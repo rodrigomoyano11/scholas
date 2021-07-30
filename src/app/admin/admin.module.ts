@@ -5,13 +5,15 @@ import { HomeComponent } from './containers/home/home.component'
 import { AdminsComponent } from './containers/admins/admins.component'
 import { DonorsComponent } from './containers/donors/donors.component'
 import { ProjectsComponent } from './containers/projects/projects.component'
+import { NewsComponent } from './containers/news/news.component'
 
 @NgModule({
   declarations: [
     HomeComponent,
     AdminsComponent,
     DonorsComponent,
-    ProjectsComponent
+    ProjectsComponent,
+    NewsComponent
   ],
   imports: [CommonModule, AdminRoutingModule]
 })
