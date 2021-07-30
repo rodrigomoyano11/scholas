@@ -102,8 +102,12 @@
           }
         },
         "deploy": {
-          "builder": "@angular/fire:deploy",
-          "options": {}
+          "builder": "@netlify-builder/deploy:deploy",
+          "options": {
+            "outputPath": "dist/scholas",
+            "netlifyToken": "wHQOgvplWkWrbXWnuUF1uFqvLc6B-WMdrJBXYEK1z18",
+            "siteId": "bbc35bbe-387a-466d-8937-d26601bc50a2"
+          }
         }
       }
     }
