@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
+import { NotFoundComponent } from './containers/not-found/not-found.component'
 
-const routes: Routes = []
+const routes: Routes = [{ path: '**', component: NotFoundComponent }]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

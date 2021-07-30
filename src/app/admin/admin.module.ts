@@ -6,6 +6,7 @@ import { AdminsComponent } from './containers/admins/admins.component'
 import { DonorsComponent } from './containers/donors/donors.component'
 import { ProjectsComponent } from './containers/projects/projects.component'
 import { NewsComponent } from './containers/news/news.component'
+import { SharedModule } from '../shared/shared.module'
 
 @NgModule({
   declarations: [
@@ -15,6 +16,6 @@ import { NewsComponent } from './containers/news/news.component'
     ProjectsComponent,
     NewsComponent
   ],
-  imports: [CommonModule, AdminRoutingModule]
+  imports: [CommonModule, AdminRoutingModule, SharedModule]
 })
 export class AdminModule {}
