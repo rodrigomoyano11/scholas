@@ -38,6 +38,10 @@
     // TypeScript
     "tsconfig.app.json": true,
 
+    // Firebase
+    ".firebaserc": true,
+    "firebase.json": true,
+
     // Others
     "karma.conf.js": true,
     ".husky/": true,
