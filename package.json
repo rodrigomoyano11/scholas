@@ -8,7 +8,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint & stylelint --cache **/*.{css,sccs}"
+    "lint": "ng lint & stylelint --cache **/*.{css,sccs}",
+    "format": "prettier --write **/*.{js,jsx,ts,tsx,css,html,json,md,yml}"
   },
   "dependencies": {
     "@angular/animations": "~12.1.0",
