@@ -1,0 +1,48 @@
+{
+  // Icons
+  "material-icon-theme.activeIconPack": "angular",
+  "workbench.iconTheme": "material-icon-theme",
+  "material-icon-theme.files.associations": {
+    ".stylelintcache": "stylelint"
+  },
+
+  // Editor
+  "js/ts.implicitProjectConfig.experimentalDecorators": true,
+
+  // Linter
+  "eslint.format.enable": true,
+
+  // Excluded files and folders
+  "files.exclude": {
+    // Dependencies
+    "node_modules/": true,
+    "package-lock.json": true,
+
+    // Formatter
+    ".prettierrc": true,
+    ".prettierignore": true,
+
+    // Linter
+    ".eslintrc": true,
+    ".eslintcache": true,
+    ".stylelintrc.js": true,
+    ".stylelintcache": true,
+
+    // Tests
+    "**/*test.ts": true,
+    "**/*spec*": true,
+
+    // Git
+    ".gitignore": true,
+
+    // TypeScript
+    "tsconfig.app.json": true,
+
+    // Others
+    "karma.conf.js": true,
+    ".husky/": true,
+    ".editorconfig": true,
+    ".browserslistrc": true,
+    "**/polyfills.ts": true
+  }
+}
