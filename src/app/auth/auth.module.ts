@@ -6,14 +6,26 @@ import { LoginComponent } from './containers/login/login.component'
 import { ForgotPasswordComponent } from './containers/forgot-password/forgot-password.component'
 import { SharedModule } from '../shared/shared.module'
 import { HomeComponent } from './containers/home/home.component'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatButtonModule } from '@angular/material/button'
+import { MatInputModule } from '@angular/material/input'
+import { ModalContainerComponent } from './components/modal-container/modal-container.component'
 
 @NgModule({
   declarations: [
     RegisterComponent,
     LoginComponent,
     ForgotPasswordComponent,
-    HomeComponent
+    HomeComponent,
+    ModalContainerComponent
   ],
-  imports: [CommonModule, AuthRoutingModule, SharedModule]
+  imports: [
+    CommonModule,
+    AuthRoutingModule,
+    SharedModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule
+  ]
 })
 export class AuthModule {}
