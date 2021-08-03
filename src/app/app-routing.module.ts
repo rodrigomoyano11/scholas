@@ -5,6 +5,10 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
+    redirectTo: 'landing'
+  },
+  {
+    path: 'landing',
     loadChildren: () =>
       import('./landing-page/landing-page.module').then(
         (m) => m.LandingPageModule
