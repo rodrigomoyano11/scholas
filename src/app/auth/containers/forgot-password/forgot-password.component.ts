@@ -1,5 +1,6 @@
 import { Component } from '@angular/core'
-import { FormBuilder, FormGroup } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { ValidationService } from '../../services/validation/validation.service'
 
 @Component({
   selector: 'app-forgot-password',
@@ -9,10 +10,16 @@ import { FormBuilder, FormGroup } from '@angular/forms'
 export class ForgotPasswordComponent {
   forgotPasswordForm: FormGroup
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private validation: ValidationService) {
     this.forgotPasswordForm = this.fb.group({
-      email: ['', []]
+      email: ['', [Validators.required, Validators.email]]
     })
+  }
+
+  getErrors(controlName: string): string {
+    return this.validation.getErrors(
+      this.forgotPasswordForm.controls[controlName]
+    )
   }
 
   resetPassword(): void {

@@ -18,6 +18,7 @@
         autocomplete="email"
         formControlName="email"
       />
+      <mat-error>{{ getErrors('email') }}</mat-error>
     </mat-form-field>
     <mat-form-field class="field" appearance="outline">
       <mat-label>Contraseña</mat-label>
@@ -28,6 +29,7 @@
         autocomplete="current-password"
         formControlName="password"
       />
+      <mat-error>{{ getErrors('password') }}</mat-error>
     </mat-form-field>
 
     <button

@@ -18,6 +18,7 @@
         autocomplete="name"
         formControlName="name"
       />
+      <mat-error>{{ getErrors('name') }}</mat-error>
     </mat-form-field>
 
     <mat-form-field class="field" appearance="outline">
@@ -29,6 +30,7 @@
         autocomplete="email"
         formControlName="email"
       />
+      <mat-error>{{ getErrors('email') }}</mat-error>
     </mat-form-field>
 
     <mat-form-field class="field" appearance="outline">
@@ -40,6 +42,7 @@
         autocomplete="new-password"
         formControlName="password"
       />
+      <mat-error>{{ getErrors('password') }}</mat-error>
     </mat-form-field>
     <mat-form-field class="field" appearance="outline">
       <mat-label>Repetir contraseña</mat-label>
@@ -50,6 +53,7 @@
         autocomplete="new-password"
         formControlName="passwordConfirm"
       />
+      <mat-error>{{ getErrors('passwordConfirm') }}</mat-error>
     </mat-form-field>
 
     <button
