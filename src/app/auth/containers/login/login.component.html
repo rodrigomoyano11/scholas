@@ -1,1 +1,44 @@
-<p>login works!</p>
+<app-modal-container>
+  <h1 class="title">Inicio de sesión</h1>
+
+  <p class="subtitle">Usa una de tus redes sociales</p>
+  <div class="button-group">
+    <button class="button" mat-stroked-button>Google</button>
+    <button class="button" mat-stroked-button>Facebook</button>
+  </div>
+
+  <p class="subtitle">O usa tu correo electrónico</p>
+
+  <form class="form">
+    <mat-form-field class="field" appearance="outline">
+      <mat-label>Correo electrónico</mat-label>
+      <input
+        matInput
+        placeholder="Ingrese su correo electrónico"
+        type="email"
+        autocomplete="email"
+      />
+    </mat-form-field>
+    <mat-form-field class="field" appearance="outline">
+      <mat-label>Contraseña</mat-label>
+      <input
+        matInput
+        placeholder="Ingrese su contraseña"
+        type="password"
+        autocomplete="current-password"
+      />
+    </mat-form-field>
+    <button type="submit" class="submit" mat-stroked-button>
+      Iniciar sesión
+    </button>
+  </form>
+
+  <p class="signup">
+    ¿No tienes una cuenta?
+    <a mat-button [routerLink]="'/auth/register'">Regístrate aquí</a>
+  </p>
+
+  <a mat-button [routerLink]="'/auth/forgot-password'"
+    >¿Olvidaste tu contraseña?</a
+  >
+</app-modal-container>
