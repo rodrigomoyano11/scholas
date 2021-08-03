@@ -1,0 +1,17 @@
+.logo {
+  width: 8rem;
+  height: 2rem;
+
+  background-color: #fff;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.login-button {
+  margin-right: 1rem;
+  margin-left: auto;
+}

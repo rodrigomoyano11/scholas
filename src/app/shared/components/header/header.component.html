@@ -1,1 +1,45 @@
-<p>header works!</p>
+<header>
+  <mat-toolbar class="header">
+    <a [routerLink]="'/'">
+      <div class="logo"></div>
+    </a>
+    <button
+      mat-stroked-button
+      class="login-button"
+      [routerLink]="'/auth/login'"
+    >
+      Iniciar sesión
+    </button>
+    <button mat-icon-button class="menu-button" [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-toolbar>
+</header>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item [matMenuTriggerFor]="landing">Landing Page</button>
+  <button mat-menu-item [matMenuTriggerFor]="admin">Administración</button>
+  <button mat-menu-item [matMenuTriggerFor]="auth">Auth</button>
+</mat-menu>
+
+<mat-menu #landing="matMenu">
+  <button mat-menu-item [routerLink]="'/landing'">Inicio</button>
+  <button mat-menu-item [routerLink]="'/landing/news'">Noticias</button>
+  <button mat-menu-item [routerLink]="'/landing/projects'">Proyectos</button>
+</mat-menu>
+
+<mat-menu #admin="matMenu">
+  <button mat-menu-item [routerLink]="'/admin'">Inicio</button>
+  <button mat-menu-item [routerLink]="'/admin/projects'">Proyectos</button>
+  <button mat-menu-item [routerLink]="'/admin/news'">Noticias</button>
+  <button mat-menu-item [routerLink]="'/admin/donors'">Donantes</button>
+  <button mat-menu-item [routerLink]="'/admin/admins'">Administradores</button>
+</mat-menu>
+
+<mat-menu #auth="matMenu">
+  <button mat-menu-item [routerLink]="'/auth/login'">Iniciar sesión</button>
+  <button mat-menu-item [routerLink]="'/auth/register'">Registrarse</button>
+  <button mat-menu-item [routerLink]="'/auth/forgot-password'">
+    Restablecer contraseña
+  </button>
+</mat-menu>
