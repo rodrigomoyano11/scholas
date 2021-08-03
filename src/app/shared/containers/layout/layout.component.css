@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  min-height: 100vh;
+}
+
+.header {
+  width: 100%;
+}
+
+.content {
+  flex: 1;
+  width: 100%;
+  padding: 2rem 0;
+
+  background-color: #eee;
+}
+
+.footer {
+  width: 100%;
+}
