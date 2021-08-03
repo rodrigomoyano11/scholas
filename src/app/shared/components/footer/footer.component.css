@@ -1,0 +1,32 @@
+.logo {
+  width: 8rem;
+  height: 2rem;
+
+  border: 2px solid #888;
+
+  background-color: #fff;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.description {
+  max-width: 20rem;
+
+  margin: 0;
+  margin-right: auto;
+  margin-left: 1rem;
+
+  white-space: normal;
+}
+
+.social-networks {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
