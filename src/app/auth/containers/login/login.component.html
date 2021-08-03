@@ -3,12 +3,16 @@
 
   <p class="subtitle">Usa una de tus redes sociales</p>
   <div class="button-group">
-    <button class="button" mat-stroked-button>Google</button>
-    <button class="button" mat-stroked-button>Facebook</button>
+    <button class="button" mat-stroked-button (click)="login('google')">
+      Google
+    </button>
+    <button class="button" mat-stroked-button (click)="login('facebook')">
+      Facebook
+    </button>
   </div>
 
   <p class="subtitle">O usa tu correo electrónico</p>
-  <form class="form" (ngSubmit)="login()" [formGroup]="loginForm">
+  <form class="form" (ngSubmit)="login('email')" [formGroup]="loginForm">
     <mat-form-field class="field" appearance="outline">
       <mat-label>Correo electrónico</mat-label>
       <input

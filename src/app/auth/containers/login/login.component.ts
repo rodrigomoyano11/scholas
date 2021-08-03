@@ -1,5 +1,6 @@
 import { Component } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { AuthService, Provider } from '../../services/auth/auth.service'
 import { ValidationService } from '../../services/validation/validation.service'
 
 @Component({
@@ -10,7 +11,11 @@ import { ValidationService } from '../../services/validation/validation.service'
 export class LoginComponent {
   loginForm: FormGroup
 
-  constructor(private fb: FormBuilder, private validation: ValidationService) {
+  constructor(
+    private fb: FormBuilder,
+    private validation: ValidationService,
+    private auth: AuthService
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
@@ -21,7 +26,10 @@ export class LoginComponent {
     return this.validation.getErrors(this.loginForm.controls[controlName])
   }
 
-  login(): void {
-    console.log(this.loginForm.value)
+  login(provider: Provider): void {
+    const password = <string>this.loginForm.controls['password'].value
+    const email = <string>this.loginForm.controls['email'].value
+
+    this.auth.login(provider, email, password)
   }
 }

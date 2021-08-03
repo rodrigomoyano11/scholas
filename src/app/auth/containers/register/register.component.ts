@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms'
+import { AuthService, Provider } from '../../services/auth/auth.service'
 import { ValidationService } from '../../services/validation/validation.service'
 
 @Component({
@@ -15,7 +16,11 @@ import { ValidationService } from '../../services/validation/validation.service'
 export class RegisterComponent {
   registerForm: FormGroup
 
-  constructor(private fb: FormBuilder, private validation: ValidationService) {
+  constructor(
+    private fb: FormBuilder,
+    private validation: ValidationService,
+    private auth: AuthService
+  ) {
     this.registerForm = this.fb.group(
       {
         name: ['', [Validators.required, validation.isValidName()]],
@@ -41,7 +46,10 @@ export class RegisterComponent {
     return this.validation.getErrors(this.registerForm.controls[controlName])
   }
 
-  register(): void {
-    console.log(this.registerForm.value)
+  register(provider: Provider): void {
+    const password = <string>this.registerForm.controls['password'].value
+    const email = <string>this.registerForm.controls['email'].value
+
+    this.auth.register(provider, email, password)
   }
 }
