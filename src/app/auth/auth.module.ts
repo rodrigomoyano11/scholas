@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatButtonModule } from '@angular/material/button'
 import { MatInputModule } from '@angular/material/input'
 import { ModalContainerComponent } from './components/modal-container/modal-container.component'
+import { ReactiveFormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ModalContainerComponent } from './components/modal-container/modal-cont
     SharedModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    ReactiveFormsModule
   ]
 })
 export class AuthModule {}

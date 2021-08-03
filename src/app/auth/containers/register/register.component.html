@@ -8,7 +8,7 @@
   </div>
 
   <p class="subtitle">O usa tu correo electrónico</p>
-  <form class="form">
+  <form class="form" (ngSubmit)="register()" [formGroup]="registerForm">
     <mat-form-field class="field" appearance="outline">
       <mat-label>Nombre completo</mat-label>
       <input
@@ -16,6 +16,7 @@
         placeholder="Ingrese su nombre y apellido"
         type="text"
         autocomplete="name"
+        formControlName="name"
       />
     </mat-form-field>
 
@@ -26,6 +27,7 @@
         placeholder="Correo electrónico"
         type="email"
         autocomplete="email"
+        formControlName="email"
       />
     </mat-form-field>
 
@@ -36,6 +38,7 @@
         placeholder="Contraseña"
         type="password"
         autocomplete="new-password"
+        formControlName="password"
       />
     </mat-form-field>
     <mat-form-field class="field" appearance="outline">
@@ -45,10 +48,18 @@
         placeholder="Repetir contraseña"
         type="password"
         autocomplete="new-password"
+        formControlName="passwordConfirm"
       />
     </mat-form-field>
 
-    <button type="submit" class="submit" mat-stroked-button>Registrarse</button>
+    <button
+      type="submit"
+      class="submit"
+      mat-stroked-button
+      [disabled]="!registerForm.valid"
+    >
+      Registrarse
+    </button>
   </form>
 
   <p class="signup">

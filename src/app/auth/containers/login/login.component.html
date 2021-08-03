@@ -8,8 +8,7 @@
   </div>
 
   <p class="subtitle">O usa tu correo electrónico</p>
-
-  <form class="form">
+  <form class="form" (ngSubmit)="login()" [formGroup]="loginForm">
     <mat-form-field class="field" appearance="outline">
       <mat-label>Correo electrónico</mat-label>
       <input
@@ -17,6 +16,7 @@
         placeholder="Ingrese su correo electrónico"
         type="email"
         autocomplete="email"
+        formControlName="email"
       />
     </mat-form-field>
     <mat-form-field class="field" appearance="outline">
@@ -26,9 +26,16 @@
         placeholder="Ingrese su contraseña"
         type="password"
         autocomplete="current-password"
+        formControlName="password"
       />
     </mat-form-field>
-    <button type="submit" class="submit" mat-stroked-button>
+
+    <button
+      type="submit"
+      class="submit"
+      mat-stroked-button
+      [disabled]="!loginForm.valid"
+    >
       Iniciar sesión
     </button>
   </form>
