@@ -3,11 +3,7 @@
     <a [routerLink]="'/'">
       <div class="logo"></div>
     </a>
-    <button
-      mat-stroked-button
-      class="login-button"
-      [routerLink]="'/auth/login'"
-    >
+    <button mat-stroked-button class="login-button" [routerLink]="'/auth/login'">
       Iniciar sesión
     </button>
     <button mat-icon-button class="menu-button" [matMenuTriggerFor]="menu">
@@ -20,6 +16,11 @@
   <button mat-menu-item [matMenuTriggerFor]="landing">Landing Page</button>
   <button mat-menu-item [matMenuTriggerFor]="admin">Administración</button>
   <button mat-menu-item [matMenuTriggerFor]="auth">Auth</button>
+
+  <ng-container *ngIf="user$ | async">
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="logout()">Cerrar sesión</button>
+  </ng-container>
 </mat-menu>
 
 <mat-menu #landing="matMenu">
@@ -39,7 +40,5 @@
 <mat-menu #auth="matMenu">
   <button mat-menu-item [routerLink]="'/auth/login'">Iniciar sesión</button>
   <button mat-menu-item [routerLink]="'/auth/register'">Registrarse</button>
-  <button mat-menu-item [routerLink]="'/auth/forgot-password'">
-    Restablecer contraseña
-  </button>
+  <button mat-menu-item [routerLink]="'/auth/forgot-password'">Restablecer contraseña</button>
 </mat-menu>
