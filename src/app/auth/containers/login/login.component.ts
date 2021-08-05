@@ -30,6 +30,9 @@ export class LoginComponent {
     const password = <string>this.loginForm.controls['password'].value
     const email = <string>this.loginForm.controls['email'].value
 
-    this.auth.login(provider, email, password)
+    this.auth
+      .login(provider, email, password)
+      .then((userCredential) => userCredential.user)
+      .catch((error) => console.log(error))
   }
 }

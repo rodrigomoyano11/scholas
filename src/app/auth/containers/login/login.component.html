@@ -3,12 +3,8 @@
 
   <p class="subtitle">Usa una de tus redes sociales</p>
   <div class="button-group">
-    <button class="button" mat-stroked-button (click)="login('google')">
-      Google
-    </button>
-    <button class="button" mat-stroked-button (click)="login('facebook')">
-      Facebook
-    </button>
+    <button class="button" mat-stroked-button (click)="login('google')">Google</button>
+    <button class="button" mat-stroked-button (click)="login('facebook')">Facebook</button>
   </div>
 
   <p class="subtitle">O usa tu correo electrónico</p>
@@ -36,12 +32,7 @@
       <mat-error>{{ getErrors('password') }}</mat-error>
     </mat-form-field>
 
-    <button
-      type="submit"
-      class="submit"
-      mat-stroked-button
-      [disabled]="!loginForm.valid"
-    >
+    <button type="submit" class="submit" mat-stroked-button [disabled]="!loginForm.valid">
       Iniciar sesión
     </button>
   </form>
@@ -51,7 +42,5 @@
     <a mat-button [routerLink]="'/auth/register'">Regístrate aquí</a>
   </p>
 
-  <a mat-button [routerLink]="'/auth/forgot-password'"
-    >¿Olvidaste tu contraseña?</a
-  >
+  <a mat-button [routerLink]="'/auth/forgot-password'">¿Olvidaste tu contraseña?</a>
 </app-modal-container>

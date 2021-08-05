@@ -3,12 +3,8 @@
 
   <p class="subtitle">Usa una de tus redes sociales</p>
   <div class="button-group">
-    <button class="button" mat-stroked-button (click)="register('google')">
-      Google
-    </button>
-    <button class="button" mat-stroked-button (click)="register('facebook')">
-      Facebook
-    </button>
+    <button class="button" mat-stroked-button (click)="register('google')">Google</button>
+    <button class="button" mat-stroked-button (click)="register('facebook')">Facebook</button>
   </div>
 
   <p class="subtitle">O usa tu correo electrónico</p>
@@ -46,6 +42,7 @@
         autocomplete="new-password"
         formControlName="password"
       />
+
       <mat-error>{{ getErrors('password') }}</mat-error>
     </mat-form-field>
     <mat-form-field class="field" appearance="outline">
@@ -60,12 +57,7 @@
       <mat-error>{{ getErrors('passwordConfirm') }}</mat-error>
     </mat-form-field>
 
-    <button
-      type="submit"
-      class="submit"
-      mat-stroked-button
-      [disabled]="!registerForm.valid"
-    >
+    <button type="submit" class="submit" mat-stroked-button [disabled]="!registerForm.valid">
       Registrarse
     </button>
   </form>
@@ -75,3 +67,6 @@
     <a mat-button [routerLink]="'/auth/login'">Inicia sesión aquí</a>
   </p>
 </app-modal-container>
+
+<!-- alert - success -->
+<!-- alert - warn y error -->

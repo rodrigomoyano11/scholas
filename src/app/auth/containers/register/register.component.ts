@@ -1,10 +1,5 @@
 import { Component } from '@angular/core'
-import {
-  AbstractControlOptions,
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms'
+import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { AuthService, Provider } from '../../services/auth/auth.service'
 import { ValidationService } from '../../services/validation/validation.service'
 
@@ -50,6 +45,9 @@ export class RegisterComponent {
     const password = <string>this.registerForm.controls['password'].value
     const email = <string>this.registerForm.controls['email'].value
 
-    this.auth.register(provider, email, password)
+    this.auth
+      .register(provider, email, password)
+      .then((userCredential) => userCredential.user)
+      .catch((error) => console.log(error))
   }
 }
