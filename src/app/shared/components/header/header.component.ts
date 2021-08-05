@@ -17,4 +17,8 @@ export class HeaderComponent {
   logout(): void {
     void this.auth.logout()
   }
+
+  deleteAccount(): void {
+    void this.auth.deleteAccount()
+  }
 }

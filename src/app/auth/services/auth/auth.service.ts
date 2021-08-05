@@ -47,4 +47,10 @@ export class AuthService {
     await this.auth.signOut()
     return void this.router.navigate(['/'])
   }
+
+  async deleteAccount(): Promise<void> {
+    const user = await this.auth.currentUser
+    await user?.delete()
+    return void this.router.navigate(['/'])
+  }
 }

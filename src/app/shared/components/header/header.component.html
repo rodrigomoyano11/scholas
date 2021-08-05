@@ -19,6 +19,7 @@
 
   <ng-container *ngIf="user$ | async">
     <mat-divider></mat-divider>
+    <button mat-menu-item [matMenuTriggerFor]="account">Mi cuenta</button>
     <button mat-menu-item (click)="logout()">Cerrar sesión</button>
   </ng-container>
 </mat-menu>
@@ -41,4 +42,8 @@
   <button mat-menu-item [routerLink]="'/auth/login'">Iniciar sesión</button>
   <button mat-menu-item [routerLink]="'/auth/register'">Registrarse</button>
   <button mat-menu-item [routerLink]="'/auth/forgot-password'">Restablecer contraseña</button>
+</mat-menu>
+
+<mat-menu #account="matMenu">
+  <button mat-menu-item (click)="deleteAccount()">Eliminar mi cuenta</button>
 </mat-menu>
