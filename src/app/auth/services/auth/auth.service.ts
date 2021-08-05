@@ -48,6 +48,11 @@ export class AuthService {
     return void this.router.navigate(['/'])
   }
 
+  async resetPassword(email: string): Promise<void> {
+    await this.auth.sendPasswordResetEmail(email)
+    return void this.router.navigate(['/'])
+  }
+
   async deleteAccount(): Promise<void> {
     const user = await this.auth.currentUser
     await user?.delete()
