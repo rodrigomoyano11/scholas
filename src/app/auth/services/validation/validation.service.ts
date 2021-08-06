@@ -41,18 +41,15 @@ export class ValidationService {
   // Validators
 
   isValidName(): ValidatorFn {
-    const RegExp =
-      /^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)/
+    const RegExp = /^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)/
 
-    return (control) =>
-      RegExp.test(control.value) ? null : { validName: true }
+    return (control) => (RegExp.test(control.value) ? null : { validName: true })
   }
 
   isStrongPassword(): ValidatorFn {
     const RegExp = /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])/
 
-    return (control) =>
-      RegExp.test(control.value) ? null : { strongPassword: true }
+    return (control) => (RegExp.test(control.value) ? null : { strongPassword: true })
   }
 
   isControlsMatch(controlName: string, matchingControlName: string) {

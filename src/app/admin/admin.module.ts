@@ -9,13 +9,7 @@ import { NewsComponent } from './containers/news/news.component'
 import { SharedModule } from '../shared/shared.module'
 
 @NgModule({
-  declarations: [
-    HomeComponent,
-    AdminsComponent,
-    DonorsComponent,
-    ProjectsComponent,
-    NewsComponent
-  ],
+  declarations: [HomeComponent, AdminsComponent, DonorsComponent, ProjectsComponent, NewsComponent],
   imports: [CommonModule, AdminRoutingModule, SharedModule]
 })
 export class AdminModule {}

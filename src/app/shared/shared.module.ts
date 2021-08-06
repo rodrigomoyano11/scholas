@@ -12,12 +12,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button'
 
 @NgModule({
-  declarations: [
-    NotFoundComponent,
-    LayoutComponent,
-    HeaderComponent,
-    FooterComponent
-  ],
+  declarations: [NotFoundComponent, LayoutComponent, HeaderComponent, FooterComponent],
   imports: [
     CommonModule,
     SharedRoutingModule,
