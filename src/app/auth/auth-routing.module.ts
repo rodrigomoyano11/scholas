@@ -5,6 +5,7 @@ import { ForgotPasswordComponent } from './containers/forgot-password/forgot-pas
 import { HomeComponent } from './containers/home/home.component'
 import { LoginComponent } from './containers/login/login.component'
 import { RegisterComponent } from './containers/register/register.component'
+import { VerifyEmailComponent } from './containers/verify-email/verify-email.component'
 
 const routes: Routes = [
   {
@@ -13,7 +14,8 @@ const routes: Routes = [
     children: [
       { path: 'register', component: RegisterComponent },
       { path: 'login', component: LoginComponent },
-      { path: 'forgot-password', component: ForgotPasswordComponent }
+      { path: 'forgot-password', component: ForgotPasswordComponent },
+      { path: 'verify-email', component: VerifyEmailComponent }
     ]
   },
   { path: '**', component: NotFoundComponent }

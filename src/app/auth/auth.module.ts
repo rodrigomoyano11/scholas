@@ -12,6 +12,8 @@ import { MatInputModule } from '@angular/material/input'
 import { ModalContainerComponent } from './components/modal-container/modal-container.component'
 import { ReactiveFormsModule } from '@angular/forms'
 import { AngularFireAuthModule } from '@angular/fire/auth'
+import { VerifyEmailComponent } from './containers/verify-email/verify-email.component'
+import { MatSnackBarModule } from '@angular/material/snack-bar'
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth'
     LoginComponent,
     ForgotPasswordComponent,
     HomeComponent,
-    ModalContainerComponent
+    ModalContainerComponent,
+    VerifyEmailComponent
   ],
   imports: [
     CommonModule,
@@ -28,6 +31,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth'
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSnackBarModule,
     ReactiveFormsModule,
     AngularFireAuthModule
   ]

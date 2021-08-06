@@ -1,0 +1,12 @@
+<app-modal-container>
+  <h1 class="title">Revisá tu bandeja de entrada</h1>
+
+  <p class="description">
+    Te enviamos un correo electrónico a {{ this.auth.user?.email }}. Ingresá en el enlace que
+    recibiste para poder verificar tu cuenta
+  </p>
+
+  <button class="button" mat-stroked-button [routerLink]="'/landing'">
+    Volver a la página principal
+  </button>
+</app-modal-container>

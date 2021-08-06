@@ -47,7 +47,10 @@ export class RegisterComponent {
 
     this.auth
       .register(provider, email, password)
-      .then((userCredential) => userCredential.user)
+      .then((userCredential) => {
+        userCredential.user
+        this.auth.verifyEmail()
+      })
       .catch((error) => console.log(error))
   }
 }
