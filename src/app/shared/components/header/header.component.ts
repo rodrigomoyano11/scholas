@@ -1,6 +1,4 @@
 import { Component } from '@angular/core'
-import { User } from '@firebase/auth-types'
-import { Observable } from 'rxjs'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
 
 @Component({
@@ -9,9 +7,10 @@ import { AuthService } from 'src/app/auth/services/auth/auth.service'
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  user$: Observable<User | null>
+  isLogged = false
+
   constructor(private auth: AuthService) {
-    this.user$ = auth.getUser()
+    this.auth.user$.subscribe((user) => (this.isLogged = !!user?.getIdToken(true)))
   }
 
   logout(): void {
