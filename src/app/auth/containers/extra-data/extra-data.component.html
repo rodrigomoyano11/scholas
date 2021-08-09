@@ -1,0 +1,60 @@
+<app-modal-container>
+  <h1>¡Queremos conocerte!</h1>
+
+  <form class="form" (ngSubmit)="submitExtraData()" [formGroup]="extraDataForm">
+    <mat-form-field class="field" appearance="outline">
+      <mat-label>Fecha de Nacimiento</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        placeholder="Ingresá tu fecha de nacimiento"
+        autocomplete="bday"
+        formControlName="birthday"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+
+      <mat-error>{{ getErrors('birthday') }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="field" appearance="outline">
+      <mat-label>Teléfono</mat-label>
+      <input
+        matInput
+        placeholder="Ingresá tu número de teléfono"
+        type="tel"
+        autocomplete="tel"
+        formControlName="phoneNumber"
+      />
+      <mat-error>{{ getErrors('phoneNumber') }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="field" appearance="outline">
+      <mat-label>Provincia</mat-label>
+      <input
+        matInput
+        placeholder="Ingresá la provincia donde vives"
+        type="text"
+        autocomplete="address-level1"
+        formControlName="province"
+      />
+      <mat-error>{{ getErrors('province') }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="field" appearance="outline">
+      <mat-label>Localidad</mat-label>
+      <input
+        matInput
+        placeholder="Ingresá la localidad donde vives"
+        type="text"
+        autocomplete="address-level2"
+        formControlName="department"
+      />
+      <mat-error>{{ getErrors('department') }}</mat-error>
+    </mat-form-field>
+
+    <button type="submit" class="submit" mat-stroked-button [disabled]="!extraDataForm.valid">
+      Continuar
+    </button>
+  </form>
+</app-modal-container>

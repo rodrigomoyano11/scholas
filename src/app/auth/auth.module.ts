@@ -14,6 +14,9 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { AngularFireAuthModule } from '@angular/fire/auth'
 import { VerifyEmailComponent } from './containers/verify-email/verify-email.component'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { ExtraDataComponent } from './containers/extra-data/extra-data.component'
+import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatNativeDateModule } from '@angular/material/core'
 
 @NgModule({
   declarations: [
@@ -22,7 +25,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
     ForgotPasswordComponent,
     HomeComponent,
     ModalContainerComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    ExtraDataComponent
   ],
   imports: [
     CommonModule,
@@ -32,6 +36,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
     MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     ReactiveFormsModule,
     AngularFireAuthModule
   ]

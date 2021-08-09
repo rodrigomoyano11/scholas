@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { NotFoundComponent } from '../shared/containers/not-found/not-found.component'
+import { ExtraDataComponent } from './containers/extra-data/extra-data.component'
 import { ForgotPasswordComponent } from './containers/forgot-password/forgot-password.component'
 import { HomeComponent } from './containers/home/home.component'
 import { LoginComponent } from './containers/login/login.component'
@@ -15,7 +16,8 @@ const routes: Routes = [
       { path: 'register', component: RegisterComponent },
       { path: 'login', component: LoginComponent },
       { path: 'forgot-password', component: ForgotPasswordComponent },
-      { path: 'verify-email', component: VerifyEmailComponent }
+      { path: 'verify-email', component: VerifyEmailComponent },
+      { path: 'extra-data', component: ExtraDataComponent }
     ]
   },
   { path: '**', component: NotFoundComponent }
