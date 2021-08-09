@@ -9,10 +9,17 @@
 
 .header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   width: 100%;
 
   background-color: #009993;
+}
+
+.page-title {
+  margin-right: auto;
+  margin-bottom: 0;
+  margin-left: 1rem;
 }
 
 .login-button {

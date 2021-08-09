@@ -4,9 +4,12 @@
       <mat-icon>menu</mat-icon>
     </button>
 
-    <button mat-stroked-button class="login-button" [routerLink]="'/auth/login'">
+    <button *ngIf="!isLogged" mat-stroked-button class="login-button" [routerLink]="'/auth/login'">
       Iniciar sesión
     </button>
+
+    <p class="page-title" *ngIf="isLogged">Hola {{ userType }}</p>
+
     <a [routerLink]="'/'">
       <div class="logo"></div>
     </a>
