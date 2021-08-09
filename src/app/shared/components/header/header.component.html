@@ -1,16 +1,19 @@
 <header>
   <mat-toolbar class="header">
-    <a [routerLink]="'/'">
-      <div class="logo"></div>
-    </a>
-    <button mat-stroked-button class="login-button" [routerLink]="'/auth/login'">
-      Iniciar sesión
-    </button>
     <button mat-icon-button class="menu-button" [matMenuTriggerFor]="menu">
       <mat-icon>menu</mat-icon>
     </button>
+
+    <button mat-stroked-button class="login-button" [routerLink]="'/auth/login'">
+      Iniciar sesión
+    </button>
+    <a [routerLink]="'/'">
+      <div class="logo"></div>
+    </a>
   </mat-toolbar>
 </header>
+
+<!-- Menu items -->
 
 <mat-menu #menu="matMenu">
   <button mat-menu-item [matMenuTriggerFor]="landing">Landing Page</button>
