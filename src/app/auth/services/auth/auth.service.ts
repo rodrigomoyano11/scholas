@@ -49,15 +49,33 @@ export class AuthService {
     return methods[provider]()
   }
 
+  getExtraData(): Promise<boolean> {
+    // TODO: Verificar si es necesario registrar más datos
+    return this.router.navigate(['/auth/extra-data'])
+  }
+
+  sendExtraData(extraData: { [key: string]: string }): Promise<boolean> {
+    console.log(extraData)
+    // TODO: Enviar datos a backend y verificar datos
+    this.snackBar.open('Tu cuenta ha sido creada correctamente', 'Cerrar')
+    return this.router.navigate(['/'])
+  }
+
   // Others operations
 
   async logout(): Promise<void> {
     await this.auth.signOut()
+    this.snackBar.open('Se ha cerrado tu sesión correctamente', 'Cerrar')
     return void this.router.navigate(['/'])
   }
 
   async resetPassword(email: string): Promise<void> {
     await this.auth.sendPasswordResetEmail(email)
+    this.snackBar.open(
+      `Se ha enviado un correo a ${email} para restablecer tu contraseña`,
+      'Cerrar'
+    )
+
     return void this.router.navigate(['/'])
   }
 
@@ -65,10 +83,7 @@ export class AuthService {
     void this.auth.currentUser.then((currentUser) => {
       if (!currentUser?.emailVerified) {
         this.snackBar
-          .open('Necesitamos verificar tu correo electrónico', 'Verificar', {
-            horizontalPosition: 'center',
-            verticalPosition: 'top'
-          })
+          .open('Necesitamos verificar tu correo electrónico', 'Verificar')
           .onAction()
           .pipe(take(1))
           .subscribe(() => {
@@ -82,7 +97,9 @@ export class AuthService {
 
   async deleteAccount(): Promise<void> {
     const user = await this.auth.currentUser
+    // TODO: Conectarse con Backend para eliminar al usuario
     await user?.delete()
+    this.snackBar.open('Tu cuenta ha sido eliminada correctamente', 'Cerrar')
     return void this.router.navigate(['/'])
   }
 }

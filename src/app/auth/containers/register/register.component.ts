@@ -47,10 +47,8 @@ export class RegisterComponent {
 
     this.auth
       .register(provider, email, password)
-      .then((userCredential) => {
-        userCredential.user
-        this.auth.verifyEmail()
-      })
+      .then(() => this.auth.getExtraData())
+      .then((resume) => !resume && this.auth.verifyEmail())
       .catch((error) => console.log(error))
   }
 }

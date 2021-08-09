@@ -1,5 +1,6 @@
 import { Component } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { AuthService } from '../../services/auth/auth.service'
 import { ValidationService } from '../../services/validation/validation.service'
 
 @Component({
@@ -10,7 +11,11 @@ import { ValidationService } from '../../services/validation/validation.service'
 export class ExtraDataComponent {
   extraDataForm: FormGroup
 
-  constructor(private validation: ValidationService, private fb: FormBuilder) {
+  constructor(
+    private validation: ValidationService,
+    private fb: FormBuilder,
+    private auth: AuthService
+  ) {
     this.extraDataForm = this.fb.group({
       birthday: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required]],
@@ -24,6 +29,6 @@ export class ExtraDataComponent {
   }
 
   submitExtraData(): void {
-    console.log(this.extraDataForm.value)
+    void this.auth.sendExtraData(this.extraDataForm.value)
   }
 }
