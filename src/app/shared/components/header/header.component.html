@@ -10,9 +10,7 @@
 
     <p class="page-title" *ngIf="isLogged">Hola {{ userType }}</p>
 
-    <a [routerLink]="'/'">
-      <div class="logo"></div>
-    </a>
+    <app-logo></app-logo>
   </mat-toolbar>
 </header>
 
