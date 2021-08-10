@@ -1,22 +1,18 @@
 <header>
   <mat-toolbar class="header">
-    <button mat-icon-button class="menu-button" [matMenuTriggerFor]="menu">
-      <mat-icon>menu</mat-icon>
+    <button mat-icon-button class="nav-menu__button" [matMenuTriggerFor]="navMenu">
+      <mat-icon class="nav-menu__icon">menu</mat-icon>
     </button>
 
-    <button *ngIf="!isLogged" mat-stroked-button class="login-button" [routerLink]="'/auth/login'">
-      Iniciar sesión
-    </button>
+    <p class="title" *ngIf="isLogged">Hola {{ userType }}</p>
 
-    <p class="page-title" *ngIf="isLogged">Hola {{ userType }}</p>
-
-    <app-logo></app-logo>
+    <app-logo class="brand__logo"></app-logo>
   </mat-toolbar>
 </header>
 
 <!-- Menu items -->
 
-<mat-menu #menu="matMenu">
+<mat-menu #navMenu="matMenu">
   <button mat-menu-item [matMenuTriggerFor]="landing">Landing Page</button>
   <button mat-menu-item [matMenuTriggerFor]="admin">Administración</button>
   <button mat-menu-item [matMenuTriggerFor]="auth">Auth</button>

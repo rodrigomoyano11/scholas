@@ -7,13 +7,12 @@
   background-color: #009993;
 }
 
-.page-title {
-  margin-right: auto;
-  margin-bottom: 0;
-  margin-left: 1rem;
+.nav-menu__icon {
+  color: #fff;
 }
 
-.login-button {
+.title {
   margin-right: auto;
+  margin-bottom: 0;
   margin-left: 1rem;
 }
