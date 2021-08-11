@@ -3,14 +3,8 @@
 
   <p class="social-login__title">Usa una de tus redes sociales</p>
   <div class="social-login__buttons">
-    <button class="login-button" mat-stroked-button (click)="login('google')">
-      <mat-icon class="login-button__icon" svgIcon="google"></mat-icon>
-      <span class="login-button__text">Google</span>
-    </button>
-    <button class="login-button" mat-stroked-button (click)="login('facebook')">
-      <mat-icon class="login-button__icon" svgIcon="facebook"></mat-icon>
-      <span class="login-button__text">Facebook</span>
-    </button>
+    <app-social-button [method]="'google'" (clicked)="login('google')"></app-social-button>
+    <app-social-button [method]="'facebook'" (clicked)="login('facebook')"></app-social-button>
   </div>
 
   <p class="email-login__title">O usa tu correo electrónico</p>

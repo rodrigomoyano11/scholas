@@ -17,6 +17,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { ExtraDataComponent } from './containers/extra-data/extra-data.component'
 import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatNativeDateModule } from '@angular/material/core'
+import { MatIconModule } from '@angular/material/icon'
+import SocialButtonComponent from './components/social-button/social-button.component'
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { MatNativeDateModule } from '@angular/material/core'
     HomeComponent,
     ModalContainerComponent,
     VerifyEmailComponent,
-    ExtraDataComponent
+    ExtraDataComponent,
+    SocialButtonComponent
   ],
   imports: [
     CommonModule,
@@ -38,6 +41,7 @@ import { MatNativeDateModule } from '@angular/material/core'
     MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatIconModule,
     ReactiveFormsModule,
     AngularFireAuthModule
   ]

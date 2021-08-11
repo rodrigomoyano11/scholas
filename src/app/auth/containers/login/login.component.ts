@@ -1,7 +1,5 @@
 import { Component } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { MatIconRegistry } from '@angular/material/icon'
-import { DomSanitizer } from '@angular/platform-browser'
 import { AuthService, Provider } from '../../services/auth/auth.service'
 import { ValidationService } from '../../services/validation/validation.service'
 
@@ -16,23 +14,12 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private validation: ValidationService,
-    private auth: AuthService,
-    private iconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private auth: AuthService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     })
-
-    this.iconRegistry.addSvgIcon(
-      'facebook',
-      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/facebook.svg')
-    )
-    this.iconRegistry.addSvgIcon(
-      'google',
-      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/google.svg')
-    )
   }
 
   getErrors(controlName: string): string {
