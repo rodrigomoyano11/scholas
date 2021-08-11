@@ -26,10 +26,18 @@
       <input
         matInput
         placeholder="Ingresá tu contraseña"
-        type="password"
+        [type]="hidePassword ? 'password' : 'text'"
         autocomplete="current-password"
         formControlName="password"
       />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hidePassword = !hidePassword"
+        [attr.aria-pressed]="hidePassword"
+      >
+        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
       <mat-error>{{ getErrors('password') }}</mat-error>
     </mat-form-field>
 

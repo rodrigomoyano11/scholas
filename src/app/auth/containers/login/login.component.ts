@@ -10,6 +10,7 @@ import { ValidationService } from '../../services/validation/validation.service'
 })
 export class LoginComponent {
   loginForm: FormGroup
+  hidePassword = true
 
   constructor(
     private fb: FormBuilder,

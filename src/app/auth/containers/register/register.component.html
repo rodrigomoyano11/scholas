@@ -52,10 +52,18 @@
       <input
         matInput
         placeholder="Contraseña"
-        type="password"
+        [type]="hidePassword.field1 ? 'password' : 'text'"
         autocomplete="new-password"
         formControlName="password"
       />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hidePassword.field1 = !hidePassword.field1"
+        [attr.aria-pressed]="hidePassword.field1"
+      >
+        <mat-icon>{{ hidePassword.field1 ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
       <mat-error>{{ getErrors('password') }}</mat-error>
     </mat-form-field>
     <mat-form-field class="register-form__field" appearance="outline">
@@ -63,10 +71,18 @@
       <input
         matInput
         placeholder="Repetir contraseña"
-        type="password"
+        [type]="hidePassword.field2 ? 'password' : 'text'"
         autocomplete="new-password"
         formControlName="passwordConfirm"
       />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hidePassword.field2 = !hidePassword.field2"
+        [attr.aria-pressed]="hidePassword.field2"
+      >
+        <mat-icon>{{ hidePassword.field2 ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
       <mat-error>{{ getErrors('passwordConfirm') }}</mat-error>
     </mat-form-field>
 
