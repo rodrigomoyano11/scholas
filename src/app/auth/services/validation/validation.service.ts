@@ -25,7 +25,7 @@ export class ValidationService {
       min: `La cantidad mínima debe ser de $${control.errors?.min}`,
       whitespace: `No se permiten los espacios en blanco`,
       strongPassword: `Debe incluir al menos una minúscula, una mayúscula y un dígito numérico`,
-      validName: `Solo puede incluir letras, espacios y otros caracteres especiales`,
+      name: `Solo puede incluir letras, espacios y otros caracteres especiales`,
       matchPassword: `Las contraseñas no coinciden`
     }
 
@@ -43,7 +43,14 @@ export class ValidationService {
   isValidName(): ValidatorFn {
     const RegExp = /^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)/
 
-    return (control) => (RegExp.test(control.value) ? null : { validName: true })
+    return (control) => (RegExp.test(control.value) ? null : { name: true })
+  }
+
+  isValidEmail(): ValidatorFn {
+    const RegExp =
+      /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+[^<>()\.,;:\s@\"]{2,})$/
+
+    return (control) => (RegExp.test(control.value) ? null : { email: true })
   }
 
   isStrongPassword(): ValidatorFn {
