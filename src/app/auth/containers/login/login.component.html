@@ -36,7 +36,8 @@
     <button
       type="submit"
       class="login-form__submit"
-      mat-stroked-button
+      [color]="'primary'"
+      mat-flat-button
       [disabled]="!loginForm.valid"
     >
       Iniciar sesión
@@ -46,12 +47,15 @@
   <a
     class="extra-links__forgot-password extra-links__button"
     mat-button
+    [color]="'primary'"
     [routerLink]="'/auth/forgot-password'"
     >¿Olvidaste tu contraseña?</a
   >
 
   <p class="extra-links__register">
     <span class="extra-links__text">¿No tenés una cuenta?</span>
-    <a class="extra-links__button" mat-button [routerLink]="'/auth/register'">Registrate aquí</a>
+    <a class="extra-links__button" mat-button [color]="'primary'" [routerLink]="'/auth/register'"
+      >Registrate aquí</a
+    >
   </p>
 </app-modal-container>

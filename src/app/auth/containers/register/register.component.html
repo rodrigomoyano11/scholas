@@ -60,7 +60,8 @@
     <button
       type="submit"
       class="register-form__submit"
-      mat-stroked-button
+      [color]="'primary'"
+      mat-flat-button
       [disabled]="!registerForm.valid"
     >
       Registrarse
@@ -69,6 +70,8 @@
 
   <p class="extra-links__login">
     <span class="extra-links__text">¿Ya tenés una cuenta?</span>
-    <a class="extra-links__button" mat-button [routerLink]="'/auth/login'">Iniciá sesión aquí</a>
+    <a class="extra-links__button" mat-button [color]="'primary'" [routerLink]="'/auth/login'"
+      >Iniciá sesión aquí</a
+    >
   </p>
 </app-modal-container>
