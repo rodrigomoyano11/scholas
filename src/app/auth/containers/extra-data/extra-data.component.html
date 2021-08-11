@@ -1,8 +1,8 @@
 <app-modal-container>
-  <h1>¡Queremos conocerte!</h1>
+  <h1 class="title">¡Queremos conocerte!</h1>
 
-  <form class="form" (ngSubmit)="submitExtraData()" [formGroup]="extraDataForm">
-    <mat-form-field class="field" appearance="outline">
+  <form class="extra-data-form" (ngSubmit)="submitExtraData()" [formGroup]="extraDataForm">
+    <mat-form-field class="extra-data-form__field" appearance="outline">
       <mat-label>Fecha de Nacimiento</mat-label>
       <input
         matInput
@@ -17,7 +17,7 @@
       <mat-error>{{ getErrors('birthday') }}</mat-error>
     </mat-form-field>
 
-    <mat-form-field class="field" appearance="outline">
+    <mat-form-field class="extra-data-form__field" appearance="outline">
       <mat-label>Teléfono</mat-label>
       <input
         matInput
@@ -29,7 +29,7 @@
       <mat-error>{{ getErrors('phoneNumber') }}</mat-error>
     </mat-form-field>
 
-    <mat-form-field class="field" appearance="outline">
+    <mat-form-field class="extra-data-form__field" appearance="outline">
       <mat-label>Provincia</mat-label>
       <input
         matInput
@@ -41,7 +41,7 @@
       <mat-error>{{ getErrors('province') }}</mat-error>
     </mat-form-field>
 
-    <mat-form-field class="field" appearance="outline">
+    <mat-form-field class="extra-data-form__field" appearance="outline">
       <mat-label>Localidad</mat-label>
       <input
         matInput
@@ -53,7 +53,12 @@
       <mat-error>{{ getErrors('department') }}</mat-error>
     </mat-form-field>
 
-    <button type="submit" class="submit" mat-stroked-button [disabled]="!extraDataForm.valid">
+    <button
+      type="submit"
+      class="extra-data-form__submit"
+      mat-stroked-button
+      [disabled]="!extraDataForm.valid"
+    >
       Continuar
     </button>
   </form>
