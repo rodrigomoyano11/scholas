@@ -1,19 +1,19 @@
 <app-modal-container>
   <h1 class="title">Registrate</h1>
 
-  <p class="social-register__title">Usa una de tus redes sociales</p>
+  <p class="social-register__title">Usá una de tus redes sociales</p>
   <div class="social-register__buttons">
     <app-social-button [method]="'google'" (clicked)="register('google')"></app-social-button>
     <app-social-button [method]="'facebook'" (clicked)="register('facebook')"></app-social-button>
   </div>
 
-  <p class="email-register__title">O usa tu correo electrónico</p>
+  <p class="email-register__title">O usá tu correo electrónico</p>
   <form class="register-form" (ngSubmit)="register('email')" [formGroup]="registerForm">
     <mat-form-field class="register-form__field" appearance="outline">
       <mat-label>Nombre completo</mat-label>
       <input
         matInput
-        placeholder="Ingrese su nombre y apellido"
+        placeholder="Ingresá tu nombre y apellido"
         type="text"
         autocomplete="name"
         formControlName="name"
@@ -68,7 +68,7 @@
   </form>
 
   <p class="extra-links__login">
-    ¿Ya tiene una cuenta?
-    <a mat-button [routerLink]="'/auth/login'">Inicia sesión aquí</a>
+    <span class="extra-links__text">¿Ya tenés una cuenta?</span>
+    <a class="extra-links__button" mat-button [routerLink]="'/auth/login'">Iniciá sesión aquí</a>
   </p>
 </app-modal-container>

@@ -1,19 +1,19 @@
 <app-modal-container>
   <h1 class="title">Iniciar sesión</h1>
 
-  <p class="social-login__title">Usa una de tus redes sociales</p>
+  <p class="social-login__title">Usá una de tus redes sociales</p>
   <div class="social-login__buttons">
     <app-social-button [method]="'google'" (clicked)="login('google')"></app-social-button>
     <app-social-button [method]="'facebook'" (clicked)="login('facebook')"></app-social-button>
   </div>
 
-  <p class="email-login__title">O usa tu correo electrónico</p>
+  <p class="email-login__title">O usá tu correo electrónico</p>
   <form class="login-form" (ngSubmit)="login('email')" [formGroup]="loginForm">
     <mat-form-field class="login-form__field" appearance="outline">
       <mat-label>Correo electrónico</mat-label>
       <input
         matInput
-        placeholder="Ingrese su correo electrónico"
+        placeholder="Ingresá tu correo electrónico"
         type="email"
         autocomplete="email"
         formControlName="email"
@@ -25,7 +25,7 @@
       <mat-label>Contraseña</mat-label>
       <input
         matInput
-        placeholder="Ingrese su contraseña"
+        placeholder="Ingresá tu contraseña"
         type="password"
         autocomplete="current-password"
         formControlName="password"
@@ -43,12 +43,15 @@
     </button>
   </form>
 
-  <p class="extra-links__register">
-    ¿No tenés una cuenta?
-    <a mat-button [routerLink]="'/auth/register'">Registrate aquí</a>
-  </p>
-
-  <a class="extra-links__forgot-password" mat-button [routerLink]="'/auth/forgot-password'"
+  <a
+    class="extra-links__forgot-password extra-links__button"
+    mat-button
+    [routerLink]="'/auth/forgot-password'"
     >¿Olvidaste tu contraseña?</a
   >
+
+  <p class="extra-links__register">
+    <span class="extra-links__text">¿No tenés una cuenta?</span>
+    <a class="extra-links__button" mat-button [routerLink]="'/auth/register'">Registrate aquí</a>
+  </p>
 </app-modal-container>

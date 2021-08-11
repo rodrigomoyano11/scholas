@@ -17,7 +17,7 @@ export class ValidationService {
     const errors: string[] = []
 
     const messages: { [key: string]: string } = {
-      email: `Ingrese un correo electrónico válido`,
+      email: `Ingresá un correo electrónico válido`,
       required: `Este campo es obligatorio`,
       maxlength: `Debe tener como máximo ${control.errors?.maxlength?.requiredLength} caracteres`,
       minlength: `Debe tener como mínimo ${control.errors?.minlength?.requiredLength} caracteres`,

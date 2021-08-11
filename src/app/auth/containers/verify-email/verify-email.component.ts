@@ -7,5 +7,8 @@ import { AuthService } from '../../services/auth/auth.service'
   styleUrls: ['./verify-email.component.css']
 })
 export class VerifyEmailComponent {
-  constructor(public auth: AuthService) {}
+  email = ''
+  constructor(public auth: AuthService) {
+    this.email = this.auth.user?.email ? ` a ${this.auth.user?.email}` : ''
+  }
 }

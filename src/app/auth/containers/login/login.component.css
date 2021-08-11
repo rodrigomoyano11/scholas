@@ -34,6 +34,27 @@
 
 /* Extra links */
 
-.extra-links__register {
+.extra-links__forgot-password {
   margin-top: 1rem;
+}
+
+.extra-links__register {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+
+  width: 100%;
+  gap: 0.5rem;
+
+  margin: 0;
+}
+
+.extra-links__text {
+  min-width: max-content;
+
+  white-space: nowrap;
+}
+
+.extra-links__button {
+  width: 100%;
 }

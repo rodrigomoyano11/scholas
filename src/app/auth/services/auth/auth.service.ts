@@ -28,6 +28,7 @@ export class AuthService {
 
   // Others
   claims!: IdTokenResult['claims'] | undefined
+  uid!: User['uid'] | undefined
 
   constructor(
     private auth: AngularFireAuth,
@@ -37,6 +38,7 @@ export class AuthService {
     auth.user.subscribe((user) => {
       this.user = user
       this.isEmailVerified = this.user?.emailVerified
+      this.uid = user?.uid
     })
     auth.idTokenResult.subscribe((idTokenResult) => {
       this.idTokenResult = idTokenResult
@@ -89,9 +91,13 @@ export class AuthService {
 
   // Permissions and Claims
 
-  // setPermissions(type: 'donor' | 'admin', uid = ''): Observable<unknown> {
+  // setPermissions(
+  //   type: 'donor' | 'admin',
+  //   uid = '3BBLAz4VU3YEX0iglQztwGAHfeX2'
+  // ): Observable<unknown> {
   //   const body = type === 'admin' ? { admin: true, donor: false } : { admin: false, donor: true }
-  //   return this.http.post(`${environment.apiUrl}/users/claims/:${uid}`, body)
+  //   return this.http.get(`${environment.apiUrl}/users/fb`)
+  //   return this.http.post(`${environment.apiUrl}/users/claims/${uid}`, body)
   // }
 
   // Others operations
@@ -105,7 +111,7 @@ export class AuthService {
   async resetPassword(email: string): Promise<void> {
     await this.auth.sendPasswordResetEmail(email)
     this.snackBar.open(
-      `Se ha enviado un correo a ${email} para restablecer tu contraseña`,
+      `En tu ${email} recibirás un correo electrónico con un enlace para restablecer tu contraseña`,
       'Cerrar'
     )
 
@@ -116,7 +122,7 @@ export class AuthService {
     this.authState$.subscribe(() => {
       if (this.isEmailVerified !== undefined && !this.isEmailVerified)
         this.snackBar
-          .open('Necesitamos verificar tu correo electrónico', 'Verificar')
+          .open('Acordate de verificar tu correo electrónico', 'Hacerlo ahora')
           .onAction()
           .pipe(take(1))
           .subscribe(
