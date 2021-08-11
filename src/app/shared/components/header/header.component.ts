@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/auth/services/auth/auth.service'
 export class HeaderComponent implements OnDestroy {
   authState!: Subscription
 
-  userType!: 'Donante' | 'Administrador'
+  userType!: 'Donante' | 'Administrador' | string
 
   constructor(public auth: AuthService) {
     this.authState = this.auth.authState$.subscribe(() => {
@@ -19,7 +19,9 @@ export class HeaderComponent implements OnDestroy {
   }
 
   selectTitle(): void {
-    this.auth.claims?.admin ? (this.userType = 'Administrador') : (this.userType = 'Donante')
+    this.auth.claims?.admin
+      ? (this.userType = 'Administrador')
+      : (this.userType = this.auth.user?.displayName || 'Donante')
   }
 
   ngOnDestroy(): void {
