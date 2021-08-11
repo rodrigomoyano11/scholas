@@ -26,6 +26,7 @@
     ".eslintrc": true,
     ".eslintcache": true,
     ".stylelintrc.js": true,
+    ".stylelintignore": true,
     ".stylelintcache": true,
 
     // Tests
