@@ -1,15 +1,21 @@
 <app-modal-container>
-  <h1 class="title">Inicio de sesión</h1>
+  <h1 class="title">Iniciar sesión</h1>
 
-  <p class="subtitle">Usa una de tus redes sociales</p>
-  <div class="button-group">
-    <button class="button" mat-stroked-button (click)="login('google')">Google</button>
-    <button class="button" mat-stroked-button (click)="login('facebook')">Facebook</button>
+  <p class="social-login__title">Usa una de tus redes sociales</p>
+  <div class="social-login__buttons">
+    <button class="login-button" mat-stroked-button (click)="login('google')">
+      <mat-icon class="login-button__icon" svgIcon="google"></mat-icon>
+      <span class="login-button__text">Google</span>
+    </button>
+    <button class="login-button" mat-stroked-button (click)="login('facebook')">
+      <mat-icon class="login-button__icon" svgIcon="facebook"></mat-icon>
+      <span class="login-button__text">Facebook</span>
+    </button>
   </div>
 
-  <p class="subtitle">O usa tu correo electrónico</p>
-  <form class="form" (ngSubmit)="login('email')" [formGroup]="loginForm">
-    <mat-form-field class="field" appearance="outline">
+  <p class="email-login__title">O usa tu correo electrónico</p>
+  <form class="login-form" (ngSubmit)="login('email')" [formGroup]="loginForm">
+    <mat-form-field class="login-form__field" appearance="outline">
       <mat-label>Correo electrónico</mat-label>
       <input
         matInput
@@ -18,9 +24,10 @@
         autocomplete="email"
         formControlName="email"
       />
+
       <mat-error>{{ getErrors('email') }}</mat-error>
     </mat-form-field>
-    <mat-form-field class="field" appearance="outline">
+    <mat-form-field class="login-form__field" appearance="outline">
       <mat-label>Contraseña</mat-label>
       <input
         matInput
@@ -32,15 +39,22 @@
       <mat-error>{{ getErrors('password') }}</mat-error>
     </mat-form-field>
 
-    <button type="submit" class="submit" mat-stroked-button [disabled]="!loginForm.valid">
+    <button
+      type="submit"
+      class="login-form__submit"
+      mat-stroked-button
+      [disabled]="!loginForm.valid"
+    >
       Iniciar sesión
     </button>
   </form>
 
-  <p class="signup">
+  <p class="extra-links__signup">
     ¿No tienes una cuenta?
     <a mat-button [routerLink]="'/auth/register'">Regístrate aquí</a>
   </p>
 
-  <a mat-button [routerLink]="'/auth/forgot-password'">¿Olvidaste tu contraseña?</a>
+  <a class="extra-links__forgot-password" mat-button [routerLink]="'/auth/forgot-password'"
+    >¿Olvidaste tu contraseña?</a
+  >
 </app-modal-container>

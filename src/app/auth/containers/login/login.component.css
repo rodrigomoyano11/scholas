@@ -1,19 +1,44 @@
-.button-group {
+/* Social login */
+
+.social-login__buttons {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
+
   width: 100%;
 }
 
-.button {
+.login-button {
   width: 100%;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 
-.subtitle {
+.login-button:first-of-type {
+  background-color: #fff;
+}
+
+.login-button__icon {
+  max-height: 100%;
+  margin-right: 0.5rem;
+}
+
+.login-button__icon:last-of-type {
+  color: #4267b2;
+}
+
+.login-button__text {
+  margin: auto 0;
+}
+
+/* Email login */
+
+.email-login__title {
   margin-top: 1rem;
 }
 
-.form {
+.login-form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,15 +46,17 @@
   width: 100%;
 }
 
-.field {
+.login-form__field {
   width: 100%;
   padding-bottom: 0.5rem;
 }
 
-.submit {
+.login-form__submit {
   width: 100%;
 }
 
-.signup {
+/* Extra links */
+
+.extra-links__signup {
   margin-top: 1rem;
 }
