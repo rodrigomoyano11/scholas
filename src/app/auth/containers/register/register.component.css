@@ -23,9 +23,19 @@
   width: 100%;
 }
 
+.register-form__field-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
 .register-form__field {
   width: 100%;
   padding-bottom: 0.5rem;
+}
+
+.register-form__field-group > * {
+  min-width: 100%;
 }
 
 .register-form__submit {
