@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { AngularFireAuth } from '@angular/fire/auth'
 import firebase from 'firebase/app'
-import { UserCredential, User } from '@firebase/auth-types'
+import { UserCredential, User, IdTokenResult } from '@firebase/auth-types'
 import { Router } from '@angular/router'
 import { Observable } from 'rxjs'
 import { take } from 'rxjs/operators'
@@ -13,18 +13,44 @@ export type Provider = 'google' | 'facebook' | 'email'
   providedIn: 'root'
 })
 export class AuthService {
-  user$!: Observable<User | null>
-  user: User | null = null
+  // Observables
+  authState$!: Observable<User | null>
+
+  // Subscriptions
+  user!: User | null
+  userCredential!: UserCredential | null
+  idTokenResult!: IdTokenResult | null
+  idToken!: string | null
+
+  // Flags
+  isLogged = false
+  isEmailVerified!: boolean | undefined
+
+  // Others
+  claims!: IdTokenResult['claims'] | undefined
 
   constructor(
     private auth: AngularFireAuth,
     private router: Router,
     private snackBar: MatSnackBar
   ) {
-    this.user$ = this.auth.user
-    this.user$.subscribe((user) => {
+    auth.user.subscribe((user) => {
       this.user = user
+      this.isEmailVerified = this.user?.emailVerified
     })
+    auth.idTokenResult.subscribe((idTokenResult) => {
+      this.idTokenResult = idTokenResult
+      this.claims = idTokenResult?.claims
+    })
+    auth.credential.subscribe((userCredential) => {
+      this.userCredential = userCredential
+    })
+    auth.idToken.subscribe((idToken) => {
+      this.idToken = idToken
+      this.isLogged = !!this.idToken || false
+    })
+
+    this.authState$ = auth.authState
   }
 
   // Login/Register Methods
@@ -61,6 +87,13 @@ export class AuthService {
     return this.router.navigate(['/'])
   }
 
+  // Permissions and Claims
+
+  // setPermissions(type: 'donor' | 'admin', uid = ''): Observable<unknown> {
+  //   const body = type === 'admin' ? { admin: true, donor: false } : { admin: false, donor: true }
+  //   return this.http.post(`${environment.apiUrl}/users/claims/:${uid}`, body)
+  // }
+
   // Others operations
 
   async logout(): Promise<void> {
@@ -80,18 +113,18 @@ export class AuthService {
   }
 
   verifyEmail(): void {
-    void this.auth.currentUser.then((currentUser) => {
-      if (!currentUser?.emailVerified) {
+    this.authState$.subscribe(() => {
+      if (this.isEmailVerified !== undefined && !this.isEmailVerified)
         this.snackBar
           .open('Necesitamos verificar tu correo electrónico', 'Verificar')
           .onAction()
           .pipe(take(1))
-          .subscribe(() => {
-            void this.user
-              ?.sendEmailVerification()
-              .then(() => this.router.navigate(['/auth/verify-email']))
-          })
-      }
+          .subscribe(
+            () =>
+              void this.user
+                ?.sendEmailVerification()
+                .then(() => void this.router.navigate(['/auth/verify-email']))
+          )
     })
   }
 
