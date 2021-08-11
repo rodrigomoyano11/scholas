@@ -1,20 +1,21 @@
-.button-group,
-.field-group {
+/* Social register */
+
+.social-register__buttons {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
+
   width: 100%;
 }
 
-.button {
-  width: 100%;
-}
+/* Email register */
 
-.subtitle {
+.email-register__title {
   margin-top: 1rem;
 }
 
-.form {
+.register-form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,15 +23,17 @@
   width: 100%;
 }
 
-.field {
+.register-form__field {
   width: 100%;
   padding-bottom: 0.5rem;
 }
 
-.submit {
+.register-form__submit {
   width: 100%;
 }
 
-.signup {
+/* Extra links */
+
+.extra-links__login {
   margin-top: 1rem;
 }
