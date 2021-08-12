@@ -111,7 +111,7 @@ export class AuthService {
   async resetPassword(email: string): Promise<void> {
     await this.auth.sendPasswordResetEmail(email)
     this.snackBar.open(
-      `En tu ${email} recibirás un correo electrónico con un enlace para restablecer tu contraseña`,
+      `En ${email} recibirás un correo electrónico con un enlace para restablecer tu contraseña`,
       'Cerrar'
     )
 
