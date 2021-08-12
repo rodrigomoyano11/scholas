@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { NotFoundComponent } from '../shared/containers/not-found/not-found.component'
 import { AdminsComponent } from './containers/admins/admins.component'
+import { DonationsComponent } from './containers/donations/donations.component'
 import { DonorsComponent } from './containers/donors/donors.component'
 import { HomeComponent } from './containers/home/home.component'
 import { NewsComponent } from './containers/news/news.component'
@@ -14,6 +15,7 @@ const routes: Routes = [
     children: [
       { path: 'admins', component: AdminsComponent },
       { path: 'donors', component: DonorsComponent },
+      { path: 'donations', component: DonationsComponent },
       { path: 'news', component: NewsComponent },
       { path: 'projects', component: ProjectsComponent }
     ]
