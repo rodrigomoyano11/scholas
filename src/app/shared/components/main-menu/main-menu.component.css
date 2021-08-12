@@ -1,0 +1,13 @@
+.mobile-menu__toggle {
+  color: #fff;
+}
+
+.desktop-menu__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.desktop-menu__item {
+  color: #fff;
+}

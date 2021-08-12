@@ -1,0 +1,55 @@
+<!-- Mobile Menu -->
+
+<button
+  *ngIf="!layout.isDesktop"
+  mat-icon-button
+  class="mobile-menu__toggle"
+  [matMenuTriggerFor]="mainMenu"
+>
+  <mat-icon>menu</mat-icon>
+</button>
+
+<mat-menu #mainMenu="matMenu">
+  <ng-container *ngFor="let item of auth.isLogged && !auth.claims?.admin ? adminItems : donorItems">
+    <button class="mobile-menu__item" mat-menu-item [routerLink]="item.link">
+      {{ item.name }}
+    </button>
+  </ng-container>
+
+  <!-- Others -->
+
+  <mat-divider></mat-divider>
+  <button mat-menu-item [matMenuTriggerFor]="landingMenu">Landing Page</button>
+  <button mat-menu-item [matMenuTriggerFor]="adminMenu">Administración</button>
+  <button mat-menu-item [matMenuTriggerFor]="authMenu">Auth</button>
+</mat-menu>
+
+<mat-menu #landingMenu="matMenu">
+  <button mat-menu-item [routerLink]="'/landing'">Inicio</button>
+  <button mat-menu-item [routerLink]="'/landing/news'">Noticias</button>
+  <button mat-menu-item [routerLink]="'/landing/projects'">Proyectos</button>
+</mat-menu>
+
+<mat-menu #adminMenu="matMenu">
+  <button mat-menu-item [routerLink]="'/admin'">Inicio</button>
+  <button mat-menu-item [routerLink]="'/admin/projects'">Proyectos</button>
+  <button mat-menu-item [routerLink]="'/admin/news'">Noticias</button>
+  <button mat-menu-item [routerLink]="'/admin/donors'">Donantes</button>
+  <button mat-menu-item [routerLink]="'/admin/admins'">Administradores</button>
+</mat-menu>
+
+<mat-menu #authMenu="matMenu">
+  <button mat-menu-item [routerLink]="'/auth/login'">Iniciar sesión</button>
+  <button mat-menu-item [routerLink]="'/auth/register'">Registrarse</button>
+  <button mat-menu-item [routerLink]="'/auth/forgot-password'">Restablecer contraseña</button>
+</mat-menu>
+
+<!-- Desktop Menu -->
+
+<div *ngIf="layout.isDesktop" class="desktop-menu__container">
+  <ng-container *ngFor="let item of auth.isLogged && !auth.claims?.admin ? adminItems : donorItems">
+    <button class="desktop-menu__item" mat-button [routerLink]="item.link">
+      {{ item.name }}
+    </button>
+  </ng-container>
+</div>

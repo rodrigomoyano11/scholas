@@ -11,6 +11,9 @@ import { MatDividerModule } from '@angular/material/divider'
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button'
 import { LogoComponent } from './components/logo/logo.component'
+import { LayoutModule } from '@angular/cdk/layout'
+import { UserProfileMenuComponent } from './components/user-profile-menu/user-profile-menu.component'
+import { MainMenuComponent } from './components/main-menu/main-menu.component'
 
 @NgModule({
   declarations: [
@@ -18,7 +21,9 @@ import { LogoComponent } from './components/logo/logo.component'
     LayoutComponent,
     HeaderComponent,
     FooterComponent,
-    LogoComponent
+    LogoComponent,
+    UserProfileMenuComponent,
+    MainMenuComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +32,8 @@ import { LogoComponent } from './components/logo/logo.component'
     MatMenuModule,
     MatDividerModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    LayoutModule
   ],
   exports: [NotFoundComponent, LayoutComponent]
 })
