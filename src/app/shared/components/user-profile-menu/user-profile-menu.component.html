@@ -1,0 +1,19 @@
+<div class="container">
+  <p class="user-profile__title">Hola {{ userType }}</p>
+
+  <button mat-icon-button class="user-menu__button" [matMenuTriggerFor]="userMenu">
+    <mat-icon class="user-menu__icon">expand_more</mat-icon>
+  </button>
+</div>
+
+<!-- Menu items -->
+<mat-menu #userMenu="matMenu">
+  <ng-container>
+    <button mat-menu-item [matMenuTriggerFor]="accountMenu">Mi cuenta</button>
+    <button mat-menu-item (click)="auth.logout()">Cerrar sesión</button>
+  </ng-container>
+</mat-menu>
+
+<mat-menu #accountMenu="matMenu">
+  <button mat-menu-item (click)="auth.deleteAccount()">Eliminar mi cuenta</button>
+</mat-menu>
