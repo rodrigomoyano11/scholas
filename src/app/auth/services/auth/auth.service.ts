@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core'
 import { AngularFireAuth } from '@angular/fire/auth'
 import firebase from 'firebase/app'
-import { UserCredential, User, IdTokenResult } from '@firebase/auth-types'
 import { Router } from '@angular/router'
 import { Observable } from 'rxjs'
 import { take } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { User } from 'src/app/shared/models/user'
+import { HttpClient } from '@angular/common/http'
+import { environment } from 'src/environments/environment'
 
 export type Provider = 'google' | 'facebook' | 'email'
 
@@ -14,12 +16,12 @@ export type Provider = 'google' | 'facebook' | 'email'
 })
 export class AuthService {
   // Observables
-  authState$!: Observable<User | null>
+  authState$!: Observable<firebase.User | null>
 
   // Subscriptions
-  user!: User | null
-  userCredential!: UserCredential | null
-  idTokenResult!: IdTokenResult | null
+  user!: firebase.User | null
+  userCredential!: firebase.auth.UserCredential | null
+  idTokenResult!: firebase.auth.IdTokenResult | null
   idToken!: string | null
 
   // Flags
@@ -27,13 +29,14 @@ export class AuthService {
   isEmailVerified!: boolean | undefined
 
   // Others
-  claims!: IdTokenResult['claims'] | undefined
-  uid!: User['uid'] | undefined
+  claims!: firebase.auth.IdTokenResult['claims'] | undefined
+  uid!: firebase.User['uid'] | undefined
 
   constructor(
     private auth: AngularFireAuth,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private http: HttpClient
   ) {
     auth.user.subscribe((user) => {
       this.user = user
@@ -57,7 +60,7 @@ export class AuthService {
 
   // Login/Register Methods
 
-  register(provider: Provider, email = '', password = ''): Promise<UserCredential> {
+  register(provider: Provider, email = '', password = ''): Promise<firebase.auth.UserCredential> {
     const methods = {
       google: () => this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()),
       facebook: () => this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()),
@@ -67,7 +70,7 @@ export class AuthService {
     return methods[provider]()
   }
 
-  login(provider: Provider, email = '', password = ''): Promise<UserCredential> {
+  login(provider: Provider, email = '', password = ''): Promise<firebase.auth.UserCredential> {
     const methods = {
       google: () => this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()),
       facebook: () => this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()),
@@ -91,14 +94,10 @@ export class AuthService {
 
   // Permissions and Claims
 
-  // setPermissions(
-  //   type: 'donor' | 'admin',
-  //   uid = '3BBLAz4VU3YEX0iglQztwGAHfeX2'
-  // ): Observable<unknown> {
-  //   const body = type === 'admin' ? { admin: true, donor: false } : { admin: false, donor: true }
-  //   return this.http.get(`${environment.apiUrl}/users/fb`)
-  //   return this.http.post(`${environment.apiUrl}/users/claims/${uid}`, body)
-  // }
+  setPermissions(type: 'donor' | 'admin', uid: User['uid']): Observable<unknown> {
+    const body = type === 'admin' ? { admin: true, donor: false } : { admin: false, donor: true }
+    return this.http.put<unknown>(`${environment.apiUrl}/users/claims/${uid}`, body)
+  }
 
   // Others operations
 

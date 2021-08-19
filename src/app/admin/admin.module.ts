@@ -8,6 +8,9 @@ import { ProjectsComponent } from './containers/projects/projects.component'
 import { NewsComponent } from './containers/news/news.component'
 import { SharedModule } from '../shared/shared.module'
 import { DonationsComponent } from './containers/donations/donations.component'
+import { MatButtonModule } from '@angular/material/button'
+import { MatIconModule } from '@angular/material/icon'
+import { MatListModule } from '@angular/material/list'
 
 @NgModule({
   declarations: [
@@ -18,6 +21,13 @@ import { DonationsComponent } from './containers/donations/donations.component'
     NewsComponent,
     DonationsComponent
   ],
-  imports: [CommonModule, AdminRoutingModule, SharedModule]
+  imports: [
+    CommonModule,
+    AdminRoutingModule,
+    SharedModule,
+    MatButtonModule,
+    MatIconModule,
+    MatListModule
+  ]
 })
 export class AdminModule {}

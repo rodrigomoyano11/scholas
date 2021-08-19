@@ -1,1 +1,27 @@
-<p>admins works!</p>
+<h1>Administradores</h1>
+
+<button
+  type="button"
+  class="new-admin__button"
+  mat-icon-button
+  (click)="adminsService.addAdmin('3BBLAz4VU3YEX0iglQztwGAHfeX2')"
+>
+  <mat-icon>add</mat-icon>
+</button>
+
+<mat-list class="admin-list">
+  <ng-container *ngFor="let admin of adminsService.admins$ | async">
+    <mat-list-item class="admin-item">
+      {{ admin.email }}
+
+      <button
+        type="button"
+        class="admin-item__delete"
+        mat-icon-button
+        (click)="adminsService.deleteAdmin(admin.uid)"
+      >
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+    </mat-list-item>
+  </ng-container>
+</mat-list>
