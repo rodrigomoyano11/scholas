@@ -1,20 +1,49 @@
 .header {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 100%;
+
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
 
   background-color: #009993;
 }
 
-.nav-menu__icon {
+.logo,
+.user-profile-menu {
+  justify-self: flex-end;
+}
+
+@media screen and (min-width: 960px) {
+  .header {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .logo {
+    order: -1;
+    justify-self: flex-start;
+  }
+}
+
+.main-menu {
+  padding: 0 1rem;
+}
+
+.call-to-action {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  justify-self: flex-end;
+}
+
+.call-to-action__button--primary {
+  background-color: #30aaa6;
+
   color: #fff;
 }
 
-.title {
-  margin-right: auto;
-  margin-bottom: 0;
-  margin-left: 1rem;
+.call-to-action__button--secondary {
+  border-color: #30aaa6;
 
   color: #fff;
 }

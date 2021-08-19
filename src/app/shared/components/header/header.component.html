@@ -1,49 +1,26 @@
 <header>
   <mat-toolbar class="header">
-    <button mat-icon-button class="nav-menu__button" [matMenuTriggerFor]="navMenu">
-      <mat-icon class="nav-menu__icon">menu</mat-icon>
-    </button>
+    <app-main-menu class="main-menu"></app-main-menu>
 
-    <p class="title" *ngIf="auth.isLogged">Hola {{ userType }}</p>
+    <app-user-profile-menu class="user-profile-menu" *ngIf="auth.isLogged"></app-user-profile-menu>
 
-    <app-logo class="brand__logo"></app-logo>
+    <app-logo class="logo"></app-logo>
+
+    <div class="call-to-action" *ngIf="!auth.isLogged && layout.isDesktop">
+      <button
+        class="call-to-action__button--secondary"
+        mat-stroked-button
+        [routerLink]="'/auth/login'"
+      >
+        Iniciar sesión
+      </button>
+      <button
+        class="call-to-action__button--primary"
+        mat-flat-button
+        [routerLink]="'/auth/register'"
+      >
+        Registrarse
+      </button>
+    </div>
   </mat-toolbar>
 </header>
-
-<!-- Menu items -->
-
-<mat-menu #navMenu="matMenu">
-  <button mat-menu-item [matMenuTriggerFor]="landingMenu">Landing Page</button>
-  <button mat-menu-item [matMenuTriggerFor]="adminMenu">Administración</button>
-  <button mat-menu-item [matMenuTriggerFor]="authMenu">Auth</button>
-
-  <ng-container *ngIf="auth.isLogged">
-    <mat-divider></mat-divider>
-    <button mat-menu-item [matMenuTriggerFor]="accountMenu">Mi cuenta</button>
-    <button mat-menu-item (click)="auth.logout()">Cerrar sesión</button>
-  </ng-container>
-</mat-menu>
-
-<mat-menu #landingMenu="matMenu">
-  <button mat-menu-item [routerLink]="'/landing'">Inicio</button>
-  <button mat-menu-item [routerLink]="'/landing/news'">Noticias</button>
-  <button mat-menu-item [routerLink]="'/landing/projects'">Proyectos</button>
-</mat-menu>
-
-<mat-menu #adminMenu="matMenu">
-  <button mat-menu-item [routerLink]="'/admin'">Inicio</button>
-  <button mat-menu-item [routerLink]="'/admin/projects'">Proyectos</button>
-  <button mat-menu-item [routerLink]="'/admin/news'">Noticias</button>
-  <button mat-menu-item [routerLink]="'/admin/donors'">Donantes</button>
-  <button mat-menu-item [routerLink]="'/admin/admins'">Administradores</button>
-</mat-menu>
-
-<mat-menu #authMenu="matMenu">
-  <button mat-menu-item [routerLink]="'/auth/login'">Iniciar sesión</button>
-  <button mat-menu-item [routerLink]="'/auth/register'">Registrarse</button>
-  <button mat-menu-item [routerLink]="'/auth/forgot-password'">Restablecer contraseña</button>
-</mat-menu>
-
-<mat-menu #accountMenu="matMenu">
-  <button mat-menu-item (click)="auth.deleteAccount()">Eliminar mi cuenta</button>
-</mat-menu>
