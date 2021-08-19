@@ -1,11 +1,6 @@
 <h1>Administradores</h1>
 
-<button
-  type="button"
-  class="new-admin__button"
-  mat-icon-button
-  (click)="adminsService.addAdmin('3BBLAz4VU3YEX0iglQztwGAHfeX2')"
->
+<button type="button" class="new-admin__button" mat-icon-button [routerLink]="'/admin/new-admin'">
   <mat-icon>add</mat-icon>
 </button>
 

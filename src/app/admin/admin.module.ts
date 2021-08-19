@@ -8,9 +8,12 @@ import { ProjectsComponent } from './containers/projects/projects.component'
 import { NewsComponent } from './containers/news/news.component'
 import { SharedModule } from '../shared/shared.module'
 import { DonationsComponent } from './containers/donations/donations.component'
+import { NewAdminComponent } from './containers/new-admin/new-admin.component'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
+import { ReactiveFormsModule } from '@angular/forms'
+import { MatInputModule } from '@angular/material/input'
 
 @NgModule({
   declarations: [
@@ -19,14 +22,17 @@ import { MatListModule } from '@angular/material/list'
     DonorsComponent,
     ProjectsComponent,
     NewsComponent,
-    DonationsComponent
+    DonationsComponent,
+    NewAdminComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     SharedModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
+    MatInputModule,
     MatListModule
   ]
 })

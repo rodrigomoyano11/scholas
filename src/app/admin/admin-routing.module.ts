@@ -5,6 +5,7 @@ import { AdminsComponent } from './containers/admins/admins.component'
 import { DonationsComponent } from './containers/donations/donations.component'
 import { DonorsComponent } from './containers/donors/donors.component'
 import { HomeComponent } from './containers/home/home.component'
+import { NewAdminComponent } from './containers/new-admin/new-admin.component'
 import { NewsComponent } from './containers/news/news.component'
 import { ProjectsComponent } from './containers/projects/projects.component'
 
@@ -14,6 +15,7 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       { path: 'admins', component: AdminsComponent },
+      { path: 'new-admin', component: NewAdminComponent },
       { path: 'donors', component: DonorsComponent },
       { path: 'donations', component: DonationsComponent },
       { path: 'news', component: NewsComponent },

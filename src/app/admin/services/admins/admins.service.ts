@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable, of } from 'rxjs'
@@ -11,16 +9,30 @@ import { environment } from 'src/environments/environment'
   providedIn: 'root'
 })
 export class AdminsService {
+  users$: Observable<User[]>
   admins$: Observable<User[]>
 
   constructor(private http: HttpClient, private auth: AuthService) {
+    this.users$ = of([])
     this.admins$ = of([])
+  }
+
+  getUsers(): void {
+    this.http
+      .get<User[]>(`${environment.apiUrl}/users`)
+      .subscribe((users) => (this.users$ = of(users)))
   }
 
   getAdmins(): void {
     this.http
       .get<User[]>(`${environment.apiUrl}/users`)
       .subscribe((users) => (this.admins$ = of(users.filter((user) => user.custom_claims.admin))))
+  }
+
+  selectUidAdmin(email: User['email']): string {
+    let uid: string | undefined = ''
+    this.users$.subscribe((users) => (uid = users.find((user) => user.email === email)?.uid))
+    return uid
   }
 
   addAdmin(uid: User['uid']): void {

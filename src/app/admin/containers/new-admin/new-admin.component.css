@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: max-content;
+  max-height: max-content;
+
+  margin: 0 auto;
+  padding: 1.5rem 3rem;
+
+  background-color: #fff;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.field {
+  width: 100%;
+  padding-bottom: 0.5rem;
+}
+
+.submit {
+  width: 100%;
+}
+
+.signup {
+  margin-top: 1rem;
+}

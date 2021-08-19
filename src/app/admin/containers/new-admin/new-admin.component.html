@@ -1,0 +1,29 @@
+<div class="container">
+  <h1 class="title">Asignación de nuevo administrador</h1>
+
+  <form class="form" (ngSubmit)="setNewAdmin()" [formGroup]="newAdminForm">
+    <mat-form-field class="field" appearance="outline">
+      <mat-label>Correo electrónico</mat-label>
+      <input
+        matInput
+        placeholder="Ingresá tu correo electrónico"
+        type="email"
+        autocomplete="email"
+        formControlName="email"
+      />
+      <mat-error>
+        {{ validation.getErrors(newAdminForm.controls['email']) }}
+      </mat-error>
+    </mat-form-field>
+
+    <button
+      type="submit"
+      class="submit"
+      [disabled]="!newAdminForm.valid"
+      [color]="'primary'"
+      mat-flat-button
+    >
+      Asignar como administrador
+    </button>
+  </form>
+</div>
