@@ -14,6 +14,7 @@ import { LogoComponent } from './components/logo/logo.component'
 import { LayoutModule } from '@angular/cdk/layout'
 import { UserProfileMenuComponent } from './components/user-profile-menu/user-profile-menu.component'
 import { MainMenuComponent } from './components/main-menu/main-menu.component'
+import { ModalContainerComponent } from './components/modal-container/modal-container.component'
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { MainMenuComponent } from './components/main-menu/main-menu.component'
     FooterComponent,
     LogoComponent,
     UserProfileMenuComponent,
-    MainMenuComponent
+    MainMenuComponent,
+    ModalContainerComponent
   ],
   imports: [
     CommonModule,
@@ -35,6 +37,6 @@ import { MainMenuComponent } from './components/main-menu/main-menu.component'
     MatIconModule,
     LayoutModule
   ],
-  exports: [NotFoundComponent, LayoutComponent]
+  exports: [NotFoundComponent, LayoutComponent, ModalContainerComponent]
 })
 export class SharedModule {}

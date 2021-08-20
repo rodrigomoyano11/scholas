@@ -9,7 +9,6 @@ import { HomeComponent } from './containers/home/home.component'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatButtonModule } from '@angular/material/button'
 import { MatInputModule } from '@angular/material/input'
-import { ModalContainerComponent } from './components/modal-container/modal-container.component'
 import { ReactiveFormsModule } from '@angular/forms'
 import { AngularFireAuthModule } from '@angular/fire/auth'
 import { VerifyEmailComponent } from './containers/verify-email/verify-email.component'
@@ -26,7 +25,6 @@ import SocialButtonComponent from './components/social-button/social-button.comp
     LoginComponent,
     ForgotPasswordComponent,
     HomeComponent,
-    ModalContainerComponent,
     VerifyEmailComponent,
     ExtraDataComponent,
     SocialButtonComponent
