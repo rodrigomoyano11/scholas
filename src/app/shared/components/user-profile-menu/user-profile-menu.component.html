@@ -1,19 +1,24 @@
 <div class="container">
   <p class="user-profile__title">Hola {{ userType }}</p>
 
-  <button mat-icon-button class="user-menu__button" [matMenuTriggerFor]="userMenu">
+  <button mat-icon-button class="user-menu__button" [matMenuTriggerFor]="user">
     <mat-icon class="user-menu__icon">expand_more</mat-icon>
   </button>
 </div>
 
 <!-- Menu items -->
-<mat-menu #userMenu="matMenu">
-  <ng-container>
-    <button mat-menu-item [matMenuTriggerFor]="accountMenu">Mi cuenta</button>
-    <button mat-menu-item (click)="auth.logout()">Cerrar sesión</button>
-  </ng-container>
+<mat-menu #user="matMenu">
+  <button mat-menu-item [matMenuTriggerFor]="account">Mi cuenta</button>
+  <button mat-menu-item *ngIf="auth.claims?.admin ?? false" [matMenuTriggerFor]="management">
+    Gestión
+  </button>
+  <button mat-menu-item (click)="auth.logout()">Cerrar sesión</button>
 </mat-menu>
 
-<mat-menu #accountMenu="matMenu">
+<mat-menu #account="matMenu">
   <button mat-menu-item (click)="auth.deleteAccount()">Eliminar mi cuenta</button>
+</mat-menu>
+
+<mat-menu #management="matMenu">
+  <button mat-menu-item [routerLink]="'/admin/admins'">Administradores</button>
 </mat-menu>
