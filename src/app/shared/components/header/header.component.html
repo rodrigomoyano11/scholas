@@ -1,26 +1,31 @@
 <header>
   <mat-toolbar class="header">
-    <app-main-menu class="main-menu"></app-main-menu>
+    <div class="header__content-limiter">
+      <app-main-menu class="main-menu"></app-main-menu>
 
-    <app-user-profile-menu class="user-profile-menu" *ngIf="auth.isLogged"></app-user-profile-menu>
+      <app-user-profile-menu
+        class="user-profile-menu"
+        *ngIf="auth.isLogged"
+      ></app-user-profile-menu>
 
-    <app-logo class="logo"></app-logo>
+      <app-logo class="logo"></app-logo>
 
-    <div class="call-to-action" *ngIf="!auth.isLogged && layout.isDesktop">
-      <button
-        class="call-to-action__button--secondary"
-        mat-stroked-button
-        [routerLink]="'/auth/login'"
-      >
-        Iniciar sesión
-      </button>
-      <button
-        class="call-to-action__button--primary"
-        mat-flat-button
-        [routerLink]="'/auth/register'"
-      >
-        Registrarse
-      </button>
+      <div class="call-to-action" *ngIf="!auth.isLogged && layout.isDesktop">
+        <button
+          class="call-to-action__button--secondary"
+          mat-stroked-button
+          [routerLink]="'/auth/login'"
+        >
+          Iniciar sesión
+        </button>
+        <button
+          class="call-to-action__button--primary"
+          mat-flat-button
+          [routerLink]="'/auth/register'"
+        >
+          Registrarse
+        </button>
+      </div>
     </div>
   </mat-toolbar>
 </header>

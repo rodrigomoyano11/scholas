@@ -1,33 +1,38 @@
 <footer>
   <mat-toolbar>
     <mat-toolbar-row class="footer">
-      <app-logo class="brand__logo"></app-logo>
-      <p class="brand__description mat-body-1">
-        En Scholas soñamos una educación que –abriéndonos al encuentro con el otro– nos devuelva el
-        contacto con la vida para, desde allí, crear un nuevo mundo.
-      </p>
-      <p class="social-networks__caption mat-body-2">Seguinos en nuestras redes sociales</p>
-      <div class="social-networks__buttons">
-        <a
-          mat-icon-button
-          class="social-network__button"
-          href="https://www.instagram.com/escuelademaryplaya"
-          target="_blank"
-        >
-          <mat-icon class="social-network__icon" svgIcon="instagram"></mat-icon>
-        </a>
+      <div class="footer__content-limiter">
+        <app-logo class="brand__logo"></app-logo>
+        <p class="brand__description mat-body-1">
+          En Scholas soñamos una educación que –abriéndonos al encuentro con el otro– nos devuelva
+          el contacto con la vida para, desde allí, crear un nuevo mundo.
+        </p>
+        <p class="social-networks__caption mat-body-2">Seguinos en nuestras redes sociales</p>
+        <div class="social-networks__buttons">
+          <a
+            mat-icon-button
+            class="social-network__button"
+            href="https://www.instagram.com/escuelademaryplaya"
+            target="_blank"
+          >
+            <mat-icon class="social-network__icon" svgIcon="instagram"></mat-icon>
+          </a>
+        </div>
       </div>
     </mat-toolbar-row>
+
     <mat-toolbar-row class="copyright">
-      <small class="copyright__message mat-body-2">Todos los derechos reservados</small>
-      <small class="copyright__extra-info mat-small">
-        <a
-          class="copyright__privacy-policy"
-          href="https://www.scholasoccurrentes.org/privacy-policy/"
-          >Política de privacidad</a
-        >
-        • Fundación Scholas Occurrentes
-      </small>
+      <div class="copyright__content-limiter">
+        <small class="copyright__message mat-body-2">Todos los derechos reservados</small>
+        <small class="copyright__extra-info mat-small">
+          <a
+            class="copyright__privacy-policy"
+            href="https://www.scholasoccurrentes.org/privacy-policy/"
+            >Política de privacidad</a
+          >
+          • Fundación Scholas Occurrentes
+        </small>
+      </div>
     </mat-toolbar-row>
   </mat-toolbar>
 </footer>
