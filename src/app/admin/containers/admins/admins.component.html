@@ -1,22 +1,36 @@
-<h1>Administradores</h1>
+<app-modal-container [size]="'small'">
+  <div class="header">
+    <h1 class="header__title">Administradores</h1>
 
-<button type="button" class="new-admin__button" mat-icon-button [routerLink]="'/admin/new-admin'">
-  <mat-icon>add</mat-icon>
-</button>
+    <button
+      type="button"
+      class="header__new-admin"
+      mat-icon-button
+      [routerLink]="'/admin/new-admin'"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
 
-<mat-list class="admin-list">
-  <ng-container *ngFor="let admin of adminsService.admins$ | async">
-    <mat-list-item class="admin-item">
-      {{ admin.email }}
+  <mat-list class="admin-list">
+    <ng-container *ngIf="((adminsService.admins$ | async)?.length ?? 0) === 0">
+      <p class="no-admins-alert__title mat-title">No hay administradores</p>
+    </ng-container>
+    <ng-container *ngFor="let admin of adminsService.admins$ | async; index as i">
+      <mat-list-item class="admin-item">
+        <p class="admin-item__name" mat-line>{{ admin.display_name }}</p>
+        <p class="admin-item__email" mat-line>{{ admin.email }}</p>
 
-      <button
-        type="button"
-        class="admin-item__delete"
-        mat-icon-button
-        (click)="adminsService.deleteAdmin(admin.uid)"
-      >
-        <mat-icon>delete_outline</mat-icon>
-      </button>
-    </mat-list-item>
-  </ng-container>
-</mat-list>
+        <button
+          type="button"
+          class="admin-item__delete"
+          mat-icon-button
+          (click)="adminsService.deleteAdmin(admin.uid)"
+        >
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </ng-container>
+  </mat-list>
+</app-modal-container>

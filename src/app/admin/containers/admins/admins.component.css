@@ -1,0 +1,28 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  margin-bottom: 1rem;
+}
+
+.header__title {
+  margin: 0;
+}
+
+.header__new-admin {
+  border-radius: 0.25rem;
+
+  background-color: #009993;
+
+  color: #fff;
+}
+
+.admin-list {
+  width: 100%;
+}
+
+.admin-item__delete {
+  color: #009993;
+}
