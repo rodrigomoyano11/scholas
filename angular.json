@@ -101,7 +101,15 @@
             "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         },
-        "deploy": {
+        "deploy-dev": {
+          "builder": "@netlify-builder/deploy:deploy",
+          "options": {
+            "outputPath": "dist/scholas",
+            "netlifyToken": "0elHjRRFEJIo4LZWtBazDUn-0Dak7lzTKygeV-hKbJw",
+            "siteId": "87bd36a0-bdbf-49e3-9fbd-c8539dfb6ae1"
+          }
+        },
+        "deploy-prod": {
           "builder": "@netlify-builder/deploy:deploy",
           "options": {
             "outputPath": "dist/scholas",
