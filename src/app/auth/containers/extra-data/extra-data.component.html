@@ -31,25 +31,28 @@
 
     <mat-form-field class="extra-data-form__field" appearance="outline">
       <mat-label>Provincia</mat-label>
-      <input
-        matInput
-        placeholder="Ingresá la provincia donde vives"
-        type="text"
+
+      <mat-select
         autocomplete="address-level1"
+        (selectionChange)="getDepartmentsByProvince($event.value)"
         formControlName="province"
-      />
+      >
+        <mat-option *ngFor="let province of provinces" [value]="province.value">
+          {{ province.value }}
+        </mat-option>
+      </mat-select>
+
       <mat-error>{{ getErrors('province') }}</mat-error>
     </mat-form-field>
 
     <mat-form-field class="extra-data-form__field" appearance="outline">
       <mat-label>Localidad</mat-label>
-      <input
-        matInput
-        placeholder="Ingresá la localidad donde vives"
-        type="text"
-        autocomplete="address-level2"
-        formControlName="department"
-      />
+
+      <mat-select autocomplete="address-level2" formControlName="department">
+        <mat-option *ngFor="let department of departments" [value]="department.value">
+          {{ department.value }}
+        </mat-option>
+      </mat-select>
       <mat-error>{{ getErrors('department') }}</mat-error>
     </mat-form-field>
 

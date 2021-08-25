@@ -9,6 +9,7 @@ import { HomeComponent } from './containers/home/home.component'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatButtonModule } from '@angular/material/button'
 import { MatInputModule } from '@angular/material/input'
+import { MatSelectModule } from '@angular/material/select'
 import { ReactiveFormsModule } from '@angular/forms'
 import { AngularFireAuthModule } from '@angular/fire/auth'
 import { VerifyEmailComponent } from './containers/verify-email/verify-email.component'
@@ -39,6 +40,7 @@ import SocialButtonComponent from './components/social-button/social-button.comp
     MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSelectModule,
     MatIconModule,
     ReactiveFormsModule,
     AngularFireAuthModule
