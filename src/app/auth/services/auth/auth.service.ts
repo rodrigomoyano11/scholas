@@ -80,9 +80,12 @@ export class AuthService {
     return methods[provider]()
   }
 
+  // Extra data operations
+
   getExtraData(): Promise<boolean> {
-    // TODO: Verificar si es necesario registrar más datos
-    return this.router.navigate(['/auth/extra-data'])
+    return this.isExtraDataComplete().then((isCompleted) =>
+      isCompleted ? this.router.navigate(['/']) : this.router.navigate(['/auth/extra-data'])
+    )
   }
 
   sendExtraData(extraData: { [key: string]: string }): Promise<boolean> {
@@ -90,6 +93,10 @@ export class AuthService {
     // TODO: Enviar datos a backend y verificar datos
     this.snackBar.open('Tu cuenta ha sido creada correctamente', 'Cerrar')
     return this.router.navigate(['/'])
+  }
+
+  isExtraDataComplete(): Promise<boolean> {
+    return new Promise((resolve) => resolve(true))
   }
 
   // Permissions and Claims

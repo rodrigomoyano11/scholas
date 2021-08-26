@@ -33,7 +33,7 @@ export class LoginComponent {
 
     this.auth
       .login(provider, email, password)
-      .then((userCredential) => userCredential.user)
+      .then(() => this.auth.getExtraData())
       .then(() => this.auth.verifyEmail())
       .catch((error) => console.log(error))
   }
