@@ -6,6 +6,8 @@
       <mat-label>Fecha de Nacimiento</mat-label>
       <input
         matInput
+        [min]="minDate"
+        [max]="maxDate"
         [matDatepicker]="picker"
         placeholder="Ingresá tu fecha de nacimiento"
         autocomplete="bday"

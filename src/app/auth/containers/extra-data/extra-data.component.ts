@@ -12,6 +12,9 @@ import { ValidationService } from '../../services/validation/validation.service'
 export class ExtraDataComponent implements OnInit {
   extraDataForm: FormGroup
 
+  minDate: Date
+  maxDate: Date
+
   provinces: { value: string }[] = []
   departments: { value: string }[] = []
 
@@ -24,6 +27,10 @@ export class ExtraDataComponent implements OnInit {
     private auth: AuthService,
     private locationService: LocationService
   ) {
+    const currentYear = new Date().getFullYear()
+    this.minDate = new Date(currentYear - 100, 0, 1)
+    this.maxDate = new Date(currentYear - 13, 11, 31)
+
     this.extraDataForm = this.fb.group({
       birthday: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required, validation.isValidPhoneNumber()]],
