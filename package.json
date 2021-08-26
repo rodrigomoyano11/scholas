@@ -25,6 +25,7 @@
     "@angular/platform-browser-dynamic": "~12.2.2",
     "@angular/router": "~12.2.2",
     "firebase": "^8.10.0",
+    "google-libphonenumber": "^3.2.22",
     "rxjs": "~6.6.7",
     "tslib": "^2.3.1",
     "zone.js": "~0.11.4"
@@ -40,6 +41,7 @@
     "@angular/cli": "~12.2.2",
     "@angular/compiler-cli": "~12.2.2",
     "@netlify-builder/deploy": "^4.1.2",
+    "@types/google-libphonenumber": "^7.4.21",
     "@types/jasmine": "~3.8.2",
     "@types/node": "^16.6.2",
     "@typescript-eslint/eslint-plugin": "4.29.2",
