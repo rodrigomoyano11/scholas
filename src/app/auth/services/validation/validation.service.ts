@@ -3,6 +3,7 @@
 
 import { Injectable } from '@angular/core'
 import { AbstractControl, ValidatorFn } from '@angular/forms'
+import { PhoneNumberUtil } from 'google-libphonenumber'
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class ValidationService {
 
     const messages: { [key: string]: string } = {
       email: `Ingresá un correo electrónico válido`,
+      phoneNumber: `Ingresá un número de teléfono válido`,
       required: `Este campo es obligatorio`,
       maxlength: `Debe tener como máximo ${control.errors?.maxlength?.requiredLength} caracteres`,
       minlength: `Debe tener como mínimo ${control.errors?.minlength?.requiredLength} caracteres`,
@@ -64,6 +66,19 @@ export class ValidationService {
     const RegExp = /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])/
 
     return (control) => (RegExp.test(control.value) ? null : { strongPassword: true })
+  }
+
+  isValidPhoneNumber(regionCode = 'AR'): ValidatorFn {
+    let validNumber = false
+    const phoneNumberUtil = PhoneNumberUtil.getInstance()
+
+    return (control) => {
+      try {
+        const phoneNumber = phoneNumberUtil.parseAndKeepRawInput(control.value, regionCode)
+        validNumber = phoneNumberUtil.isValidNumberForRegion(phoneNumber, regionCode)
+      } catch (e) {}
+      return validNumber ? null : { phoneNumber: true }
+    }
   }
 
   isControlsMatch(controlName: string, matchingControlName: string) {

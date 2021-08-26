@@ -26,7 +26,7 @@ export class ExtraDataComponent implements OnInit {
   ) {
     this.extraDataForm = this.fb.group({
       birthday: ['', [Validators.required]],
-      phoneNumber: ['', [Validators.required]],
+      phoneNumber: ['', [Validators.required, validation.isValidPhoneNumber()]],
       province: [{ value: '', disabled: !this.provinceHasData }, [Validators.required]],
       department: [{ value: '', disabled: !this.departmentHasData }, [Validators.required]]
     })
