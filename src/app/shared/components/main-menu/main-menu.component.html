@@ -10,7 +10,13 @@
 </button>
 
 <mat-menu #mainMenu="matMenu">
-  <ng-container *ngFor="let item of auth.isLogged && !auth.claims?.admin ? adminItems : donorItems">
+  <ng-container
+    *ngFor="
+      let item of (auth.user$ | async)?.isLogged && (auth.user$ | async)?.claims?.admin
+        ? adminItems
+        : donorItems
+    "
+  >
     <button class="mobile-menu__item" mat-menu-item [routerLink]="item.link">
       {{ item.name }}
     </button>
@@ -47,7 +53,13 @@
 <!-- Desktop Menu -->
 
 <div *ngIf="layout.isDesktop" class="desktop-menu__container">
-  <ng-container *ngFor="let item of auth.isLogged && !auth.claims?.admin ? adminItems : donorItems">
+  <ng-container
+    *ngFor="
+      let item of (auth.user$ | async)?.isLogged && (auth.user$ | async)?.claims?.admin
+        ? adminItems
+        : donorItems
+    "
+  >
     <button class="desktop-menu__item" mat-button [routerLink]="item.link">
       {{ item.name }}
     </button>

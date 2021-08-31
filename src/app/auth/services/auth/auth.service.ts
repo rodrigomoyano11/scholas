@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { AngularFireAuth } from '@angular/fire/auth'
 import firebase from 'firebase/app'
 import { Router } from '@angular/router'
-import { Observable, of } from 'rxjs'
+import { Observable, of, zip } from 'rxjs'
 import { take } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { User } from 'src/app/shared/models/user'
@@ -27,18 +27,16 @@ export class AuthService {
     claims: null,
     extraData: null
   }
-  private _user = this.auth.currentUser
 
-  user$: Observable<User> = of(this._userData)
+  user$!: Observable<User>
 
   // Subscriptions
   user!: firebase.User | null
   userCredential!: firebase.auth.UserCredential | null
-  idTokenResult!: firebase.auth.IdTokenResult | null
+
   idToken!: string | null
 
   // Flags
-  isLogged = false
   isEmailVerified!: boolean | undefined
 
   // Others
@@ -51,50 +49,14 @@ export class AuthService {
     private snackBar: MatSnackBar,
     private http: HttpClient
   ) {
-    auth.idTokenResult.subscribe((idTokenResult) => {
-      if (!idTokenResult) return
-
-      this.idTokenResult = idTokenResult
-      this.claims = idTokenResult?.claims
-
-      const { token, claims } = idTokenResult
-
-      this.user$ = of({
-        ...this._userData,
-        token,
-        claims,
-        isLogged: !!token
-      })
-    })
-    auth.user.subscribe((user) => {
-      if (!user) return
-
-      this.user = user
-      this.isEmailVerified = this.user.emailVerified
-      this.uid = user.uid
-
-      const { uid, displayName, photoURL, email, phoneNumber } = user
-
-      this.user$ = of({
-        ...this._userData,
-        uid,
-        displayName,
-        photoURL,
-        email,
-        extraData: {
-          birthday: null,
-          phoneNumber,
-          location: null
-        }
-      })
-    })
     auth.credential.subscribe((userCredential) => {
       this.userCredential = userCredential
     })
     auth.idToken.subscribe((idToken) => {
       this.idToken = idToken
-      this.isLogged = !!this.idToken || false
     })
+
+    void this.getUserData()
   }
 
   // Login/Register Methods
@@ -117,6 +79,39 @@ export class AuthService {
     }
 
     return methods[provider]()
+  }
+
+  // User data operations
+
+  getUserData(): void {
+    const idTokenResult$ = this.auth.idTokenResult
+    const fireUser$ = this.auth.user
+
+    zip(idTokenResult$, fireUser$).subscribe(([idTokenResult, fireUser]) => {
+      if (!idTokenResult || !fireUser) {
+        this.user$ = of({ ...this._userData })
+        return
+      }
+
+      const { token, claims } = idTokenResult
+      const { uid, displayName, photoURL, email, phoneNumber } = fireUser
+
+      this.user$ = of({
+        ...this._userData,
+        uid,
+        displayName,
+        photoURL,
+        email,
+        token,
+        claims,
+        isLogged: !!token,
+        extraData: {
+          birthday: null,
+          phoneNumber,
+          location: null
+        }
+      })
+    })
   }
 
   // Extra data operations

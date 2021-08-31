@@ -5,12 +5,12 @@
 
       <app-user-profile-menu
         class="user-profile-menu"
-        *ngIf="auth.isLogged"
+        *ngIf="(auth.user$ | async)?.isLogged"
       ></app-user-profile-menu>
 
       <app-logo class="logo"></app-logo>
 
-      <div class="call-to-action" *ngIf="!auth.isLogged && layout.isDesktop">
+      <div class="call-to-action" *ngIf="!(auth.user$ | async)?.isLogged && layout.isDesktop">
         <button
           class="call-to-action__button--secondary"
           mat-stroked-button
