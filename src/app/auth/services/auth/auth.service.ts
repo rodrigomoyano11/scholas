@@ -33,9 +33,6 @@ export class AuthService {
 
   // Subscriptions
   user!: firebase.User | null
-  userCredential!: firebase.auth.UserCredential | null
-
-  idToken!: string | null
 
   // Others
   claims!: firebase.auth.IdTokenResult['claims'] | undefined
@@ -47,13 +44,6 @@ export class AuthService {
     private snackBar: MatSnackBar,
     private http: HttpClient
   ) {
-    auth.credential.subscribe((userCredential) => {
-      this.userCredential = userCredential
-    })
-    auth.idToken.subscribe((idToken) => {
-      this.idToken = idToken
-    })
-
     void this.getUserData()
   }
 
