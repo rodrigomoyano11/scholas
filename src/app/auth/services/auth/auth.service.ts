@@ -15,8 +15,6 @@ export type Provider = 'google' | 'facebook' | 'email'
   providedIn: 'root'
 })
 export class AuthService {
-  // Observables
-
   private _userData: User = {
     uid: '',
     displayName: null,
@@ -31,12 +29,9 @@ export class AuthService {
 
   user$!: Observable<User>
 
-  // Subscriptions
   user!: firebase.User | null
 
-  // Others
   claims!: firebase.auth.IdTokenResult['claims'] | undefined
-  uid!: firebase.User['uid'] | undefined
 
   constructor(
     private auth: AngularFireAuth,
