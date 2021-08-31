@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { AngularFireAuth } from '@angular/fire/auth'
 import firebase from 'firebase/app'
 import { Router } from '@angular/router'
-import { Observable } from 'rxjs'
+import { Observable, of } from 'rxjs'
 import { take } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { User } from 'src/app/shared/models/user'
@@ -17,6 +17,18 @@ export type Provider = 'google' | 'facebook' | 'email'
 export class AuthService {
   // Observables
   authState$!: Observable<firebase.User | null>
+  private _userData: User = {
+    uid: '',
+    displayName: null,
+    photoURL: null,
+    email: null,
+    token: null,
+    isLogged: false,
+    claims: null,
+    extraData: null
+  }
+
+  user$: Observable<User> = of(this._userData)
 
   // Subscriptions
   user!: firebase.User | null

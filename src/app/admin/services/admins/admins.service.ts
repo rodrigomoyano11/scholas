@@ -5,12 +5,24 @@ import { AuthService } from 'src/app/auth/services/auth/auth.service'
 import { User } from 'src/app/shared/models/user'
 import { environment } from 'src/environments/environment'
 
+interface UserResponse {
+  display_name: string
+  email: string
+  phone_number: string | null
+  photo_url: string | null
+  provider_id: string
+  uid: string
+  custom_claims: { [key: string]: boolean }
+
+  [key: string]: string | { [key: string]: string | boolean } | null
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AdminsService {
-  users$: Observable<User[]>
-  admins$: Observable<User[]>
+  users$: Observable<UserResponse[]>
+  admins$: Observable<UserResponse[]>
 
   constructor(private http: HttpClient, private auth: AuthService) {
     this.users$ = of([])
@@ -19,14 +31,14 @@ export class AdminsService {
 
   getUsers(): void {
     this.http
-      .get<User[]>(`${environment.apiUrl}/users`)
+      .get<UserResponse[]>(`${environment.apiUrl}/users`)
       .subscribe((users) => (this.users$ = of(users)))
   }
 
   getAdmins(): void {
     this.http
-      .get<User[]>(`${environment.apiUrl}/users`)
-      .subscribe((users) => (this.admins$ = of(users.filter((user) => user.custom_claims.admin))))
+      .get<UserResponse[]>(`${environment.apiUrl}/users`)
+      .subscribe((users) => (this.admins$ = of(users.filter((user) => user.custom_claims?.admin))))
   }
 
   selectUidAdmin(email: User['email']): string {
