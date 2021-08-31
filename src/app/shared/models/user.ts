@@ -21,6 +21,7 @@ export interface User {
   email: firebase.UserInfo['email']
   token: string | null
   isLogged: boolean
+  isEmailVerified: boolean
   claims: Claims | null
   extraData: ExtraData | null
 }

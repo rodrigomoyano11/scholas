@@ -47,10 +47,6 @@ export class RegisterComponent {
     const password = <string>this.registerForm.controls['password'].value
     const email = <string>this.registerForm.controls['email'].value
 
-    this.auth
-      .register(provider, email, password)
-      .then(() => this.auth.getExtraData())
-      .then((resume) => !resume && this.auth.verifyEmail())
-      .catch((error) => console.log(error))
+    void this.auth.register(provider, email, password)
   }
 }

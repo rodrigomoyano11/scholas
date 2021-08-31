@@ -31,10 +31,6 @@ export class LoginComponent {
     const password = <string>this.loginForm.controls['password'].value
     const email = <string>this.loginForm.controls['email'].value
 
-    this.auth
-      .login(provider, email, password)
-      .then(() => this.auth.getExtraData())
-      .then(() => this.auth.verifyEmail())
-      .catch((error) => console.log(error))
+    void this.auth.login(provider, email, password)
   }
 }

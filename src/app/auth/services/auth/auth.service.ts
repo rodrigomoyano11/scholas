@@ -24,6 +24,7 @@ export class AuthService {
     email: null,
     token: null,
     isLogged: false,
+    isEmailVerified: false,
     claims: null,
     extraData: null
   }
@@ -35,9 +36,6 @@ export class AuthService {
   userCredential!: firebase.auth.UserCredential | null
 
   idToken!: string | null
-
-  // Flags
-  isEmailVerified!: boolean | undefined
 
   // Others
   claims!: firebase.auth.IdTokenResult['claims'] | undefined
@@ -61,24 +59,25 @@ export class AuthService {
 
   // Login/Register Methods
 
-  register(provider: Provider, email = '', password = ''): Promise<firebase.auth.UserCredential> {
+  async register(provider: Provider, email = '', password = ''): Promise<void> {
     const methods = {
       google: () => this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()),
       facebook: () => this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()),
       email: () => this.auth.createUserWithEmailAndPassword(email, password)
     }
 
-    return methods[provider]()
+    await methods[provider]()
   }
 
-  login(provider: Provider, email = '', password = ''): Promise<firebase.auth.UserCredential> {
+  async login(provider: Provider, email = '', password = ''): Promise<void> {
     const methods = {
       google: () => this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()),
       facebook: () => this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()),
       email: () => this.auth.signInWithEmailAndPassword(email, password)
     }
 
-    return methods[provider]()
+    await methods[provider]()
+    await this.verifyEmail()
   }
 
   // User data operations
@@ -94,7 +93,7 @@ export class AuthService {
       }
 
       const { token, claims } = idTokenResult
-      const { uid, displayName, photoURL, email, phoneNumber } = fireUser
+      const { uid, displayName, photoURL, email, phoneNumber, emailVerified } = fireUser
 
       this.user$ = of({
         ...this._userData,
@@ -105,6 +104,7 @@ export class AuthService {
         token,
         claims,
         isLogged: !!token,
+        isEmailVerified: emailVerified,
         extraData: {
           birthday: null,
           phoneNumber,
@@ -158,20 +158,20 @@ export class AuthService {
     return void this.router.navigate(['/'])
   }
 
-  verifyEmail(): void {
-    this.user$.subscribe(() => {
-      if (this.isEmailVerified !== undefined && !this.isEmailVerified)
-        this.snackBar
-          .open('Acordate de verificar tu correo electrónico', 'Hacerlo ahora')
-          .onAction()
-          .pipe(take(1))
-          .subscribe(
-            () =>
-              void this.user
-                ?.sendEmailVerification()
-                .then(() => void this.router.navigate(['/auth/verify-email']))
-          )
-    })
+  async verifyEmail(): Promise<void> {
+    const { isEmailVerified } = await this.user$.toPromise()
+    const userFire = await this.auth.currentUser
+
+    if (isEmailVerified || !userFire) return
+
+    await this.snackBar
+      .open('Acordate de verificar tu correo electrónico', 'Hacerlo ahora')
+      .onAction()
+      .pipe(take(1))
+      .toPromise()
+
+    await userFire.sendEmailVerification()
+    await this.router.navigate(['/auth/verify-email'])
   }
 
   async deleteAccount(): Promise<void> {
