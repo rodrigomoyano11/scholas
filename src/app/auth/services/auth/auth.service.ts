@@ -16,7 +16,7 @@ export type Provider = 'google' | 'facebook' | 'email'
 })
 export class AuthService {
   // Observables
-  authState$!: Observable<firebase.User | null>
+
   private _userData: User = {
     uid: '',
     displayName: null,
@@ -27,6 +27,7 @@ export class AuthService {
     claims: null,
     extraData: null
   }
+  private _user = this.auth.currentUser
 
   user$: Observable<User> = of(this._userData)
 
@@ -50,14 +51,42 @@ export class AuthService {
     private snackBar: MatSnackBar,
     private http: HttpClient
   ) {
-    auth.user.subscribe((user) => {
-      this.user = user
-      this.isEmailVerified = this.user?.emailVerified
-      this.uid = user?.uid
-    })
     auth.idTokenResult.subscribe((idTokenResult) => {
+      if (!idTokenResult) return
+
       this.idTokenResult = idTokenResult
       this.claims = idTokenResult?.claims
+
+      const { token, claims } = idTokenResult
+
+      this.user$ = of({
+        ...this._userData,
+        token,
+        claims,
+        isLogged: !!token
+      })
+    })
+    auth.user.subscribe((user) => {
+      if (!user) return
+
+      this.user = user
+      this.isEmailVerified = this.user.emailVerified
+      this.uid = user.uid
+
+      const { uid, displayName, photoURL, email, phoneNumber } = user
+
+      this.user$ = of({
+        ...this._userData,
+        uid,
+        displayName,
+        photoURL,
+        email,
+        extraData: {
+          birthday: null,
+          phoneNumber,
+          location: null
+        }
+      })
     })
     auth.credential.subscribe((userCredential) => {
       this.userCredential = userCredential
@@ -66,8 +95,6 @@ export class AuthService {
       this.idToken = idToken
       this.isLogged = !!this.idToken || false
     })
-
-    this.authState$ = auth.authState
   }
 
   // Login/Register Methods
@@ -137,7 +164,7 @@ export class AuthService {
   }
 
   verifyEmail(): void {
-    this.authState$.subscribe(() => {
+    this.user$.subscribe(() => {
       if (this.isEmailVerified !== undefined && !this.isEmailVerified)
         this.snackBar
           .open('Acordate de verificar tu correo electrónico', 'Hacerlo ahora')
