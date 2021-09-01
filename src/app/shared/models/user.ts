@@ -1,24 +1,11 @@
-// export interface User {
-//   display_name: string
-//   email: string
-//   phone_number: string | null
-//   photo_url: string | null
-//   provider_id: string
-//   uid: string
-//   custom_claims: { [key: string]: boolean }
-
-//   [key: string]: string | { [key: string]: string | boolean } | null
-// }
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-import firebase from 'firebase'
+import { UserInfo } from 'firebase/auth'
 
 export interface User {
-  uid: firebase.UserInfo['uid']
-  displayName: firebase.UserInfo['displayName']
-  photoURL: firebase.UserInfo['photoURL']
-  email: firebase.UserInfo['email']
+  uid: UserInfo['uid']
+  displayName: UserInfo['displayName']
+  photoURL: UserInfo['photoURL']
+  email: UserInfo['email']
   token: string | null
   isLogged: boolean
   isEmailVerified: boolean
@@ -34,7 +21,7 @@ interface Claims {
 
 interface ExtraData {
   birthday: string | null
-  phoneNumber: firebase.UserInfo['phoneNumber']
+  phoneNumber: UserInfo['phoneNumber']
   location: Location | null
 }
 interface Location {

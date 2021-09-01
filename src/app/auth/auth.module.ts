@@ -10,8 +10,6 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatButtonModule } from '@angular/material/button'
 import { MatInputModule } from '@angular/material/input'
 import { MatSelectModule } from '@angular/material/select'
-import { ReactiveFormsModule } from '@angular/forms'
-import { AngularFireAuthModule } from '@angular/fire/auth'
 import { VerifyEmailComponent } from './containers/verify-email/verify-email.component'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { ExtraDataComponent } from './containers/extra-data/extra-data.component'
@@ -19,6 +17,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatNativeDateModule } from '@angular/material/core'
 import { MatIconModule } from '@angular/material/icon'
 import SocialButtonComponent from './components/social-button/social-button.component'
+import { ReactiveFormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -42,8 +41,7 @@ import SocialButtonComponent from './components/social-button/social-button.comp
     MatNativeDateModule,
     MatSelectModule,
     MatIconModule,
-    ReactiveFormsModule,
-    AngularFireAuthModule
+    ReactiveFormsModule
   ]
 })
 export class AuthModule {}

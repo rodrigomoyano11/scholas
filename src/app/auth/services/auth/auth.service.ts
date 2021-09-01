@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core'
-import { AngularFireAuth } from '@angular/fire/auth'
-import firebase from 'firebase/app'
 import { Router } from '@angular/router'
 import { BehaviorSubject, zip } from 'rxjs'
 import { map, take } from 'rxjs/operators'
@@ -8,6 +6,21 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { User } from 'src/app/shared/models/user'
 import { HttpClient } from '@angular/common/http'
 import { environment } from 'src/environments/environment'
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  FacebookAuthProvider,
+  getIdToken,
+  getIdTokenResult,
+  GoogleAuthProvider,
+  idToken,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  updateCurrentUser,
+  user
+} from '@angular/fire/auth'
 
 export type Provider = 'google' | 'facebook' | 'email'
 
@@ -27,12 +40,12 @@ export class AuthService {
     extraData: null
   }
   private _userData: User = this._defaultData
-  private _user: firebase.User | null = null
+  private _user = this.auth.currentUser
 
   user$: BehaviorSubject<User> = new BehaviorSubject(this._defaultData)
 
   constructor(
-    private auth: AngularFireAuth,
+    private auth: Auth,
     private router: Router,
     private snackBar: MatSnackBar,
     private http: HttpClient
@@ -53,16 +66,16 @@ export class AuthService {
 
   async login(provider: Provider, email = '', password = '', isNewUser = false): Promise<void> {
     const methods = {
-      google: () => this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()),
-      facebook: () => this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()),
+      google: () => signInWithPopup(this.auth, new GoogleAuthProvider()),
+      facebook: () => signInWithPopup(this.auth, new FacebookAuthProvider()),
       email: () =>
         isNewUser
-          ? this.auth.createUserWithEmailAndPassword(email, password)
-          : this.auth.signInWithEmailAndPassword(email, password)
+          ? createUserWithEmailAndPassword(this.auth, email, password)
+          : signInWithEmailAndPassword(this.auth, email, password)
     }
 
     const { user } = await methods[provider]()
-    const token = (await user?.getIdToken()) ?? null
+    const token = (await getIdToken(user)) ?? null
     const isVerifiedToken = await this.verifyToken(token)
 
     if (!isVerifiedToken) return this.logout()
@@ -94,50 +107,50 @@ export class AuthService {
       .pipe(take(1))
       .subscribe(
         () =>
-          void this._user
-            ?.sendEmailVerification()
-            .then(() => this.router.navigate(['/auth/verify-email']))
+          this._user &&
+          void sendEmailVerification(this._user).then(() =>
+            this.router.navigate(['/auth/verify-email'])
+          )
       )
   }
 
   // User data operations
 
   private _getUserData(): void {
-    const idTokenResult$ = this.auth.idTokenResult
-    const currentUser$ = this.auth.user
+    const idToken$ = idToken(this.auth)
+    const currentUser$ = user(this.auth)
 
-    zip(idTokenResult$, currentUser$).subscribe(([idTokenResult, currentUser]) => {
-      if (!idTokenResult || !currentUser) {
+    zip(idToken$, currentUser$).subscribe(([token, currentUser]) => {
+      if (!token || !currentUser) {
         this.user$.next(this._defaultData)
         return
       }
 
-      this._user = currentUser
+      void getIdTokenResult(currentUser).then(({ claims }) => {
+        const { uid, displayName, photoURL, email, phoneNumber, emailVerified } = currentUser
 
-      const { token, claims } = idTokenResult
-      const { uid, displayName, photoURL, email, phoneNumber, emailVerified } = this._user
-
-      this._userData = {
-        uid,
-        displayName,
-        photoURL,
-        email,
-        token,
-        claims,
-        isLogged: !!token,
-        isEmailVerified: emailVerified,
-        extraData: {
-          birthday: null,
-          phoneNumber,
-          location: null
+        this._userData = {
+          uid,
+          displayName,
+          photoURL,
+          email,
+          token,
+          claims,
+          isLogged: !!token,
+          isEmailVerified: emailVerified,
+          extraData: {
+            birthday: null,
+            phoneNumber,
+            location: null
+          }
         }
-      }
 
-      this.user$.next(this._userData)
+        this._user = currentUser
+
+        this.user$.next(this._userData)
+      })
     })
   }
-
-  // Extra data operations
 
   async getExtraData(): Promise<boolean> {
     return (await this.isExtraDataComplete())
@@ -178,7 +191,7 @@ export class AuthService {
   }
 
   async resetPassword(email: string): Promise<void> {
-    await this.auth.sendPasswordResetEmail(email)
+    await sendPasswordResetEmail(this.auth, email)
 
     this.snackBar.open(
       `En ${email} recibirás un correo electrónico con un enlace para restablecer tu contraseña`,
@@ -206,7 +219,7 @@ export class AuthService {
     }
   }
 
-  async updateCurrentUser(): Promise<void> {
-    await this.auth.updateCurrentUser(this._user)
+  async updateUser(): Promise<void> {
+    await updateCurrentUser(this.auth, this._user)
   }
 }
