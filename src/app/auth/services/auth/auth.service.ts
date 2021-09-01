@@ -83,6 +83,23 @@ export class AuthService {
       .toPromise()
   }
 
+  async verifyEmail(): Promise<void> {
+    const { isEmailVerified } = await this.user$.pipe(take(1)).toPromise()
+
+    if (isEmailVerified || !this._user) return
+
+    this.snackBar
+      .open('Acordate de verificar tu correo electrónico', 'Hacerlo ahora')
+      .onAction()
+      .pipe(take(1))
+      .subscribe(
+        () =>
+          void this._user
+            ?.sendEmailVerification()
+            .then(() => this.router.navigate(['/auth/verify-email']))
+      )
+  }
+
   // User data operations
 
   private _getUserData(): void {
@@ -122,20 +139,21 @@ export class AuthService {
 
   // Extra data operations
 
-  getExtraData(): Promise<boolean> {
-    return this.isExtraDataComplete().then((isCompleted) =>
-      isCompleted ? this.router.navigate(['/']) : this.router.navigate(['/auth/extra-data'])
-    )
+  async getExtraData(): Promise<boolean> {
+    return (await this.isExtraDataComplete())
+      ? this.router.navigate(['/'])
+      : this.router.navigate(['/auth/extra-data'])
   }
 
   sendExtraData(extraData: { [key: string]: string }): Promise<boolean> {
     console.log(extraData)
     // TODO: Enviar datos a backend y verificar datos
-    this.snackBar.open('Tu cuenta ha sido creada correctamente', 'Cerrar')
+    this.snackBar.open('Tu cuenta ha sido creada correctamente', 'Cerrar', { duration: 5000 })
     return this.router.navigate(['/'])
   }
 
   isExtraDataComplete(): Promise<boolean> {
+    // TODO: Verificar si los datos estan completos
     return new Promise((resolve) => resolve(true))
   }
 
@@ -155,42 +173,37 @@ export class AuthService {
 
   async logout(): Promise<void> {
     await this.auth.signOut()
-    this.snackBar.open('Se ha cerrado tu sesión correctamente', 'Cerrar')
+    this.snackBar.open('Se ha cerrado tu sesión correctamente', 'Cerrar', { duration: 5000 })
     return void this.router.navigate(['/'])
   }
 
   async resetPassword(email: string): Promise<void> {
     await this.auth.sendPasswordResetEmail(email)
+
     this.snackBar.open(
       `En ${email} recibirás un correo electrónico con un enlace para restablecer tu contraseña`,
-      'Cerrar'
+      'Cerrar',
+      { duration: 5000 }
     )
 
     return void this.router.navigate(['/'])
   }
 
-  async verifyEmail(): Promise<void> {
-    const { isEmailVerified } = await this.user$.pipe(take(1)).toPromise()
-
-    if (isEmailVerified || !this._user) return
-
-    this.snackBar
-      .open('Acordate de verificar tu correo electrónico', 'Hacerlo ahora')
-      .onAction()
-      .pipe(take(1))
-      .subscribe(
-        () =>
-          void this._user
-            ?.sendEmailVerification()
-            .then(() => this.router.navigate(['/auth/verify-email']))
-      )
-  }
-
   async deleteUser(): Promise<void> {
-    // TODO: Conectarse con Backend para eliminar al usuario
-    await this._user?.delete()
-    this.snackBar.open('Tu cuenta ha sido eliminada correctamente', 'Cerrar')
-    return void this.router.navigate(['/'])
+    try {
+      const { uid } = await this.user$.pipe(take(1)).toPromise()
+
+      await this.http
+        .delete(`${environment.apiUrl}/users/${uid}`, { responseType: 'text' })
+        .toPromise()
+      await this.logout()
+      this.snackBar.open('Tu cuenta ha sido eliminada correctamente', 'Cerrar', { duration: 5000 })
+      return void this.router.navigate(['/'])
+    } catch (error) {
+      console.error(error)
+      void this.snackBar.open('Hubo un error al eliminar tu cuenta', 'Cerrar', { duration: 5000 })
+      return void this.router.navigate(['/'])
+    }
   }
 
   async updateCurrentUser(): Promise<void> {
