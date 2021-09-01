@@ -10,6 +10,7 @@ import {
   Auth,
   createUserWithEmailAndPassword,
   FacebookAuthProvider,
+  getAdditionalUserInfo,
   getIdToken,
   getIdTokenResult,
   GoogleAuthProvider,
@@ -59,9 +60,6 @@ export class AuthService {
 
   async register(provider: Provider, email = '', password = ''): Promise<void> {
     await this.login(provider, email, password, true)
-
-    const { claims, uid } = await this.user$.pipe(take(1)).toPromise()
-    if (claims && !claims.admin) await this.setPermissions('donor', uid)
   }
 
   async login(provider: Provider, email = '', password = '', isNewUser = false): Promise<void> {
@@ -74,20 +72,29 @@ export class AuthService {
           : signInWithEmailAndPassword(this.auth, email, password)
     }
 
-    const { user } = await methods[provider]()
-    const token = (await getIdToken(user)) ?? null
-    const isVerifiedToken = await this.verifyToken(token)
+    const credential = await methods[provider]()
+    isNewUser = getAdditionalUserInfo(credential)?.isNewUser ?? false
+
+    const token = await getIdToken(credential.user)
+    const isVerifiedToken = await this._verifyToken(token)
 
     if (!isVerifiedToken) return this.logout()
 
-    if (isNewUser) return
+    if (isNewUser) {
+      const { claims, uid } = await this.user$.pipe(take(1)).toPromise()
+      if (claims && !claims.admin) await this.setPermissions('donor', uid)
+      // TODO: Crear usuario en el backend
+    }
 
-    await this.verifyEmail()
+    // TODO: Verificar si faltan datos extra. Si es así, se redirige a ExtraData
+    // TODO: Se envían los datos de ExtraData
+    // TODO: Se muestra mensaje de cuenta creada correctamente
+    await this._verifyEmail()
   }
 
   // Verifications
 
-  async verifyToken(token: User['token']): Promise<boolean> {
+  private async _verifyToken(token: User['token']): Promise<boolean> {
     if (!token) return false
 
     return this.http
@@ -96,7 +103,7 @@ export class AuthService {
       .toPromise()
   }
 
-  async verifyEmail(): Promise<void> {
+  private async _verifyEmail(): Promise<void> {
     const { isEmailVerified } = await this.user$.pipe(take(1)).toPromise()
 
     if (isEmailVerified || !this._user) return
