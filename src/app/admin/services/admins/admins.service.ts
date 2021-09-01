@@ -48,10 +48,10 @@ export class AdminsService {
   }
 
   addAdmin(uid: User['uid']): void {
-    this.auth.setPermissions('admin', uid).subscribe(() => this.getAdmins())
+    void this.auth.setPermissions('admin', uid).then(() => this.getAdmins())
   }
 
   deleteAdmin(uid: User['uid']): void {
-    this.auth.setPermissions('donor', uid).subscribe(() => this.getAdmins())
+    void this.auth.setPermissions('donor', uid).then(() => this.getAdmins())
   }
 }

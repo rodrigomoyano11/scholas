@@ -9,14 +9,18 @@
 <!-- Menu items -->
 <mat-menu #user="matMenu">
   <button mat-menu-item [matMenuTriggerFor]="account">Mi cuenta</button>
-  <button mat-menu-item *ngIf="auth.claims?.admin ?? false" [matMenuTriggerFor]="management">
+  <button
+    mat-menu-item
+    *ngIf="(auth.user$ | async)?.claims?.admin ?? false"
+    [matMenuTriggerFor]="management"
+  >
     Gestión
   </button>
   <button mat-menu-item (click)="auth.logout()">Cerrar sesión</button>
 </mat-menu>
 
 <mat-menu #account="matMenu">
-  <button mat-menu-item (click)="auth.deleteAccount()">Eliminar mi cuenta</button>
+  <button mat-menu-item (click)="auth.deleteUser()">Eliminar mi cuenta</button>
 </mat-menu>
 
 <mat-menu #management="matMenu">

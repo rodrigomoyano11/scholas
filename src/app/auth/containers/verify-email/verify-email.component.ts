@@ -9,6 +9,6 @@ import { AuthService } from '../../services/auth/auth.service'
 export class VerifyEmailComponent {
   email = ''
   constructor(public auth: AuthService) {
-    this.email = this.auth.user?.email ? ` a ${this.auth.user?.email}` : ''
+    this.auth.user$.subscribe((user) => (this.email = user.email ? ` a ${user.email}` : ''))
   }
 }

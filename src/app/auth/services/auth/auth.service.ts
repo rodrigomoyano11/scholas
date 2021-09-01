@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core'
 import { AngularFireAuth } from '@angular/fire/auth'
 import firebase from 'firebase/app'
 import { Router } from '@angular/router'
-import { Observable, of, zip } from 'rxjs'
-import { take } from 'rxjs/operators'
+import { BehaviorSubject, zip } from 'rxjs'
+import { map, take } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { User } from 'src/app/shared/models/user'
 import { HttpClient } from '@angular/common/http'
@@ -15,7 +15,7 @@ export type Provider = 'google' | 'facebook' | 'email'
   providedIn: 'root'
 })
 export class AuthService {
-  private _userData: User = {
+  private _defaultData: User = {
     uid: '',
     displayName: null,
     photoURL: null,
@@ -26,12 +26,10 @@ export class AuthService {
     claims: null,
     extraData: null
   }
+  private _userData: User = this._defaultData
+  private _user: firebase.User | null = null
 
-  user$!: Observable<User>
-
-  user!: firebase.User | null
-
-  claims!: firebase.auth.IdTokenResult['claims'] | undefined
+  user$: BehaviorSubject<User> = new BehaviorSubject(this._defaultData)
 
   constructor(
     private auth: AngularFireAuth,
@@ -39,49 +37,70 @@ export class AuthService {
     private snackBar: MatSnackBar,
     private http: HttpClient
   ) {
-    void this.getUserData()
+    this.user$.next(this._defaultData)
+
+    this._getUserData()
   }
 
   // Login/Register Methods
 
   async register(provider: Provider, email = '', password = ''): Promise<void> {
-    const methods = {
-      google: () => this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()),
-      facebook: () => this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()),
-      email: () => this.auth.createUserWithEmailAndPassword(email, password)
-    }
+    await this.login(provider, email, password, true)
 
-    await methods[provider]()
+    const { claims, uid } = await this.user$.pipe(take(1)).toPromise()
+    if (claims && !claims.admin) await this.setPermissions('donor', uid)
   }
 
-  async login(provider: Provider, email = '', password = ''): Promise<void> {
+  async login(provider: Provider, email = '', password = '', isNewUser = false): Promise<void> {
     const methods = {
       google: () => this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()),
       facebook: () => this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()),
-      email: () => this.auth.signInWithEmailAndPassword(email, password)
+      email: () =>
+        isNewUser
+          ? this.auth.createUserWithEmailAndPassword(email, password)
+          : this.auth.signInWithEmailAndPassword(email, password)
     }
 
-    await methods[provider]()
+    const { user } = await methods[provider]()
+    const token = (await user?.getIdToken()) ?? null
+    const isVerifiedToken = await this.verifyToken(token)
+
+    if (!isVerifiedToken) return this.logout()
+
+    if (isNewUser) return
+
     await this.verifyEmail()
+  }
+
+  // Verifications
+
+  async verifyToken(token: User['token']): Promise<boolean> {
+    if (!token) return false
+
+    return this.http
+      .get<never>(`${environment.apiUrl}/auth/${token}`)
+      .pipe(map(({ body }) => !!body && body !== 'Token is invalid'))
+      .toPromise()
   }
 
   // User data operations
 
-  getUserData(): void {
+  private _getUserData(): void {
     const idTokenResult$ = this.auth.idTokenResult
-    const fireUser$ = this.auth.user
+    const currentUser$ = this.auth.user
 
-    zip(idTokenResult$, fireUser$).subscribe(([idTokenResult, fireUser]) => {
-      if (!idTokenResult || !fireUser) {
-        this.user$ = of({ ...this._userData })
+    zip(idTokenResult$, currentUser$).subscribe(([idTokenResult, currentUser]) => {
+      if (!idTokenResult || !currentUser) {
+        this.user$.next(this._defaultData)
         return
       }
 
-      const { token, claims } = idTokenResult
-      const { uid, displayName, photoURL, email, phoneNumber, emailVerified } = fireUser
+      this._user = currentUser
 
-      this.user$ = of({
-        ...this._userData,
+      const { token, claims } = idTokenResult
+      const { uid, displayName, photoURL, email, phoneNumber, emailVerified } = this._user
+
+      this._userData = {
         uid,
         displayName,
         photoURL,
@@ -95,7 +114,9 @@ export class AuthService {
           phoneNumber,
           location: null
         }
-      })
+      }
+
+      this.user$.next(this._userData)
     })
   }
 
@@ -120,9 +141,14 @@ export class AuthService {
 
   // Permissions and Claims
 
-  setPermissions(type: 'donor' | 'admin', uid: User['uid']): Observable<unknown> {
+  async setPermissions(type: 'donor' | 'admin', uid: User['uid']): Promise<void> {
     const body = type === 'admin' ? { admin: true, donor: false } : { admin: false, donor: true }
-    return this.http.put<unknown>(`${environment.apiUrl}/users/claims/${uid}`, body)
+
+    await this.http
+      .put<User['claims']>(`${environment.apiUrl}/users/claims/${uid}`, body)
+      .toPromise()
+
+    await this._user?.getIdToken(true)
   }
 
   // Others operations
@@ -144,26 +170,30 @@ export class AuthService {
   }
 
   async verifyEmail(): Promise<void> {
-    const { isEmailVerified } = await this.user$.toPromise()
-    const userFire = await this.auth.currentUser
+    const { isEmailVerified } = await this.user$.pipe(take(1)).toPromise()
 
-    if (isEmailVerified || !userFire) return
+    if (isEmailVerified || !this._user) return
 
-    await this.snackBar
+    this.snackBar
       .open('Acordate de verificar tu correo electrónico', 'Hacerlo ahora')
       .onAction()
       .pipe(take(1))
-      .toPromise()
-
-    await userFire.sendEmailVerification()
-    await this.router.navigate(['/auth/verify-email'])
+      .subscribe(
+        () =>
+          void this._user
+            ?.sendEmailVerification()
+            .then(() => this.router.navigate(['/auth/verify-email']))
+      )
   }
 
-  async deleteAccount(): Promise<void> {
-    const user = await this.auth.currentUser
+  async deleteUser(): Promise<void> {
     // TODO: Conectarse con Backend para eliminar al usuario
-    await user?.delete()
+    await this._user?.delete()
     this.snackBar.open('Tu cuenta ha sido eliminada correctamente', 'Cerrar')
     return void this.router.navigate(['/'])
+  }
+
+  async updateCurrentUser(): Promise<void> {
+    await this.auth.updateCurrentUser(this._user)
   }
 }

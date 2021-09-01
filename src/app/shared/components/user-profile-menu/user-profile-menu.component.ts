@@ -8,21 +8,12 @@ import { AuthService } from 'src/app/auth/services/auth/auth.service'
 })
 export class UserProfileMenuComponent {
   userType!: 'Donante' | 'Administrador' | string
-  userName!: string | undefined
 
   constructor(public auth: AuthService) {
     this.auth.user$.subscribe((user) => {
-      this.userName = user.displayName?.split(' ')[0]
+      const userName = user.displayName?.split(' ')[0]
 
-      this.selectTitle()
+      this.userType = user.claims?.admin ? 'Administrador' : userName || 'Donante'
     })
-  }
-
-  selectTitle(): void {
-    this.auth.user$.subscribe((user) =>
-      user.claims?.admin
-        ? (this.userType = 'Administrador')
-        : (this.userType = this.userName || 'Donante')
-    )
   }
 }
