@@ -47,6 +47,9 @@ export class RegisterComponent {
     const password = <string>this.registerForm.controls['password'].value
     const email = <string>this.registerForm.controls['email'].value
 
-    void this.auth.register(provider, email, password)
+    const firstName = <string>this.registerForm.controls['firstName'].value
+    const lastName = <string>this.registerForm.controls['lastName'].value
+
+    void this.auth.register(provider, email, password, `${firstName} ${lastName}`)
   }
 }

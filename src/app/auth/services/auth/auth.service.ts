@@ -19,7 +19,7 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
-  updateCurrentUser,
+  updateProfile,
   user
 } from '@angular/fire/auth'
 import { convertDate } from 'src/app/shared/utils/convertDate'
@@ -87,6 +87,8 @@ export class AuthService {
   private _userData: User = this._defaultData
   private _user = this.auth.currentUser
 
+  private _displayName: User['displayName'] = null
+
   user$: BehaviorSubject<User> = new BehaviorSubject(this._defaultData)
 
   constructor(
@@ -102,7 +104,9 @@ export class AuthService {
 
   // Login/Register Methods
 
-  async register(provider: Provider, email = '', password = ''): Promise<void> {
+  async register(provider: Provider, email = '', password = '', displayName = ''): Promise<void> {
+    if (displayName !== '') this._displayName = displayName
+
     await this.login(provider, email, password, true)
   }
 
@@ -127,15 +131,15 @@ export class AuthService {
     const { claims, uid } = await this.user$.pipe(take(1)).toPromise()
 
     if (isNewUser) {
+      await updateProfile(credential.user, {
+        displayName: this._displayName
+      })
+
       if (claims && !claims.admin) await this.setPermissions('donor', uid)
       const isUserCreated = await this._createUser(uid)
       if (!isUserCreated) return this.deleteUser()
     }
-
     const isExtraDataComplete = await this._verifyExtraDataCompleted(uid)
-
-    console.log('isExtraDataComplete: ', isExtraDataComplete)
-
     if (!isExtraDataComplete) return void this.router.navigate(['/auth/extra-data'])
 
     await this.router.navigate(['/'])
@@ -248,8 +252,6 @@ export class AuthService {
       .post<CreateUserResponse>(`${environment.apiUrl}/users/?uid=${uid}`, body)
       .toPromise()
 
-    console.log(response)
-
     return !!response?.id
   }
 
@@ -282,13 +284,14 @@ export class AuthService {
       .put<User['claims']>(`${environment.apiUrl}/users/claims/${uid}`, body)
       .toPromise()
 
-    await this._user?.getIdToken(true)
+    void this._updateUser()
   }
 
   // Others operations
 
   async logout(): Promise<void> {
     await this.auth.signOut()
+    this._displayName = null
     this.snackBar.open('Se ha cerrado tu sesión correctamente', 'Cerrar', { duration: 5000 })
     return void this.router.navigate(['/'])
   }
@@ -323,7 +326,7 @@ export class AuthService {
     }
   }
 
-  async updateUser(): Promise<void> {
-    await updateCurrentUser(this.auth, this._user)
+  async _updateUser(): Promise<void> {
+    this._user && (await getIdToken(this._user, true))
   }
 }
