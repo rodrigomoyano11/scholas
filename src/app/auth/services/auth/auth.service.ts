@@ -22,8 +22,52 @@ import {
   updateCurrentUser,
   user
 } from '@angular/fire/auth'
+import { convertDate } from 'src/app/shared/utils/convertDate'
 
 export type Provider = 'google' | 'facebook' | 'email'
+
+interface GetUserResponse {
+  nameDb: string | null
+  dateOfBirth: string
+  province: string | null
+  location: string | null
+  sex: string | null
+  display_name: string
+  email: string
+  phone_number: string | null
+  photo_url: string | null
+  provider_id: string
+  uid: string
+  custom_claims: User['claims']
+}
+
+interface CreateUserRequest {
+  displayName: string | null
+  dateOfBirth: '1900-01-01' | string
+  province: string | null
+  location: string | null
+  phoneNumber: string | null
+  sex: string | null
+}
+
+interface CreateUserResponse {
+  id: string
+  displayName: string
+  dateOfBirth: string
+  province: string
+  location: string
+  email: string
+  photoUrl: string
+  phoneNumber: string
+  sex: string
+}
+
+interface ExtraData {
+  birthday: string
+  phoneNumber: string
+  province: string
+  department: string
+}
 
 @Injectable({
   providedIn: 'root'
@@ -80,16 +124,22 @@ export class AuthService {
 
     if (!isVerifiedToken) return this.logout()
 
+    const { claims, uid } = await this.user$.pipe(take(1)).toPromise()
+
     if (isNewUser) {
-      const { claims, uid } = await this.user$.pipe(take(1)).toPromise()
       if (claims && !claims.admin) await this.setPermissions('donor', uid)
-      // TODO: Crear usuario en el backend
+      const isUserCreated = await this._createUser(uid)
+      if (!isUserCreated) return this.deleteUser()
     }
 
-    // TODO: Verificar si faltan datos extra. Si es así, se redirige a ExtraData
-    // TODO: Se envían los datos de ExtraData
-    // TODO: Se muestra mensaje de cuenta creada correctamente
-    await this._verifyEmail()
+    const isExtraDataComplete = await this._verifyExtraDataCompleted(uid)
+
+    console.log('isExtraDataComplete: ', isExtraDataComplete)
+
+    if (!isExtraDataComplete) return void this.router.navigate(['/auth/extra-data'])
+
+    await this.router.navigate(['/'])
+    return void this._verifyEmail()
   }
 
   // Verifications
@@ -106,19 +156,36 @@ export class AuthService {
   private async _verifyEmail(): Promise<void> {
     const { isEmailVerified } = await this.user$.pipe(take(1)).toPromise()
 
-    if (isEmailVerified || !this._user) return
+    if (!isEmailVerified || !this._user) return
 
-    this.snackBar
-      .open('Acordate de verificar tu correo electrónico', 'Hacerlo ahora')
-      .onAction()
-      .pipe(take(1))
-      .subscribe(
-        () =>
-          this._user &&
-          void sendEmailVerification(this._user).then(() =>
-            this.router.navigate(['/auth/verify-email'])
-          )
-      )
+    setTimeout(() => {
+      this.snackBar
+        .open('Acordate de verificar tu correo electrónico', 'Hacerlo ahora')
+        .onAction()
+        .pipe(take(1))
+        .subscribe(
+          () =>
+            this._user &&
+            void sendEmailVerification(this._user).then(() =>
+              this.router.navigate(['/auth/verify-email'])
+            )
+        )
+    }, 3000)
+  }
+
+  private async _verifyExtraDataCompleted(uid: User['uid']): Promise<boolean> {
+    const response = await this.http
+      .get<GetUserResponse>(`${environment.apiUrl}/users/${uid}`)
+      .toPromise()
+
+    if (!response.email) {
+      await this.logout()
+      return false
+    }
+
+    const { province, location, phone_number, dateOfBirth } = response
+
+    return !!(province && location && phone_number && dateOfBirth !== '1900-01-01')
   }
 
   // User data operations
@@ -159,22 +226,51 @@ export class AuthService {
     })
   }
 
-  async getExtraData(): Promise<boolean> {
-    return (await this.isExtraDataComplete())
-      ? this.router.navigate(['/'])
-      : this.router.navigate(['/auth/extra-data'])
+  private async _createUser(uid: User['uid']): Promise<boolean> {
+    const body: CreateUserRequest = {
+      displayName: null,
+      dateOfBirth: '1900-01-01',
+      province: null,
+      location: null,
+      phoneNumber: null,
+      sex: null
+    }
+
+    const response = await this.http
+      .post<CreateUserResponse>(`${environment.apiUrl}/users/?uid=${uid}`, body)
+      .toPromise()
+
+    return !!response?.id
   }
 
-  sendExtraData(extraData: { [key: string]: string }): Promise<boolean> {
-    console.log(extraData)
-    // TODO: Enviar datos a backend y verificar datos
+  private async _sendUserData(uid: User['uid'], body: CreateUserRequest): Promise<boolean> {
+    const response = await this.http
+      .post<CreateUserResponse>(`${environment.apiUrl}/users/?uid=${uid}`, body)
+      .toPromise()
+
+    console.log(response)
+
+    return !!response?.id
+  }
+
+  async sendExtraData(extraData: ExtraData): Promise<void> {
+    const { birthday, phoneNumber, province, department } = extraData
+
+    const { uid, displayName } = await this.user$.pipe(take(1)).toPromise()
+
+    await this._sendUserData(uid, {
+      displayName,
+      dateOfBirth: convertDate(birthday),
+      province,
+      location: department,
+      phoneNumber,
+      sex: null
+    })
+
     this.snackBar.open('Tu cuenta ha sido creada correctamente', 'Cerrar', { duration: 5000 })
-    return this.router.navigate(['/'])
-  }
 
-  isExtraDataComplete(): Promise<boolean> {
-    // TODO: Verificar si los datos estan completos
-    return new Promise((resolve) => resolve(true))
+    await this.router.navigate(['/'])
+    return void this._verifyEmail()
   }
 
   // Permissions and Claims
@@ -209,6 +305,7 @@ export class AuthService {
     return void this.router.navigate(['/'])
   }
 
+  // TODO: Refactorizar la siguiente función para que reciba el UID desde los argumentos
   async deleteUser(): Promise<void> {
     try {
       const { uid } = await this.user$.pipe(take(1)).toPromise()
