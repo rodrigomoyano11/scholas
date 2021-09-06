@@ -1,0 +1,28 @@
+<div mat-dialog-title *ngIf="data.title" class="dialog-title">
+  <mat-icon *ngIf="data.icon" [color]="'primary'" class="dialog-title__icon">{{
+    data.icon
+  }}</mat-icon>
+  <h1 class="dialog-title__label mat-body">{{ data.title }}</h1>
+</div>
+<div mat-dialog-content *ngIf="data.description" class="dialog-content">
+  <p class="dialog-content__description">{{ data.description }}</p>
+</div>
+<div mat-dialog-actions class="dialog-actions">
+  <button
+    *ngIf="data.actions[0]"
+    mat-flat-button
+    class="dialog-actions__button"
+    [mat-dialog-close]="false"
+  >
+    {{ data.actions[0] }}
+  </button>
+  <button
+    mat-flat-button
+    [color]="'primary'"
+    class="dialog-actions__button"
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+  >
+    {{ data.actions[1] }}
+  </button>
+</div>
