@@ -8,6 +8,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { HttpClientModule } from '@angular/common/http'
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app'
 import { getAuth, provideAuth } from '@angular/fire/auth'
+import { MatDialogModule } from '@angular/material/dialog'
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,6 +17,7 @@ import { getAuth, provideAuth } from '@angular/fire/auth'
     AppRoutingModule,
     BrowserAnimationsModule,
     MatSnackBarModule,
+    MatDialogModule,
     HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth())

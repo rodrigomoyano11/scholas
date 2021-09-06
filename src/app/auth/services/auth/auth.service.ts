@@ -23,6 +23,7 @@ import {
   user
 } from '@angular/fire/auth'
 import { convertDate } from 'src/app/shared/utils/convertDate'
+import { ErrorService } from '../error/error.service'
 
 export type Provider = 'google' | 'facebook' | 'email'
 
@@ -95,7 +96,8 @@ export class AuthService {
     private auth: Auth,
     private router: Router,
     private snackBar: MatSnackBar,
-    private http: HttpClient
+    private http: HttpClient,
+    private errorHandler: ErrorService
   ) {
     this.user$.next(this._defaultData)
 
@@ -111,201 +113,249 @@ export class AuthService {
   }
 
   async login(provider: Provider, email = '', password = '', isNewUser = false): Promise<void> {
-    const methods = {
-      google: () => signInWithPopup(this.auth, new GoogleAuthProvider()),
-      facebook: () => signInWithPopup(this.auth, new FacebookAuthProvider()),
-      email: () =>
-        isNewUser
-          ? createUserWithEmailAndPassword(this.auth, email, password)
-          : signInWithEmailAndPassword(this.auth, email, password)
+    try {
+      const methods = {
+        google: () => signInWithPopup(this.auth, new GoogleAuthProvider()),
+        facebook: () => signInWithPopup(this.auth, new FacebookAuthProvider()),
+        email: () =>
+          isNewUser
+            ? createUserWithEmailAndPassword(this.auth, email, password)
+            : signInWithEmailAndPassword(this.auth, email, password)
+      }
+
+      const credential = await methods[provider]()
+      isNewUser = getAdditionalUserInfo(credential)?.isNewUser ?? false
+
+      const token = await getIdToken(credential.user)
+      const isVerifiedToken = await this._verifyToken(token)
+
+      if (!isVerifiedToken) return this.logout()
+
+      const { claims, uid } = await this.user$.pipe(take(1)).toPromise()
+
+      if (isNewUser) {
+        await updateProfile(credential.user, {
+          displayName: this._displayName
+        })
+
+        if (claims && !claims.admin) await this.setPermissions('donor', uid)
+        const isUserCreated = await this._createUser(uid)
+        if (!isUserCreated) return this.deleteUser()
+      }
+      const isExtraDataComplete = await this._verifyExtraDataCompleted(uid)
+      if (!isExtraDataComplete) return void this.router.navigate(['/auth/extra-data'])
+
+      await this.router.navigate(['/'])
+      return void this._verifyEmail()
+    } catch (error) {
+      this.errorHandler.openDialog(error as string)
     }
-
-    const credential = await methods[provider]()
-    isNewUser = getAdditionalUserInfo(credential)?.isNewUser ?? false
-
-    const token = await getIdToken(credential.user)
-    const isVerifiedToken = await this._verifyToken(token)
-
-    if (!isVerifiedToken) return this.logout()
-
-    const { claims, uid } = await this.user$.pipe(take(1)).toPromise()
-
-    if (isNewUser) {
-      await updateProfile(credential.user, {
-        displayName: this._displayName
-      })
-
-      if (claims && !claims.admin) await this.setPermissions('donor', uid)
-      const isUserCreated = await this._createUser(uid)
-      if (!isUserCreated) return this.deleteUser()
-    }
-    const isExtraDataComplete = await this._verifyExtraDataCompleted(uid)
-    if (!isExtraDataComplete) return void this.router.navigate(['/auth/extra-data'])
-
-    await this.router.navigate(['/'])
-    return void this._verifyEmail()
   }
 
   // Verifications
 
   private async _verifyToken(token: User['token']): Promise<boolean> {
-    if (!token) return false
+    try {
+      if (!token) return false
 
-    return this.http
-      .get<never>(`${environment.apiUrl}/auth/${token}`)
-      .pipe(map(({ body }) => !!body && body !== 'Token is invalid'))
-      .toPromise()
+      return this.http
+        .get<never>(`${environment.apiUrl}/auth/${token}`)
+        .pipe(map(({ body }) => !!body && body !== 'Token is invalid'))
+        .toPromise()
+    } catch (error) {
+      this.errorHandler.openDialog(error as string)
+      return false
+    }
   }
 
   private async _verifyEmail(): Promise<void> {
-    const { isEmailVerified } = await this.user$.pipe(take(1)).toPromise()
+    try {
+      const { isEmailVerified } = await this.user$.pipe(take(1)).toPromise()
 
-    if (!isEmailVerified || !this._user) return
+      if (!isEmailVerified || !this._user) return
 
-    setTimeout(() => {
-      this.snackBar
-        .open('Acordate de verificar tu correo electrónico', 'Hacerlo ahora')
-        .onAction()
-        .pipe(take(1))
-        .subscribe(
-          () =>
-            this._user &&
-            void sendEmailVerification(this._user).then(() =>
-              this.router.navigate(['/auth/verify-email'])
-            )
-        )
-    }, 3000)
+      setTimeout(() => {
+        this.snackBar
+          .open('Acordate de verificar tu correo electrónico', 'Hacerlo ahora')
+          .onAction()
+          .pipe(take(1))
+          .subscribe(
+            () =>
+              this._user &&
+              void sendEmailVerification(this._user).then(() =>
+                this.router.navigate(['/auth/verify-email'])
+              )
+          )
+      }, 3000)
+    } catch (error) {
+      this.errorHandler.openDialog(error as string)
+    }
   }
 
   private async _verifyExtraDataCompleted(uid: User['uid']): Promise<boolean> {
-    const response = await this.http
-      .get<GetUserResponse>(`${environment.apiUrl}/users/${uid}`)
-      .toPromise()
+    try {
+      const response = await this.http
+        .get<GetUserResponse>(`${environment.apiUrl}/users/${uid}`)
+        .toPromise()
 
-    if (!response.email) {
-      await this.logout()
+      if (!response.email) {
+        await this.logout()
+        return false
+      }
+
+      const { province, location, phone_number, dateOfBirth } = response
+
+      return !!(province && location && phone_number && dateOfBirth !== '1900-01-01')
+    } catch (error) {
+      this.errorHandler.openDialog(error as string)
       return false
     }
-
-    const { province, location, phone_number, dateOfBirth } = response
-
-    return !!(province && location && phone_number && dateOfBirth !== '1900-01-01')
   }
 
   // User data operations
 
   private _getUserData(): void {
-    const idToken$ = idToken(this.auth)
-    const currentUser$ = user(this.auth)
+    try {
+      const idToken$ = idToken(this.auth)
+      const currentUser$ = user(this.auth)
 
-    zip(idToken$, currentUser$).subscribe(([token, currentUser]) => {
-      if (!token || !currentUser) {
-        this.user$.next(this._defaultData)
-        return
-      }
-
-      void getIdTokenResult(currentUser).then(({ claims }) => {
-        const { uid, displayName, photoURL, email, phoneNumber, emailVerified } = currentUser
-
-        this._userData = {
-          uid,
-          displayName,
-          photoURL,
-          email,
-          token,
-          claims,
-          isLogged: !!token,
-          isEmailVerified: emailVerified,
-          extraData: {
-            birthday: null,
-            phoneNumber,
-            location: null
-          }
+      zip(idToken$, currentUser$).subscribe(([token, currentUser]) => {
+        if (!token || !currentUser) {
+          this.user$.next(this._defaultData)
+          return
         }
 
-        this._user = currentUser
+        void getIdTokenResult(currentUser).then(({ claims }) => {
+          const { uid, displayName, photoURL, email, phoneNumber, emailVerified } = currentUser
 
-        this.user$.next(this._userData)
+          this._userData = {
+            uid,
+            displayName,
+            photoURL,
+            email,
+            token,
+            claims,
+            isLogged: !!token,
+            isEmailVerified: emailVerified,
+            extraData: {
+              birthday: null,
+              phoneNumber,
+              location: null
+            }
+          }
+
+          this._user = currentUser
+
+          this.user$.next(this._userData)
+        })
       })
-    })
+    } catch (error) {
+      this.errorHandler.openDialog(error as string)
+    }
   }
 
   private async _createUser(uid: User['uid']): Promise<boolean> {
-    const body: CreateUserRequest = {
-      displayName: null,
-      dateOfBirth: '1900-01-01',
-      province: null,
-      location: null,
-      phoneNumber: null,
-      sex: null
+    try {
+      const body: CreateUserRequest = {
+        displayName: null,
+        dateOfBirth: '1900-01-01',
+        province: null,
+        location: null,
+        phoneNumber: null,
+        sex: null
+      }
+
+      const response = await this.http
+        .post<CreateUserResponse>(`${environment.apiUrl}/users/?uid=${uid}`, body)
+        .toPromise()
+
+      return !!response?.id
+    } catch (error) {
+      this.errorHandler.openDialog(error as string)
+      return false
     }
-
-    const response = await this.http
-      .post<CreateUserResponse>(`${environment.apiUrl}/users/?uid=${uid}`, body)
-      .toPromise()
-
-    return !!response?.id
   }
 
   private async _sendUserData(uid: User['uid'], body: CreateUserRequest): Promise<boolean> {
-    const response = await this.http
-      .post<CreateUserResponse>(`${environment.apiUrl}/users/?uid=${uid}`, body)
-      .toPromise()
+    try {
+      const response = await this.http
+        .post<CreateUserResponse>(`${environment.apiUrl}/users/?uid=${uid}`, body)
+        .toPromise()
 
-    return !!response?.id
+      return !!response?.id
+    } catch (error) {
+      this.errorHandler.openDialog(error as string)
+      return false
+    }
   }
 
   async sendExtraData(extraData: ExtraData): Promise<void> {
-    const { birthday, phoneNumber, province, department } = extraData
+    try {
+      const { birthday, phoneNumber, province, department } = extraData
 
-    const { uid, displayName } = await this.user$.pipe(take(1)).toPromise()
+      const { uid, displayName } = await this.user$.pipe(take(1)).toPromise()
 
-    await this._sendUserData(uid, {
-      displayName,
-      dateOfBirth: convertDate(birthday),
-      province,
-      location: department,
-      phoneNumber,
-      sex: null
-    })
+      await this._sendUserData(uid, {
+        displayName,
+        dateOfBirth: convertDate(birthday),
+        province,
+        location: department,
+        phoneNumber,
+        sex: null
+      })
 
-    this.snackBar.open('Tu cuenta ha sido creada correctamente', 'Cerrar', { duration: 5000 })
+      this.snackBar.open('Tu cuenta ha sido creada correctamente', 'Cerrar', { duration: 5000 })
 
-    await this.router.navigate(['/'])
-    return void this._verifyEmail()
+      await this.router.navigate(['/'])
+      return void this._verifyEmail()
+    } catch (error) {
+      this.errorHandler.openDialog(error as string)
+    }
   }
 
   // Permissions and Claims
 
   async setPermissions(type: 'donor' | 'admin', uid: User['uid']): Promise<void> {
-    const body = type === 'admin' ? { admin: true, donor: false } : { admin: false, donor: true }
+    try {
+      const body = type === 'admin' ? { admin: true, donor: false } : { admin: false, donor: true }
 
-    await this.http
-      .put<User['claims']>(`${environment.apiUrl}/users/claims/${uid}`, body)
-      .toPromise()
+      await this.http
+        .put<User['claims']>(`${environment.apiUrl}/users/claims/${uid}`, body)
+        .toPromise()
 
-    void this._updateUser()
+      void this._updateUser()
+    } catch (error) {
+      this.errorHandler.openDialog(error as string)
+    }
   }
 
   // Others operations
 
   async logout(): Promise<void> {
-    await this.auth.signOut()
-    this._displayName = null
-    this.snackBar.open('Se ha cerrado tu sesión correctamente', 'Cerrar', { duration: 5000 })
-    return void this.router.navigate(['/'])
+    try {
+      await this.auth.signOut()
+      this._displayName = null
+      this.snackBar.open('Se ha cerrado tu sesión correctamente', 'Cerrar', { duration: 5000 })
+      return void this.router.navigate(['/'])
+    } catch (error) {
+      this.errorHandler.openDialog(error as string)
+    }
   }
 
   async resetPassword(email: string): Promise<void> {
-    await sendPasswordResetEmail(this.auth, email)
+    try {
+      await sendPasswordResetEmail(this.auth, email)
 
-    this.snackBar.open(
-      `En ${email} recibirás un correo electrónico con un enlace para restablecer tu contraseña`,
-      'Cerrar',
-      { duration: 5000 }
-    )
+      this.snackBar.open(
+        `En ${email} recibirás un correo electrónico con un enlace para restablecer tu contraseña`,
+        'Cerrar',
+        { duration: 5000 }
+      )
 
-    return void this.router.navigate(['/'])
+      return void this.router.navigate(['/'])
+    } catch (error) {
+      this.errorHandler.openDialog(error as string)
+    }
   }
 
   // TODO: Refactorizar la siguiente función para que reciba el UID desde los argumentos
