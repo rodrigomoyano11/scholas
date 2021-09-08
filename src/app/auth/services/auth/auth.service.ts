@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
 import { BehaviorSubject, zip } from 'rxjs'
 import { map, take } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { User } from 'src/app/shared/models/user'
 import { HttpClient } from '@angular/common/http'
 import { environment } from 'src/environments/environment'
 import {
@@ -24,46 +25,13 @@ import {
 } from '@angular/fire/auth'
 import { convertDate } from 'src/app/shared/utils/convertDate'
 import { ErrorService } from '../error/error.service'
+import { User } from 'src/app/shared/models/user'
+import { CreateUserRequest, CreateUserResponse, GetUserResponse } from 'src/app/shared/models/api'
+import { convertPhoneNumber } from 'src/app/shared/utils/convertPhoneNumber'
 
 export type Provider = 'google' | 'facebook' | 'email'
 
-interface GetUserResponse {
-  nameDb: string | null
-  dateOfBirth: string
-  province: string | null
-  location: string | null
-  sex: string | null
-  display_name: string
-  email: string
-  phone_number: string | null
-  photo_url: string | null
-  provider_id: string
-  uid: string
-  custom_claims: User['claims']
-}
-
-interface CreateUserRequest {
-  displayName: string | null
-  dateOfBirth: '1900-01-01' | string
-  province: string | null
-  location: string | null
-  phoneNumber: string | null
-  sex: string | null
-}
-
-interface CreateUserResponse {
-  id: string
-  displayName: string
-  dateOfBirth: string
-  province: string
-  location: string
-  email: string
-  photoUrl: string
-  phoneNumber: string
-  sex: string
-}
-
-interface ExtraData {
+interface ExtraDataSent {
   birthday: string
   phoneNumber: string
   province: string
@@ -147,8 +115,10 @@ export class AuthService {
 
       await this.router.navigate(['/'])
       return void this._verifyEmail()
-    } catch (error) {
-      this.errorHandler.openDialog(error as string)
+    } catch (error: any) {
+      error.code
+        ? this.errorHandler.openDialog(error.code)
+        : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
     }
   }
 
@@ -162,8 +132,11 @@ export class AuthService {
         .get<never>(`${environment.apiUrl}/auth/${token}`)
         .pipe(map(({ body }) => !!body && body !== 'Token is invalid'))
         .toPromise()
-    } catch (error) {
-      this.errorHandler.openDialog(error as string)
+    } catch (error: any) {
+      error.code
+        ? this.errorHandler.openDialog(error.code)
+        : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
+
       return false
     }
   }
@@ -172,7 +145,7 @@ export class AuthService {
     try {
       const { isEmailVerified } = await this.user$.pipe(take(1)).toPromise()
 
-      if (!isEmailVerified || !this._user) return
+      if (isEmailVerified || !this._user) return
 
       setTimeout(() => {
         this.snackBar
@@ -187,8 +160,10 @@ export class AuthService {
               )
           )
       }, 3000)
-    } catch (error) {
-      this.errorHandler.openDialog(error as string)
+    } catch (error: any) {
+      error.code
+        ? this.errorHandler.openDialog(error.code)
+        : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
     }
   }
 
@@ -203,11 +178,14 @@ export class AuthService {
         return false
       }
 
-      const { province, location, phone_number, dateOfBirth } = response
+      const { province, locality, phone_number, birthday } = response
 
-      return !!(province && location && phone_number && dateOfBirth !== '1900-01-01')
-    } catch (error) {
-      this.errorHandler.openDialog(error as string)
+      return !!(province && locality && phone_number && birthday !== '1900-01-01')
+    } catch (error: any) {
+      error.code
+        ? this.errorHandler.openDialog(error.code)
+        : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
+
       return false
     }
   }
@@ -238,7 +216,7 @@ export class AuthService {
             isLogged: !!token,
             isEmailVerified: emailVerified,
             extraData: {
-              birthday: null,
+              birthday: '1900-01-01',
               phoneNumber,
               location: null
             }
@@ -249,8 +227,10 @@ export class AuthService {
           this.user$.next(this._userData)
         })
       })
-    } catch (error) {
-      this.errorHandler.openDialog(error as string)
+    } catch (error: any) {
+      error.code
+        ? this.errorHandler.openDialog(error.code)
+        : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
     }
   }
 
@@ -258,11 +238,10 @@ export class AuthService {
     try {
       const body: CreateUserRequest = {
         displayName: null,
-        dateOfBirth: '1900-01-01',
+        birthday: '1900-01-01',
         province: null,
-        location: null,
-        phoneNumber: null,
-        sex: null
+        locality: null,
+        phoneNumber: null
       }
 
       const response = await this.http
@@ -270,8 +249,11 @@ export class AuthService {
         .toPromise()
 
       return !!response?.id
-    } catch (error) {
-      this.errorHandler.openDialog(error as string)
+    } catch (error: any) {
+      error.code
+        ? this.errorHandler.openDialog(error.code)
+        : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
+
       return false
     }
   }
@@ -281,15 +263,32 @@ export class AuthService {
       const response = await this.http
         .post<CreateUserResponse>(`${environment.apiUrl}/users/?uid=${uid}`, body)
         .toPromise()
-
       return !!response?.id
-    } catch (error) {
-      this.errorHandler.openDialog(error as string)
+      /*      const response = await this.http
+        .put(
+          `${environment.apiUrl}/users/?uid=7v3xyZxHcGSzMTA4HNbu45cMYMo2`,
+          {
+            displayName: 'Braian Orona',
+            birthday: '1999-01-01',
+            province: 'San Juan',
+            locality: 'Santa Lucia',
+            phoneNumber: '+5492644850353'
+          },
+          { responseType: 'text' }
+        )
+        .toPromise()
+
+      return response === 'Usuario actualizado' */
+    } catch (error: any) {
+      error.code
+        ? this.errorHandler.openDialog(error.code)
+        : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
+
       return false
     }
   }
 
-  async sendExtraData(extraData: ExtraData): Promise<void> {
+  async sendExtraData(extraData: ExtraDataSent): Promise<void> {
     try {
       const { birthday, phoneNumber, province, department } = extraData
 
@@ -297,19 +296,20 @@ export class AuthService {
 
       await this._sendUserData(uid, {
         displayName,
-        dateOfBirth: convertDate(birthday),
+        birthday: convertDate(birthday),
         province,
-        location: department,
-        phoneNumber,
-        sex: null
+        locality: department,
+        phoneNumber: convertPhoneNumber(phoneNumber)
       })
 
       this.snackBar.open('Tu cuenta ha sido creada correctamente', 'Cerrar', { duration: 5000 })
 
       await this.router.navigate(['/'])
       return void this._verifyEmail()
-    } catch (error) {
-      this.errorHandler.openDialog(error as string)
+    } catch (error: any) {
+      error.code
+        ? this.errorHandler.openDialog(error.code)
+        : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
     }
   }
 
@@ -324,8 +324,10 @@ export class AuthService {
         .toPromise()
 
       void this._updateUser()
-    } catch (error) {
-      this.errorHandler.openDialog(error as string)
+    } catch (error: any) {
+      error.code
+        ? this.errorHandler.openDialog(error.code)
+        : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
     }
   }
 
@@ -337,8 +339,10 @@ export class AuthService {
       this._displayName = null
       this.snackBar.open('Se ha cerrado tu sesión correctamente', 'Cerrar', { duration: 5000 })
       return void this.router.navigate(['/'])
-    } catch (error) {
-      this.errorHandler.openDialog(error as string)
+    } catch (error: any) {
+      error.code
+        ? this.errorHandler.openDialog(error.code)
+        : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
     }
   }
 
@@ -353,8 +357,10 @@ export class AuthService {
       )
 
       return void this.router.navigate(['/'])
-    } catch (error) {
-      this.errorHandler.openDialog(error as string)
+    } catch (error: any) {
+      error.code
+        ? this.errorHandler.openDialog(error.code)
+        : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
     }
   }
 
@@ -370,7 +376,6 @@ export class AuthService {
       this.snackBar.open('Tu cuenta ha sido eliminada correctamente', 'Cerrar', { duration: 5000 })
       return void this.router.navigate(['/'])
     } catch (error) {
-      console.error(error)
       void this.snackBar.open('Hubo un error al eliminar tu cuenta', 'Cerrar', { duration: 5000 })
       return void this.router.navigate(['/'])
     }
