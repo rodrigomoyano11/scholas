@@ -19,12 +19,12 @@ interface Claims {
   [key: string]: boolean | any
 }
 
-interface ExtraData {
-  birthday: string | null
+export interface ExtraData {
+  birthday: '1900-01-01' | string
   phoneNumber: UserInfo['phoneNumber']
   location: Location | null
 }
-interface Location {
+export interface Location {
   province: string | null
   locality: string | null
 }
