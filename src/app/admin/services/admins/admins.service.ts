@@ -2,27 +2,16 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable, of } from 'rxjs'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
+import { GetUsersResponse } from 'src/app/shared/models/api'
 import { User } from 'src/app/shared/models/user'
 import { environment } from 'src/environments/environment'
-
-interface UserResponse {
-  display_name: string
-  email: string
-  phone_number: string | null
-  photo_url: string | null
-  provider_id: string
-  uid: string
-  custom_claims: { [key: string]: boolean }
-
-  [key: string]: string | { [key: string]: string | boolean } | null
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminsService {
-  users$: Observable<UserResponse[]>
-  admins$: Observable<UserResponse[]>
+  users$: Observable<GetUsersResponse>
+  admins$: Observable<GetUsersResponse>
 
   constructor(private http: HttpClient, private auth: AuthService) {
     this.users$ = of([])
@@ -30,14 +19,14 @@ export class AdminsService {
   }
 
   getUsers(): void {
-    this.http
-      .get<UserResponse[]>(`${environment.apiUrl}/users`)
-      .subscribe((users) => (this.users$ = of(users)))
+    this.http.get<GetUsersResponse>(`${environment.apiUrl}/users`).subscribe((users) => {
+      this.users$ = of(users)
+    })
   }
 
   getAdmins(): void {
     this.http
-      .get<UserResponse[]>(`${environment.apiUrl}/users`)
+      .get<GetUsersResponse>(`${environment.apiUrl}/users`)
       .subscribe((users) => (this.admins$ = of(users.filter((user) => user.custom_claims?.admin))))
   }
 
