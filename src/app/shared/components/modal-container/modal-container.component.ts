@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core'
+import { LayoutService } from '../../services/layout/layout.service'
 
 @Component({
   selector: 'app-modal-container',
@@ -6,5 +7,7 @@ import { Component, Input } from '@angular/core'
   styleUrls: ['./modal-container.component.css']
 })
 export class ModalContainerComponent {
-  @Input() size: 'small' | 'medium' | 'large' = 'small'
+  @Input() size!: 'small' | 'medium' | 'large'
+
+  constructor(public layout: LayoutService) {}
 }
