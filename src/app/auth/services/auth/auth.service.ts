@@ -101,11 +101,9 @@ export class AuthService {
 
       const { claims, uid } = await this.user$.pipe(take(1)).toPromise()
 
-      if (isNewUser) {
-        await updateProfile(credential.user, {
-          displayName: this._displayName
-        })
+      this._displayName = credential.user.displayName
 
+      if (isNewUser) {
         if (claims && !claims.admin) await this.setPermissions('donor', uid)
         const isUserCreated = await this._createUser(uid)
         if (!isUserCreated) return this.deleteUser()
@@ -237,7 +235,7 @@ export class AuthService {
   private async _createUser(uid: User['uid']): Promise<boolean> {
     try {
       const body: CreateUserRequest = {
-        displayName: null,
+        displayName: this._displayName,
         birthday: '1900-01-01',
         province: null,
         locality: null,
@@ -259,33 +257,13 @@ export class AuthService {
   }
 
   private async _sendUserData(uid: User['uid'], body: CreateUserRequest): Promise<boolean> {
-    try {
-      const response = await this.http
-        .post<CreateUserResponse>(`${environment.apiUrl}/users/?uid=${uid}`, body)
-        .toPromise()
-      return !!response?.id
-      /*      const response = await this.http
-        .put(
-          `${environment.apiUrl}/users/?uid=7v3xyZxHcGSzMTA4HNbu45cMYMo2`,
-          {
-            displayName: 'Braian Orona',
-            birthday: '1999-01-01',
-            province: 'San Juan',
-            locality: 'Santa Lucia',
-            phoneNumber: '+5492644850353'
-          },
-          { responseType: 'text' }
-        )
-        .toPromise()
+    const response = await this.http
+      .put(`${environment.apiUrl}/users/?uid=${uid}`, body, {
+        responseType: 'text'
+      })
+      .toPromise()
 
-      return response === 'Usuario actualizado' */
-    } catch (error: any) {
-      error.code
-        ? this.errorHandler.openDialog(error.code)
-        : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
-
-      return false
-    }
+    return response === 'Usuario actualizado'
   }
 
   async sendExtraData(extraData: ExtraDataSent): Promise<void> {
@@ -309,6 +287,8 @@ export class AuthService {
     } catch (error: any) {
       error.code
         ? this.errorHandler.openDialog(error.code)
+        : error.error
+        ? this.errorHandler.openDialog(error.error)
         : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
     }
   }
@@ -385,3 +365,17 @@ export class AuthService {
     this._user && (await getIdToken(this._user, true))
   }
 }
+
+/*
+
+{
+  "headers":{"normalizedNames":{},
+"lazyUpdate":null},
+"status":500,
+"statusText":"OK",
+"url":"https://proyecto-scholas.herokuapp.com/users/?uid=1kGp1Kc8eHedsZnHHSrz0pKNN0K3",
+"ok":false,
+"name":"HttpErrorResponse",
+"message":"Http failure response for https://proyecto-scholas.herokuapp.com/users/?uid=1kGp1Kc8eHedsZnHHSrz0pKNN0K3: 500 OK",
+"error":"The user with the provided phone number already exists (PHONE_NUMBER_EXISTS)."}
+*/
