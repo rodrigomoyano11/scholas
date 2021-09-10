@@ -1,9 +1,9 @@
 <!-- Mobile Menu -->
 
 <button
-  *ngIf="!layout.isDesktop"
   mat-icon-button
   class="mobile-menu__toggle"
+  *ngIf="(layout.isDesktop$ | async) === false"
   [matMenuTriggerFor]="mainMenu"
 >
   <mat-icon>menu</mat-icon>
@@ -52,7 +52,7 @@
 
 <!-- Desktop Menu -->
 
-<div *ngIf="layout.isDesktop" class="desktop-menu__container">
+<div *ngIf="layout.isDesktop$ | async" class="desktop-menu__container">
   <ng-container
     *ngFor="
       let item of (auth.user$ | async)?.isLogged && (auth.user$ | async)?.claims?.admin

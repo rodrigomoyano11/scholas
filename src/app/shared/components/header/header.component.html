@@ -10,7 +10,10 @@
 
       <app-logo class="logo"></app-logo>
 
-      <div class="call-to-action" *ngIf="!(auth.user$ | async)?.isLogged && layout.isDesktop">
+      <div
+        class="call-to-action"
+        *ngIf="!(auth.user$ | async)?.isLogged && (layout.isDesktop$ | async)"
+      >
         <button
           class="call-to-action__button--secondary"
           mat-stroked-button
