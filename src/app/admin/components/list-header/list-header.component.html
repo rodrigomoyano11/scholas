@@ -1,0 +1,29 @@
+<div class="container">
+  <h1 class="title">{{ title }}</h1>
+
+  <div class="buttons">
+    <ng-container *ngFor="let item of buttons">
+      <button
+        *ngIf="item.action.type === 'link'"
+        type="button"
+        class="button"
+        mat-icon-button
+        [matTooltip]="item.label"
+        [routerLink]="item.action.callback() ?? ''"
+      >
+        <mat-icon>{{ item.icon }}</mat-icon>
+      </button>
+
+      <button
+        *ngIf="item.action.type === 'button'"
+        type="button"
+        class="button"
+        mat-icon-button
+        [matTooltip]="item.label"
+        (click)="item.action.callback()"
+      >
+        <mat-icon>{{ item.icon }}</mat-icon>
+      </button>
+    </ng-container>
+  </div>
+</div>

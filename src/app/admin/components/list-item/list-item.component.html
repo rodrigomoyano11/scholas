@@ -1,0 +1,9 @@
+<mat-list-item class="admin-item">
+  <p class="admin-item__name" mat-line>{{ title }}</p>
+  <p class="admin-item__email" mat-line>{{ subtitle }}</p>
+
+  <button type="button" class="admin-item__delete" mat-icon-button (click)="clickEvent.emit()">
+    <mat-icon>delete_outline</mat-icon>
+  </button>
+</mat-list-item>
+<mat-divider></mat-divider>
