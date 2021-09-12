@@ -1,0 +1,28 @@
+<mat-card class="card__main-container">
+  <div class="card__image">
+    <img mat-card-md-image [src]="image" />
+  </div>
+  <div class="card__caption">
+    <div class="card__header-info">
+      <div class="card__info">
+        <mat-card-title class="card__title">{{ title }}</mat-card-title>
+        <mat-card-subtitle class="card__subtitle">{{ subtitle }}</mat-card-subtitle>
+      </div>
+      <mat-card-actions class="card__actions">
+        <button mat-icon-button [matMenuTriggerFor]="user"><mat-icon>more_vert</mat-icon></button>
+      </mat-card-actions>
+    </div>
+
+    <mat-card-content class="card__content">
+      <p>
+        {{ description }}
+      </p>
+    </mat-card-content>
+  </div>
+</mat-card>
+
+<mat-menu #user="matMenu">
+  <button mat-menu-item (click)="action()">Editar detalles</button>
+  <button mat-menu-item (click)="action()">Ver métricas</button>
+  <button mat-menu-item (click)="action()">Dar de baja</button>
+</mat-menu>

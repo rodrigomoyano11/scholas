@@ -19,6 +19,7 @@ import { ListItemComponent } from './components/list-item/list-item.component'
 import { MatCardModule } from '@angular/material/card'
 import { MatMenuModule } from '@angular/material/menu'
 import { ListAlertComponent } from './components/list-alert/list-alert.component'
+import { ProjectCardComponent } from './components/project-card/project-card.component'
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ListAlertComponent } from './components/list-alert/list-alert.component
     NewAdminComponent,
     ListHeaderComponent,
     ListItemComponent,
-    ListAlertComponent
+    ListAlertComponent,
+    ProjectCardComponent
   ],
   imports: [
     CommonModule,

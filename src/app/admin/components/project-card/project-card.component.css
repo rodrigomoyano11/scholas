@@ -1,0 +1,41 @@
+.card__main-container {
+  display: flex;
+  height: min-content;
+}
+
+.card__image {
+  display: flex;
+}
+
+.card__actions {
+  margin: 0;
+  padding: 0;
+}
+
+.card__caption {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  margin-left: 1rem;
+}
+
+.card__header-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.card__content {
+  width: 100%;
+  margin: 0;
+}
+
+.card__content > * {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
