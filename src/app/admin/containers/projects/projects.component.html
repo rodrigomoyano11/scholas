@@ -1,1 +1,18 @@
-<p>projects works!</p>
+<app-modal-container>
+  <app-list-header title="Proyectos" [buttons]="buttonsData"></app-list-header>
+
+  <mat-list class="project-list">
+    <app-list-alert
+      alert="No hay proyectos"
+      [alertCondition]="(cardData?.length ?? 0) === 0"
+    ></app-list-alert>
+    <ng-container *ngFor="let item of cardData; index as i">
+      <app-project-card
+        [image]="item.image"
+        [title]="item.title"
+        [subtitle]="item.subtitle"
+        [description]="item.description"
+      ></app-project-card>
+    </ng-container>
+  </mat-list>
+</app-modal-container>

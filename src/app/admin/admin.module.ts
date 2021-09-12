@@ -4,6 +4,7 @@ import { AdminRoutingModule } from './admin-routing.module'
 import { HomeComponent } from './containers/home/home.component'
 import { AdminsComponent } from './containers/admins/admins.component'
 import { DonorsComponent } from './containers/donors/donors.component'
+import { ProjectsComponent } from './containers/projects/projects.component'
 import { NewsComponent } from './containers/news/news.component'
 import { SharedModule } from '../shared/shared.module'
 import { DonationsComponent } from './containers/donations/donations.component'
@@ -26,6 +27,7 @@ import { ProjectCardComponent } from './components/project-card/project-card.com
     HomeComponent,
     AdminsComponent,
     DonorsComponent,
+    ProjectsComponent,
     NewsComponent,
     DonationsComponent,
     NewAdminComponent,
