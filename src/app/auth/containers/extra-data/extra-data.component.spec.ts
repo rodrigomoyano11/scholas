@@ -8,7 +8,7 @@ describe('ExtraDataComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ExtraDataComponent]
+      declarations: [ExtraDataComponent],
     }).compileComponents()
   })
 

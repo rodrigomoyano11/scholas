@@ -12,7 +12,7 @@ export interface ButtonData {
 @Component({
   selector: 'app-list-header',
   templateUrl: './list-header.component.html',
-  styleUrls: ['./list-header.component.css']
+  styleUrls: ['./list-header.component.css'],
 })
 export class ListHeaderComponent {
   @Input() title!: string

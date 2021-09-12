@@ -6,7 +6,7 @@ import { ValidationService } from '../../services/validation/validation.service'
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.css']
+  styleUrls: ['./forgot-password.component.css'],
 })
 export class ForgotPasswordComponent {
   forgotPasswordForm: FormGroup
@@ -14,10 +14,10 @@ export class ForgotPasswordComponent {
   constructor(
     private fb: FormBuilder,
     private validation: ValidationService,
-    private auth: AuthService
+    private auth: AuthService,
   ) {
     this.forgotPasswordForm = this.fb.group({
-      email: ['', [Validators.required, validation.isValidEmail()]]
+      email: ['', [Validators.required, validation.isValidEmail()]],
     })
   }
 

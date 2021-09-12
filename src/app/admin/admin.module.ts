@@ -34,7 +34,7 @@ import { ProjectCardComponent } from './components/project-card/project-card.com
     ListHeaderComponent,
     ListItemComponent,
     ListAlertComponent,
-    ProjectCardComponent
+    ProjectCardComponent,
   ],
   imports: [
     CommonModule,
@@ -47,7 +47,7 @@ import { ProjectCardComponent } from './components/project-card/project-card.com
     MatListModule,
     MatCardModule,
     MatTooltipModule,
-    MatMenuModule
-  ]
+    MatMenuModule,
+  ],
 })
 export class AdminModule {}

@@ -9,7 +9,7 @@ interface Location {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocationService {
   locations!: Observable<Location[]>

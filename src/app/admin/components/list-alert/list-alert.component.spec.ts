@@ -8,7 +8,7 @@ describe('ListAlertComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ListAlertComponent]
+      declarations: [ListAlertComponent],
     }).compileComponents()
   })
 

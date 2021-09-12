@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core'
 import { Observable, of } from 'rxjs'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LayoutService {
   isDesktop$!: Observable<boolean>

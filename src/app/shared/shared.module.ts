@@ -28,7 +28,7 @@ import { DialogComponent } from './components/dialog/dialog.component'
     UserProfileMenuComponent,
     MainMenuComponent,
     ModalContainerComponent,
-    DialogComponent
+    DialogComponent,
   ],
   imports: [
     CommonModule,
@@ -39,8 +39,8 @@ import { DialogComponent } from './components/dialog/dialog.component'
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
-    LayoutModule
+    LayoutModule,
   ],
-  exports: [NotFoundComponent, LayoutComponent, ModalContainerComponent]
+  exports: [NotFoundComponent, LayoutComponent, ModalContainerComponent],
 })
 export class SharedModule {}

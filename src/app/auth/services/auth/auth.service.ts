@@ -20,7 +20,7 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
-  user
+  user,
 } from '@angular/fire/auth'
 import { convertDate } from 'src/app/shared/utils/convertDate'
 import { ErrorService } from '../error/error.service'
@@ -38,7 +38,7 @@ interface ExtraDataSent {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private _defaultData: User = {
@@ -50,7 +50,7 @@ export class AuthService {
     isLogged: false,
     isEmailVerified: false,
     claims: null,
-    extraData: null
+    extraData: null,
   }
   private _userData: User = this._defaultData
   private _user = this.auth.currentUser
@@ -64,7 +64,7 @@ export class AuthService {
     private router: Router,
     private snackBar: MatSnackBar,
     private http: HttpClient,
-    private errorHandler: ErrorService
+    private errorHandler: ErrorService,
   ) {
     this.user$.next(this._defaultData)
 
@@ -87,7 +87,7 @@ export class AuthService {
         email: () =>
           isNewUser
             ? createUserWithEmailAndPassword(this.auth, email, password)
-            : signInWithEmailAndPassword(this.auth, email, password)
+            : signInWithEmailAndPassword(this.auth, email, password),
       }
 
       const credential = await methods[provider]()
@@ -153,8 +153,8 @@ export class AuthService {
             () =>
               this._user &&
               void sendEmailVerification(this._user).then(() =>
-                this.router.navigate(['/auth/verify-email'])
-              )
+                this.router.navigate(['/auth/verify-email']),
+              ),
           )
       }, 3000)
     } catch (error: any) {
@@ -215,8 +215,8 @@ export class AuthService {
             extraData: {
               birthday: '1900-01-01',
               phoneNumber,
-              location: null
-            }
+              location: null,
+            },
           }
 
           this._user = currentUser
@@ -238,7 +238,7 @@ export class AuthService {
         birthday: '1900-01-01',
         province: null,
         locality: null,
-        phoneNumber: null
+        phoneNumber: null,
       }
 
       const response = await this.http
@@ -258,7 +258,7 @@ export class AuthService {
   private async _sendUserData(uid: User['uid'], body: CreateUserRequest): Promise<boolean> {
     const response = await this.http
       .put(`${environment.apiUrl}/users/?uid=${uid}`, body, {
-        responseType: 'text'
+        responseType: 'text',
       })
       .toPromise()
 
@@ -276,7 +276,7 @@ export class AuthService {
         birthday: convertDate(birthday),
         province,
         locality: department,
-        phoneNumber: convertPhoneNumber(phoneNumber)
+        phoneNumber: convertPhoneNumber(phoneNumber),
       })
 
       this.snackBar.open('Tu cuenta ha sido creada correctamente', 'Cerrar', { duration: 5000 })
@@ -332,7 +332,7 @@ export class AuthService {
       this.snackBar.open(
         `En ${email} recibirás un correo electrónico con un enlace para restablecer tu contraseña`,
         'Cerrar',
-        { duration: 5000 }
+        { duration: 5000 },
       )
 
       return void this.router.navigate(['/'])

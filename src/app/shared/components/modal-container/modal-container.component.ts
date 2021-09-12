@@ -4,7 +4,7 @@ import { LayoutService } from '../../services/layout/layout.service'
 @Component({
   selector: 'app-modal-container',
   templateUrl: './modal-container.component.html',
-  styleUrls: ['./modal-container.component.css']
+  styleUrls: ['./modal-container.component.css'],
 })
 export class ModalContainerComponent {
   @Input() size!: 'small' | 'medium' | 'large'

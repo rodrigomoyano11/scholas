@@ -19,14 +19,14 @@ const routes: Routes = [
       { path: 'donors', component: DonorsComponent },
       { path: 'donations', component: DonationsComponent },
       { path: 'news', component: NewsComponent },
-      { path: 'projects', component: ProjectsComponent }
-    ]
+      { path: 'projects', component: ProjectsComponent },
+    ],
   },
-  { path: '**', component: NotFoundComponent }
+  { path: '**', component: NotFoundComponent },
 ]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AdminRoutingModule {}

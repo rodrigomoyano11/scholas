@@ -8,6 +8,6 @@ import { SharedModule } from '../shared/shared.module'
 
 @NgModule({
   declarations: [HomeComponent, ProjectsComponent, NewsComponent],
-  imports: [CommonModule, LandingPageRoutingModule, SharedModule]
+  imports: [CommonModule, LandingPageRoutingModule, SharedModule],
 })
 export class LandingPageModule {}

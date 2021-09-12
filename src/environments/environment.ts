@@ -11,9 +11,9 @@ export const environment = {
     storageBucket: 'proyecto-scholas.appspot.com',
     messagingSenderId: '392012977402',
     appId: '1:392012977402:web:1eed44468bebab5bdc6543',
-    measurementId: 'G-EZN648D5LM'
+    measurementId: 'G-EZN648D5LM',
   },
-  apiUrl: 'https://proyecto-scholas.herokuapp.com'
+  apiUrl: 'https://proyecto-scholas.herokuapp.com',
 }
 
 /*

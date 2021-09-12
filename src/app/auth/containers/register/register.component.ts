@@ -6,7 +6,7 @@ import { ValidationService } from '../../services/validation/validation.service'
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
   registerForm: FormGroup
@@ -15,7 +15,7 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private validation: ValidationService,
-    private auth: AuthService
+    private auth: AuthService,
   ) {
     this.registerForm = this.fb.group(
       {
@@ -28,14 +28,14 @@ export class RegisterComponent {
             Validators.required,
             Validators.minLength(8),
             Validators.maxLength(24),
-            validation.isStrongPassword()
-          ]
+            validation.isStrongPassword(),
+          ],
         ],
-        passwordConfirm: ['', [Validators.required]]
+        passwordConfirm: ['', [Validators.required]],
       },
       {
-        validators: [validation.isControlsMatch('password', 'passwordConfirm')]
-      } as AbstractControlOptions
+        validators: [validation.isControlsMatch('password', 'passwordConfirm')],
+      } as AbstractControlOptions,
     )
   }
 

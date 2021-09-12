@@ -6,7 +6,7 @@ import { AdminsService } from '../../services/admins/admins.service'
 @Component({
   selector: 'app-admins',
   templateUrl: './admins.component.html',
-  styleUrls: ['./admins.component.css']
+  styleUrls: ['./admins.component.css'],
 })
 export class AdminsComponent implements OnInit {
   buttonsData: ButtonData[] = [
@@ -15,9 +15,9 @@ export class AdminsComponent implements OnInit {
       icon: 'add',
       action: {
         type: 'link',
-        callback: () => '/admin/new-admin'
-      }
-    }
+        callback: () => '/admin/new-admin',
+      },
+    },
   ]
 
   constructor(public adminsService: AdminsService, public layout: LayoutService) {}

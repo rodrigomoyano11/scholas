@@ -17,14 +17,14 @@ const routes: Routes = [
       { path: 'login', component: LoginComponent },
       { path: 'forgot-password', component: ForgotPasswordComponent },
       { path: 'verify-email', component: VerifyEmailComponent },
-      { path: 'extra-data', component: ExtraDataComponent }
-    ]
+      { path: 'extra-data', component: ExtraDataComponent },
+    ],
   },
-  { path: '**', component: NotFoundComponent }
+  { path: '**', component: NotFoundComponent },
 ]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AuthRoutingModule {}

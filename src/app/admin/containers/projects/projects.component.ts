@@ -5,7 +5,7 @@ import { CardData } from '../../components/project-card/project-card.component'
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
-  styleUrls: ['./projects.component.css']
+  styleUrls: ['./projects.component.css'],
 })
 export class ProjectsComponent {
   buttonsData: ButtonData[] = [
@@ -14,17 +14,17 @@ export class ProjectsComponent {
       icon: 'filter_alt',
       action: {
         type: 'button',
-        callback: () => console.log('Works')
-      }
+        callback: () => console.log('Works'),
+      },
     },
     {
       label: 'Agregar nuevo proyecto',
       icon: 'add',
       action: {
         type: 'link',
-        callback: () => '/admin/new-project'
-      }
-    }
+        callback: () => '/admin/new-project',
+      },
+    },
   ]
 
   cardData: CardData[] = [
@@ -33,14 +33,14 @@ export class ProjectsComponent {
       title: 'Escuela de Mar y Playa',
       subtitle: 'Mar del Plata',
       description:
-        'Experiencia educativa que a partir del Surf, reúne a jóvenes de diferentes credos, ámbitos y realidades de la Ciudad de Mar del Plata, con foco en aquellos que hayan abandonado o se encuentren en peligro de abandono escolar.'
+        'Experiencia educativa que a partir del Surf, reúne a jóvenes de diferentes credos, ámbitos y realidades de la Ciudad de Mar del Plata, con foco en aquellos que hayan abandonado o se encuentren en peligro de abandono escolar.',
     },
     {
       image: 'https://material.angular.io/assets/img/examples/shiba2.jpg',
       title: 'Escuela de Mar y Playa',
       subtitle: 'Mar del Plata',
       description:
-        'Experiencia educativa que a partir del Surf, reúne a jóvenes de diferentes credos, ámbitos y realidades de la Ciudad de Mar del Plata, con foco en aquellos que hayan abandonado o se encuentren en peligro de abandono escolar.'
-    }
+        'Experiencia educativa que a partir del Surf, reúne a jóvenes de diferentes credos, ámbitos y realidades de la Ciudad de Mar del Plata, con foco en aquellos que hayan abandonado o se encuentren en peligro de abandono escolar.',
+    },
   ]
 }

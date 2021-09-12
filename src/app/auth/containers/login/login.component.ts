@@ -6,7 +6,7 @@ import { ValidationService } from '../../services/validation/validation.service'
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   loginForm: FormGroup
@@ -15,11 +15,11 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private validation: ValidationService,
-    private auth: AuthService
+    private auth: AuthService,
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, validation.isValidEmail()]],
-      password: ['', [Validators.required]]
+      password: ['', [Validators.required]],
     })
   }
 

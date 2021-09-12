@@ -7,7 +7,7 @@ import { User } from 'src/app/shared/models/user'
 import { environment } from 'src/environments/environment'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AdminsService {
   users$: Observable<GetUsersResponse>

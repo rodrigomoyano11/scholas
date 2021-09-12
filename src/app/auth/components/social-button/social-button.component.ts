@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser'
 @Component({
   selector: 'app-social-button',
   templateUrl: './social-button.component.html',
-  styleUrls: ['./social-button.component.css']
+  styleUrls: ['./social-button.component.css'],
 })
 export default class SocialButtonComponent {
   @Input() method!: 'google' | 'facebook'
@@ -14,11 +14,11 @@ export default class SocialButtonComponent {
   constructor(private iconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
     this.iconRegistry.addSvgIcon(
       'facebook',
-      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/facebook.svg')
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/facebook.svg'),
     )
     this.iconRegistry.addSvgIcon(
       'google',
-      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/google.svg')
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/google.svg'),
     )
   }
 }

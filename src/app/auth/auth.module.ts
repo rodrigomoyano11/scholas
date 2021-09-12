@@ -27,7 +27,7 @@ import { ReactiveFormsModule } from '@angular/forms'
     HomeComponent,
     VerifyEmailComponent,
     ExtraDataComponent,
-    SocialButtonComponent
+    SocialButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -41,7 +41,7 @@ import { ReactiveFormsModule } from '@angular/forms'
     MatNativeDateModule,
     MatSelectModule,
     MatIconModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+  ],
 })
 export class AuthModule {}

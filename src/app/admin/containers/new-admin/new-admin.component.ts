@@ -7,7 +7,7 @@ import { AdminsService } from '../../services/admins/admins.service'
 @Component({
   selector: 'app-new-admin',
   templateUrl: './new-admin.component.html',
-  styleUrls: ['./new-admin.component.css']
+  styleUrls: ['./new-admin.component.css'],
 })
 export class NewAdminComponent implements OnInit {
   newAdminForm: FormGroup
@@ -16,10 +16,10 @@ export class NewAdminComponent implements OnInit {
     private fb: FormBuilder,
     public validation: ValidationService,
     private router: Router,
-    private adminsService: AdminsService
+    private adminsService: AdminsService,
   ) {
     this.newAdminForm = this.fb.group({
-      email: ['', [Validators.required, validation.isValidEmail()]]
+      email: ['', [Validators.required, validation.isValidEmail()]],
     })
   }
 

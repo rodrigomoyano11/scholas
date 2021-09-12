@@ -7,7 +7,7 @@ import { ValidationService } from '../../services/validation/validation.service'
 @Component({
   selector: 'app-extra-data',
   templateUrl: './extra-data.component.html',
-  styleUrls: ['./extra-data.component.css']
+  styleUrls: ['./extra-data.component.css'],
 })
 export class ExtraDataComponent implements OnInit {
   extraDataForm: FormGroup
@@ -25,7 +25,7 @@ export class ExtraDataComponent implements OnInit {
     private validation: ValidationService,
     private fb: FormBuilder,
     private auth: AuthService,
-    private locationService: LocationService
+    private locationService: LocationService,
   ) {
     const currentYear = new Date().getFullYear()
     this.minDate = new Date(currentYear - 100, 0, 1)
@@ -35,7 +35,7 @@ export class ExtraDataComponent implements OnInit {
       birthday: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required, validation.isValidPhoneNumber()]],
       province: [{ value: '', disabled: !this.provinceHasData }, [Validators.required]],
-      department: [{ value: '', disabled: !this.departmentHasData }, [Validators.required]]
+      department: [{ value: '', disabled: !this.departmentHasData }, [Validators.required]],
     })
   }
 
@@ -56,7 +56,7 @@ export class ExtraDataComponent implements OnInit {
       locations
         .find((location) => location.name === province)
         ?.departments.map(
-          (department) => (this.departments = [...this.departments, { value: department }])
+          (department) => (this.departments = [...this.departments, { value: department }]),
         )
       province !== '' && !!this.departments.length ? control.enable() : control.disable()
     })

@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ErrorService {
   constructor(public dialog: MatDialog) {}
@@ -14,8 +14,8 @@ export class ErrorService {
         actions: [null, 'Cerrar'],
         title: 'Ha ocurrido un error',
         description: error,
-        icon: 'cancel'
-      }
+        icon: 'cancel',
+      },
     })
   }
 }

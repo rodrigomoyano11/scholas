@@ -6,7 +6,7 @@ import { AbstractControl, ValidatorFn } from '@angular/forms'
 import { PhoneNumberUtil } from 'google-libphonenumber'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ValidationService {
   // Error handler
@@ -29,7 +29,7 @@ export class ValidationService {
       strongPassword: `Debe incluir al menos una minúscula, una mayúscula y un dígito numérico`,
       firstName: `Ingresá un nombre válido`,
       lastName: `Ingresá un apellido válido`,
-      matchPassword: `Las contraseñas no coinciden`
+      matchPassword: `Las contraseñas no coinciden`,
     }
 
     if (control.touched || control.dirty) {
