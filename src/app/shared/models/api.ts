@@ -1,19 +1,17 @@
 import { ExtraData, Location, User } from './user'
 
 export interface GetUserResponse {
-  nameDb: User['displayName']
-  display_name: User['displayName']
   birthday: ExtraData['birthday']
   province: Location['province']
   locality: Location['locality']
-  phoneNumber: string | null
-  email: string
-  phone_number: string | null
-  photo_url: string | null
-  provider_id: string
-  uid: string
-  custom_claims: User['claims']
+  displayName: User['displayName']
+  email: User['email']
+  phoneNumber: ExtraData['phoneNumber']
+  photoUrl: User['photoURL']
+  uid: User['uid']
+  customClaims: User['claims']
 }
+
 export type GetUsersResponse = GetUserResponse[]
 
 export interface CreateUserRequest {

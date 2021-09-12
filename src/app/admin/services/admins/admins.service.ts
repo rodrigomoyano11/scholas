@@ -27,7 +27,7 @@ export class AdminsService {
   getAdmins(): void {
     this.http
       .get<GetUsersResponse>(`${environment.apiUrl}/users`)
-      .subscribe((users) => (this.admins$ = of(users.filter((user) => user.custom_claims?.admin))))
+      .subscribe((users) => (this.admins$ = of(users.filter((user) => user.customClaims?.admin))))
   }
 
   selectUidAdmin(email: User['email']): string {

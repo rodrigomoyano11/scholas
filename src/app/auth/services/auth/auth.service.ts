@@ -20,7 +20,6 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
-  updateProfile,
   user
 } from '@angular/fire/auth'
 import { convertDate } from 'src/app/shared/utils/convertDate'
@@ -176,9 +175,9 @@ export class AuthService {
         return false
       }
 
-      const { province, locality, phone_number, birthday } = response
+      const { province, locality, phoneNumber, birthday } = response
 
-      return !!(province && locality && phone_number && birthday !== '1900-01-01')
+      return !!(province && locality && phoneNumber && birthday !== '1900-01-01')
     } catch (error: any) {
       error.code
         ? this.errorHandler.openDialog(error.code)

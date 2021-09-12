@@ -14,6 +14,14 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
 import { ReactiveFormsModule } from '@angular/forms'
 import { MatInputModule } from '@angular/material/input'
+import { ListContainerComponent } from './components/list-container/list-container.component'
+import { ListHeaderComponent } from './components/list-header/list-header.component'
+import { MatTooltipModule } from '@angular/material/tooltip'
+import { ListContentComponent } from './components/list-content/list-content.component'
+import { ListItemComponent } from './components/list-item/list-item.component'
+import { ProyectCardComponent } from './components/proyect-card/proyect-card.component'
+import { MatCardModule } from '@angular/material/card'
+import { MatMenuModule } from '@angular/material/menu'
 
 @NgModule({
   declarations: [
@@ -23,7 +31,12 @@ import { MatInputModule } from '@angular/material/input'
     ProjectsComponent,
     NewsComponent,
     DonationsComponent,
-    NewAdminComponent
+    NewAdminComponent,
+    ListContainerComponent,
+    ListHeaderComponent,
+    ListContentComponent,
+    ListItemComponent,
+    ProyectCardComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +46,10 @@ import { MatInputModule } from '@angular/material/input'
     MatButtonModule,
     MatIconModule,
     MatInputModule,
-    MatListModule
+    MatListModule,
+    MatCardModule,
+    MatTooltipModule,
+    MatMenuModule
   ]
 })
 export class AdminModule {}
