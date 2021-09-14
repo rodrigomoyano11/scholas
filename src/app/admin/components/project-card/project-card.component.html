@@ -1,6 +1,6 @@
 <mat-card class="card__main-container">
   <div class="card__image">
-    <img mat-card-md-image [src]="image" />
+    <img *ngIf="layout.isDesktop$ | async; else mobile" mat-card-md-image [src]="image" />
   </div>
   <div class="card__caption">
     <div class="card__header-info">
@@ -26,3 +26,7 @@
   <button mat-menu-item (click)="action()">Ver métricas</button>
   <button mat-menu-item (click)="action()">Dar de baja</button>
 </mat-menu>
+
+<ng-template #mobile>
+  <img mat-card-image [src]="image" />
+</ng-template>

@@ -1,10 +1,25 @@
 .card__main-container {
   display: flex;
+  flex-wrap: wrap;
   height: min-content;
 }
 
 .card__image {
   display: flex;
+}
+
+.card__image > * {
+  border-radius: 4px 4px 0 0;
+}
+
+@media screen and (min-width: 960px) {
+  .card__main-container {
+    flex-wrap: nowrap;
+  }
+
+  .card__image > * {
+    border-radius: 4px;
+  }
 }
 
 .card__actions {
