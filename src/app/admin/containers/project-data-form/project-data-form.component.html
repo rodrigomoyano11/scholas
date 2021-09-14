@@ -1,0 +1,92 @@
+<app-modal-container [withPadding]="false">
+  <div class="title__container">
+    <p class="title mat-subheading-2">Crear proyecto</p>
+  </div>
+
+  <form class="project-data-form" (ngSubmit)="submitProjectData()" [formGroup]="projectDataForm">
+    <mat-form-field class="project-data-form__field" appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput placeholder="Ingresá el nombre del proyecto" formControlName="name" />
+      <mat-error>{{ getErrors('name') }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="project-data-form__field" appearance="outline">
+      <mat-label>Provincia</mat-label>
+      <mat-select
+        (selectionChange)="getDepartmentsByProvince($event.value)"
+        formControlName="province"
+      >
+        <mat-option *ngFor="let province of provinces" [value]="province.value">
+          {{ province.value }}
+        </mat-option>
+      </mat-select>
+
+      <mat-error>{{ getErrors('province') }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="project-data-form__field" appearance="outline">
+      <mat-label>Localidad</mat-label>
+      <mat-select formControlName="locality">
+        <mat-option *ngFor="let locality of localities" [value]="locality.value">
+          {{ locality.value }}
+        </mat-option>
+      </mat-select>
+      <mat-error>{{ getErrors('locality') }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="project-data-form__field" appearance="outline">
+      <mat-label>Información</mat-label>
+      <textarea
+        class="text-area"
+        rows="3"
+        matInput
+        placeholder="Ingresá la descripción del proyecto"
+        formControlName="description"
+      ></textarea>
+      <mat-error>{{ getErrors('description') }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="project-data-form__field" appearance="outline">
+      <mat-label>Monto objetivo</mat-label>
+      <input
+        matInput
+        placeholder="Ingresá el monto de dinero objetivo a recaudar"
+        formControlName="targetAmount"
+      />
+      <mat-error>{{ getErrors('targetAmount') }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="project-data-form__field" appearance="outline">
+      <mat-label>Video</mat-label>
+      <input matInput placeholder="Ingresá el link del video de YouTube" formControlName="video" />
+      <mat-error>{{ getErrors('video') }}</mat-error>
+    </mat-form-field>
+
+    <div class="buttons-container">
+      <button
+        type="button"
+        class="project-data-form__cancel"
+        [color]="'primary'"
+        mat-stroked-button
+      >
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        class="project-data-form__submit"
+        [color]="'primary'"
+        mat-flat-button
+        [disabled]="!projectDataForm.valid"
+      >
+        Crear proyecto
+      </button>
+    </div>
+  </form>
+</app-modal-container>
+
+<!--  
+      province: ['', [Validators.required]],
+      locality: ['', [Validators.required]],
+                  coverPhoto: ['', [Validators.required]],
+      photos: ['', [Validators.required]],
+       -->
