@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Component } from '@angular/core'
 import { ButtonData } from '../../components/list-header/list-header.component'
 import { CardData } from '../../components/project-card/project-card.component'

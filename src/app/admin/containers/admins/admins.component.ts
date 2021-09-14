@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Component, OnInit } from '@angular/core'
 import { LayoutService } from 'src/app/shared/services/layout/layout.service'
 import { ButtonData } from '../../components/list-header/list-header.component'
