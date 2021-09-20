@@ -4,7 +4,7 @@
   </div>
   <div class="card__caption">
     <span
-      *ngIf="visibility === 'PRIVATE' && (layout.isDesktop$ | async) === true"
+      *ngIf="visibility === 'PRIVATE' && (layout.isDesktop$ | async) === false"
       class="card__status--secondary mat-body-2"
       >Dado de baja</span
     >
@@ -36,9 +36,7 @@
 </mat-card>
 
 <mat-menu #user="matMenu">
-  <button mat-menu-item (click)="action()">Editar detalles</button>
-  <button mat-menu-item (click)="action()">Ver métricas</button>
-  <button mat-menu-item (click)="action()">Dar de baja</button>
+  <ng-content></ng-content>
 </mat-menu>
 
 <ng-template #mobile>

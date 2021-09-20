@@ -13,13 +13,23 @@
     ></app-list-alert>
     <ng-container *ngFor="let item of cardData; index as i">
       <app-project-card
+        [id]="item.id"
         [image]="item.image"
         [title]="item.title"
         [subtitle]="item.subtitle"
         [description]="item.description"
         [status]="item.status"
         [visibility]="item.visibility"
-      ></app-project-card>
+      >
+        <button mat-menu-item (click)="action()">Editar detalles</button>
+        <button mat-menu-item (click)="action()">Ver métricas</button>
+        <button mat-menu-item *ngIf="item.visibility === 'PUBLIC'" (click)="setProjectPrivate()">
+          Dar de baja
+        </button>
+        <button mat-menu-item *ngIf="item.visibility === 'PRIVATE'" (click)="setProjectPublic()">
+          Dar de alta
+        </button>
+      </app-project-card>
     </ng-container>
   </mat-list>
 </app-modal-container>

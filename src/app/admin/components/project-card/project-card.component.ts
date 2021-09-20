@@ -3,10 +3,11 @@ import { GetProjectsResponse } from 'src/app/shared/models/api'
 import { LayoutService } from 'src/app/shared/services/layout/layout.service'
 
 export interface CardData {
-  image: string
-  title: string
+  id: GetProjectsResponse['id']
+  image: GetProjectsResponse['coverPhotoURL']
+  title: GetProjectsResponse['name']
   subtitle: string
-  description: string
+  description: GetProjectsResponse['description']
   status: GetProjectsResponse['status']
   visibility: GetProjectsResponse['visibility']
 }
@@ -16,17 +17,14 @@ export interface CardData {
   templateUrl: './project-card.component.html',
   styleUrls: ['./project-card.component.css'],
 })
-export class ProjectCardComponent {
-  @Input() image!: string
-  @Input() title!: string
-  @Input() subtitle!: string
-  @Input() description!: string
-  @Input() status!: GetProjectsResponse['status']
-  @Input() visibility!: GetProjectsResponse['visibility']
+export class ProjectCardComponent implements CardData {
+  @Input() id!: CardData['id']
+  @Input() image!: CardData['image']
+  @Input() title!: CardData['title']
+  @Input() subtitle!: CardData['subtitle']
+  @Input() description!: CardData['description']
+  @Input() status!: CardData['status']
+  @Input() visibility!: CardData['visibility']
 
   constructor(public layout: LayoutService) {}
-
-  action(): void {
-    console.log('Works')
-  }
 }

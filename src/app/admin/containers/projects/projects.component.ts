@@ -39,17 +39,15 @@ export class ProjectsComponent implements OnInit {
   }
 
   setCardData(project: GetProjectsResponse) {
-    return [
-      ...this.cardData,
-      {
-        image: project.coverPhotoURL,
-        title: project.name,
-        subtitle: `${project.locality} - ${project.province}`,
-        description: project.description,
-        status: project.status,
-        visibility: project.visibility,
-      },
-    ]
+    return {
+      id: project.id,
+      image: project.coverPhotoURL,
+      title: project.name,
+      subtitle: `${project.locality} - ${project.province}`,
+      description: project.description,
+      status: project.status,
+      visibility: project.visibility,
+    }
   }
 
   getProjects(filter: 'all' | 'finished' | 'inProgress' | 'public' | 'private') {
@@ -62,7 +60,18 @@ export class ProjectsComponent implements OnInit {
     }
     this.cardData = []
     return filters[filter].subscribe((projects) =>
-      projects.map((project) => (this.cardData = this.setCardData(project))),
+      projects.forEach((project) => this.cardData.push(this.setCardData(project))),
     )
+  }
+
+  action(): void {
+    console.log('Works')
+  }
+
+  setProjectPrivate(): void {
+    this.projects.setProjectVisibility('1', 'private').catch(() => this.getProjects('all'))
+  }
+  setProjectPublic(): void {
+    this.projects.setProjectVisibility('1', 'public').catch(() => this.getProjects('all'))
   }
 }
