@@ -1,5 +1,10 @@
 <app-modal-container>
   <app-list-header title="Proyectos" [buttons]="buttonsData">
+    <button mat-menu-item (click)="getProjects('all')">
+      <p>Todos los proyectos</p>
+    </button>
+    <mat-divider></mat-divider>
+
     <button mat-menu-item (click)="getProjects('finished')">Proyectos finalizados</button>
     <button mat-menu-item (click)="getProjects('inProgress')">Proyectos en curso</button>
     <button mat-menu-item (click)="getProjects('public')">Proyectos en alta</button>
@@ -23,10 +28,18 @@
       >
         <button mat-menu-item (click)="action()">Editar detalles</button>
         <button mat-menu-item (click)="action()">Ver métricas</button>
-        <button mat-menu-item *ngIf="item.visibility === 'PUBLIC'" (click)="setProjectPrivate()">
+        <button
+          mat-menu-item
+          *ngIf="item.visibility === 'PUBLIC'"
+          (click)="setProjectPrivate(item.id.toString())"
+        >
           Dar de baja
         </button>
-        <button mat-menu-item *ngIf="item.visibility === 'PRIVATE'" (click)="setProjectPublic()">
+        <button
+          mat-menu-item
+          *ngIf="item.visibility === 'PRIVATE'"
+          (click)="setProjectPublic(item.id.toString())"
+        >
           Dar de alta
         </button>
       </app-project-card>

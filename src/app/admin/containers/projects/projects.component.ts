@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Component, OnInit } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
+import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
 import { GetProjectsResponse } from 'src/app/shared/models/api'
+import { Project } from 'src/app/shared/models/project'
 import { ButtonData } from '../../components/list-header/list-header.component'
 import { CardData } from '../../components/project-card/project-card.component'
 import { ProjectsService } from '../../services/admins/projects/projects.service'
@@ -32,7 +35,7 @@ export class ProjectsComponent implements OnInit {
 
   cardData: CardData[] = []
 
-  constructor(private projects: ProjectsService) {}
+  constructor(private projects: ProjectsService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getProjects('all')
@@ -68,10 +71,34 @@ export class ProjectsComponent implements OnInit {
     console.log('Works')
   }
 
-  setProjectPrivate(): void {
-    this.projects.setProjectVisibility('1', 'private').catch(() => this.getProjects('all'))
+  async setProjectPrivate(id: Project['id']): Promise<void> {
+    const isApproved = (await this.dialog
+      .open<DialogComponent, DialogData>(DialogComponent, {
+        data: {
+          actions: ['Cancelar', 'Dar de baja'],
+          title: null,
+          description: '¿Estás seguro de dar de baja este proyecto?',
+        },
+      })
+      .afterClosed()
+      .toPromise()) as boolean
+
+    if (isApproved)
+      this.projects.setProjectVisibility(id, 'private').catch(() => this.getProjects('all'))
   }
-  setProjectPublic(): void {
-    this.projects.setProjectVisibility('1', 'public').catch(() => this.getProjects('all'))
+  async setProjectPublic(id: Project['id']): Promise<void> {
+    const isApproved = (await this.dialog
+      .open<DialogComponent, DialogData>(DialogComponent, {
+        data: {
+          actions: ['Cancelar', 'Dar de alta'],
+          title: null,
+          description: '¿Estás seguro de dar de alta este proyecto?',
+        },
+      })
+      .afterClosed()
+      .toPromise()) as boolean
+
+    if (isApproved)
+      this.projects.setProjectVisibility(id, 'public').catch(() => this.getProjects('all'))
   }
 }
