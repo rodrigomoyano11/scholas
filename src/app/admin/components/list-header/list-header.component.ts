@@ -4,7 +4,7 @@ export interface ButtonData {
   label: string
   icon: string
   action: {
-    type: 'link' | 'button'
+    type: 'link' | 'button' | 'menu'
     callback: () => string | void
   }
 }
