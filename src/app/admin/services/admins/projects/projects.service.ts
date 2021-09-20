@@ -9,24 +9,19 @@ import { environment } from 'src/environments/environment'
   providedIn: 'root',
 })
 export class ProjectsService {
-  constructor(private http: HttpClient) {}
-
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  selectParamsOptions() {
-    const options = {
-      status: {
-        started: 'STARTED',
-        inProgress: 'IN_PROGRESS',
-        finished: 'FINISHED',
-      },
-      visibility: {
-        public: 'PUBLIC',
-        private: 'PRIVATE',
-      },
-    }
-
-    return options
+  paramsOptions = {
+    status: {
+      started: 'STARTED',
+      inProgress: 'IN_PROGRESS',
+      finished: 'FINISHED',
+    },
+    visibility: {
+      public: 'PUBLIC',
+      private: 'PRIVATE',
+    },
   }
+
+  constructor(private http: HttpClient) {}
 
   getProject(id: Project['id']): Observable<GetProjectsResponse> {
     return this.http.get<GetProjectsResponse>(`${environment.apiUrl}/projects/${id}`)
@@ -36,10 +31,10 @@ export class ProjectsService {
     status?: Project['status'],
     visibility?: Project['visibility'],
   ): Observable<GetProjectsResponse[]> {
-    const params = new HttpParams()
+    let params = new HttpParams({})
 
-    status && params.set(status, this.selectParamsOptions().status[status])
-    visibility && params.set(visibility, this.selectParamsOptions().visibility[visibility])
+    if (status) params = params.set('status', this.paramsOptions.status[status])
+    if (visibility) params = params.set('visibility', this.paramsOptions.visibility[visibility])
 
     return this.http.get<GetProjectsResponse[]>(
       `${environment.apiUrl}/projects?${params.toString()}`,
@@ -50,10 +45,8 @@ export class ProjectsService {
   setProjectVisibility(id: Project['id'], visibility: Project['visibility']): Promise<Object> {
     return this.http
       .put(`${environment.apiUrl}/projects/visibility/${id}`, {
-        visibility: this.selectParamsOptions().visibility[visibility],
+        visibility: this.paramsOptions.visibility[visibility],
       })
       .toPromise()
   }
 }
-
-/* {{apiUrl}}/projects/:id */
