@@ -1,6 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
+import { Router } from '@angular/router'
 import { Observable } from 'rxjs'
+import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
 import { CreateProjectRequest, GetProjectsResponse } from 'src/app/shared/models/api'
 import { Project } from 'src/app/shared/models/project'
 import { environment } from 'src/environments/environment'
@@ -32,34 +35,50 @@ export class ProjectsService {
     },
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog) {}
 
-  createProject({
+  async createProject({
     name,
     description,
     locality,
     province,
     targetAmount,
     video,
-  }: CreateProjectData): Observable<CreateProjectRequest> {
-    return this.http.post<CreateProjectRequest>(`${environment.apiUrl}/projects`, {
-      name,
-      description,
-      visibility: 'PUBLIC',
-      targetAmount,
-      currentAmount: 0,
-      locality,
-      province,
-      coverPhotoURL: 'https://i.ytimg.com/vi/SJk607lIjZg/maxresdefault.jpg',
-      photos: [
-        'https://i.ytimg.com/vi/SJk607lIjZg/maxresdefault.jpg',
-        'https://i.ytimg.com/vi/SJk607lIjZg/maxresdefault.jpg',
-        'https://i.ytimg.com/vi/SJk607lIjZg/maxresdefault.jpg',
-      ],
-      videoURL: video,
-      donorsQuantity: 0,
-      donationsQuantity: 0,
-    })
+  }: CreateProjectData): Promise<void> {
+    await this.http
+      .post<CreateProjectRequest>(`${environment.apiUrl}/projects`, {
+        name,
+        description,
+        visibility: 'PUBLIC',
+        targetAmount,
+        currentAmount: 0,
+        locality,
+        province,
+        coverPhotoURL: 'https://i.ytimg.com/vi/SJk607lIjZg/maxresdefault.jpg',
+        photos: [
+          'https://i.ytimg.com/vi/SJk607lIjZg/maxresdefault.jpg',
+          'https://i.ytimg.com/vi/SJk607lIjZg/maxresdefault.jpg',
+          'https://i.ytimg.com/vi/SJk607lIjZg/maxresdefault.jpg',
+        ],
+        videoURL: video,
+        donorsQuantity: 0,
+        donationsQuantity: 0,
+      })
+      .toPromise()
+
+    await this.dialog
+      .open<DialogComponent, DialogData>(DialogComponent, {
+        data: {
+          actions: [null, 'Cerrar'],
+          title: 'Alta de proyecto completada',
+          description: 'El proceso de alta de proyecto ha sido completado exitosamente',
+          icon: 'check_circle',
+        },
+      })
+      .afterClosed()
+      .toPromise()
+
+    await this.router.navigate(['/admin/projects'])
   }
 
   getProject(id: Project['id']): Observable<GetProjectsResponse> {
