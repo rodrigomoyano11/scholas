@@ -42,3 +42,45 @@
 .project-data-form__submit {
   width: 50%;
 }
+
+.img__container {
+  width: 100%;
+  padding-bottom: 1.5rem;
+
+  color: rgb(100, 100, 100);
+}
+
+.img__title {
+  padding-bottom: 0.5rem;
+
+  color: rgb(90, 90, 90);
+
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.img__heading {
+  padding-top: 0.5rem;
+  padding-bottom: 0.25rem;
+
+  font-size: 14px;
+}
+
+.img__images {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.img__action {
+  margin: 2rem;
+
+  color: rgb(150, 150, 150);
+}
+
+.img__note {
+  margin-top: 0.5rem;
+
+  font-size: 12px;
+}

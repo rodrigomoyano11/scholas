@@ -23,8 +23,8 @@ export class ProjectDataFormComponent implements OnInit {
       locality: [{ value: '', disabled: !this.localityHasData }, [Validators.required]],
       description: ['', [Validators.required]],
       targetAmount: ['', [Validators.required]],
-      coverPhoto: ['', [Validators.required]],
-      photos: ['', [Validators.required]],
+      // coverPhoto: ['', [Validators.required]],
+      // photos: ['', [Validators.required]],
       video: ['', [Validators.required]],
     })
   }
