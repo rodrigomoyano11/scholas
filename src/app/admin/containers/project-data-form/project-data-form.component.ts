@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { LocationService } from 'src/app/auth/services/location.service'
+import { ProjectsService } from '../../services/admins/projects/projects.service'
+import { ValidationService } from '../../services/validation/validation.service'
 
 @Component({
   selector: 'app-project-data-form',
@@ -16,16 +18,24 @@ export class ProjectDataFormComponent implements OnInit {
   provinceHasData = false
   localityHasData = false
 
-  constructor(private fb: FormBuilder, private locationService: LocationService) {
+  constructor(
+    private projects: ProjectsService,
+    private fb: FormBuilder,
+    private locationService: LocationService,
+    private validation: ValidationService,
+  ) {
     this.projectDataForm = this.fb.group({
       name: ['', [Validators.required]],
       province: [{ value: '', disabled: !this.provinceHasData }, [Validators.required]],
       locality: [{ value: '', disabled: !this.localityHasData }, [Validators.required]],
       description: ['', [Validators.required]],
-      targetAmount: ['', [Validators.required]],
+      targetAmount: [
+        '',
+        [Validators.required, validation.isNumber(), validation.isValidTargetAmount()],
+      ],
       // coverPhoto: ['', [Validators.required]],
       // photos: ['', [Validators.required]],
-      video: ['', [Validators.required]],
+      video: ['', validation.isValidLink()],
     })
   }
   ngOnInit(): void {
@@ -39,8 +49,8 @@ export class ProjectDataFormComponent implements OnInit {
   }
 
   getErrors(controlName: string): string {
-    return 'error ' + controlName
-    // return this.validation.getErrors(this.projectDataForm.controls[controlName])
+    // return 'error ' + controlName
+    return this.validation.getErrors(this.projectDataForm.controls[controlName])
   }
 
   getDepartmentsByProvince(province: string): void {
@@ -57,7 +67,19 @@ export class ProjectDataFormComponent implements OnInit {
   }
 
   submitProjectData(): void {
-    console.log('ProjectDataForm submitted')
-    // void this.auth.sendExtraData(this.projectDataForm.value)
+    console.log(this.projectDataForm.value, 'ProjectDataForm submitted')
+
+    const projectData = {
+      name: this.projectDataForm.controls['name'].value as string,
+      province: this.projectDataForm.controls['province'].value as string,
+      locality: this.projectDataForm.controls['locality'].value as string,
+      description: this.projectDataForm.controls['description'].value as string,
+      targetAmount: this.projectDataForm.controls['targetAmount'].value as string,
+      // coverPhoto: "",
+      // photos: "",
+      video: this.projectDataForm.controls['video'].value as string,
+    }
+
+    void this.projects.createProject(projectData)
   }
 }

@@ -18,6 +18,11 @@
   text-align: center;
 }
 
+.dialog-content {
+  display: flex;
+  justify-content: center;
+}
+
 .dialog-content__description {
   max-width: 14rem;
 

@@ -53,3 +53,18 @@ export interface GetProjectsResponse {
   donationsQuantity: number
   createdDate: string
 }
+
+export interface CreateProjectRequest {
+  name: string
+  description: string
+  visibility: string
+  targetAmount: number
+  currentAmount: number
+  locality: string
+  province: string
+  coverPhotoURL: string
+  photos: string[]
+  videoURL: string
+  donorsQuantity: number
+  donationsQuantity: number
+}
