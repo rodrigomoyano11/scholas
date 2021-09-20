@@ -26,7 +26,6 @@
     "@angular/router": "~12.2.6",
     "firebase": "^9.0.2",
     "google-libphonenumber": "^3.2.23",
-    "ng2-file-upload": "^1.4.0",
     "rxfire": "^6.0.2",
     "rxjs": "~6.6.7",
     "tslib": "^2.3.1",
