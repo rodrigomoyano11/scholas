@@ -1,5 +1,10 @@
 <app-modal-container>
-  <app-list-header title="Proyectos" [buttons]="buttonsData"></app-list-header>
+  <app-list-header title="Proyectos" [buttons]="buttonsData">
+    <button mat-menu-item (click)="getProjects('finished')">Proyectos finalizados</button>
+    <button mat-menu-item (click)="getProjects('inProgress')">Proyectos en curso</button>
+    <button mat-menu-item (click)="getProjects('public')">Proyectos en alta</button>
+    <button mat-menu-item (click)="getProjects('private')">Proyectos dados de baja</button>
+  </app-list-header>
 
   <mat-list class="project-list">
     <app-list-alert
@@ -12,6 +17,8 @@
         [title]="item.title"
         [subtitle]="item.subtitle"
         [description]="item.description"
+        [status]="item.status"
+        [visibility]="item.visibility"
       ></app-project-card>
     </ng-container>
   </mat-list>

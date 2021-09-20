@@ -1,5 +1,6 @@
 import { ExtraData, Location, User } from './user'
 
+// Users
 export interface GetUserResponse {
   birthday: ExtraData['birthday']
   province: Location['province']
@@ -31,4 +32,24 @@ export interface CreateUserResponse {
   email: User['email']
   photoURL: User['photoURL']
   phoneNumber: ExtraData['phoneNumber']
+}
+
+// Projects
+export interface GetProjectsResponse {
+  id: number
+  name: string
+  description: string
+  status: 'STARTED' | 'IN_PROGRESS' | 'FINISHED'
+  visibility: 'PUBLIC' | 'PRIVATE'
+  targetAmount: number
+  currentAmount: number
+  remainingAmount: number
+  locality: string
+  province: string
+  coverPhotoURL: string
+  photos: string[]
+  videoURL: string
+  donorsQuantity: number
+  donationsQuantity: number
+  createdDate: string
 }

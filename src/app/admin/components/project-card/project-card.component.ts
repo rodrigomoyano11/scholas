@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core'
+import { GetProjectsResponse } from 'src/app/shared/models/api'
 import { LayoutService } from 'src/app/shared/services/layout/layout.service'
 
 export interface CardData {
@@ -6,6 +7,8 @@ export interface CardData {
   title: string
   subtitle: string
   description: string
+  status: GetProjectsResponse['status']
+  visibility: GetProjectsResponse['visibility']
 }
 
 @Component({
@@ -18,6 +21,8 @@ export class ProjectCardComponent {
   @Input() title!: string
   @Input() subtitle!: string
   @Input() description!: string
+  @Input() status!: GetProjectsResponse['status']
+  @Input() visibility!: GetProjectsResponse['visibility']
 
   constructor(public layout: LayoutService) {}
 

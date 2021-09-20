@@ -3,7 +3,9 @@
     <img *ngIf="layout.isDesktop$ | async; else mobile" mat-card-md-image [src]="image" />
   </div>
   <div class="card__caption">
-    <span *ngIf="(layout.isDesktop$ | async) !== true" class="card__status--secondary mat-body-2"
+    <span
+      *ngIf="visibility === 'PRIVATE' && (layout.isDesktop$ | async) === true"
+      class="card__status--secondary mat-body-2"
       >Dado de baja</span
     >
     <div class="card__header-info">
@@ -12,12 +14,16 @@
           <mat-card-title class="card__title">{{ title }}</mat-card-title>
           <mat-card-subtitle class="card__subtitle">{{ subtitle }}</mat-card-subtitle>
         </div>
-        <span *ngIf="(layout.isDesktop$ | async) === true" class="card__status--primary mat-body-2"
+        <span
+          *ngIf="visibility === 'PRIVATE' && (layout.isDesktop$ | async) === true"
+          class="card__status--primary mat-body-2"
           >Dado de baja</span
         >
       </div>
       <mat-card-actions class="card__actions">
-        <button mat-icon-button [matMenuTriggerFor]="user"><mat-icon>more_vert</mat-icon></button>
+        <button mat-icon-button [matMenuTriggerFor]="user" xPosition="before">
+          <mat-icon>more_vert</mat-icon>
+        </button>
       </mat-card-actions>
     </div>
 
