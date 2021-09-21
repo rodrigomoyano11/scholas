@@ -14,8 +14,8 @@ interface CreateProjectData {
   locality: string
   description: string
   targetAmount: string
-  // coverPhoto: "",
-  // photos: "",
+  coverPhoto: string
+  photos: string[]
   video: string
 }
 
@@ -43,8 +43,11 @@ export class ProjectsService {
     locality,
     province,
     targetAmount,
+    coverPhoto,
+    photos,
     video,
   }: CreateProjectData): Promise<void> {
+    console.log(name, description, locality, province, targetAmount, coverPhoto, photos, video)
     await this.http
       .post<CreateProjectRequest>(`${environment.apiUrl}/projects`, {
         name,
@@ -54,12 +57,8 @@ export class ProjectsService {
         currentAmount: 0,
         locality,
         province,
-        coverPhotoURL: 'https://i.ytimg.com/vi/SJk607lIjZg/maxresdefault.jpg',
-        photos: [
-          'https://i.ytimg.com/vi/SJk607lIjZg/maxresdefault.jpg',
-          'https://i.ytimg.com/vi/SJk607lIjZg/maxresdefault.jpg',
-          'https://i.ytimg.com/vi/SJk607lIjZg/maxresdefault.jpg',
-        ],
+        coverPhotoURL: coverPhoto,
+        photos,
         videoURL: video,
         donorsQuantity: 0,
         donationsQuantity: 0,

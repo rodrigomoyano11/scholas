@@ -1,0 +1,22 @@
+<div class="container">
+  <button class="delete-image" *ngIf="image" type="button" mat-icon-button (click)="deleteImage()">
+    <mat-icon class="delete-image__icon">close</mat-icon>
+  </button>
+  <img *ngIf="image" class="image" [src]="image" alt="Imagen subida por el usuario" />
+  <button
+    *ngIf="!image"
+    type="button"
+    class="upload-image"
+    mat-icon-button
+    (click)="fileInput.click()"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+<input
+  #fileInput
+  type="file"
+  class="file-input"
+  (change)="onFileChange($event)"
+  accept="image/jpeg"
+/>

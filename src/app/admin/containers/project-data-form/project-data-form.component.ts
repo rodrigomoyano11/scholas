@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { LocationService } from 'src/app/auth/services/location.service'
 import { ProjectsService } from '../../services/admins/projects/projects.service'
@@ -8,6 +8,7 @@ import { ValidationService } from '../../services/validation/validation.service'
   selector: 'app-project-data-form',
   templateUrl: './project-data-form.component.html',
   styleUrls: ['./project-data-form.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectDataFormComponent implements OnInit {
   projectDataForm: FormGroup
@@ -18,11 +19,15 @@ export class ProjectDataFormComponent implements OnInit {
   provinceHasData = false
   localityHasData = false
 
+  photos: (string | null)[] = [null, null, null, null, null]
+
   constructor(
-    private projects: ProjectsService,
     private fb: FormBuilder,
+
+    private projects: ProjectsService,
     private locationService: LocationService,
     private validation: ValidationService,
+    private cd: ChangeDetectorRef,
   ) {
     this.projectDataForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -33,8 +38,8 @@ export class ProjectDataFormComponent implements OnInit {
         '',
         [Validators.required, validation.isNumber(), validation.isValidTargetAmount()],
       ],
-      // coverPhoto: ['', [Validators.required]],
-      // photos: ['', [Validators.required]],
+      coverPhoto: ['', [Validators.required]],
+      photos: ['', [Validators.required]],
       video: ['', validation.isValidLink()],
     })
   }
@@ -48,11 +53,12 @@ export class ProjectDataFormComponent implements OnInit {
     })
   }
 
+  // Error handler
   getErrors(controlName: string): string {
-    // return 'error ' + controlName
     return this.validation.getErrors(this.projectDataForm.controls[controlName])
   }
 
+  // General
   getDepartmentsByProvince(province: string): void {
     this.locationService.locations.subscribe((locations) => {
       const control = this.projectDataForm.controls['locality']
@@ -67,7 +73,10 @@ export class ProjectDataFormComponent implements OnInit {
   }
 
   submitProjectData(): void {
-    console.log(this.projectDataForm.value, 'ProjectDataForm submitted')
+    const filteredPhotos = this.photos.filter((photo) => photo !== null)
+    this.projectDataForm.patchValue({
+      photos: filteredPhotos,
+    })
 
     const projectData = {
       name: this.projectDataForm.controls['name'].value as string,
@@ -75,11 +84,26 @@ export class ProjectDataFormComponent implements OnInit {
       locality: this.projectDataForm.controls['locality'].value as string,
       description: this.projectDataForm.controls['description'].value as string,
       targetAmount: this.projectDataForm.controls['targetAmount'].value as string,
-      // coverPhoto: "",
-      // photos: "",
+      coverPhoto: this.projectDataForm.controls['coverPhoto'].value as string,
+      photos: this.projectDataForm.controls['photos'].value as string[],
       video: this.projectDataForm.controls['video'].value as string,
     }
 
     void this.projects.createProject(projectData)
+  }
+
+  // Photos
+  setCoverPhoto(PhotoInBase64: string): void {
+    this.projectDataForm.patchValue({
+      coverPhoto: PhotoInBase64,
+    })
+  }
+
+  setPhotos(PhotoInBase64: string, i: number): void {
+    this.photos[i] = PhotoInBase64
+  }
+
+  deletePhoto(i: number): void {
+    this.photos[i] = null
   }
 }

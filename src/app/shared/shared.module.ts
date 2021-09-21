@@ -17,6 +17,7 @@ import { UserProfileMenuComponent } from './components/user-profile-menu/user-pr
 import { MainMenuComponent } from './components/main-menu/main-menu.component'
 import { ModalContainerComponent } from './components/modal-container/modal-container.component'
 import { DialogComponent } from './components/dialog/dialog.component'
+import { UploadImageComponent } from './components/upload-image/upload-image.component'
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { DialogComponent } from './components/dialog/dialog.component'
     MainMenuComponent,
     ModalContainerComponent,
     DialogComponent,
+    UploadImageComponent,
   ],
   imports: [
     CommonModule,
@@ -41,6 +43,6 @@ import { DialogComponent } from './components/dialog/dialog.component'
     MatDialogModule,
     LayoutModule,
   ],
-  exports: [NotFoundComponent, LayoutComponent, ModalContainerComponent],
+  exports: [NotFoundComponent, LayoutComponent, ModalContainerComponent, UploadImageComponent],
 })
 export class SharedModule {}
