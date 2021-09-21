@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
 import { Observable, of } from 'rxjs'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
+import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
 import { GetUsersResponse } from 'src/app/shared/models/api'
 import { User } from 'src/app/shared/models/user'
 import { environment } from 'src/environments/environment'
@@ -13,7 +15,7 @@ export class AdminsService {
   users$: Observable<GetUsersResponse>
   admins$: Observable<GetUsersResponse>
 
-  constructor(private http: HttpClient, private auth: AuthService) {
+  constructor(private http: HttpClient, private auth: AuthService, private dialog: MatDialog) {
     this.users$ = of([])
     this.admins$ = of([])
   }
@@ -40,7 +42,18 @@ export class AdminsService {
     void this.auth.setPermissions('admin', uid).then(() => this.getAdmins())
   }
 
-  deleteAdmin(uid: User['uid']): void {
-    void this.auth.setPermissions('donor', uid).then(() => this.getAdmins())
+  async deleteAdmin(uid: User['uid']): Promise<void> {
+    const isApproved = (await this.dialog
+      .open<DialogComponent, DialogData>(DialogComponent, {
+        data: {
+          actions: ['No', 'Sí, eliminar'],
+          title: null,
+          description: '¿Estás seguro de eliminar a este administrador?',
+        },
+      })
+      .afterClosed()
+      .toPromise()) as boolean
+
+    if (isApproved) void this.auth.setPermissions('donor', uid).then(() => this.getAdmins())
   }
 }
