@@ -10,4 +10,5 @@ export class ListItemComponent {
   @Input() icon = 'add'
   @Input() title!: string | null
   @Input() subtitle!: string | null
+  @Input() disabled = false
 }

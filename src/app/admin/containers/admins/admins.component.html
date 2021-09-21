@@ -11,6 +11,7 @@
         [title]="admin.displayName"
         [subtitle]="admin.email"
         icon="delete_outline"
+        [disabled]="((adminsService.admins$ | async)?.length ?? 1) <= 1"
         (clickEvent)="adminsService.deleteAdmin(admin.uid)"
       ></app-list-item>
     </ng-container>
