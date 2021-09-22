@@ -21,8 +21,8 @@ import { MatCardModule } from '@angular/material/card'
 import { MatMenuModule } from '@angular/material/menu'
 import { ListAlertComponent } from './components/list-alert/list-alert.component'
 import { ProjectCardComponent } from './components/project-card/project-card.component'
-import { ProjectDataFormComponent } from './containers/project-data-form/project-data-form.component'
 import { MatSelectModule } from '@angular/material/select'
+import { CreateProjectFormComponent } from './containers/create-project-form/create-project-form.component'
 
 @NgModule({
   declarations: [
@@ -37,7 +37,7 @@ import { MatSelectModule } from '@angular/material/select'
     ListItemComponent,
     ListAlertComponent,
     ProjectCardComponent,
-    ProjectDataFormComponent,
+    CreateProjectFormComponent,
   ],
   imports: [
     CommonModule,

@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { NotFoundComponent } from '../shared/containers/not-found/not-found.component'
 import { AdminsComponent } from './containers/admins/admins.component'
+import { CreateProjectFormComponent } from './containers/create-project-form/create-project-form.component'
 import { DonationsComponent } from './containers/donations/donations.component'
 import { DonorsComponent } from './containers/donors/donors.component'
 import { HomeComponent } from './containers/home/home.component'
 import { NewAdminComponent } from './containers/new-admin/new-admin.component'
 import { NewsComponent } from './containers/news/news.component'
-import { ProjectDataFormComponent } from './containers/project-data-form/project-data-form.component'
+
 import { ProjectsComponent } from './containers/projects/projects.component'
 
 const routes: Routes = [
@@ -21,7 +22,7 @@ const routes: Routes = [
       { path: 'donations', component: DonationsComponent },
       { path: 'news', component: NewsComponent },
       { path: 'projects', component: ProjectsComponent },
-      { path: 'new-project', component: ProjectDataFormComponent },
+      { path: 'new-project', component: CreateProjectFormComponent },
     ],
   },
   { path: '**', component: NotFoundComponent },
