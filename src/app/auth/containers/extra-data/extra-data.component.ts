@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from '../../services/auth/auth.service'
 import { LocationService } from '../../services/location.service'
 import { ValidationService } from '../../services/validation/validation.service'
@@ -15,17 +15,16 @@ export class ExtraDataComponent implements OnInit {
   minDate: Date
   maxDate: Date
 
-  provinces: { value: string }[] = []
-  departments: { value: string }[] = []
-
-  provinceHasData = false
-  departmentHasData = false
+  provinces: string[] = []
+  localities: string[] = []
+  provinceControl: AbstractControl
+  localityControl: AbstractControl
 
   constructor(
     private validation: ValidationService,
     private fb: FormBuilder,
     private auth: AuthService,
-    private locationService: LocationService,
+    public location: LocationService,
   ) {
     const currentYear = new Date().getFullYear()
     this.minDate = new Date(currentYear - 100, 0, 1)
@@ -34,32 +33,33 @@ export class ExtraDataComponent implements OnInit {
     this.extraDataForm = this.fb.group({
       birthday: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required, validation.isValidPhoneNumber()]],
-      province: [{ value: '', disabled: !this.provinceHasData }, [Validators.required]],
-      department: [{ value: '', disabled: !this.departmentHasData }, [Validators.required]],
+      province: ['', [Validators.required]],
+      locality: ['', [Validators.required]],
     })
+
+    this.provinceControl = this.extraDataForm.controls['province']
+    this.localityControl = this.extraDataForm.controls['locality']
   }
 
-  ngOnInit(): void {
-    this.locationService.getLocationData()
-
-    const control = this.extraDataForm.controls['province']
-    this.locationService.locations.subscribe((locations) => {
-      locations.map((location) => (this.provinces = [...this.provinces, { value: location.name }]))
-      !!this.provinces.length ? control.enable() : control.disable()
-    })
+  async ngOnInit(): Promise<void> {
+    this.provinceControl.disable()
+    this.localityControl.disable()
+    await this.getProvinces()
   }
 
-  getDepartmentsByProvince(province: string): void {
-    this.locationService.locations.subscribe((locations) => {
-      const control = this.extraDataForm.controls['department']
-      this.departments = []
-      locations
-        .find((location) => location.name === province)
-        ?.departments.map(
-          (department) => (this.departments = [...this.departments, { value: department }]),
-        )
-      province !== '' && !!this.departments.length ? control.enable() : control.disable()
-    })
+  async getProvinces(): Promise<void> {
+    this.provinces = await this.location.getProvinces()
+    const provinceHasData = !!this.provinces.length
+    provinceHasData && this.provinceControl.enable()
+  }
+
+  async getLocalitiesByProvince(province: string): Promise<void> {
+    this.localityControl.disable()
+
+    this.localities = []
+    this.localities = await this.location.getLocalitiesByProvince(province)
+    const localityHasData = province !== '' && !!this.localities.length
+    localityHasData && this.localityControl.enable()
   }
 
   getErrors(controlName: string): string {

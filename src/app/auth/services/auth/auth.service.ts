@@ -34,7 +34,7 @@ interface ExtraDataSent {
   birthday: string
   phoneNumber: string
   province: string
-  department: string
+  locality: string
 }
 
 @Injectable({
@@ -267,7 +267,7 @@ export class AuthService {
 
   async sendExtraData(extraData: ExtraDataSent): Promise<void> {
     try {
-      const { birthday, phoneNumber, province, department } = extraData
+      const { birthday, phoneNumber, province, locality } = extraData
 
       const { uid, displayName } = await this.user$.pipe(take(1)).toPromise()
 
@@ -275,7 +275,7 @@ export class AuthService {
         displayName,
         birthday: convertDate(birthday),
         province,
-        locality: department,
+        locality,
         phoneNumber: convertPhoneNumber(phoneNumber),
       })
 
