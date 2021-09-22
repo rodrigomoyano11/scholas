@@ -50,27 +50,18 @@
   color: rgb(100, 100, 100);
 }
 
-.img__title {
-  padding-bottom: 0.5rem;
-
-  color: rgb(90, 90, 90);
-
-  font-size: 18px;
-  font-weight: bold;
-}
-
 .img__heading {
+  margin-bottom: 0.25rem;
   padding-top: 0.5rem;
-  padding-bottom: 0.25rem;
 
   font-size: 14px;
+  font-weight: 500;
 }
 
-.img__images {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 1rem;
+.img__description {
+  margin-bottom: 0.25rem;
+
+  font-size: 14px;
 }
 
 .img__action {

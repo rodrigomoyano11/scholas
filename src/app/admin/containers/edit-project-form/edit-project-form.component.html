@@ -57,16 +57,21 @@
     </mat-form-field>
 
     <div class="img__container">
-      <p class="img__title">Imágenes</p>
-
       <p class="img__heading">Foto de Portada</p>
-      <app-upload-image (loadImage)="setCoverPhoto($event)"></app-upload-image>
+      <p class="img__description">Imagen que aparece al principio del proyecto</p>
+      <app-upload-image
+        [initialImages]="coverPhotoData"
+        [maxUploads]="1"
+        (loaded)="setCoverPhoto($event)"
+      ></app-upload-image>
 
-      <p class="img__heading">Imágenes</p>
-      <div class="img__images">
-        <ng-container *ngTemplateOutlet="uploadPhotosCarrousel"></ng-container>
-      </div>
-      <p class="img__note">Usá imágenes con un tamaño de archivo inferior a 5 MB</p>
+      <p class="img__heading">Fotos</p>
+      <p class="img__description">Imágenes aparecen en la galeria del proyecto</p>
+      <app-upload-image
+        [initialImages]="photosData"
+        [maxUploads]="5"
+        (loaded)="setPhotos($event)"
+      ></app-upload-image>
     </div>
 
     <mat-form-field class="project-data-form__field" appearance="outline">
@@ -91,30 +96,3 @@
     </div>
   </form>
 </app-modal-container>
-
-<ng-template #uploadPhotosCarrousel>
-  <app-upload-image
-    (loadImage)="setPhotos($event, 0)"
-    (unloadImage)="deletePhoto(0)"
-  ></app-upload-image>
-  <app-upload-image
-    *ngIf="photos[0] || photos[1]"
-    (loadImage)="setPhotos($event, 1)"
-    (unloadImage)="deletePhoto(1)"
-  ></app-upload-image>
-  <app-upload-image
-    *ngIf="photos[1] || photos[2]"
-    (loadImage)="setPhotos($event, 2)"
-    (unloadImage)="deletePhoto(2)"
-  ></app-upload-image>
-  <app-upload-image
-    *ngIf="photos[2] || photos[3]"
-    (loadImage)="setPhotos($event, 3)"
-    (unloadImage)="deletePhoto(3)"
-  ></app-upload-image>
-  <app-upload-image
-    *ngIf="photos[3] || photos[4]"
-    (loadImage)="setPhotos($event, 4)"
-    (unloadImage)="deletePhoto(4)"
-  ></app-upload-image>
-</ng-template>

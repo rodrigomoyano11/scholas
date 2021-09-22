@@ -1,22 +1,27 @@
-<div class="container">
-  <button class="delete-image" *ngIf="image" type="button" mat-icon-button (click)="deleteImage()">
-    <mat-icon class="delete-image__icon">close</mat-icon>
-  </button>
-  <img *ngIf="image" class="image" [src]="image" alt="Imagen subida por el usuario" />
+<div class="images-carrousel__container">
+  <div class="images-carrousel__item" *ngFor="let image of images; index as i">
+    <button class="button--delete-image" *ngIf="image" type="button" mat-icon-button>
+      <mat-icon (click)="deleteImage(i)">close</mat-icon>
+    </button>
+    <img *ngIf="image" class="image" [src]="image" alt="Imagen subida por el usuario" />
+  </div>
+
   <button
-    *ngIf="!image"
+    *ngIf="images.length < maxUploads"
     type="button"
-    class="upload-image"
+    class="button--upload-image"
     mat-icon-button
-    (click)="fileInput.click()"
+    (click)="FileInput.click()"
   >
     <mat-icon>add</mat-icon>
   </button>
 </div>
+
 <input
-  #fileInput
+  #FileInput
   type="file"
   class="file-input"
-  (change)="onFileChange($event)"
+  (change)="onFilesChange($event)"
   accept="image/jpeg"
+  [multiple]="maxUploads !== 1"
 />

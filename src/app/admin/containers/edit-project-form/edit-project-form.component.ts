@@ -15,12 +15,13 @@ export class EditProjectFormComponent implements OnInit {
 
   selectedProjectId: string | null = this.route.snapshot.paramMap.get('id')
 
-  photos: (string | null)[] = [null, null, null, null, null]
-
   provinces: string[] = []
   localities: string[] = []
   provinceControl: AbstractControl
   localityControl: AbstractControl
+
+  coverPhotoData: string[] = []
+  photosData: string[] = []
 
   constructor(
     private fb: FormBuilder,
@@ -58,6 +59,7 @@ export class EditProjectFormComponent implements OnInit {
   // General
   async setInitialValues(): Promise<void> {
     if (this.selectedProjectId) {
+      console.log(await this.projects.getProject(this.selectedProjectId).toPromise())
       const {
         name,
         province,
@@ -69,14 +71,17 @@ export class EditProjectFormComponent implements OnInit {
         videoURL,
       } = await this.projects.getProject(this.selectedProjectId).toPromise()
 
+      console.log(photos)
+
+      this.coverPhotoData = coverPhotoURL ? [coverPhotoURL] : []
+      this.photosData = photos ?? []
+
       this.editProjectForm.patchValue({
         name,
         province,
         locality,
         description,
         targetAmount,
-        coverPhoto: coverPhotoURL,
-        photos,
         video: videoURL,
       })
     }
@@ -87,18 +92,13 @@ export class EditProjectFormComponent implements OnInit {
   }
 
   submitProjectData(): void {
-    const filteredPhotos = this.photos.filter((photo) => photo !== null)
-    this.editProjectForm.patchValue({
-      photos: filteredPhotos,
-    })
-
     const projectData = {
       name: this.editProjectForm.controls['name'].value as string,
       province: this.editProjectForm.controls['province'].value as string,
       locality: this.editProjectForm.controls['locality'].value as string,
       description: this.editProjectForm.controls['description'].value as string,
       targetAmount: this.editProjectForm.controls['targetAmount'].value as string,
-      coverPhoto: this.editProjectForm.controls['coverPhoto'].value as string,
+      coverPhoto: (this.editProjectForm.controls['coverPhoto'].value as string[])[0],
       photos: this.editProjectForm.controls['photos'].value as string[],
       video: this.editProjectForm.controls['video'].value as string,
     }
@@ -129,17 +129,14 @@ export class EditProjectFormComponent implements OnInit {
   }
 
   // Photos
-  setCoverPhoto(PhotoInBase64: string): void {
+  setCoverPhoto(photosInBase64: string[]): void {
     this.editProjectForm.patchValue({
-      coverPhoto: PhotoInBase64,
+      coverPhoto: photosInBase64,
     })
   }
-
-  setPhotos(PhotoInBase64: string, i: number): void {
-    this.photos[i] = PhotoInBase64
-  }
-
-  deletePhoto(i: number): void {
-    this.photos[i] = null
+  setPhotos(photosInBase64: string[]): void {
+    this.editProjectForm.patchValue({
+      photos: photosInBase64,
+    })
   }
 }

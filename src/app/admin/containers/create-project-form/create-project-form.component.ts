@@ -12,8 +12,6 @@ import { ValidationService } from '../../services/validation/validation.service'
 export class CreateProjectFormComponent implements OnInit {
   createProjectForm: FormGroup
 
-  photos: (string | null)[] = [null, null, null, null, null]
-
   provinces: string[] = []
   localities: string[] = []
   provinceControl: AbstractControl
@@ -55,18 +53,13 @@ export class CreateProjectFormComponent implements OnInit {
   }
 
   submitProjectData(): void {
-    const filteredPhotos = this.photos.filter((photo) => photo !== null)
-    this.createProjectForm.patchValue({
-      photos: filteredPhotos,
-    })
-
     const projectData = {
       name: this.createProjectForm.controls['name'].value as string,
       province: this.createProjectForm.controls['province'].value as string,
       locality: this.createProjectForm.controls['locality'].value as string,
       description: this.createProjectForm.controls['description'].value as string,
       targetAmount: this.createProjectForm.controls['targetAmount'].value as string,
-      coverPhoto: this.createProjectForm.controls['coverPhoto'].value as string,
+      coverPhoto: (this.createProjectForm.controls['coverPhoto'].value as string[])[0],
       photos: this.createProjectForm.controls['photos'].value as string[],
       video: this.createProjectForm.controls['video'].value as string,
     }
@@ -91,17 +84,14 @@ export class CreateProjectFormComponent implements OnInit {
   }
 
   // Photos
-  setCoverPhoto(PhotoInBase64: string): void {
+  setCoverPhoto(photosInBase64: string[]): void {
     this.createProjectForm.patchValue({
-      coverPhoto: PhotoInBase64,
+      coverPhoto: photosInBase64,
     })
   }
-
-  setPhotos(PhotoInBase64: string, i: number): void {
-    this.photos[i] = PhotoInBase64
-  }
-
-  deletePhoto(i: number): void {
-    this.photos[i] = null
+  setPhotos(photosInBase64: string[]): void {
+    this.createProjectForm.patchValue({
+      photos: photosInBase64,
+    })
   }
 }
