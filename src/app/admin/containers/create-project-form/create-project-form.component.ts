@@ -49,21 +49,7 @@ export class CreateProjectFormComponent implements OnInit {
     await this.getProvinces()
   }
 
-  async getProvinces(): Promise<void> {
-    this.provinces = await this.location.getProvinces()
-    const provinceHasData = !!this.provinces.length
-    provinceHasData && this.provinceControl.enable()
-  }
-
-  async getLocalitiesByProvince(province: string): Promise<void> {
-    this.localityControl.disable()
-
-    this.localities = []
-    this.localities = await this.location.getLocalitiesByProvince(province)
-    const localityHasData = province !== '' && !!this.localities.length
-    localityHasData && this.localityControl.enable()
-  }
-
+  // General
   getErrors(controlName: string): string {
     return this.validation.getErrors(this.createProjectForm.controls[controlName])
   }
@@ -86,6 +72,22 @@ export class CreateProjectFormComponent implements OnInit {
     }
 
     void this.projects.createProject(projectData)
+  }
+
+  // Location
+  async getProvinces(): Promise<void> {
+    this.provinces = await this.location.getProvinces()
+    const provinceHasData = !!this.provinces.length
+    provinceHasData && this.provinceControl.enable()
+  }
+
+  async getLocalitiesByProvince(province: string): Promise<void> {
+    this.localityControl.disable()
+
+    this.localities = []
+    this.localities = await this.location.getLocalitiesByProvince(province)
+    const localityHasData = province !== '' && !!this.localities.length
+    localityHasData && this.localityControl.enable()
   }
 
   // Photos
