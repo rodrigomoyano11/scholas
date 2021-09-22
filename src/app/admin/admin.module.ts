@@ -23,6 +23,7 @@ import { ListAlertComponent } from './components/list-alert/list-alert.component
 import { ProjectCardComponent } from './components/project-card/project-card.component'
 import { MatSelectModule } from '@angular/material/select'
 import { CreateProjectFormComponent } from './containers/create-project-form/create-project-form.component'
+import { EditProjectFormComponent } from './containers/edit-project-form/edit-project-form.component'
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { CreateProjectFormComponent } from './containers/create-project-form/cre
     ListAlertComponent,
     ProjectCardComponent,
     CreateProjectFormComponent,
+    EditProjectFormComponent,
   ],
   imports: [
     CommonModule,

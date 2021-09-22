@@ -26,7 +26,9 @@
         [status]="item.status"
         [visibility]="item.visibility"
       >
-        <button mat-menu-item (click)="action()">Editar detalles</button>
+        <button mat-menu-item [routerLink]="['/admin/edit-project', item.id]">
+          Editar detalles
+        </button>
         <button mat-menu-item (click)="action()">Ver métricas</button>
         <button
           mat-menu-item

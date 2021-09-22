@@ -5,6 +5,7 @@ import { AdminsComponent } from './containers/admins/admins.component'
 import { CreateProjectFormComponent } from './containers/create-project-form/create-project-form.component'
 import { DonationsComponent } from './containers/donations/donations.component'
 import { DonorsComponent } from './containers/donors/donors.component'
+import { EditProjectFormComponent } from './containers/edit-project-form/edit-project-form.component'
 import { HomeComponent } from './containers/home/home.component'
 import { NewAdminComponent } from './containers/new-admin/new-admin.component'
 import { NewsComponent } from './containers/news/news.component'
@@ -23,6 +24,7 @@ const routes: Routes = [
       { path: 'news', component: NewsComponent },
       { path: 'projects', component: ProjectsComponent },
       { path: 'new-project', component: CreateProjectFormComponent },
+      { path: 'edit-project/:id', component: EditProjectFormComponent },
     ],
   },
   { path: '**', component: NotFoundComponent },
