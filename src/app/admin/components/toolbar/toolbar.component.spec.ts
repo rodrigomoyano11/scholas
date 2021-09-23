@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ListHeaderComponent } from './list-header.component'
+import { ToolbarComponent } from './toolbar.component'
 
-describe('ListHeaderComponent', () => {
-  let component: ListHeaderComponent
-  let fixture: ComponentFixture<ListHeaderComponent>
+describe('ToolbarComponent', () => {
+  let component: ToolbarComponent
+  let fixture: ComponentFixture<ToolbarComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ListHeaderComponent],
+      declarations: [ToolbarComponent],
     }).compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListHeaderComponent)
+    fixture = TestBed.createComponent(ToolbarComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

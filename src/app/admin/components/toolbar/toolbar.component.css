@@ -16,13 +16,25 @@
   margin: 0;
 }
 
-.buttons {
+.left-buttons {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.right-buttons {
   display: flex;
   justify-content: flex-end;
+}
+
+.no-dense {
   gap: 1rem;
 }
 
-.button {
+.dense {
+  gap: 0.5rem;
+}
+
+.button--primary {
   border-radius: 0.25rem;
 
   background-color: #009993;

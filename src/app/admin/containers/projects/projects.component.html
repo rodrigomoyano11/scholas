@@ -1,5 +1,5 @@
 <app-modal-container>
-  <app-list-header title="Proyectos" [buttons]="buttonsData">
+  <app-toolbar [toolbarData]="toolbarData">
     <button type="button" mat-menu-item (click)="getProjects('all')">
       <p>Todos los proyectos</p>
     </button>
@@ -15,7 +15,7 @@
     <button type="button" mat-menu-item (click)="getProjects('private')">
       Proyectos dados de baja
     </button>
-  </app-list-header>
+  </app-toolbar>
 
   <mat-list class="project-list">
     <app-list-alert

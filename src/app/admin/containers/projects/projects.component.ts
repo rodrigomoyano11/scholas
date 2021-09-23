@@ -4,8 +4,8 @@ import { Router } from '@angular/router'
 import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
 import { GetProjectResponse } from 'src/app/shared/models/Api'
 import { Project } from 'src/app/shared/models/Project'
-import { ButtonData } from '../../components/list-header/list-header.component'
 import { CardData } from '../../components/project-card/project-card.component'
+import { ToolbarData } from '../../components/toolbar/toolbar.component'
 import { ProjectsService } from '../../services/admins/projects/projects.service'
 
 @Component({
@@ -14,24 +14,30 @@ import { ProjectsService } from '../../services/admins/projects/projects.service
   styleUrls: ['./projects.component.css'],
 })
 export class ProjectsComponent implements OnInit {
-  buttonsData: ButtonData[] = [
-    {
-      label: 'Filtrar proyectos',
-      icon: 'filter_alt',
-      action: {
-        type: 'menu',
-        callback: (): undefined => undefined,
-      },
+  toolbarData: ToolbarData = {
+    title: 'Proyectos',
+    rightButtons: {
+      style: 'primary',
+      data: [
+        {
+          label: 'Filtrar proyectos',
+          icon: 'filter_alt',
+          action: {
+            type: 'menu',
+            click: (): undefined => undefined,
+          },
+        },
+        {
+          label: 'Agregar nuevo proyecto',
+          icon: 'add',
+          action: {
+            type: 'button',
+            click: (): void => void this.router.navigate(['/admin/new-project']),
+          },
+        },
+      ],
     },
-    {
-      label: 'Agregar nuevo proyecto',
-      icon: 'add',
-      action: {
-        type: 'link',
-        callback: (): string => '/admin/new-project',
-      },
-    },
-  ]
+  }
 
   cardData: CardData[] = []
 

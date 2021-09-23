@@ -14,7 +14,6 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
 import { ReactiveFormsModule } from '@angular/forms'
 import { MatInputModule } from '@angular/material/input'
-import { ListHeaderComponent } from './components/list-header/list-header.component'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { ListItemComponent } from './components/list-item/list-item.component'
 import { MatCardModule } from '@angular/material/card'
@@ -25,6 +24,7 @@ import { MatSelectModule } from '@angular/material/select'
 import { CreateProjectFormComponent } from './containers/create-project-form/create-project-form.component'
 import { EditProjectFormComponent } from './containers/edit-project-form/edit-project-form.component'
 import { ProjectDetailsComponent } from './containers/project-details/project-details.component'
+import { ToolbarComponent } from './components/toolbar/toolbar.component'
 
 @NgModule({
   declarations: [
@@ -35,13 +35,13 @@ import { ProjectDetailsComponent } from './containers/project-details/project-de
     NewsComponent,
     DonationsComponent,
     NewAdminComponent,
-    ListHeaderComponent,
     ListItemComponent,
     ListAlertComponent,
     ProjectCardComponent,
     CreateProjectFormComponent,
     EditProjectFormComponent,
     ProjectDetailsComponent,
+    ToolbarComponent,
   ],
   imports: [
     CommonModule,

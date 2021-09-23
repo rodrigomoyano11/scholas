@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
 import { LayoutService } from 'src/app/shared/services/layout/layout.service'
-import { ButtonData } from '../../components/list-header/list-header.component'
+import { ToolbarData } from '../../components/toolbar/toolbar.component'
 import { AdminsService } from '../../services/admins/admins.service'
 
 @Component({
@@ -10,18 +11,28 @@ import { AdminsService } from '../../services/admins/admins.service'
   styleUrls: ['./admins.component.css'],
 })
 export class AdminsComponent implements OnInit {
-  buttonsData: ButtonData[] = [
-    {
-      label: 'Agregar nuevo administrador',
-      icon: 'add',
-      action: {
-        type: 'link',
-        callback: () => '/admin/new-admin',
-      },
+  toolbarData: ToolbarData = {
+    title: 'Administradores',
+    rightButtons: {
+      style: 'primary',
+      data: [
+        {
+          label: 'Agregar nuevo administrador',
+          icon: 'add',
+          action: {
+            type: 'button',
+            click: (): void => void this.router.navigate(['/admin/new-admin']),
+          },
+        },
+      ],
     },
-  ]
+  }
 
-  constructor(public adminsService: AdminsService, public layout: LayoutService) {}
+  constructor(
+    public adminsService: AdminsService,
+    public layout: LayoutService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.adminsService.getAdmins()
