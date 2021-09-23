@@ -32,8 +32,8 @@ export class CreateProjectFormComponent implements OnInit {
         '',
         [Validators.required, validation.isNumber(), validation.isValidTargetAmount()],
       ],
-      coverPhoto: ['', [Validators.required]],
-      photos: ['', [Validators.required]],
+      coverPhoto: [''],
+      photos: [''],
       video: ['', validation.isValidLink()],
     })
 

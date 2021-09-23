@@ -82,8 +82,14 @@
       >
         Cancelar
       </button>
-      <!-- TODO: Agregar atributo disabled -->
-      <button type="submit" class="project-data-form__submit" [color]="'primary'" mat-flat-button>
+
+      <button
+        type="submit"
+        class="project-data-form__submit"
+        [color]="'primary'"
+        [disabled]="!createProjectForm.valid"
+        mat-flat-button
+      >
         Crear proyecto
       </button>
     </div>
