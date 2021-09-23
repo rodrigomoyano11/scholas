@@ -9,6 +9,7 @@
 </div>
 <div mat-dialog-actions class="dialog-actions">
   <button
+    type="button"
     *ngIf="data.actions[0]"
     mat-flat-button
     class="dialog-actions__button"
@@ -17,6 +18,7 @@
     {{ data.actions[0] }}
   </button>
   <button
+    type="button"
     mat-flat-button
     [color]="'primary'"
     class="dialog-actions__button"

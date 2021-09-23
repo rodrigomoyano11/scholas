@@ -1,6 +1,7 @@
 <!-- Mobile Menu -->
 
 <button
+  type="button"
   mat-icon-button
   class="mobile-menu__toggle"
   *ngIf="(layout.isDesktop$ | async) === false"
@@ -17,7 +18,7 @@
         : donorItems
     "
   >
-    <button class="mobile-menu__item" mat-menu-item [routerLink]="item.link">
+    <button type="button" class="mobile-menu__item" mat-menu-item [routerLink]="item.link">
       {{ item.name }}
     </button>
   </ng-container>
@@ -25,29 +26,31 @@
   <!-- Others -->
 
   <mat-divider></mat-divider>
-  <button mat-menu-item [matMenuTriggerFor]="landingMenu">Landing Page</button>
-  <button mat-menu-item [matMenuTriggerFor]="adminMenu">Administración</button>
-  <button mat-menu-item [matMenuTriggerFor]="authMenu">Auth</button>
+  <button type="button" mat-menu-item [matMenuTriggerFor]="landingMenu">Landing Page</button>
+  <button type="button" mat-menu-item [matMenuTriggerFor]="adminMenu">Administración</button>
+  <button type="button" mat-menu-item [matMenuTriggerFor]="authMenu">Auth</button>
 </mat-menu>
 
 <mat-menu #landingMenu="matMenu">
-  <button mat-menu-item [routerLink]="'/landing'">Inicio</button>
-  <button mat-menu-item [routerLink]="'/landing/news'">Noticias</button>
-  <button mat-menu-item [routerLink]="'/landing/projects'">Proyectos</button>
+  <button type="button" mat-menu-item [routerLink]="'/landing'">Inicio</button>
+  <button type="button" mat-menu-item [routerLink]="'/landing/news'">Noticias</button>
+  <button type="button" mat-menu-item [routerLink]="'/landing/projects'">Proyectos</button>
 </mat-menu>
 
 <mat-menu #adminMenu="matMenu">
-  <button mat-menu-item [routerLink]="'/admin'">Inicio</button>
-  <button mat-menu-item [routerLink]="'/admin/projects'">Proyectos</button>
-  <button mat-menu-item [routerLink]="'/admin/news'">Noticias</button>
-  <button mat-menu-item [routerLink]="'/admin/donors'">Donantes</button>
-  <button mat-menu-item [routerLink]="'/admin/admins'">Administradores</button>
+  <button type="button" mat-menu-item [routerLink]="'/admin'">Inicio</button>
+  <button type="button" mat-menu-item [routerLink]="'/admin/projects'">Proyectos</button>
+  <button type="button" mat-menu-item [routerLink]="'/admin/news'">Noticias</button>
+  <button type="button" mat-menu-item [routerLink]="'/admin/donors'">Donantes</button>
+  <button type="button" mat-menu-item [routerLink]="'/admin/admins'">Administradores</button>
 </mat-menu>
 
 <mat-menu #authMenu="matMenu">
-  <button mat-menu-item [routerLink]="'/auth/login'">Iniciar sesión</button>
-  <button mat-menu-item [routerLink]="'/auth/register'">Registrarse</button>
-  <button mat-menu-item [routerLink]="'/auth/forgot-password'">Restablecer contraseña</button>
+  <button type="button" mat-menu-item [routerLink]="'/auth/login'">Iniciar sesión</button>
+  <button type="button" mat-menu-item [routerLink]="'/auth/register'">Registrarse</button>
+  <button type="button" mat-menu-item [routerLink]="'/auth/forgot-password'">
+    Restablecer contraseña
+  </button>
 </mat-menu>
 
 <!-- Desktop Menu -->
@@ -60,7 +63,7 @@
         : donorItems
     "
   >
-    <button class="desktop-menu__item" mat-button [routerLink]="item.link">
+    <button type="button" class="desktop-menu__item" mat-button [routerLink]="item.link">
       {{ item.name }}
     </button>
   </ng-container>

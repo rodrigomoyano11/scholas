@@ -4,8 +4,8 @@
   <div class="buttons">
     <ng-container *ngFor="let item of buttons">
       <button
-        *ngIf="item.action.type === 'link'"
         type="button"
+        *ngIf="item.action.type === 'link'"
         class="button"
         mat-icon-button
         [matTooltip]="item.label"
@@ -15,8 +15,8 @@
       </button>
 
       <button
-        *ngIf="item.action.type === 'button'"
         type="button"
+        *ngIf="item.action.type === 'button'"
         class="button"
         mat-icon-button
         [matTooltip]="item.label"
@@ -26,8 +26,8 @@
       </button>
 
       <button
-        *ngIf="item.action.type === 'menu'"
         type="button"
+        *ngIf="item.action.type === 'menu'"
         class="button"
         mat-icon-button
         [matTooltip]="item.label"
