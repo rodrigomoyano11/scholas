@@ -9,6 +9,7 @@ import { EditProjectFormComponent } from './containers/edit-project-form/edit-pr
 import { HomeComponent } from './containers/home/home.component'
 import { NewAdminComponent } from './containers/new-admin/new-admin.component'
 import { NewsComponent } from './containers/news/news.component'
+import { ProjectDetailsComponent } from './containers/project-details/project-details.component'
 
 import { ProjectsComponent } from './containers/projects/projects.component'
 
@@ -25,6 +26,7 @@ const routes: Routes = [
       { path: 'projects', component: ProjectsComponent },
       { path: 'new-project', component: CreateProjectFormComponent },
       { path: 'edit-project/:id', component: EditProjectFormComponent },
+      { path: 'projects/:id', component: ProjectDetailsComponent },
     ],
   },
   { path: '**', component: NotFoundComponent },

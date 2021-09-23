@@ -11,6 +11,7 @@ export interface CardData {
   description: GetProjectResponse['description']
   status: GetProjectResponse['status']
   visibility: GetProjectResponse['visibility']
+  mainAction: () => unknown
 }
 
 @Component({
@@ -26,6 +27,7 @@ export class ProjectCardComponent implements CardData {
   @Input() description!: CardData['description']
   @Input() status!: CardData['status']
   @Input() visibility!: CardData['visibility']
+  @Input() mainAction!: CardData['mainAction']
 
   constructor(public layout: LayoutService) {}
 }

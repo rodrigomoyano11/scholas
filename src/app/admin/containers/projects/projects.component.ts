@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
+import { Router } from '@angular/router'
 import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
 import { GetProjectResponse } from 'src/app/shared/models/Api'
 import { Project } from 'src/app/shared/models/Project'
@@ -34,7 +35,11 @@ export class ProjectsComponent implements OnInit {
 
   cardData: CardData[] = []
 
-  constructor(private projects: ProjectsService, private dialog: MatDialog) {}
+  constructor(
+    private projects: ProjectsService,
+    private dialog: MatDialog,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.getProjects('all')
@@ -49,6 +54,7 @@ export class ProjectsComponent implements OnInit {
       description: project.description,
       status: project.status,
       visibility: project.visibility,
+      mainAction: (): void => void this.router.navigate(['/admin/projects', project.id]),
     }
   }
 

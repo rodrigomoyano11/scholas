@@ -1,6 +1,6 @@
 <mat-card class="card__main-container">
-  <div class="card__image">
-    <img *ngIf="layout.isDesktop$ | async; else mobile" mat-card-md-image [src]="image" />
+  <div class="card__image-container">
+    <img class="card__image" [src]="image" />
   </div>
   <div class="card__caption">
     <span
@@ -28,9 +28,18 @@
     </div>
 
     <mat-card-content class="card__content">
-      <p>
+      <p class="card__description">
         {{ description }}
       </p>
+      <button
+        type="button"
+        class="card__main-action"
+        [color]="'primary'"
+        (click)="mainAction()"
+        mat-button
+      >
+        Ver más detalles
+      </button>
     </mat-card-content>
   </div>
 </mat-card>
@@ -38,7 +47,3 @@
 <mat-menu #user="matMenu">
   <ng-content></ng-content>
 </mat-menu>
-
-<ng-template #mobile>
-  <img mat-card-image [src]="image" />
-</ng-template>
