@@ -28,8 +28,6 @@ export class UploadImageComponent implements OnInit, OnChanges {
   setInitialImages(): void {
     this.initialImages.map(async (image) => {
       const response = await fetch(image)
-      console.log(response)
-
       const data = await response.blob()
       const extension = image.substring(image.lastIndexOf('.') + 1, image.length) || 'jpg'
       const metadata = { type: `image/${extension}` }

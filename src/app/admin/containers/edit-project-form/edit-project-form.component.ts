@@ -59,7 +59,6 @@ export class EditProjectFormComponent implements OnInit {
   // General
   async setInitialValues(): Promise<void> {
     if (!!this.selectedProjectId) {
-      console.log(await this.projects.getProject(+this.selectedProjectId).toPromise())
       const {
         name,
         province,
