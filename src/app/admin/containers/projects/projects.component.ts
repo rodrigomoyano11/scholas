@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
-import { GetProjectsResponse } from 'src/app/shared/models/api'
-import { Project } from 'src/app/shared/models/project'
+import { GetProjectResponse } from 'src/app/shared/models/Api'
+import { Project } from 'src/app/shared/models/Project'
 import { ButtonData } from '../../components/list-header/list-header.component'
 import { CardData } from '../../components/project-card/project-card.component'
 import { ProjectsService } from '../../services/admins/projects/projects.service'
@@ -20,7 +19,7 @@ export class ProjectsComponent implements OnInit {
       icon: 'filter_alt',
       action: {
         type: 'menu',
-        callback: () => undefined,
+        callback: (): undefined => undefined,
       },
     },
     {
@@ -28,7 +27,7 @@ export class ProjectsComponent implements OnInit {
       icon: 'add',
       action: {
         type: 'link',
-        callback: () => '/admin/new-project',
+        callback: (): string => '/admin/new-project',
       },
     },
   ]
@@ -41,19 +40,19 @@ export class ProjectsComponent implements OnInit {
     this.getProjects('all')
   }
 
-  setCardData(project: GetProjectsResponse) {
+  setCardData(project: GetProjectResponse): CardData {
     return {
       id: project.id,
       image: project.coverPhotoURL,
       title: project.name,
-      subtitle: `${project.locality} - ${project.province}`,
+      subtitle: `${project.locality ?? ''} - ${project.province ?? ''}`,
       description: project.description,
       status: project.status,
       visibility: project.visibility,
     }
   }
 
-  getProjects(filter: 'all' | 'finished' | 'inProgress' | 'public' | 'private') {
+  getProjects(filter: 'all' | 'finished' | 'inProgress' | 'public' | 'private'): void {
     const filters = {
       all: this.projects.getProjects(),
       finished: this.projects.getProjects('finished', 'public'),
@@ -62,7 +61,7 @@ export class ProjectsComponent implements OnInit {
       private: this.projects.getProjects('started', 'private'),
     }
     this.cardData = []
-    return filters[filter].subscribe((projects) =>
+    filters[filter].subscribe((projects) =>
       projects.forEach((project) => this.cardData.push(this.setCardData(project))),
     )
   }

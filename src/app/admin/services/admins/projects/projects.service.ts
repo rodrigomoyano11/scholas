@@ -9,9 +9,9 @@ import {
   CreateProjectResponse,
   GetProjectResponse,
   GetProjectsResponse,
-} from 'src/app/shared/models/api'
+} from 'src/app/shared/models/Api'
 
-import { Project } from 'src/app/shared/models/project'
+import { Project } from 'src/app/shared/models/Project'
 import { environment } from 'src/environments/environment'
 
 interface ProjectFormData {
@@ -100,6 +100,7 @@ export class ProjectsService {
     return this.http.get<GetProjectsResponse>(`${environment.apiUrl}/projects?${params.toString()}`)
   }
 
+  // TODO: Establecer tipado de la siguiente función
   // eslint-disable-next-line @typescript-eslint/ban-types
   setProjectVisibility(id: Project['id'], visibility: Project['visibility']): Promise<Object> {
     return this.http

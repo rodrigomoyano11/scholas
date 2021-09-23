@@ -1,15 +1,16 @@
 import { Component, Input } from '@angular/core'
-import { GetProjectsResponse } from 'src/app/shared/models/api'
+import { GetProjectResponse } from 'src/app/shared/models/Api'
+
 import { LayoutService } from 'src/app/shared/services/layout/layout.service'
 
 export interface CardData {
-  id: GetProjectsResponse['id']
-  image: GetProjectsResponse['coverPhotoURL']
-  title: GetProjectsResponse['name']
+  id: GetProjectResponse['id']
+  image: GetProjectResponse['coverPhotoURL']
+  title: GetProjectResponse['name']
   subtitle: string
-  description: GetProjectsResponse['description']
-  status: GetProjectsResponse['status']
-  visibility: GetProjectsResponse['visibility']
+  description: GetProjectResponse['description']
+  status: GetProjectResponse['status']
+  visibility: GetProjectResponse['visibility']
 }
 
 @Component({

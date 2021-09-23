@@ -1,6 +1,7 @@
 import { Location } from './Location'
-import { Project } from './project'
-import { ExtraData, User } from './user'
+import { Project } from './Project'
+
+import { ExtraData, User } from './User'
 
 // Users
 export interface GetUserResponse {

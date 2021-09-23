@@ -4,8 +4,8 @@ import { MatDialog } from '@angular/material/dialog'
 import { Observable, of } from 'rxjs'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
 import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
-import { GetUsersResponse } from 'src/app/shared/models/api'
-import { User } from 'src/app/shared/models/user'
+import { GetUsersResponse } from 'src/app/shared/models/Api'
+import { User } from 'src/app/shared/models/User'
 import { environment } from 'src/environments/environment'
 
 @Injectable({

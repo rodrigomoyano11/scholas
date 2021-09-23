@@ -24,9 +24,9 @@ import {
 } from '@angular/fire/auth'
 import { convertDate } from 'src/app/shared/utils/convertDate'
 import { ErrorService } from '../error/error.service'
-import { User } from 'src/app/shared/models/user'
-import { CreateUserRequest, CreateUserResponse, GetUserResponse } from 'src/app/shared/models/api'
+import { User } from 'src/app/shared/models/User'
 import { convertPhoneNumber } from 'src/app/shared/utils/convertPhoneNumber'
+import { CreateUserRequest, CreateUserResponse, GetUserResponse } from 'src/app/shared/models/Api'
 
 export type Provider = 'google' | 'facebook' | 'email'
 
