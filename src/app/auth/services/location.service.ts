@@ -1,17 +1,13 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
+import { GetLocationsResponse } from 'src/app/shared/models/api'
 import { environment } from '../../../environments/environment'
-
-interface Location {
-  name: string
-  departments: string[]
-}
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocationService {
-  locationData!: Location[]
+  locationData!: GetLocationsResponse
 
   constructor(private http: HttpClient) {
     void this.getLocationData()
@@ -19,7 +15,7 @@ export class LocationService {
 
   async getLocationData(): Promise<void> {
     this.locationData = await this.http
-      .get<Location[]>(`${environment.apiUrl}/location`)
+      .get<GetLocationsResponse>(`${environment.apiUrl}/location`)
       .toPromise()
   }
 

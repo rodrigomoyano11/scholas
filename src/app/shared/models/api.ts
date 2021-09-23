@@ -1,4 +1,6 @@
-import { ExtraData, Location, User } from './user'
+import { Location } from './Location'
+import { Project } from './project'
+import { ExtraData, User } from './user'
 
 // Users
 export interface GetUserResponse {
@@ -35,36 +37,48 @@ export interface CreateUserResponse {
 }
 
 // Projects
-export interface GetProjectsResponse {
-  id: number
-  name: string
-  description: string
-  status: 'STARTED' | 'IN_PROGRESS' | 'FINISHED'
-  visibility: 'PUBLIC' | 'PRIVATE'
-  targetAmount: number
-  currentAmount: number
-  remainingAmount: number
-  locality: string
-  province: string
-  coverPhotoURL: string
-  photos: string[]
-  videoURL: string
-  donorsQuantity: number
-  donationsQuantity: number
-  createdDate: string
-}
+type Status = 'STARTED' | 'IN_PROGRESS' | 'FINISHED'
+type Visibility = 'PUBLIC' | 'PRIVATE'
 
 export interface CreateProjectRequest {
-  name: string
-  description: string
-  visibility: string
-  targetAmount: number
-  currentAmount: number
-  locality: string
-  province: string
-  coverPhotoURL: string
-  photos: string[]
-  videoURL: string
-  donorsQuantity: number
-  donationsQuantity: number
+  name: Project['name']
+  description: Project['description']
+  visibility: Visibility
+  targetAmount: Project['metrics']['targetAmount']
+  province: Project['location']['province']
+  locality: Project['location']['locality']
+  coverPhotoURL: Project['coverPhotoURL']
+  photos: Project['photos']
+  videoURL: Project['videoURL']
 }
+export interface CreateProjectResponse {
+  id: Project['id']
+  name: Project['name']
+  description: Project['description']
+  status: Status
+  visibility: Visibility
+  targetAmount: Project['metrics']['targetAmount']
+  currentAmount: Project['metrics']['currentAmount']
+  remainingAmount: Project['metrics']['remainingAmount']
+  province: Project['location']['province']
+  locality: Project['location']['locality']
+  coverPhotoURL: Project['coverPhotoURL']
+  photos: Project['photos']
+  videoURL: Project['videoURL']
+  donorsQuantity: Project['metrics']['donorsQuantity']
+  donationsQuantity: Project['metrics']['donationsQuantity']
+  createdDate: Project['createdDate']
+}
+
+export type GetProjectsResponse = GetProjectResponse[]
+
+export type GetProjectResponse = CreateProjectResponse
+
+// Utils
+
+export type GetLocationsResponse = [
+  {
+    name: string
+    departments: string[]
+  },
+]

@@ -4,11 +4,17 @@ import { MatDialog } from '@angular/material/dialog'
 import { Router } from '@angular/router'
 import { Observable } from 'rxjs'
 import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
-import { CreateProjectRequest, GetProjectsResponse } from 'src/app/shared/models/api'
+import {
+  CreateProjectRequest,
+  CreateProjectResponse,
+  GetProjectResponse,
+  GetProjectsResponse,
+} from 'src/app/shared/models/api'
+
 import { Project } from 'src/app/shared/models/project'
 import { environment } from 'src/environments/environment'
 
-interface CreateProjectData {
+interface ProjectFormData {
   name: string
   province: string
   locality: string
@@ -46,24 +52,22 @@ export class ProjectsService {
     coverPhoto,
     photos,
     video,
-  }: CreateProjectData): Promise<void> {
+  }: ProjectFormData): Promise<void> {
     console.log(name, description, locality, province, targetAmount, coverPhoto, photos, video)
-    await this.http
-      .post<CreateProjectRequest>(`${environment.apiUrl}/projects`, {
-        name,
-        description,
-        visibility: 'PUBLIC',
-        targetAmount,
-        currentAmount: 0,
-        locality,
-        province,
-        coverPhotoURL: coverPhoto,
-        photos,
-        videoURL: video,
-        donorsQuantity: 0,
-        donationsQuantity: 0,
-      })
-      .toPromise()
+
+    const body: CreateProjectRequest = {
+      name,
+      description,
+      visibility: 'PUBLIC',
+      targetAmount: +targetAmount,
+      locality,
+      province,
+      coverPhotoURL: coverPhoto,
+      photos,
+      videoURL: video,
+    }
+
+    await this.http.post<CreateProjectResponse>(`${environment.apiUrl}/projects`, body).toPromise()
 
     await this.dialog
       .open<DialogComponent, DialogData>(DialogComponent, {
@@ -80,22 +84,20 @@ export class ProjectsService {
     await this.router.navigate(['/admin/projects'])
   }
 
-  getProject(id: Project['id']): Observable<GetProjectsResponse> {
-    return this.http.get<GetProjectsResponse>(`${environment.apiUrl}/projects/${id}`)
+  getProject(id: Project['id']): Observable<GetProjectResponse> {
+    return this.http.get<GetProjectResponse>(`${environment.apiUrl}/projects/${id}`)
   }
 
   getProjects(
     status?: Project['status'],
     visibility?: Project['visibility'],
-  ): Observable<GetProjectsResponse[]> {
+  ): Observable<GetProjectsResponse> {
     let params = new HttpParams({})
 
     if (status) params = params.set('status', this.paramsOptions.status[status])
     if (visibility) params = params.set('visibility', this.paramsOptions.visibility[visibility])
 
-    return this.http.get<GetProjectsResponse[]>(
-      `${environment.apiUrl}/projects?${params.toString()}`,
-    )
+    return this.http.get<GetProjectsResponse>(`${environment.apiUrl}/projects?${params.toString()}`)
   }
 
   // eslint-disable-next-line @typescript-eslint/ban-types

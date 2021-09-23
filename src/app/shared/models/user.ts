@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { UserInfo } from 'firebase/auth'
+import { Location } from './Location'
 
 export interface User {
   uid: UserInfo['uid']
@@ -23,8 +24,4 @@ export interface ExtraData {
   birthday: '1900-01-01' | string
   phoneNumber: UserInfo['phoneNumber']
   location: Location | null
-}
-export interface Location {
-  province: string | null
-  locality: string | null
 }

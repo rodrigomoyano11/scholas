@@ -39,8 +39,8 @@ export class EditProjectFormComponent implements OnInit {
         '',
         [Validators.required, validation.isNumber(), validation.isValidTargetAmount()],
       ],
-      coverPhoto: ['', [Validators.required]],
-      photos: ['', [Validators.required]],
+      coverPhoto: [''],
+      photos: [''],
       video: ['', validation.isValidLink()],
     })
 
@@ -58,8 +58,8 @@ export class EditProjectFormComponent implements OnInit {
 
   // General
   async setInitialValues(): Promise<void> {
-    if (this.selectedProjectId) {
-      console.log(await this.projects.getProject(this.selectedProjectId).toPromise())
+    if (!!this.selectedProjectId) {
+      console.log(await this.projects.getProject(+this.selectedProjectId).toPromise())
       const {
         name,
         province,
@@ -69,9 +69,7 @@ export class EditProjectFormComponent implements OnInit {
         coverPhotoURL,
         photos,
         videoURL,
-      } = await this.projects.getProject(this.selectedProjectId).toPromise()
-
-      console.log(photos)
+      } = await this.projects.getProject(+this.selectedProjectId).toPromise()
 
       this.coverPhotoData = coverPhotoURL ? [coverPhotoURL] : []
       this.photosData = photos ?? []
