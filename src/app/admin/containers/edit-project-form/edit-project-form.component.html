@@ -53,6 +53,14 @@
         placeholder="Ingresá el monto de dinero objetivo a recaudar"
         formControlName="targetAmount"
       />
+      <mat-hint>
+        {{
+          editProjectForm.controls['targetAmount'].value !== ''
+            ? 'El monto objetivo es de ' +
+              (editProjectForm.controls['targetAmount'].value | currency)
+            : ''
+        }}</mat-hint
+      >
       <mat-error>{{ getErrors('targetAmount') }}</mat-error>
     </mat-form-field>
 
