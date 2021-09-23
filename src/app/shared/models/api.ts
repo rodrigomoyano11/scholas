@@ -44,7 +44,6 @@ type Visibility = 'PUBLIC' | 'PRIVATE'
 export interface CreateProjectRequest {
   name: Project['name']
   description: Project['description']
-  visibility: Visibility
   targetAmount: Project['metrics']['targetAmount']
   province: Project['location']['province']
   locality: Project['location']['locality']
