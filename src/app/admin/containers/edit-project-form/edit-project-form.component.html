@@ -57,7 +57,7 @@
         {{
           editProjectForm.controls['targetAmount'].value !== ''
             ? 'El monto objetivo es de ' +
-              (editProjectForm.controls['targetAmount'].value | currency)
+              (editProjectForm.controls['targetAmount'].value | currency: 'ARS')
             : ''
         }}</mat-hint
       >
