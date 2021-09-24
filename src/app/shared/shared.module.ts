@@ -20,6 +20,8 @@ import { DialogComponent } from './components/dialog/dialog.component'
 import { UploadImageComponent } from './components/upload-image/upload-image.component'
 import { AmountProgressComponent } from './components/amount-progress/amount-progress.component'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
+import { ImageGalleryComponent } from './components/image-gallery/image-gallery.component'
+import { IvyCarouselModule } from 'angular-responsive-carousel'
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar'
     DialogComponent,
     UploadImageComponent,
     AmountProgressComponent,
+    ImageGalleryComponent,
   ],
   imports: [
     CommonModule,
@@ -46,6 +49,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar'
     MatDialogModule,
     MatProgressBarModule,
     LayoutModule,
+    IvyCarouselModule,
   ],
   exports: [
     NotFoundComponent,
@@ -53,6 +57,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar'
     ModalContainerComponent,
     UploadImageComponent,
     AmountProgressComponent,
+    ImageGalleryComponent,
   ],
 })
 export class SharedModule {}
