@@ -2,6 +2,10 @@
   display: flex;
   flex-wrap: wrap;
   height: min-content;
+
+  border: 1px solid rgba(0, 0, 0, 0.12);
+
+  box-shadow: none;
 }
 
 .card__image-container {
