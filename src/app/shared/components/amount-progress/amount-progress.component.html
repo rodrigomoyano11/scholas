@@ -2,13 +2,9 @@
   <div class="info">
     <p class="title">
       {{
-        (currentAmount < 1000
-          ? (currentAmount | currency: '$')
-          : (currentAmount | currency: '$':true:'1.0-2')
-        )
-          ?.replace(',', 'x')
-          ?.replace('.', ',')
-          ?.replace('x', '.')
+        currentAmount < 1000
+          ? (currentAmount | currency: 'ARS')
+          : (currentAmount | currency: 'ARS':'symbol':'1.0-2')
       }}
     </p>
     <p class="subtitle">Monto Recaudado</p>
@@ -21,13 +17,9 @@
   <div class="info">
     <p class="title">
       {{
-        (targetAmount < 1000
-          ? (targetAmount | currency: '$')
-          : (targetAmount | currency: '$':true:'1.0-2')
-        )
-          ?.replace(',', 'x')
-          ?.replace('.', ',')
-          ?.replace('x', '.')
+        targetAmount < 1000
+          ? (targetAmount | currency: 'ARS')
+          : (targetAmount | currency: 'ARS':'symbol':'1.0-2')
       }}
     </p>
     <p class="subtitle">Monto Objetivo</p>
