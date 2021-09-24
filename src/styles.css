@@ -17,3 +17,7 @@ body {
 *::after {
   box-sizing: border-box;
 }
+
+.cdk-overlay-container {
+  z-index: 10000;
+}
