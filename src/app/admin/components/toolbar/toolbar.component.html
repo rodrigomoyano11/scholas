@@ -20,7 +20,7 @@
       <button
         type="button--secondary"
         *ngIf="item.action.type === 'button' && toolbarData.leftButtons.style === 'secondary'"
-        mat-stroked-button
+        mat-button
         color="primary"
         [matTooltip]="item.label"
         (click)="item.action.click()"
@@ -65,7 +65,7 @@
       <button
         type="button--secondary"
         *ngIf="item.action.type === 'button' && toolbarData.rightButtons.style === 'secondary'"
-        mat-stroked-button
+        mat-button
         color="primary"
         [matTooltip]="item.label"
         (click)="item.action.click()"
