@@ -22,6 +22,7 @@ import { AmountProgressComponent } from './components/amount-progress/amount-pro
 import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { ImageGalleryComponent } from './components/image-gallery/image-gallery.component'
 import { IvyCarouselModule } from 'angular-responsive-carousel'
+import { VideoPlayerComponent } from './components/video-player/video-player.component'
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { IvyCarouselModule } from 'angular-responsive-carousel'
     UploadImageComponent,
     AmountProgressComponent,
     ImageGalleryComponent,
+    VideoPlayerComponent,
   ],
   imports: [
     CommonModule,
@@ -57,6 +59,7 @@ import { IvyCarouselModule } from 'angular-responsive-carousel'
     ModalContainerComponent,
     UploadImageComponent,
     AmountProgressComponent,
+    VideoPlayerComponent,
     ImageGalleryComponent,
   ],
 })
