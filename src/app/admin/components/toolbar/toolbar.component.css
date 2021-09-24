@@ -12,6 +12,10 @@
   padding: 0 1rem;
 }
 
+.full-width {
+  padding: 0;
+}
+
 .title {
   margin: 0;
 }

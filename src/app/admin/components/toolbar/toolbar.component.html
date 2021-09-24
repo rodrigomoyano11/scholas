@@ -1,4 +1,4 @@
-<div class="container">
+<div [ngClass]="['container', toolbarData.fullWidth ? 'full-width' : '']">
   <h1 *ngIf="toolbarData.title" class="title">{{ toolbarData.title }}</h1>
 
   <div
