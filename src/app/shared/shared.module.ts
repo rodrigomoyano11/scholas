@@ -18,6 +18,8 @@ import { MainMenuComponent } from './components/main-menu/main-menu.component'
 import { ModalContainerComponent } from './components/modal-container/modal-container.component'
 import { DialogComponent } from './components/dialog/dialog.component'
 import { UploadImageComponent } from './components/upload-image/upload-image.component'
+import { AmountProgressComponent } from './components/amount-progress/amount-progress.component'
+import { MatProgressBarModule } from '@angular/material/progress-bar'
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { UploadImageComponent } from './components/upload-image/upload-image.com
     ModalContainerComponent,
     DialogComponent,
     UploadImageComponent,
+    AmountProgressComponent,
   ],
   imports: [
     CommonModule,
@@ -41,8 +44,15 @@ import { UploadImageComponent } from './components/upload-image/upload-image.com
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
+    MatProgressBarModule,
     LayoutModule,
   ],
-  exports: [NotFoundComponent, LayoutComponent, ModalContainerComponent, UploadImageComponent],
+  exports: [
+    NotFoundComponent,
+    LayoutComponent,
+    ModalContainerComponent,
+    UploadImageComponent,
+    AmountProgressComponent,
+  ],
 })
 export class SharedModule {}

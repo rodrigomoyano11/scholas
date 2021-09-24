@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="info">
+    <p class="title">
+      {{
+        (currentAmount < 1000
+          ? (currentAmount | currency: '$')
+          : (currentAmount | currency: '$':true:'1.0-2')
+        )
+          ?.replace(',', 'x')
+          ?.replace('.', ',')
+          ?.replace('x', '.')
+      }}
+    </p>
+    <p class="subtitle">Monto Recaudado</p>
+  </div>
+  <mat-progress-bar
+    class="progress-bar"
+    mode="determinate"
+    [value]="((targetAmount - currentAmount) / targetAmount) * 100"
+  ></mat-progress-bar>
+  <div class="info">
+    <p class="title">
+      {{
+        (targetAmount < 1000
+          ? (targetAmount | currency: '$')
+          : (targetAmount | currency: '$':true:'1.0-2')
+        )
+          ?.replace(',', 'x')
+          ?.replace('.', ',')
+          ?.replace('x', '.')
+      }}
+    </p>
+    <p class="subtitle">Monto Objetivo</p>
+  </div>
+</div>
