@@ -11,6 +11,7 @@ import { getAuth, provideAuth } from '@angular/fire/auth'
 import { MatDialogModule } from '@angular/material/dialog'
 import AR from '@angular/common/locales/es-AR'
 import { registerLocaleData } from '@angular/common'
+import { ClipboardModule } from '@angular/cdk/clipboard'
 
 registerLocaleData(AR)
 
@@ -21,6 +22,7 @@ registerLocaleData(AR)
     AppRoutingModule,
     BrowserAnimationsModule,
     MatSnackBarModule,
+    ClipboardModule,
     MatDialogModule,
     HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),

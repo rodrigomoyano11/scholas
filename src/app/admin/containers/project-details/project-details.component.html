@@ -1,1 +1,34 @@
-<p>project-details works!</p>
+<app-modal-container>
+  <app-toolbar [toolbarData]="toolbarData"></app-toolbar>
+  <div *ngIf="projectData" class="project-info">
+    <img class="image" [src]="projectData.coverPhotoURL" />
+    <div class="header">
+      <div class="header__info">
+        <h1 class="title">{{ projectData.name }}</h1>
+        <h2 class="subtitle">{{ projectData.locality }} - {{ projectData.province }}</h2>
+      </div>
+      <div class="header__actions">
+        <button
+          type="button"
+          class="action--share"
+          mat-icon-button
+          [matTooltip]="'Compartir'"
+          (click)="share()"
+        >
+          <mat-icon class="action--share__icon">share</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="content">
+      <p class="description mat-body-2">{{ projectData.description }}</p>
+      <app-amount-progress
+        [targetAmount]="projectData.targetAmount"
+        [currentAmount]="450000 || projectData.currentAmount"
+      ></app-amount-progress>
+
+      <app-image-gallery class="image-gallery" [images]="projectData.photos"></app-image-gallery>
+
+      <app-video-player class="video" [video]="projectData.videoURL"></app-video-player>
+    </div>
+  </div>
+</app-modal-container>
