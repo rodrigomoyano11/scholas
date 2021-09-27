@@ -27,6 +27,7 @@
     <div class="content">
       <p class="description mat-body-2">{{ projectData.description }}</p>
       <app-amount-progress
+        [type]="'desktop'"
         [targetAmount]="projectData.targetAmount"
         [currentAmount]="450000 || projectData.currentAmount"
       ></app-amount-progress>

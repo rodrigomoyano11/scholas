@@ -7,7 +7,7 @@
           : (currentAmount | currency: 'ARS':'symbol':'1.0-2')
       }}
     </p>
-    <p class="subtitle">Monto Recaudado</p>
+    <p class="subtitle" *ngIf="type === 'desktop'">Monto Recaudado</p>
   </div>
   <mat-progress-bar
     class="progress-bar"
@@ -22,6 +22,6 @@
           : (targetAmount | currency: 'ARS':'symbol':'1.0-2')
       }}
     </p>
-    <p class="subtitle">Monto Objetivo</p>
+    <p class="subtitle" *ngIf="type === 'desktop'">Monto Objetivo</p>
   </div>
 </div>

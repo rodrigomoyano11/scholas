@@ -6,6 +6,7 @@ import { Component, Input } from '@angular/core'
   styleUrls: ['./amount-progress.component.css'],
 })
 export class AmountProgressComponent {
+  @Input() type!: 'mobile' | 'desktop'
   @Input() targetAmount!: number
   @Input() currentAmount!: number
 }
