@@ -5,12 +5,11 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'landing',
+    redirectTo: 'donor',
   },
   {
-    path: 'landing',
-    loadChildren: () =>
-      import('./landing-page/landing-page.module').then((m) => m.LandingPageModule),
+    path: 'donor',
+    loadChildren: () => import('./donor/donor.module').then((m) => m.DonorModule),
   },
   {
     path: 'auth',
