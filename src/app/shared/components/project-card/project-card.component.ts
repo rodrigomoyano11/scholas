@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core'
-import { GetProjectResponse } from 'src/app/shared/models/Api'
-
-import { LayoutService } from 'src/app/shared/services/layout/layout.service'
+import { GetProjectResponse } from '../../models/Api'
+import { LayoutService } from '../../services/layout/layout.service'
 
 export interface CardData {
   id: GetProjectResponse['id']
@@ -19,7 +18,7 @@ export interface CardData {
   templateUrl: './project-card.component.html',
   styleUrls: ['./project-card.component.css'],
 })
-export class ProjectCardComponent implements CardData {
+export class ProjectCardComponent {
   @Input() id!: CardData['id']
   @Input() image!: CardData['image']
   @Input() title!: CardData['title']

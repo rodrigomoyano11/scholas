@@ -25,6 +25,8 @@ import { IvyCarouselModule } from 'angular-responsive-carousel'
 import { VideoPlayerComponent } from './components/video-player/video-player.component'
 import { ToolbarComponent } from './components/toolbar/toolbar.component'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { ProjectCardComponent } from './components/project-card/project-card.component'
+import { MatCardModule } from '@angular/material/card'
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import { MatTooltipModule } from '@angular/material/tooltip'
     ImageGalleryComponent,
     VideoPlayerComponent,
     ToolbarComponent,
+    ProjectCardComponent,
   ],
   imports: [
     CommonModule,
@@ -53,6 +56,7 @@ import { MatTooltipModule } from '@angular/material/tooltip'
     MatIconModule,
     MatDialogModule,
     MatTooltipModule,
+    MatCardModule,
     MatProgressBarModule,
     LayoutModule,
     IvyCarouselModule,
@@ -66,6 +70,7 @@ import { MatTooltipModule } from '@angular/material/tooltip'
     VideoPlayerComponent,
     ImageGalleryComponent,
     ToolbarComponent,
+    ProjectCardComponent,
   ],
 })
 export class SharedModule {}
