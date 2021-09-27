@@ -23,6 +23,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { ImageGalleryComponent } from './components/image-gallery/image-gallery.component'
 import { IvyCarouselModule } from 'angular-responsive-carousel'
 import { VideoPlayerComponent } from './components/video-player/video-player.component'
+import { ToolbarComponent } from './components/toolbar/toolbar.component'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { VideoPlayerComponent } from './components/video-player/video-player.com
     AmountProgressComponent,
     ImageGalleryComponent,
     VideoPlayerComponent,
+    ToolbarComponent,
   ],
   imports: [
     CommonModule,
@@ -49,6 +52,7 @@ import { VideoPlayerComponent } from './components/video-player/video-player.com
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
+    MatTooltipModule,
     MatProgressBarModule,
     LayoutModule,
     IvyCarouselModule,
@@ -61,6 +65,7 @@ import { VideoPlayerComponent } from './components/video-player/video-player.com
     AmountProgressComponent,
     VideoPlayerComponent,
     ImageGalleryComponent,
+    ToolbarComponent,
   ],
 })
 export class SharedModule {}

@@ -1,11 +1,11 @@
 import { Clipboard } from '@angular/cdk/clipboard'
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
+import { Buttons } from 'src/app/shared/components/toolbar/toolbar.component'
 import { GetProjectResponse } from 'src/app/shared/models/Api'
 import { LayoutService } from 'src/app/shared/services/layout/layout.service'
-import { Buttons } from '../../components/toolbar/toolbar.component'
 import { ProjectsService } from '../../services/admins/projects/projects.service'
 
 @Component({

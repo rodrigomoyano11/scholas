@@ -24,7 +24,6 @@ import { MatSelectModule } from '@angular/material/select'
 import { CreateProjectFormComponent } from './containers/create-project-form/create-project-form.component'
 import { EditProjectFormComponent } from './containers/edit-project-form/edit-project-form.component'
 import { ProjectDetailsComponent } from './containers/project-details/project-details.component'
-import { ToolbarComponent } from './components/toolbar/toolbar.component'
 
 @NgModule({
   declarations: [
@@ -41,7 +40,6 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component'
     CreateProjectFormComponent,
     EditProjectFormComponent,
     ProjectDetailsComponent,
-    ToolbarComponent,
   ],
   imports: [
     CommonModule,
