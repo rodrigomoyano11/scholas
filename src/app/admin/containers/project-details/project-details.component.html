@@ -4,7 +4,9 @@
     <img class="image" [src]="projectData.coverPhotoURL" />
     <div class="header">
       <div class="header__info">
-        <span *ngIf="projectData.visibility === 'PRIVATE'" class="status--secondary mat-body-2"
+        <span
+          *ngIf="isAdmin && projectData.visibility === 'PRIVATE'"
+          class="status--secondary mat-body-2"
           >Dado de baja</span
         >
         <h1 class="title">{{ projectData.name }}</h1>
@@ -32,6 +34,10 @@
       <app-image-gallery class="image-gallery" [images]="projectData.photos"></app-image-gallery>
 
       <app-video-player class="video" [video]="projectData.videoURL"></app-video-player>
+
+      <button type="submit" class="CTA" [color]="'primary'" mat-flat-button [matTooltip]="'Donar'">
+        Donar
+      </button>
     </div>
   </div>
 </app-modal-container>

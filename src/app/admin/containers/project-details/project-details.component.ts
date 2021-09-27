@@ -1,7 +1,8 @@
 import { Clipboard } from '@angular/cdk/clipboard'
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
+import { AuthService } from 'src/app/auth/services/auth/auth.service'
 import { GetProjectResponse } from 'src/app/shared/models/Api'
 import { LayoutService } from 'src/app/shared/services/layout/layout.service'
 import { Buttons } from '../../components/toolbar/toolbar.component'
@@ -13,6 +14,8 @@ import { ProjectsService } from '../../services/admins/projects/projects.service
   styleUrls: ['./project-details.component.css'],
 })
 export class ProjectDetailsComponent implements OnInit {
+  isAdmin = false
+
   selectedProjectId: string | null = this.route.snapshot.paramMap.get('id')
   projectData!: GetProjectResponse
   buttons: Buttons = []
@@ -24,17 +27,19 @@ export class ProjectDetailsComponent implements OnInit {
     private projects: ProjectsService,
     private clipboard: Clipboard,
     private snackBar: MatSnackBar,
+    public auth: AuthService,
   ) {}
 
   async ngOnInit(): Promise<void> {
     await this.getProjectData()
+    this.auth.user$.subscribe((user) => (this.isAdmin = !(user.claims?.admin ?? false)))
   }
 
   async getProjectData(): Promise<void> {
     if (!!this.selectedProjectId) {
       this.projectData = await this.projects.getProject(+this.selectedProjectId).toPromise()
 
-      this.buttons = [
+      const adminButtons: Buttons = [
         {
           style: 'primary',
           data: [
@@ -85,6 +90,23 @@ export class ProjectDetailsComponent implements OnInit {
           ],
         },
       ]
+      const donorButtons: Buttons = [
+        {
+          style: 'primary',
+          data: [
+            {
+              label: 'Volver',
+              icon: 'chevron_left',
+              action: {
+                type: 'button',
+                click: (): void => void this.router.navigate(['/donor/projects']),
+              },
+            },
+          ],
+        },
+      ]
+
+      this.buttons = this.isAdmin ? adminButtons : donorButtons
     }
   }
 
