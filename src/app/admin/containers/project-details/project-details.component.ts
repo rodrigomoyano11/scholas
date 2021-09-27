@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { GetProjectResponse } from 'src/app/shared/models/Api'
 import { LayoutService } from 'src/app/shared/services/layout/layout.service'
-import { ToolbarData } from '../../components/toolbar/toolbar.component'
+import { Buttons } from '../../components/toolbar/toolbar.component'
 import { ProjectsService } from '../../services/admins/projects/projects.service'
 
 @Component({
@@ -13,55 +13,9 @@ import { ProjectsService } from '../../services/admins/projects/projects.service
   styleUrls: ['./project-details.component.css'],
 })
 export class ProjectDetailsComponent implements OnInit {
-  toolbarData: ToolbarData = {
-    fullWidth: true,
-    leftButtons: {
-      style: 'primary',
-      data: [
-        {
-          label: 'Volver',
-          icon: 'chevron_left',
-          action: {
-            type: 'button',
-            click: (): void => void this.router.navigate(['/admin/new-project']),
-          },
-        },
-      ],
-    },
-    rightButtons: {
-      style: 'secondary',
-      data: [
-        {
-          label: 'Editar detalles',
-          icon: null,
-          action: {
-            type: 'button',
-            click: (): void => void this.router.navigate(['/admin/new-project']),
-          },
-        },
-        {
-          label: 'Métricas',
-          icon: null,
-          action: {
-            type: 'button',
-            click: (): void => void this.router.navigate(['/admin/new-project']),
-          },
-        },
-        {
-          label: 'Dar de baja',
-          icon: null,
-          action: {
-            type: 'button',
-            click: (): void => void this.router.navigate(['/admin/new-project']),
-          },
-        },
-      ],
-    },
-  }
-
-  projectData!: GetProjectResponse
-
   selectedProjectId: string | null = this.route.snapshot.paramMap.get('id')
+  projectData!: GetProjectResponse
+  buttons: Buttons = []
 
   constructor(
     public layout: LayoutService,
@@ -71,6 +25,7 @@ export class ProjectDetailsComponent implements OnInit {
     private clipboard: Clipboard,
     private snackBar: MatSnackBar,
   ) {}
+
   async ngOnInit(): Promise<void> {
     await this.getProjectData()
   }
@@ -78,6 +33,58 @@ export class ProjectDetailsComponent implements OnInit {
   async getProjectData(): Promise<void> {
     if (!!this.selectedProjectId) {
       this.projectData = await this.projects.getProject(+this.selectedProjectId).toPromise()
+
+      this.buttons = [
+        {
+          style: 'primary',
+          data: [
+            {
+              label: 'Volver',
+              icon: 'chevron_left',
+              action: {
+                type: 'button',
+                click: (): void => void this.router.navigate(['/admin/projects']),
+              },
+            },
+          ],
+        },
+        {
+          style: 'secondary',
+          data: [
+            {
+              label: 'Editar detalles',
+              icon: null,
+              action: {
+                type: 'button',
+                click: (): void =>
+                  void this.router.navigate(['/admin/edit-project', this.projectData.id]),
+              },
+            },
+            {
+              label: 'Métricas',
+              icon: null,
+              action: {
+                type: 'button',
+                click: (): void => console.log('Works'),
+              },
+            },
+            {
+              label: this.projectData.visibility === 'PUBLIC' ? 'Dar de baja' : 'Dar de alta',
+              icon: null,
+              action: {
+                type: 'button',
+                click: (): void =>
+                  void this.projects
+                    .setProjectVisibility(
+                      this.projectData.id,
+                      this.projectData.visibility === 'PUBLIC' ? 'private' : 'public',
+                    )
+                    .catch(() => this.getProjectData()),
+              },
+            },
+          ],
+        },
+      ]
     }
   }
 

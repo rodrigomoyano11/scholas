@@ -20,14 +20,9 @@
   margin: 0;
 }
 
-.left-buttons {
+.no-dense,
+.dense {
   display: flex;
-  justify-content: flex-start;
-}
-
-.right-buttons {
-  display: flex;
-  justify-content: flex-end;
 }
 
 .no-dense {

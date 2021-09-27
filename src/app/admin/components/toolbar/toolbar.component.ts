@@ -1,17 +1,10 @@
 import { Component, Input } from '@angular/core'
 
-export interface ToolbarData {
-  title?: string
-  fullWidth?: boolean
-  leftButtons?: {
-    style: 'primary' | 'secondary'
-    data: ButtonData[]
-  }
-  rightButtons?: {
-    style: 'primary' | 'secondary'
-    data: ButtonData[]
-  }
-}
+export type Buttons = {
+  style: 'primary' | 'secondary'
+  data: ButtonData[]
+}[]
+
 interface ButtonData {
   label: string
   icon: string | null
@@ -27,7 +20,7 @@ interface ButtonData {
   styleUrls: ['./toolbar.component.css'],
 })
 export class ToolbarComponent {
-  @Input() toolbarData: ToolbarData = {
-    fullWidth: false,
-  }
+  @Input() title!: string
+  @Input() fullWidth = false
+  @Input() buttons: Buttons = []
 }

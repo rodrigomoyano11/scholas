@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core'
-import { MatDialog } from '@angular/material/dialog'
 import { Router } from '@angular/router'
-import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
 import { GetProjectResponse } from 'src/app/shared/models/Api'
 import { Project } from 'src/app/shared/models/Project'
 import { CardData } from '../../components/project-card/project-card.component'
-import { ToolbarData } from '../../components/toolbar/toolbar.component'
+import { Buttons } from '../../components/toolbar/toolbar.component'
 import { ProjectsService } from '../../services/admins/projects/projects.service'
 
 @Component({
@@ -14,9 +12,8 @@ import { ProjectsService } from '../../services/admins/projects/projects.service
   styleUrls: ['./projects.component.css'],
 })
 export class ProjectsComponent implements OnInit {
-  toolbarData: ToolbarData = {
-    title: 'Proyectos',
-    rightButtons: {
+  buttons: Buttons = [
+    {
       style: 'primary',
       data: [
         {
@@ -37,13 +34,13 @@ export class ProjectsComponent implements OnInit {
         },
       ],
     },
-  }
+  ]
 
   cardData: CardData[] = []
 
   constructor(
-    private projects: ProjectsService,
-    private dialog: MatDialog,
+    public projects: ProjectsService,
+
     private router: Router,
   ) {}
 
@@ -82,34 +79,7 @@ export class ProjectsComponent implements OnInit {
     console.log('Works')
   }
 
-  async setProjectPrivate(id: Project['id']): Promise<void> {
-    const isApproved = (await this.dialog
-      .open<DialogComponent, DialogData>(DialogComponent, {
-        data: {
-          actions: ['Cancelar', 'Dar de baja'],
-          title: null,
-          description: '¿Estás seguro de dar de baja este proyecto?',
-        },
-      })
-      .afterClosed()
-      .toPromise()) as boolean
-
-    if (isApproved)
-      this.projects.setProjectVisibility(id, 'private').catch(() => this.getProjects('all'))
-  }
-  async setProjectPublic(id: Project['id']): Promise<void> {
-    const isApproved = (await this.dialog
-      .open<DialogComponent, DialogData>(DialogComponent, {
-        data: {
-          actions: ['Cancelar', 'Dar de alta'],
-          title: null,
-          description: '¿Estás seguro de dar de alta este proyecto?',
-        },
-      })
-      .afterClosed()
-      .toPromise()) as boolean
-
-    if (isApproved)
-      this.projects.setProjectVisibility(id, 'public').catch(() => this.getProjects('all'))
+  setProjectVisibility(id: Project['id'], visibility: Project['visibility']): void {
+    void this.projects.setProjectVisibility(id, visibility).catch(() => this.getProjects('all'))
   }
 }

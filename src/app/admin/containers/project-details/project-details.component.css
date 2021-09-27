@@ -20,6 +20,19 @@
   object-fit: cover;
 }
 
+.header__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.status--secondary {
+  margin-bottom: 1rem;
+
+  color: #ad2d44;
+  font-size: 16px;
+  font-weight: bold;
+}
+
 .title {
   margin-bottom: 0.5rem;
 

@@ -1,5 +1,5 @@
 <app-modal-container>
-  <app-toolbar [toolbarData]="toolbarData">
+  <app-toolbar [title]="'Proyectos'" [buttons]="buttons">
     <button type="button" mat-menu-item (click)="getProjects('all')">
       <p>Todos los proyectos</p>
     </button>
@@ -40,18 +40,11 @@
         <button
           type="button"
           mat-menu-item
-          *ngIf="item.visibility === 'PUBLIC'"
-          (click)="setProjectPrivate(item.id)"
+          (click)="
+            setProjectVisibility(item.id, item.visibility === 'PUBLIC' ? 'private' : 'public')
+          "
         >
-          Dar de baja
-        </button>
-        <button
-          type="button"
-          mat-menu-item
-          *ngIf="item.visibility === 'PRIVATE'"
-          (click)="setProjectPublic(item.id)"
-        >
-          Dar de alta
+          Dar de {{ item.visibility === 'PUBLIC' ? 'baja' : 'alta' }}
         </button>
       </app-project-card>
     </ng-container>

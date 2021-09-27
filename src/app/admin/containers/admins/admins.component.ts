@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { LayoutService } from 'src/app/shared/services/layout/layout.service'
-import { ToolbarData } from '../../components/toolbar/toolbar.component'
+import { Buttons } from '../../components/toolbar/toolbar.component'
 import { AdminsService } from '../../services/admins/admins.service'
 
 @Component({
@@ -11,9 +11,8 @@ import { AdminsService } from '../../services/admins/admins.service'
   styleUrls: ['./admins.component.css'],
 })
 export class AdminsComponent implements OnInit {
-  toolbarData: ToolbarData = {
-    title: 'Administradores',
-    rightButtons: {
+  buttons: Buttons = [
+    {
       style: 'primary',
       data: [
         {
@@ -26,7 +25,7 @@ export class AdminsComponent implements OnInit {
         },
       ],
     },
-  }
+  ]
 
   constructor(
     public adminsService: AdminsService,

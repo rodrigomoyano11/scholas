@@ -1,92 +1,46 @@
-<div [ngClass]="['container', toolbarData.fullWidth ? 'full-width' : '']">
-  <h1 *ngIf="toolbarData.title" class="title">{{ toolbarData.title }}</h1>
+<div [ngClass]="['container', fullWidth ? 'full-width' : '']">
+  <h1 *ngIf="title" class="title">{{ title }}</h1>
 
-  <div
-    *ngIf="toolbarData.leftButtons"
-    [ngClass]="['left-buttons', toolbarData.leftButtons.style === 'primary' ? 'no-dense' : 'dense']"
-  >
-    <ng-container *ngFor="let item of toolbarData.leftButtons.data">
-      <button
-        type="button"
-        *ngIf="item.action.type === 'button' && toolbarData.leftButtons.style === 'primary'"
-        class="button--primary"
-        mat-icon-button
-        [matTooltip]="item.label"
-        (click)="item.action.click()"
-      >
-        <mat-icon *ngIf="item.icon">{{ item.icon }}</mat-icon>
-      </button>
+  <ng-container *ngFor="let section of buttons">
+    <div [ngClass]="[section.style === 'primary' ? 'no-dense' : 'dense']">
+      <ng-container *ngFor="let item of section.data">
+        <button
+          type="button"
+          *ngIf="item.action.type === 'button' && section.style === 'primary'"
+          class="button--primary"
+          mat-icon-button
+          [matTooltip]="item.label"
+          (click)="item.action.click()"
+        >
+          <mat-icon *ngIf="item.icon">{{ item.icon }}</mat-icon>
+        </button>
 
-      <button
-        type="button--secondary"
-        *ngIf="item.action.type === 'button' && toolbarData.leftButtons.style === 'secondary'"
-        mat-button
-        color="primary"
-        [matTooltip]="item.label"
-        (click)="item.action.click()"
-      >
-        <mat-icon *ngIf="item.icon">{{ item.icon }}</mat-icon>
-        {{ item.label.toUpperCase() }}
-      </button>
+        <button
+          type="button--secondary"
+          *ngIf="item.action.type === 'button' && section.style === 'secondary'"
+          mat-button
+          color="primary"
+          [matTooltip]="item.label"
+          (click)="item.action.click()"
+        >
+          <mat-icon *ngIf="item.icon">{{ item.icon }}</mat-icon>
+          {{ item.label.toUpperCase() }}
+        </button>
 
-      <button
-        type="button"
-        *ngIf="item.action.type === 'menu'"
-        class="button--primary"
-        mat-icon-button
-        [matTooltip]="item.label"
-        [matMenuTriggerFor]="buttonMenu"
-        (click)="item.action.click()"
-      >
-        <mat-icon *ngIf="item.icon">{{ item.icon }}</mat-icon>
-      </button>
-    </ng-container>
-  </div>
-
-  <div
-    *ngIf="toolbarData.rightButtons"
-    [ngClass]="[
-      'right-buttons',
-      toolbarData.rightButtons.style === 'primary' ? 'no-dense' : 'dense'
-    ]"
-  >
-    <ng-container *ngFor="let item of toolbarData.rightButtons.data">
-      <button
-        type="button"
-        *ngIf="item.action.type === 'button' && toolbarData.rightButtons.style === 'primary'"
-        class="button--primary"
-        mat-icon-button
-        [matTooltip]="item.label"
-        (click)="item.action.click()"
-      >
-        <mat-icon *ngIf="item.icon">{{ item.icon }}</mat-icon>
-      </button>
-
-      <button
-        type="button--secondary"
-        *ngIf="item.action.type === 'button' && toolbarData.rightButtons.style === 'secondary'"
-        mat-button
-        color="primary"
-        [matTooltip]="item.label"
-        (click)="item.action.click()"
-      >
-        <mat-icon *ngIf="item.icon">{{ item.icon }}</mat-icon>
-        {{ item.label.toUpperCase() }}
-      </button>
-
-      <button
-        type="button"
-        *ngIf="item.action.type === 'menu'"
-        class="button--primary"
-        mat-icon-button
-        [matTooltip]="item.label"
-        [matMenuTriggerFor]="buttonMenu"
-        (click)="item.action.click()"
-      >
-        <mat-icon *ngIf="item.icon">{{ item.icon }}</mat-icon>
-      </button>
-    </ng-container>
-  </div>
+        <button
+          type="button"
+          *ngIf="item.action.type === 'menu'"
+          class="button--primary"
+          mat-icon-button
+          [matTooltip]="item.label"
+          [matMenuTriggerFor]="buttonMenu"
+          (click)="item.action.click()"
+        >
+          <mat-icon *ngIf="item.icon">{{ item.icon }}</mat-icon>
+        </button>
+      </ng-container>
+    </div>
+  </ng-container>
 </div>
 
 <mat-menu #buttonMenu="matMenu" class="menu">
