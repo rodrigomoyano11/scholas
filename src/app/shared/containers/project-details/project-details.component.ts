@@ -16,7 +16,7 @@ import { ProjectsService } from '../../services/projects/projects.service'
 export class ProjectDetailsComponent implements OnInit, OnChanges {
   toolbarButtons: ToolbarButtons = []
 
-  isAdmin = true
+  userIsAdmin = true
 
   projectIsPrivate!: boolean
 
@@ -34,7 +34,7 @@ export class ProjectDetailsComponent implements OnInit, OnChanges {
 
   async ngOnInit(): Promise<void> {
     await this.getProjectData()
-    this.auth.user$.subscribe((user) => (this.isAdmin = !(user.claims?.admin ?? false)))
+    // this.auth.user$.subscribe((user) => (this.userIsAdmin = !(user.claims?.admin ?? false)))
   }
 
   ngOnChanges(): void {
@@ -44,6 +44,7 @@ export class ProjectDetailsComponent implements OnInit, OnChanges {
   async getProjectData(): Promise<void> {
     if (!!this.selectedProjectId) {
       this.projectData = await this.projects.getProject(+this.selectedProjectId).toPromise()
+      this.projectIsPrivate = this.projectData.visibility === 'PRIVATE'
 
       const adminButtons: ToolbarButtons = [
         {
@@ -85,12 +86,10 @@ export class ProjectDetailsComponent implements OnInit, OnChanges {
               action: {
                 type: 'button',
                 click: (): void =>
-                  void this.projects
-                    .setProjectVisibility(
-                      this.projectData.id,
-                      this.projectIsPrivate ? 'public' : 'private',
-                    )
-                    .catch(() => this.getProjectData()),
+                  void this.setProjectVisibility(
+                    this.projectData.id,
+                    this.projectIsPrivate ? 'public' : 'private',
+                  ),
               },
             },
           ],
@@ -112,8 +111,12 @@ export class ProjectDetailsComponent implements OnInit, OnChanges {
         },
       ]
 
-      this.toolbarButtons = this.isAdmin ? adminButtons : donorButtons
+      this.toolbarButtons = this.userIsAdmin ? adminButtons : donorButtons
     }
+  }
+
+  setProjectVisibility(id: Project['id'], visibility: Project['visibility']): void {
+    void this.projects.setProjectVisibility(id, visibility).catch(() => this.getProjectData())
   }
 
   shareAsLink(): void {
