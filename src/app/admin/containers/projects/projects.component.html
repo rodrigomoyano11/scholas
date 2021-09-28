@@ -22,31 +22,8 @@
       alert="No hay proyectos"
       [alertCondition]="(cardData?.length ?? 0) === 0"
     ></app-list-alert>
-    <ng-container *ngFor="let item of cardData; index as i">
-      <app-project-card
-        [id]="item.id"
-        [image]="item.image"
-        [title]="item.title"
-        [subtitle]="item.subtitle"
-        [description]="item.description"
-        [status]="item.status"
-        [visibility]="item.visibility"
-        [mainAction]="item.mainAction"
-      >
-        <button type="button" mat-menu-item [routerLink]="['/admin/edit-project', item.id]">
-          Editar detalles
-        </button>
-        <button type="button" mat-menu-item (click)="action()">Ver métricas</button>
-        <button
-          type="button"
-          mat-menu-item
-          (click)="
-            setProjectVisibility(item.id, item.visibility === 'PUBLIC' ? 'private' : 'public')
-          "
-        >
-          Dar de {{ item.visibility === 'PUBLIC' ? 'baja' : 'alta' }}
-        </button>
-      </app-project-card>
+    <ng-container *ngFor="let item of cardData">
+      <app-project-card [projectData]="item"> </app-project-card>
     </ng-container>
   </mat-list>
 </app-modal-container>

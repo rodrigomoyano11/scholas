@@ -1,49 +1,98 @@
-<mat-card class="card__main-container">
-  <div class="card__image-container">
-    <img class="card__image" [src]="image" />
-  </div>
-  <div class="card__caption">
+<mat-card class="main-container">
+  <img [ngClass]="['image', !userIsAdmin ? 'image--donor' : '']" [src]="projectData.image" />
+
+  <div class="caption">
     <span
-      *ngIf="visibility === 'PRIVATE' && (layout.isDesktop$ | async) === false"
-      class="card__status--secondary mat-body-2"
-      >Dado de baja</span
+      class="status--secondary"
+      *ngIf="projectIsPrivate && (layout.isDesktop$ | async) !== true"
     >
-    <div class="card__header-info">
-      <div class="card__info-container">
-        <div class="card__info">
-          <mat-card-title class="card__title">{{ title }}</mat-card-title>
-          <mat-card-subtitle class="card__subtitle">{{ subtitle }}</mat-card-subtitle>
+      Dado de baja
+    </span>
+
+    <div class="header">
+      <div class="info__container">
+        <div class="info">
+          <mat-card-title class="title">{{ projectData.title }}</mat-card-title>
+          <mat-card-subtitle class="subtitle">{{ projectData.subtitle }}</mat-card-subtitle>
         </div>
         <span
-          *ngIf="visibility === 'PRIVATE' && (layout.isDesktop$ | async) === true"
-          class="card__status--primary mat-body-2"
-          >Dado de baja</span
+          class="status--primary"
+          *ngIf="projectIsPrivate && (layout.isDesktop$ | async) === true"
         >
+          Dado de baja
+        </span>
       </div>
-      <mat-card-actions class="card__actions">
-        <button type="button" mat-icon-button [matMenuTriggerFor]="user" xPosition="before">
-          <mat-icon>more_vert</mat-icon>
-        </button>
+      <mat-card-actions class="actions">
+        <ng-container *ngIf="projectData.actions.type === 'button'">
+          <ng-container *ngFor="let item of projectData.actions.data">
+            <button
+              class="action"
+              type="button"
+              mat-icon-button
+              xPosition="before"
+              [matTooltip]="item.label ?? ''"
+              (click)="item.click()"
+            >
+              <mat-icon>{{ item.icon ?? 'more_vert' }}</mat-icon>
+            </button>
+          </ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="projectData.actions.type === 'menu'">
+          <button
+            class="action"
+            type="button"
+            mat-icon-button
+            xPosition="before"
+            [matTooltip]="'Más opciones'"
+            [matMenuTriggerFor]="menu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <ng-container *ngFor="let item of projectData.actions.data">
+              <button class="action__item" type="button" mat-menu-item (click)="item.click()">
+                {{ item.label }}
+              </button>
+            </ng-container>
+          </mat-menu>
+        </ng-container>
       </mat-card-actions>
     </div>
 
-    <mat-card-content class="card__content">
-      <p class="card__description">
-        {{ description }}
+    <mat-card-content class="content">
+      <p [ngClass]="['description', !userIsAdmin ? 'description--donor' : '']">
+        {{ projectData.description }}
       </p>
-      <button
-        type="button"
-        class="card__main-action"
-        [color]="'primary'"
-        (click)="mainAction()"
-        mat-button
-      >
-        Ver más
-      </button>
+
+      <app-amount-progress
+        *ngIf="!userIsAdmin"
+        [type]="'mobile'"
+        [targetAmount]="projectData.targetAmount"
+        [currentAmount]="450000 || projectData.currentAmount"
+      ></app-amount-progress>
+
+      <div class="CTA__container">
+        <button
+          class="CTA--primary"
+          *ngIf="!userIsAdmin"
+          type="button"
+          [color]="'primary'"
+          (click)="projectData.primaryCTA()"
+          mat-flat-button
+        >
+          Donar
+        </button>
+        <button
+          class="CTA--secondary"
+          type="button"
+          [color]="'primary'"
+          (click)="projectData.secondaryCTA()"
+          mat-button
+        >
+          Ver más
+        </button>
+      </div>
     </mat-card-content>
   </div>
 </mat-card>
-
-<mat-menu #user="matMenu">
-  <ng-content></ng-content>
-</mat-menu>

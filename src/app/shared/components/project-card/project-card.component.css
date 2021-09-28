@@ -1,4 +1,4 @@
-.card__main-container {
+.main-container {
   display: flex;
   flex-wrap: wrap;
   height: min-content;
@@ -8,66 +8,23 @@
   box-shadow: none;
 }
 
-.card__image-container {
-  height: 12rem;
-  margin-bottom: 1rem;
-}
-
-.card__image {
+.image {
   width: 18rem;
+  height: 12rem;
   height: 100%;
+  margin-bottom: 1rem;
 
   border-radius: 0.25rem 0.25rem 0 0;
   object-fit: cover;
 }
 
-.card__actions {
-  margin: 0;
-  padding: 0;
-}
-
-.card__caption {
+.caption {
   display: flex;
   flex: 1;
   flex-wrap: wrap;
 }
 
-.card__header-info {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.card__content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 100%;
-  margin: 0;
-}
-
-.card__description {
-  display: -webkit-box;
-
-  overflow: hidden;
-
-  text-overflow: ellipsis;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-}
-
-.card__main-action {
-  align-self: flex-start;
-
-  text-transform: uppercase;
-}
-
-.card__info-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.card__status--primary {
+.status--primary {
   display: flex;
   align-items: center;
   align-self: flex-start;
@@ -83,45 +40,102 @@
   color: #fff;
 }
 
-.card__status--secondary {
-  margin-bottom: 0.25rem;
+.status--secondary {
+  margin-bottom: 0.5rem;
 
   color: #ad2d44;
   font-weight: bold;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.info__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  line-height: 1.75rem;
+}
+
+.actions {
+  margin: 0;
+  padding: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0;
+}
+
+.description {
+  display: -webkit-box;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.description--donor {
+  margin: 0;
+  padding: 0;
+}
+
+.CTA__container {
+  display: flex;
+  gap: 0.5rem;
+
+  justify-content: flex-start;
+}
+
+.CTA--primary,
+.CTA--secondary {
+  text-transform: uppercase;
+}
+
 @media screen and (min-width: 960px) {
-  .card__main-container {
+  .main-container {
     flex-wrap: nowrap;
   }
 
-  .card__caption {
+  .caption {
     margin-left: 1rem;
   }
 
-  .card__image-container {
-    height: 9.25rem;
-    margin: 0;
+  .subtitle {
+    margin-bottom: 0.5rem;
   }
 
-  .card__image {
-    width: 9.25rem;
-
-    border-radius: 0.25rem;
-  }
-
-  .card__description {
-    -webkit-line-clamp: 2;
-
-    margin: 0;
-  }
-
-  .card__info-container {
+  .info__container {
     flex-direction: row;
     gap: 1rem;
   }
 
-  .card__main-action {
-    align-self: flex-end;
+  .image {
+    width: 10rem;
+    height: 10rem;
+    margin: 0;
+
+    border-radius: 0.25rem;
+  }
+
+  .image--donor {
+    width: 12rem;
+    height: 12rem;
+  }
+
+  .description {
+    -webkit-line-clamp: 2;
+
+    margin: 0;
   }
 }
