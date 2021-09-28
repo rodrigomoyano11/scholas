@@ -6,7 +6,7 @@ import { GetProjectResponse } from 'src/app/shared/models/Api'
 import { Project } from 'src/app/shared/models/Project'
 import { LayoutService } from 'src/app/shared/services/layout/layout.service'
 import { ShareService } from 'src/app/shared/services/share/share.service'
-import { ProjectsService } from '../../../shared/services/projects/projects.service'
+import { ProjectsService } from '../../services/projects/projects.service'
 
 @Component({
   selector: 'app-project-details',

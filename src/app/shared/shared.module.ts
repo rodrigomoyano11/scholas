@@ -30,6 +30,7 @@ import { MatCardModule } from '@angular/material/card'
 import { ListItemComponent } from './components/list-item/list-item.component'
 import { ListAlertComponent } from './components/list-alert/list-alert.component'
 import { MatListModule } from '@angular/material/list'
+import { ProjectDetailsComponent } from './containers/project-details/project-details.component'
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { MatListModule } from '@angular/material/list'
     ProjectCardComponent,
     ListItemComponent,
     ListAlertComponent,
+    ProjectDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -79,6 +81,7 @@ import { MatListModule } from '@angular/material/list'
     ProjectCardComponent,
     ListItemComponent,
     ListAlertComponent,
+    ProjectDetailsComponent,
   ],
 })
 export class SharedModule {}
