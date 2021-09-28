@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { AuthService } from 'src/app/auth/services/auth/auth.service'
 import { CardData } from 'src/app/shared/components/project-card/project-card.component'
-import { Buttons } from 'src/app/shared/components/toolbar/toolbar.component'
+import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
 import { GetProjectResponse } from 'src/app/shared/models/Api'
 import { Project } from 'src/app/shared/models/Project'
 import { ProjectsService } from '../../services/admins/projects/projects.service'
@@ -13,7 +12,7 @@ import { ProjectsService } from '../../services/admins/projects/projects.service
   styleUrls: ['./projects.component.css'],
 })
 export class ProjectsComponent implements OnInit {
-  buttons: Buttons = [
+  toolbarButtons: ToolbarButtons = [
     {
       style: 'primary',
       data: [
@@ -39,25 +38,15 @@ export class ProjectsComponent implements OnInit {
 
   cardData: CardData[] = []
 
-  userIsAdmin = !false
+  constructor(public projects: ProjectsService, private router: Router) {}
 
-  constructor(
-    public projects: ProjectsService,
-    private router: Router,
-    private auth: AuthService,
-  ) {}
-
-  // eslint-disable-next-line @typescript-eslint/require-await
-  async ngOnInit(): Promise<void> {
-    // const { claims } = await this.auth.user$.toPromise()
-    // this.userIsAdmin = claims?.admin ?? false
-
+  ngOnInit(): void {
     this.getProjects('all')
   }
 
   setCardData(project: GetProjectResponse): CardData {
     return {
-      type: this.userIsAdmin ? 'admin' : 'donor',
+      type: 'admin',
 
       id: project.id,
       image: project.coverPhotoURL,
@@ -73,33 +62,25 @@ export class ProjectsComponent implements OnInit {
       targetAmount: project.targetAmount,
 
       actions: {
-        type: this.userIsAdmin ? 'menu' : 'button',
-        data: this.userIsAdmin
-          ? [
-              {
-                label: 'Editar detalles',
-                click: () => this.router.navigate(['/admin/edit-project', project.id]),
-              },
-              {
-                label: 'Ver métricas',
-                click: () => console.log('Works'),
-              },
-              {
-                label: `Dar de ${project.visibility === 'PUBLIC' ? 'baja' : 'alta'}`,
-                click: () =>
-                  this.setProjectVisibility(
-                    project.id,
-                    project.visibility === 'PRIVATE' ? 'public' : 'private',
-                  ),
-              },
-            ]
-          : [
-              {
-                label: 'Compartir',
-                icon: 'share',
-                click: () => console.log('Works'),
-              },
-            ],
+        type: 'menu',
+        data: [
+          {
+            label: 'Editar detalles',
+            click: () => this.router.navigate(['/admin/edit-project', project.id]),
+          },
+          {
+            label: 'Ver métricas',
+            click: () => console.log('Works'),
+          },
+          {
+            label: `Dar de ${project.visibility === 'PUBLIC' ? 'baja' : 'alta'}`,
+            click: () =>
+              this.setProjectVisibility(
+                project.id,
+                project.visibility === 'PRIVATE' ? 'public' : 'private',
+              ),
+          },
+        ],
       },
 
       primaryCTA: (): void => console.log('Works'),

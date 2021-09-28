@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
-import { Buttons } from 'src/app/shared/components/toolbar/toolbar.component'
+import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
 import { GetProjectResponse } from 'src/app/shared/models/Api'
 import { LayoutService } from 'src/app/shared/services/layout/layout.service'
 import { ProjectsService } from '../../services/admins/projects/projects.service'
@@ -14,11 +14,12 @@ import { ProjectsService } from '../../services/admins/projects/projects.service
   styleUrls: ['./project-details.component.css'],
 })
 export class ProjectDetailsComponent implements OnInit {
+  toolbarButtons: ToolbarButtons = []
+
   isAdmin = false
 
   selectedProjectId: string | null = this.route.snapshot.paramMap.get('id')
   projectData!: GetProjectResponse
-  buttons: Buttons = []
 
   constructor(
     public layout: LayoutService,
@@ -39,7 +40,7 @@ export class ProjectDetailsComponent implements OnInit {
     if (!!this.selectedProjectId) {
       this.projectData = await this.projects.getProject(+this.selectedProjectId).toPromise()
 
-      const adminButtons: Buttons = [
+      const adminButtons: ToolbarButtons = [
         {
           style: 'primary',
           data: [
@@ -90,7 +91,7 @@ export class ProjectDetailsComponent implements OnInit {
           ],
         },
       ]
-      const donorButtons: Buttons = [
+      const donorButtons: ToolbarButtons = [
         {
           style: 'primary',
           data: [
@@ -106,7 +107,7 @@ export class ProjectDetailsComponent implements OnInit {
         },
       ]
 
-      this.buttons = this.isAdmin ? adminButtons : donorButtons
+      this.toolbarButtons = this.isAdmin ? adminButtons : donorButtons
     }
   }
 

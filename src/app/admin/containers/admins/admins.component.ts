@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { Buttons } from 'src/app/shared/components/toolbar/toolbar.component'
+import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
 import { LayoutService } from 'src/app/shared/services/layout/layout.service'
 
 import { AdminsService } from '../../services/admins/admins.service'
@@ -12,7 +11,7 @@ import { AdminsService } from '../../services/admins/admins.service'
   styleUrls: ['./admins.component.css'],
 })
 export class AdminsComponent implements OnInit {
-  buttons: Buttons = [
+  toolbarButtons: ToolbarButtons = [
     {
       style: 'primary',
       data: [
