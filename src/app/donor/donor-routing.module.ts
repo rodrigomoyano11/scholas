@@ -6,9 +6,15 @@ import { NewsComponent } from './containers/news/news.component'
 import { ProjectsComponent } from './containers/projects/projects.component'
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', component: HomeComponent },
-  { path: 'news', component: NewsComponent },
-  { path: 'projects', component: ProjectsComponent },
+  {
+    path: '',
+    component: HomeComponent,
+    children: [
+      { path: 'news', component: NewsComponent },
+      { path: 'projects', component: ProjectsComponent },
+      { path: '**', component: NotFoundComponent },
+    ],
+  },
   { path: '**', component: NotFoundComponent },
 ]
 
