@@ -25,7 +25,7 @@
     <div class="content">
       <p class="description mat-body-2">{{ projectData.description }}</p>
       <app-amount-progress
-        [type]="'desktop'"
+        [type]="(layout.isDesktop$ | async) === true ? 'desktop' : 'mobile'"
         [targetAmount]="projectData.targetAmount"
         [currentAmount]="450000 || projectData.currentAmount"
       ></app-amount-progress>

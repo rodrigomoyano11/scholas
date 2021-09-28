@@ -13,8 +13,8 @@
 
 .image {
   width: 100%;
-  height: 24rem;
-  margin-bottom: 1.5rem;
+  height: 12rem;
+  margin-bottom: 1rem;
 
   border-radius: 0.25rem;
   object-fit: cover;
@@ -34,26 +34,25 @@
 }
 
 .title {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
 
   color: rgba(0, 0, 0, 0.87);
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 500;
+  line-height: 1.75rem;
 }
 
 .subtitle {
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
 
   color: rgba(0, 0, 0, 0.54);
-  font-size: 20px;
+  font-size: 14px;
 }
 
 .action--share {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 4rem;
-  height: 4rem;
 }
 
 .action--share__icon {
@@ -74,4 +73,31 @@
   font-size: 20px;
 
   text-transform: uppercase;
+}
+
+@media screen and (min-width: 960px) {
+  .image {
+    height: 24rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .title {
+    margin-bottom: 0.5rem;
+
+    font-size: 32px;
+  }
+
+  .subtitle {
+    margin-bottom: 1.5rem;
+
+    font-size: 20px;
+  }
+
+  .action--share {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+  }
 }
