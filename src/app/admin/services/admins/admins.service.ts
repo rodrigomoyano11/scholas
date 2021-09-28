@@ -39,7 +39,24 @@ export class AdminsService {
   }
 
   addAdmin(uid: User['uid']): void {
-    void this.auth.setPermissions('admin', uid).then(() => this.getAdmins())
+    void this.auth
+      .setPermissions('admin', uid)
+
+      .then(() =>
+        this.dialog
+          .open<DialogComponent, DialogData>(DialogComponent, {
+            data: {
+              actions: [null, 'Cerrar'],
+              title: 'Importante',
+              description:
+                'Para que se apliquen los cambios, el nuevo administrador deberá cerrar sesión y volver a ingresar a su cuenta.',
+              icon: 'info',
+            },
+          })
+          .afterClosed()
+          .toPromise(),
+      )
+      .then(() => this.getAdmins())
   }
 
   async deleteAdmin(uid: User['uid']): Promise<void> {
