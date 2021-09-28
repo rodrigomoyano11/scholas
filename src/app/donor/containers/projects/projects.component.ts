@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { CardData } from 'src/app/shared/components/project-card/project-card.component'
 import { GetProjectResponse } from 'src/app/shared/models/Api'
+import { Project } from 'src/app/shared/models/Project'
+import { ShareService } from 'src/app/shared/services/share/share.service'
 import { ProjectsService } from '../../../shared/services/projects/projects.service'
 
 @Component({
@@ -12,7 +14,11 @@ import { ProjectsService } from '../../../shared/services/projects/projects.serv
 export class ProjectsComponent implements OnInit {
   cardData: CardData[] = []
 
-  constructor(public projects: ProjectsService, private router: Router) {}
+  constructor(
+    public projects: ProjectsService,
+    private router: Router,
+    private share: ShareService,
+  ) {}
 
   ngOnInit(): void {
     this.getProjects()
@@ -41,7 +47,7 @@ export class ProjectsComponent implements OnInit {
           {
             label: 'Compartir',
             icon: 'share',
-            click: () => console.log('Works'),
+            click: () => this.shareAsLink(project.id),
           },
         ],
       },
@@ -57,5 +63,9 @@ export class ProjectsComponent implements OnInit {
       .subscribe((projects) =>
         projects.forEach((project) => this.cardData.push(this.setCardData(project))),
       )
+  }
+
+  shareAsLink(projectId: Project['id']): void {
+    this.share.shareAsLink(`${window.location.href}/${projectId}`, 'Se copió el link del proyecto')
   }
 }

@@ -1,11 +1,10 @@
-import { Clipboard } from '@angular/cdk/clipboard'
 import { Component, OnInit } from '@angular/core'
-import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute, Router } from '@angular/router'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
 import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
 import { GetProjectResponse } from 'src/app/shared/models/Api'
 import { LayoutService } from 'src/app/shared/services/layout/layout.service'
+import { ShareService } from 'src/app/shared/services/share/share.service'
 import { ProjectsService } from '../../../shared/services/projects/projects.service'
 
 @Component({
@@ -26,9 +25,8 @@ export class ProjectDetailsComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private projects: ProjectsService,
-    private clipboard: Clipboard,
-    private snackBar: MatSnackBar,
     public auth: AuthService,
+    private share: ShareService,
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -111,8 +109,7 @@ export class ProjectDetailsComponent implements OnInit {
     }
   }
 
-  share(): void {
-    this.clipboard.copy(window.location.href)
-    this.snackBar.open('Se copió el link del proyecto', 'Cerrar', { duration: 3000 })
+  shareAsLink(): void {
+    this.share.shareAsLink(window.location.href, 'Se copió el link del proyecto')
   }
 }
