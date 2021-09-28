@@ -36,7 +36,14 @@
 
       <app-video-player class="video" [video]="projectData.videoURL"></app-video-player>
 
-      <button type="submit" class="CTA" [color]="'primary'" mat-flat-button [matTooltip]="'Donar'">
+      <button
+        class="CTA"
+        type="button"
+        [color]="'primary'"
+        (click)="donateToProject(projectData.id)"
+        mat-flat-button
+        [matTooltip]="'Donar'"
+      >
         Donar
       </button>
     </div>

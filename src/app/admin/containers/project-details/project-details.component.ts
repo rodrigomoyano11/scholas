@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
 import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
 import { GetProjectResponse } from 'src/app/shared/models/Api'
+import { Project } from 'src/app/shared/models/Project'
 import { LayoutService } from 'src/app/shared/services/layout/layout.service'
 import { ShareService } from 'src/app/shared/services/share/share.service'
 import { ProjectsService } from '../../../shared/services/projects/projects.service'
@@ -111,5 +112,9 @@ export class ProjectDetailsComponent implements OnInit {
 
   shareAsLink(): void {
     this.share.shareAsLink(window.location.href, 'Se copió el link del proyecto')
+  }
+
+  donateToProject(id: Project['id']): void {
+    void this.router.navigate(['/donation/donate', id])
   }
 }

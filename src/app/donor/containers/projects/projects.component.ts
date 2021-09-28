@@ -52,7 +52,7 @@ export class ProjectsComponent implements OnInit {
         ],
       },
 
-      primaryCTA: (): void => console.log('Works'),
+      primaryCTA: (): void => void this.router.navigate(['/donation/donate', project.id]),
       secondaryCTA: (): void => void this.router.navigate(['/admin/projects', project.id]),
     }
   }
