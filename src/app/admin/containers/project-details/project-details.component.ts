@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/auth/services/auth/auth.service'
 import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
 import { GetProjectResponse } from 'src/app/shared/models/Api'
 import { LayoutService } from 'src/app/shared/services/layout/layout.service'
-import { ProjectsService } from '../../services/admins/projects/projects.service'
+import { ProjectsService } from '../../../shared/services/projects/projects.service'
 
 @Component({
   selector: 'app-project-details',

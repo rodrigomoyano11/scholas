@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { ProjectsService } from 'src/app/admin/services/admins/projects/projects.service'
 import { CardData } from 'src/app/shared/components/project-card/project-card.component'
 import { GetProjectResponse } from 'src/app/shared/models/Api'
+import { ProjectsService } from '../../../shared/services/projects/projects.service'
 
 @Component({
   selector: 'app-projects',

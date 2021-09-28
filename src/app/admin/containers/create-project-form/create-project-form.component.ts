@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { LocationService } from 'src/app/auth/services/location.service'
-import { ProjectsService } from '../../services/admins/projects/projects.service'
+import { ProjectsService } from '../../../shared/services/projects/projects.service'
 import { ValidationService } from '../../services/validation/validation.service'
 
 @Component({

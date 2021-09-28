@@ -4,7 +4,7 @@ import { CardData } from 'src/app/shared/components/project-card/project-card.co
 import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
 import { GetProjectResponse } from 'src/app/shared/models/Api'
 import { Project } from 'src/app/shared/models/Project'
-import { ProjectsService } from '../../services/admins/projects/projects.service'
+import { ProjectsService } from '../../../shared/services/projects/projects.service'
 
 @Component({
   selector: 'app-projects',
