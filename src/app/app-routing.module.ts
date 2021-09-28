@@ -8,12 +8,16 @@ const routes: Routes = [
     redirectTo: 'donor',
   },
   {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
     path: 'donor',
     loadChildren: () => import('./donor/donor.module').then((m) => m.DonorModule),
   },
   {
-    path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+    path: 'donation',
+    loadChildren: () => import('./donation/donation.module').then((m) => m.DonationModule),
   },
   {
     path: 'admin',
