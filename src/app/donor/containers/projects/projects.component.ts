@@ -1,8 +1,61 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
+import { ProjectsService } from 'src/app/admin/services/admins/projects/projects.service'
+import { CardData } from 'src/app/shared/components/project-card/project-card.component'
+import { GetProjectResponse } from 'src/app/shared/models/Api'
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css'],
 })
-export class ProjectsComponent {}
+export class ProjectsComponent implements OnInit {
+  cardData: CardData[] = []
+
+  constructor(public projects: ProjectsService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.getProjects()
+  }
+
+  setCardData(project: GetProjectResponse): CardData {
+    return {
+      type: 'donor',
+
+      id: project.id,
+      image: project.coverPhotoURL,
+
+      title: project.name,
+      subtitle: `${project.locality ?? ''} - ${project.province ?? ''}`,
+      description: project.description,
+
+      status: project.status,
+      visibility: project.visibility,
+
+      currentAmount: project.currentAmount,
+      targetAmount: project.targetAmount,
+
+      actions: {
+        type: 'button',
+        data: [
+          {
+            label: 'Compartir',
+            icon: 'share',
+            click: () => console.log('Works'),
+          },
+        ],
+      },
+
+      primaryCTA: (): void => console.log('Works'),
+      secondaryCTA: (): void => void this.router.navigate(['/admin/projects', project.id]),
+    }
+  }
+
+  getProjects(): void {
+    this.projects
+      .getProjects()
+      .subscribe((projects) =>
+        projects.forEach((project) => this.cardData.push(this.setCardData(project))),
+      )
+  }
+}

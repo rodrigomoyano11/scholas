@@ -1,3 +1,11 @@
-<app-layout>
-  <p>projects works!</p>
-</app-layout>
+<app-modal-container>
+  <mat-list class="project-list">
+    <app-list-alert
+      alert="No hay proyectos"
+      [alertCondition]="(cardData?.length ?? 0) === 0"
+    ></app-list-alert>
+    <ng-container *ngFor="let item of cardData">
+      <app-project-card [projectData]="item"> </app-project-card>
+    </ng-container>
+  </mat-list>
+</app-modal-container>

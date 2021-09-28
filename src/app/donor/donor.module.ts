@@ -5,9 +5,10 @@ import { HomeComponent } from './containers/home/home.component'
 import { ProjectsComponent } from './containers/projects/projects.component'
 import { NewsComponent } from './containers/news/news.component'
 import { SharedModule } from '../shared/shared.module'
+import { MatListModule } from '@angular/material/list'
 
 @NgModule({
   declarations: [HomeComponent, ProjectsComponent, NewsComponent],
-  imports: [CommonModule, LandingPageRoutingModule, SharedModule],
+  imports: [CommonModule, LandingPageRoutingModule, SharedModule, MatListModule],
 })
 export class DonorModule {}
