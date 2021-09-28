@@ -77,8 +77,8 @@ export class ProjectsService {
   }
 
   getProjects(
-    status?: Project['status'],
     visibility?: Project['visibility'],
+    status?: Project['status'],
   ): Observable<GetProjectsResponse> {
     let params = new HttpParams({})
 

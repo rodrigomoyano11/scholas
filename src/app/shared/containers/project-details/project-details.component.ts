@@ -16,7 +16,7 @@ import { ProjectsService } from '../../services/projects/projects.service'
 export class ProjectDetailsComponent implements OnInit, OnChanges {
   toolbarButtons: ToolbarButtons = []
 
-  userIsAdmin = true
+  userIsAdmin = false
 
   projectIsPrivate!: boolean
 

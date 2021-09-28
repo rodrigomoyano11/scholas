@@ -59,7 +59,7 @@ export class ProjectsComponent implements OnInit {
 
   getProjects(): void {
     this.projects
-      .getProjects()
+      .getProjects('public')
       .subscribe((projects) =>
         projects.forEach((project) => this.cardData.push(this.setCardData(project))),
       )

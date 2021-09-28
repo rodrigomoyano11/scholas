@@ -90,10 +90,10 @@ export class ProjectsComponent implements OnInit {
   getProjects(filter: 'all' | 'finished' | 'inProgress' | 'public' | 'private'): void {
     const filters = {
       all: this.projects.getProjects(),
-      finished: this.projects.getProjects('finished', 'public'),
-      inProgress: this.projects.getProjects('inProgress', 'public'),
-      public: this.projects.getProjects('started', 'public'),
-      private: this.projects.getProjects('started', 'private'),
+      finished: this.projects.getProjects('public', 'finished'),
+      inProgress: this.projects.getProjects('public', 'inProgress'),
+      public: this.projects.getProjects('public'),
+      private: this.projects.getProjects('public'),
     }
     this.cardData = []
     filters[filter].subscribe((projects) =>
