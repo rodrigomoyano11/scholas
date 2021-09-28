@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core'
 
-export type Buttons = {
+export type ToolbarButtons = {
   style: 'primary' | 'secondary'
   data: ButtonData[]
 }[]
@@ -22,5 +22,5 @@ interface ButtonData {
 export class ToolbarComponent {
   @Input() title!: string
   @Input() fullWidth = false
-  @Input() buttons: Buttons = []
+  @Input() buttons: ToolbarButtons = []
 }

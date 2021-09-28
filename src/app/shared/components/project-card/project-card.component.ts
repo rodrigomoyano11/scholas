@@ -2,16 +2,6 @@ import { Component, Input, OnChanges } from '@angular/core'
 import { GetProjectResponse } from '../../models/Api'
 import { LayoutService } from '../../services/layout/layout.service'
 
-export interface CardDataOLD {
-  id: GetProjectResponse['id']
-  image: GetProjectResponse['coverPhotoURL']
-  title: GetProjectResponse['name']
-  subtitle: string
-  description: GetProjectResponse['description']
-  status: GetProjectResponse['status']
-  visibility: GetProjectResponse['visibility']
-  mainAction: () => unknown
-}
 export interface CardData {
   type: 'admin' | 'donor'
 

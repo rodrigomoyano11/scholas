@@ -27,6 +27,9 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { ProjectCardComponent } from './components/project-card/project-card.component'
 import { MatCardModule } from '@angular/material/card'
+import { ListItemComponent } from './components/list-item/list-item.component'
+import { ListAlertComponent } from './components/list-alert/list-alert.component'
+import { MatListModule } from '@angular/material/list'
 
 @NgModule({
   declarations: [
@@ -45,6 +48,8 @@ import { MatCardModule } from '@angular/material/card'
     VideoPlayerComponent,
     ToolbarComponent,
     ProjectCardComponent,
+    ListItemComponent,
+    ListAlertComponent,
   ],
   imports: [
     CommonModule,
@@ -55,6 +60,7 @@ import { MatCardModule } from '@angular/material/card'
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
+    MatListModule,
     MatTooltipModule,
     MatCardModule,
     MatProgressBarModule,
@@ -71,6 +77,8 @@ import { MatCardModule } from '@angular/material/card'
     ImageGalleryComponent,
     ToolbarComponent,
     ProjectCardComponent,
+    ListItemComponent,
+    ListAlertComponent,
   ],
 })
 export class SharedModule {}
