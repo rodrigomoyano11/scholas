@@ -1,4 +1,4 @@
-<mat-list>
+<mat-list [ngClass]="['project-list', alertCondition ? '' : 'has-content']">
   <ng-container *ngIf="alertCondition">
     <p class="alert mat-title">{{ alert }}</p>
   </ng-container>
