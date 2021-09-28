@@ -45,6 +45,8 @@ export class ProjectsComponent implements OnInit {
   }
 
   setCardData(project: GetProjectResponse): CardData {
+    const projectIsPrivate = project.visibility === 'PRIVATE'
+
     return {
       type: 'admin',
 
@@ -73,12 +75,9 @@ export class ProjectsComponent implements OnInit {
             click: () => console.log('Works'),
           },
           {
-            label: `Dar de ${project.visibility === 'PUBLIC' ? 'baja' : 'alta'}`,
+            label: `Dar de ${projectIsPrivate ? 'alta' : 'baja'}`,
             click: () =>
-              this.setProjectVisibility(
-                project.id,
-                project.visibility === 'PRIVATE' ? 'public' : 'private',
-              ),
+              this.setProjectVisibility(project.id, projectIsPrivate ? 'public' : 'private'),
           },
         ],
       },

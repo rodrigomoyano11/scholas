@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnChanges, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
 import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
@@ -13,10 +13,12 @@ import { ProjectsService } from '../../services/projects/projects.service'
   templateUrl: './project-details.component.html',
   styleUrls: ['./project-details.component.css'],
 })
-export class ProjectDetailsComponent implements OnInit {
+export class ProjectDetailsComponent implements OnInit, OnChanges {
   toolbarButtons: ToolbarButtons = []
 
-  isAdmin = false
+  isAdmin = true
+
+  projectIsPrivate!: boolean
 
   selectedProjectId: string | null = this.route.snapshot.paramMap.get('id')
   projectData!: GetProjectResponse
@@ -33,6 +35,10 @@ export class ProjectDetailsComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await this.getProjectData()
     this.auth.user$.subscribe((user) => (this.isAdmin = !(user.claims?.admin ?? false)))
+  }
+
+  ngOnChanges(): void {
+    this.projectIsPrivate = this.projectData.visibility === 'PRIVATE'
   }
 
   async getProjectData(): Promise<void> {
@@ -74,7 +80,7 @@ export class ProjectDetailsComponent implements OnInit {
               },
             },
             {
-              label: this.projectData.visibility === 'PUBLIC' ? 'Dar de baja' : 'Dar de alta',
+              label: this.projectIsPrivate ? 'Dar de alta' : 'Dar de baja',
               icon: null,
               action: {
                 type: 'button',
@@ -82,7 +88,7 @@ export class ProjectDetailsComponent implements OnInit {
                   void this.projects
                     .setProjectVisibility(
                       this.projectData.id,
-                      this.projectData.visibility === 'PUBLIC' ? 'private' : 'public',
+                      this.projectIsPrivate ? 'public' : 'private',
                     )
                     .catch(() => this.getProjectData()),
               },

@@ -4,9 +4,7 @@
     <img class="image" [src]="projectData.coverPhotoURL" />
     <div class="header">
       <div class="header__info">
-        <span
-          *ngIf="isAdmin && projectData.visibility === 'PRIVATE'"
-          class="status--secondary mat-body-2"
+        <span *ngIf="isAdmin && projectIsPrivate" class="status--secondary mat-body-2"
           >Dado de baja</span
         >
         <h1 class="title">{{ projectData.name }}</h1>
