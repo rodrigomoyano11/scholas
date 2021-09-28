@@ -18,31 +18,31 @@ export class MainMenuComponent {
   donorItems: Item[] = [
     {
       name: 'Proyectos',
-      link: '/landing/projects',
+      link: '/donor/projects',
       type: 'internal',
       access: ['anonymous', 'donor'],
     },
     {
       name: 'Quienes somos',
-      link: '/landing',
+      link: '/donor',
       type: 'internal',
       access: ['anonymous', 'donor'],
     },
     {
       name: 'Noticias',
-      link: '/landing/news',
+      link: '/donor/news',
       type: 'internal',
       access: ['anonymous', 'donor'],
     },
     {
       name: 'Preguntas frecuentes',
-      link: '/landing',
+      link: '/donor',
       type: 'internal',
       access: ['anonymous', 'donor'],
     },
     {
       name: 'Contacto',
-      link: '/landing',
+      link: '/donor',
       type: 'internal',
       access: ['anonymous', 'donor'],
     },

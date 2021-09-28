@@ -26,15 +26,15 @@
   <!-- Others -->
 
   <mat-divider></mat-divider>
-  <button type="button" mat-menu-item [matMenuTriggerFor]="landingMenu">Landing Page</button>
+  <button type="button" mat-menu-item [matMenuTriggerFor]="donorMenu">Landing Page</button>
   <button type="button" mat-menu-item [matMenuTriggerFor]="adminMenu">Administración</button>
   <button type="button" mat-menu-item [matMenuTriggerFor]="authMenu">Auth</button>
 </mat-menu>
 
-<mat-menu #landingMenu="matMenu">
-  <button type="button" mat-menu-item [routerLink]="'/landing'">Inicio</button>
-  <button type="button" mat-menu-item [routerLink]="'/landing/news'">Noticias</button>
-  <button type="button" mat-menu-item [routerLink]="'/landing/projects'">Proyectos</button>
+<mat-menu #donorMenu="matMenu">
+  <button type="button" mat-menu-item [routerLink]="'/donor'">Inicio</button>
+  <button type="button" mat-menu-item [routerLink]="'/donor/news'">Noticias</button>
+  <button type="button" mat-menu-item [routerLink]="'/donor/projects'">Proyectos</button>
 </mat-menu>
 
 <mat-menu #adminMenu="matMenu">
