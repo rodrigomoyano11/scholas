@@ -1,2 +1,28 @@
-<button (click)="sendData()">Complete</button>
-<p>amount-selection-step works!</p>
+<div class="amount-selection">
+  <mat-button-toggle-group class="toggle__container">
+    <mat-button-toggle class="toggle__button" value="500">{{
+      500 | currency: 'ARS':'symbol':'1.0-2'
+    }}</mat-button-toggle>
+
+    <mat-button-toggle class="toggle__button" value="1000">{{
+      1000 | currency: 'ARS':'symbol':'1.0-2'
+    }}</mat-button-toggle>
+
+    <mat-button-toggle class="toggle__button" value="2000">{{
+      2000 | currency: 'ARS':'symbol':'1.0-2'
+    }}</mat-button-toggle>
+
+    <mat-button-toggle class="toggle__button" value="5000">{{
+      5000 | currency: 'ARS':'symbol':'1.0-2'
+    }}</mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <mat-form-field class="field" appearance="outline">
+    <input matInput class="field__input" placeholder="OTRO" />
+    <!-- <mat-error>{{ getErrors('password') }}</mat-error> -->
+  </mat-form-field>
+</div>
+
+<mat-checkbox [color]="'primary'" class="checkbox"
+  >Me gustaría comprometerme para apoyar todos los meses a este proyecto</mat-checkbox
+>
