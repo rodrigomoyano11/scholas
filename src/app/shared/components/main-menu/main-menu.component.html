@@ -11,6 +11,31 @@
 </button>
 
 <mat-menu #mainMenu="matMenu">
+  <!-- Sections -->
+  <button type="button" mat-menu-item>
+    <mat-icon>work_outline</mat-icon>
+    Proyectos
+  </button>
+  <button type="button" mat-menu-item>
+    <mat-icon fontSet="material-icons-outlined">people</mat-icon>
+    Quienes somos
+  </button>
+  <button type="button" mat-menu-item>
+    <mat-icon fontSet="material-icons-outlined">feed</mat-icon>
+    Noticias
+  </button>
+  <button type="button" mat-menu-item>
+    <mat-icon>help_outline</mat-icon>
+    Preguntas frecuentes
+  </button>
+  <button type="button" mat-menu-item>
+    <mat-icon fontSet="material-icons-outlined">mail</mat-icon>
+    Contacto
+  </button>
+
+  <!-- Navigation -->
+
+  <mat-divider></mat-divider>
   <ng-container
     *ngFor="
       let item of (auth.user$ | async)?.isLogged && (auth.user$ | async)?.claims?.admin
