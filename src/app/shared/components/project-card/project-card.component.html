@@ -33,7 +33,7 @@
               [matTooltip]="item.label ?? ''"
               (click)="item.click()"
             >
-              <mat-icon>{{ item.icon ?? 'more_vert' }}</mat-icon>
+              <mat-icon fontSet="material-icons-outlined">{{ item.icon ?? 'more_vert' }}</mat-icon>
             </button>
           </ng-container>
         </ng-container>
@@ -47,7 +47,7 @@
             [matTooltip]="'Más opciones'"
             [matMenuTriggerFor]="menu"
           >
-            <mat-icon>more_vert</mat-icon>
+            <mat-icon fontSet="material-icons-outlined">more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
             <ng-container *ngFor="let item of projectData.actions.data">

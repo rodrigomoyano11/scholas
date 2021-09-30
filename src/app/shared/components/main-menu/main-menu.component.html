@@ -7,13 +7,13 @@
   *ngIf="(layout.isDesktop$ | async) === false"
   [matMenuTriggerFor]="mainMenu"
 >
-  <mat-icon>menu</mat-icon>
+  <mat-icon fontSet="material-icons-outlined">menu</mat-icon>
 </button>
 
 <mat-menu #mainMenu="matMenu">
   <!-- Sections -->
   <button type="button" mat-menu-item>
-    <mat-icon>work_outline</mat-icon>
+    <mat-icon fontSet="material-icons-outlined">work_outline</mat-icon>
     Proyectos
   </button>
   <button type="button" mat-menu-item>
@@ -25,7 +25,7 @@
     Noticias
   </button>
   <button type="button" mat-menu-item>
-    <mat-icon>help_outline</mat-icon>
+    <mat-icon fontSet="material-icons-outlined">help_outline</mat-icon>
     Preguntas frecuentes
   </button>
   <button type="button" mat-menu-item>

@@ -1,7 +1,11 @@
 <div mat-dialog-title *ngIf="data.title" class="dialog-title">
-  <mat-icon *ngIf="data.icon" [color]="'primary'" class="dialog-title__icon">{{
-    data.icon
-  }}</mat-icon>
+  <mat-icon
+    fontSet="material-icons-outlined"
+    *ngIf="data.icon"
+    [color]="'primary'"
+    class="dialog-title__icon"
+    >{{ data.icon }}</mat-icon
+  >
   <h1 class="dialog-title__label mat-body">{{ data.title }}</h1>
 </div>
 <div mat-dialog-content *ngIf="data.description" class="dialog-content">

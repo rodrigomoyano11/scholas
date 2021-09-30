@@ -63,7 +63,9 @@
         (click)="hidePassword.field1 = !hidePassword.field1"
         [attr.aria-pressed]="hidePassword.field1"
       >
-        <mat-icon>{{ hidePassword.field1 ? 'visibility_off' : 'visibility' }}</mat-icon>
+        <mat-icon fontSet="material-icons-outlined">{{
+          hidePassword.field1 ? 'visibility_off' : 'visibility'
+        }}</mat-icon>
       </button>
       <mat-error>{{ getErrors('password') }}</mat-error>
     </mat-form-field>
@@ -83,7 +85,9 @@
         (click)="hidePassword.field2 = !hidePassword.field2"
         [attr.aria-pressed]="hidePassword.field2"
       >
-        <mat-icon>{{ hidePassword.field2 ? 'visibility_off' : 'visibility' }}</mat-icon>
+        <mat-icon fontSet="material-icons-outlined">{{
+          hidePassword.field2 ? 'visibility_off' : 'visibility'
+        }}</mat-icon>
       </button>
       <mat-error>{{ getErrors('passwordConfirm') }}</mat-error>
     </mat-form-field>

@@ -37,7 +37,9 @@
         (click)="hidePassword = !hidePassword"
         [attr.aria-pressed]="hidePassword"
       >
-        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        <mat-icon fontSet="material-icons-outlined">{{
+          hidePassword ? 'visibility_off' : 'visibility'
+        }}</mat-icon>
       </button>
       <mat-error>{{ getErrors('password') }}</mat-error>
     </mat-form-field>

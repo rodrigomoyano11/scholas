@@ -1,7 +1,7 @@
 <div class="images-carrousel__container">
   <div class="images-carrousel__item" *ngFor="let image of images; index as i">
     <button type="button" class="button--delete-image" *ngIf="image" mat-icon-button>
-      <mat-icon (click)="deleteImage(i)">close</mat-icon>
+      <mat-icon fontSet="material-icons-outlined" (click)="deleteImage(i)">close</mat-icon>
     </button>
     <img *ngIf="image" class="image" [src]="image" alt="Imagen subida por el usuario" />
   </div>
@@ -13,7 +13,7 @@
     mat-icon-button
     (click)="FileInput.click()"
   >
-    <mat-icon>add</mat-icon>
+    <mat-icon fontSet="material-icons-outlined">add</mat-icon>
   </button>
 </div>
 
