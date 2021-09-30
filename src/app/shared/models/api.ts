@@ -70,6 +70,43 @@ export interface CreateProjectResponse {
   createdDate: Project['createdDate']
 }
 
+export interface ModifyProjectRequest {
+  name: Project['name']
+  description: Project['description']
+  province: Project['location']['province']
+  locality: Project['location']['locality']
+  coverPhotoURL: Project['coverPhotoURL']
+  photosUrl: Project['photos']
+  videoURL: Project['videoURL']
+}
+
+export interface ModifyProjectResponse {
+  id: Project['id']
+
+  name: Project['name']
+  description: Project['description']
+
+  status: Status
+  visibility: Visibility
+
+  targetAmount: Project['metrics']['targetAmount']
+
+  currentAmount: Project['metrics']['currentAmount']
+  remainingAmount: Project['metrics']['remainingAmount']
+
+  province: Project['location']['province']
+  locality: Project['location']['locality']
+  coverPhotoURL: Project['coverPhotoURL']
+  photos: Project['photos']
+  videoURL: Project['videoURL']
+
+  createdDate: Project['createdDate']
+
+  // Otros
+  donorsQuantity: Project['metrics']['donorsQuantity']
+  donationsQuantity: Project['metrics']['donationsQuantity']
+}
+
 export type GetProjectsResponse = GetProjectResponse[]
 
 export type GetProjectResponse = CreateProjectResponse
