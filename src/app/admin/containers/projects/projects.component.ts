@@ -68,14 +68,17 @@ export class ProjectsComponent implements OnInit {
         data: [
           {
             label: 'Editar detalles',
+            icon: 'edit',
             click: () => this.router.navigate(['/admin/edit-project', project.id]),
           },
           {
             label: 'Ver métricas',
+            icon: 'analytics',
             click: () => console.log('Works'),
           },
           {
             label: `Dar de ${projectIsPrivate ? 'alta' : 'baja'}`,
+            icon: projectIsPrivate ? 'visibility' : 'visibility_off',
             click: () =>
               this.setProjectVisibility(project.id, projectIsPrivate ? 'public' : 'private'),
           },

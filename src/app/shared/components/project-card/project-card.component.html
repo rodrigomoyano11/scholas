@@ -52,6 +52,7 @@
           <mat-menu #menu="matMenu">
             <ng-container *ngFor="let item of projectData.actions.data">
               <button class="action__item" type="button" mat-menu-item (click)="item.click()">
+                <mat-icon fontSet="material-icons-outlined">{{ item.icon }}</mat-icon>
                 {{ item.label }}
               </button>
             </ng-container>
