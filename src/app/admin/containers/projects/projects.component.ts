@@ -105,6 +105,6 @@ export class ProjectsComponent implements OnInit {
   }
 
   setProjectVisibility(id: Project['id'], visibility: Project['visibility']): void {
-    void this.projects.setProjectVisibility(id, visibility).catch(() => this.getProjects('all'))
+    void this.projects.setProjectVisibility(id, visibility).then(() => this.getProjects('all'))
   }
 }

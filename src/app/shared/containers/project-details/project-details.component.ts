@@ -92,7 +92,7 @@ export class ProjectDetailsComponent implements OnInit, OnChanges {
   }
 
   setProjectVisibility(id: Project['id'], visibility: Project['visibility']): void {
-    void this.projects.setProjectVisibility(id, visibility).catch(() => this.getProjectData())
+    void this.projects.setProjectVisibility(id, visibility).then(() => this.getProjectData())
   }
 
   shareAsLink(): void {

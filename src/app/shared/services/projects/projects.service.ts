@@ -9,6 +9,8 @@ import {
   CreateProjectResponse,
   GetProjectResponse,
   GetProjectsResponse,
+  ModifyProjectRequest,
+  ModifyProjectResponse,
 } from 'src/app/shared/models/Api'
 
 import { Project } from 'src/app/shared/models/Project'
@@ -47,7 +49,7 @@ export class ProjectsService {
     const body: CreateProjectRequest = {
       name: data.name,
       description: data.description,
-      targetAmount: +data.targetAmount,
+      targetAmount: Number(data.targetAmount),
       province: data.province,
       locality: data.locality,
       videoURL: data.video,
@@ -63,6 +65,40 @@ export class ProjectsService {
           actions: [null, 'Cerrar'],
           title: 'Alta de proyecto completada',
           description: 'El proceso de alta de proyecto ha sido completado exitosamente',
+          icon: 'check_circle',
+        },
+      })
+      .afterClosed()
+      .toPromise()
+
+    await this.router.navigate(['/admin/projects'])
+  }
+
+  // TODO: Habilitar modificación de targetAmount
+  async editProject(id: Project['id'], data: ProjectFormData): Promise<void> {
+    const body: ModifyProjectRequest = {
+      name: data.name,
+      description: data.description,
+      // targetAmount: Number(data.targetAmount),
+      videoURL: data.video,
+      province: data.province,
+      locality: data.locality,
+      coverPhotoURL: data.coverPhoto,
+      photosUrl: data.photos,
+    }
+
+    await this.http
+      .put<ModifyProjectResponse>(`${environment.apiUrl}/projects/${id}`, body, {
+        responseType: 'text' as 'json',
+      })
+      .toPromise()
+
+    await this.dialog
+      .open<DialogComponent, DialogData>(DialogComponent, {
+        data: {
+          actions: [null, 'Cerrar'],
+          title: 'Edición de proyecto completada',
+          description: 'El proceso de edición de proyecto ha sido completado exitosamente',
           icon: 'check_circle',
         },
       })
@@ -107,9 +143,11 @@ export class ProjectsService {
     if (!isApproved) return
 
     return this.http
-      .put<unknown>(`${environment.apiUrl}/projects/visibility/${id}`, {
-        visibility: this.paramsOptions.visibility[visibility],
-      })
+      .put<unknown>(
+        `${environment.apiUrl}/projects/visibility/${id}`,
+        { visibility: this.paramsOptions.visibility[visibility] },
+        { responseType: 'text' as 'json' },
+      )
       .toPromise()
   }
 }

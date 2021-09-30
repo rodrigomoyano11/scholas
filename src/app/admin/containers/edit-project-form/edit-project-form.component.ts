@@ -68,7 +68,7 @@ export class EditProjectFormComponent implements OnInit {
         coverPhotoURL,
         photos,
         videoURL,
-      } = await this.projects.getProject(+this.selectedProjectId).toPromise()
+      } = await this.projects.getProject(Number(this.selectedProjectId)).toPromise()
 
       this.coverPhotoData = coverPhotoURL ? [coverPhotoURL] : []
       this.photosData = photos ?? []
@@ -100,8 +100,7 @@ export class EditProjectFormComponent implements OnInit {
       video: this.editProjectForm.controls['video'].value as string,
     }
 
-    console.log(projectData)
-    // void this.projects.createProject(projectData)
+    void this.projects.editProject(Number(this.selectedProjectId), projectData)
   }
 
   // Location
