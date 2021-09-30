@@ -1,5 +1,18 @@
 <div [ngClass]="['container', fullWidth ? 'full-width' : '']">
-  <h1 *ngIf="title" class="title">{{ title }}</h1>
+  <div class="title__container">
+    <button
+      type="button"
+      *ngIf="backButton"
+      class="button--primary"
+      mat-icon-button
+      [matTooltip]="'Volver'"
+      (click)="backButton()"
+    >
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+
+    <h1 *ngIf="title" class="title">{{ title }}</h1>
+  </div>
 
   <ng-container *ngFor="let section of buttons">
     <div [ngClass]="[section.style === 'primary' ? 'no-dense' : 'dense']">

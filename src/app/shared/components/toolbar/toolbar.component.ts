@@ -14,6 +14,8 @@ interface ButtonData {
   }
 }
 
+export type BackButton = () => unknown
+
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
@@ -23,4 +25,5 @@ export class ToolbarComponent {
   @Input() title!: string
   @Input() fullWidth = false
   @Input() buttons: ToolbarButtons = []
+  @Input() backButton!: BackButton
 }
