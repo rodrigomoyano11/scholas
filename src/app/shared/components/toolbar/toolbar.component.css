@@ -40,15 +40,18 @@
   gap: 0.5rem;
 }
 
-.label {
-  align-self: center;
-  margin-left: 0.25rem;
-}
-
 .button--primary {
   border-radius: 0.25rem;
 
   background-color: #009993;
 
   color: #fff;
+}
+
+.button__label {
+  align-self: center;
+  margin-left: 0.5rem;
+
+  font-size: 0.75rem;
+  line-height: 0.75rem;
 }
