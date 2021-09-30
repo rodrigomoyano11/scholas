@@ -6,6 +6,7 @@ import { Component, Input } from '@angular/core'
   styleUrls: ['./list-alert.component.css'],
 })
 export class ListAlertComponent {
-  @Input() alert!: string
+  @Input() title!: string
+  @Input() description!: string
   @Input() alertCondition!: boolean
 }

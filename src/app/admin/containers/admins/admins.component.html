@@ -1,11 +1,11 @@
 <app-modal-container>
   <app-toolbar [title]="'Administradores'" [buttons]="toolbarButtons"></app-toolbar>
 
-  <mat-list class="admin-list">
-    <app-list-alert
-      alert="No hay administradores"
-      [alertCondition]="((adminsService.admins$ | async)?.length ?? 0) === 0"
-    ></app-list-alert>
+  <app-list-alert
+    title="Agregá un nuevo administrador"
+    description="No se han encontrado administradores"
+    [alertCondition]="((adminsService.admins$ | async)?.length ?? 0) === 0"
+  >
     <ng-container *ngFor="let admin of adminsService.admins$ | async; index as i">
       <app-list-item
         [title]="admin.displayName"
@@ -15,5 +15,5 @@
         (clickEvent)="adminsService.deleteAdmin(admin.uid)"
       ></app-list-item>
     </ng-container>
-  </mat-list>
+  </app-list-alert>
 </app-modal-container>
