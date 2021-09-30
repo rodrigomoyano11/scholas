@@ -40,6 +40,11 @@
   gap: 0.5rem;
 }
 
+.label {
+  align-self: center;
+  margin-left: 0.25rem;
+}
+
 .button--primary {
   border-radius: 0.25rem;
 

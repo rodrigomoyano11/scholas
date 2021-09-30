@@ -1,5 +1,9 @@
 <app-modal-container>
-  <app-toolbar [fullWidth]="true" [buttons]="toolbarButtons"></app-toolbar>
+  <app-toolbar
+    [fullWidth]="true"
+    [backButton]="toolbarBackButton"
+    [buttons]="toolbarButtons"
+  ></app-toolbar>
   <div *ngIf="projectData" class="project-info">
     <img class="image" [src]="projectData.coverPhotoURL" />
     <div class="header">
@@ -36,6 +40,7 @@
 
       <button
         class="CTA"
+        *ngIf="!userIsAdmin"
         type="button"
         [color]="'primary'"
         (click)="donateToProject(projectData.id)"

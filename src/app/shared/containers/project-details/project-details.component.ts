@@ -1,7 +1,7 @@
 import { Component, OnChanges, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
-import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
+import { BackButton, ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
 import { GetProjectResponse } from 'src/app/shared/models/Api'
 import { Project } from 'src/app/shared/models/Project'
 import { LayoutService } from 'src/app/shared/services/layout/layout.service'
@@ -15,8 +15,9 @@ import { ProjectsService } from '../../services/projects/projects.service'
 })
 export class ProjectDetailsComponent implements OnInit, OnChanges {
   toolbarButtons: ToolbarButtons = []
+  toolbarBackButton!: BackButton
 
-  userIsAdmin = false
+  userIsAdmin = true
 
   projectIsPrivate!: boolean
 
@@ -48,24 +49,11 @@ export class ProjectDetailsComponent implements OnInit, OnChanges {
 
       const adminButtons: ToolbarButtons = [
         {
-          style: 'primary',
-          data: [
-            {
-              label: 'Volver',
-              icon: 'chevron_left',
-              action: {
-                type: 'button',
-                click: (): void => void this.router.navigate(['/admin/projects']),
-              },
-            },
-          ],
-        },
-        {
           style: 'secondary',
           data: [
             {
               label: 'Editar detalles',
-              icon: null,
+              icon: 'edit',
               action: {
                 type: 'button',
                 click: (): void =>
@@ -74,7 +62,7 @@ export class ProjectDetailsComponent implements OnInit, OnChanges {
             },
             {
               label: 'Métricas',
-              icon: null,
+              icon: 'analytics',
               action: {
                 type: 'button',
                 click: (): void => console.log('Works'),
@@ -82,7 +70,7 @@ export class ProjectDetailsComponent implements OnInit, OnChanges {
             },
             {
               label: this.projectIsPrivate ? 'Dar de alta' : 'Dar de baja',
-              icon: null,
+              icon: this.projectIsPrivate ? 'visibility' : 'visibility_off',
               action: {
                 type: 'button',
                 click: (): void =>
@@ -95,23 +83,11 @@ export class ProjectDetailsComponent implements OnInit, OnChanges {
           ],
         },
       ]
-      const donorButtons: ToolbarButtons = [
-        {
-          style: 'primary',
-          data: [
-            {
-              label: 'Volver',
-              icon: 'chevron_left',
-              action: {
-                type: 'button',
-                click: (): void => void this.router.navigate(['/donor/projects']),
-              },
-            },
-          ],
-        },
-      ]
 
-      this.toolbarButtons = this.userIsAdmin ? adminButtons : donorButtons
+      this.toolbarButtons = this.userIsAdmin ? adminButtons : []
+      this.toolbarBackButton = this.userIsAdmin
+        ? (): void => void this.router.navigate(['/admin/projects'])
+        : (): void => void this.router.navigate(['/donor/projects'])
     }
   }
 
