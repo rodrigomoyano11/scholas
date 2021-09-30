@@ -74,12 +74,11 @@ export class ProjectsService {
     await this.router.navigate(['/admin/projects'])
   }
 
-  // TODO: Habilitar modificación de targetAmount
   async editProject(id: Project['id'], data: ProjectFormData): Promise<void> {
     const body: ModifyProjectRequest = {
       name: data.name,
       description: data.description,
-      // targetAmount: Number(data.targetAmount),
+      targetAmount: Number(data.targetAmount),
       videoURL: data.video,
       province: data.province,
       locality: data.locality,

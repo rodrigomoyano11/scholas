@@ -73,6 +73,7 @@ export interface CreateProjectResponse {
 export interface ModifyProjectRequest {
   name: Project['name']
   description: Project['description']
+  targetAmount: Project['metrics']['targetAmount']
   province: Project['location']['province']
   locality: Project['location']['locality']
   coverPhotoURL: Project['coverPhotoURL']
