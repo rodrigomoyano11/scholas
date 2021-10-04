@@ -62,14 +62,8 @@ export class MainMenuComponent {
       access: ['admin'],
     },
     {
-      name: 'Donaciones',
+      name: 'Métricas',
       link: '/admin/donations',
-      type: 'internal',
-      access: ['admin'],
-    },
-    {
-      name: 'Donantes',
-      link: '/admin/donors',
       type: 'internal',
       access: ['admin'],
     },
