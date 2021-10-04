@@ -9,9 +9,16 @@ import { MatListModule } from '@angular/material/list'
 import { AccountDetailsComponent } from './containers/account-details/account-details.component'
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button'
+import { DonationsComponent } from './containers/donations/donations.component'
 
 @NgModule({
-  declarations: [HomeComponent, ProjectsComponent, NewsComponent, AccountDetailsComponent],
+  declarations: [
+    HomeComponent,
+    ProjectsComponent,
+    NewsComponent,
+    AccountDetailsComponent,
+    DonationsComponent,
+  ],
   imports: [
     CommonModule,
     DonorRoutingModule,
