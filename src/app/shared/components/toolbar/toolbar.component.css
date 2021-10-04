@@ -20,7 +20,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .title {
@@ -52,6 +52,6 @@
   align-self: center;
   margin-left: 0.5rem;
 
-  font-size: 0.75rem;
-  line-height: 0.75rem;
+  font-size: 14px;
+  line-height: 14px;
 }
