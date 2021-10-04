@@ -11,4 +11,5 @@ export class ListItemComponent {
   @Input() title!: string | null
   @Input() subtitle!: string | null
   @Input() disabled = false
+  @Input() actionItem!: boolean
 }

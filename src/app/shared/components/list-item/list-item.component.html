@@ -1,15 +1,25 @@
-<mat-list-item class="admin-item">
-  <p class="admin-item__name" mat-line>{{ title }}</p>
-  <p class="admin-item__email" mat-line>{{ subtitle }}</p>
+<mat-list-item *ngIf="!actionItem" class="main-container">
+  <div class="line" mat-line>
+    <p *ngIf="title" class="title">{{ title }}</p>
+  </div>
+  <div class="line" mat-line>
+    <p *ngIf="subtitle" class="subtitle">{{ subtitle }}</p>
+  </div>
 
-  <button
-    type="button"
-    class="admin-item__delete"
-    mat-icon-button
-    (click)="clickEvent.emit()"
-    [disabled]="disabled"
-  >
-    <mat-icon fontSet="material-icons-outlined">delete_outline</mat-icon>
+  <button type="button" mat-icon-button (click)="clickEvent.emit()" [disabled]="disabled">
+    <mat-icon fontSet="material-icons-outlined" class="button__icon">{{ icon }}</mat-icon>
   </button>
 </mat-list-item>
+
+<mat-list-item class="main-container" mat-ripple *ngIf="actionItem" (click)="clickEvent.emit()">
+  <div class="line" mat-line>
+    <p *ngIf="title" class="title">{{ title }}</p>
+  </div>
+  <div class="line" mat-line>
+    <p *ngIf="subtitle" class="subtitle">{{ subtitle }}</p>
+  </div>
+
+  <mat-icon fontSet="material-icons-outlined" class="button__icon">{{ icon }}</mat-icon>
+</mat-list-item>
+
 <mat-divider></mat-divider>

@@ -31,6 +31,7 @@ import { ListItemComponent } from './components/list-item/list-item.component'
 import { ListAlertComponent } from './components/list-alert/list-alert.component'
 import { MatListModule } from '@angular/material/list'
 import { ProjectDetailsComponent } from './containers/project-details/project-details.component'
+import { MatRippleModule } from '@angular/material/core'
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { ProjectDetailsComponent } from './containers/project-details/project-de
     MatListModule,
     MatTooltipModule,
     MatCardModule,
+    MatRippleModule,
     MatProgressBarModule,
     LayoutModule,
     IvyCarouselModule,

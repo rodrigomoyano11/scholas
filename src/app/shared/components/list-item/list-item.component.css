@@ -1,3 +1,57 @@
-.admin-item__delete {
+.main-container {
+  margin-bottom: 0.5rem;
+
+  border-radius: 0.25rem;
+}
+
+.title,
+.subtitle {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.subtitle {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.button__icon {
   color: #009993;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media screen and (min-width: 960px) {
+  .title {
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    font-weight: 400;
+  }
 }
