@@ -1,0 +1,41 @@
+<app-modal-container size="small">
+  <div class="content">
+    <div class="user-info">
+      <img
+        class="profile-photo"
+        [src]="(this.auth.user$ | async)?.photoURL ?? 'assets/vectors/profile-picture-default.svg'"
+        alt="Foto de Perfil"
+      />
+
+      <p class="username">
+        {{
+          (this.auth.user$ | async)?.displayName ?? (this.auth.user$ | async)?.claims ?? 'Donante'
+        }}
+      </p>
+    </div>
+
+    <mat-action-list class="action__container">
+      <button class="action__item" mat-list-item (click)="action()">
+        <mat-icon class="action__item" fontSet="material-icons-outlined">person</mat-icon>
+        <span>Mis datos</span>
+      </button>
+
+      <button
+        class="action__item"
+        mat-list-item
+        *ngIf="(auth.user$ | async)?.claims?.donor ?? false"
+        [routerLink]="'/donor/donations'"
+      >
+        <mat-icon class="action__item" fontSet="material-icons-outlined"
+          >volunteer_activism</mat-icon
+        >
+        <span>Mis donaciones</span>
+      </button>
+
+      <button class="action__item" mat-list-item (click)="auth.deleteUser()">
+        <mat-icon class="action__item" fontSet="material-icons-outlined">delete</mat-icon>
+        <span>Eliminar mi cuenta</span>
+      </button>
+    </mat-action-list>
+  </div>
+</app-modal-container>

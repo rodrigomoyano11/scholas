@@ -7,7 +7,7 @@
 </div>
 
 <mat-menu #user="matMenu">
-  <button type="button" mat-menu-item [matMenuTriggerFor]="account">
+  <button type="button" mat-menu-item [routerLink]="'/donor/account'">
     <mat-icon fontSet="material-icons-outlined">account_circle</mat-icon>
     Mi cuenta
   </button>
@@ -23,26 +23,6 @@
   <button type="button" mat-menu-item (click)="auth.logout()">
     <mat-icon fontSet="material-icons-outlined">logout</mat-icon>
     Cerrar sesión
-  </button>
-</mat-menu>
-
-<mat-menu #account="matMenu">
-  <button type="button" mat-menu-item>
-    <mat-icon fontSet="material-icons-outlined">person</mat-icon>
-    Mis datos
-  </button>
-  <button
-    type="button"
-    mat-menu-item
-    *ngIf="(auth.user$ | async)?.claims?.donor ?? false"
-    [routerLink]="'/donor/donations'"
-  >
-    <mat-icon fontSet="material-icons-outlined">volunteer_activism</mat-icon>
-    Mis donaciones
-  </button>
-  <button type="button" mat-menu-item (click)="auth.deleteUser()">
-    <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
-    Eliminar mi cuenta
   </button>
 </mat-menu>
 
