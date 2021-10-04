@@ -18,6 +18,8 @@ import { MatNativeDateModule } from '@angular/material/core'
 import { MatIconModule } from '@angular/material/icon'
 import SocialButtonComponent from './components/social-button/social-button.component'
 import { ReactiveFormsModule } from '@angular/forms'
+import { AccountDetailsComponent } from './components/account-details/account-details.component'
+import { MatListModule } from '@angular/material/list'
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { ReactiveFormsModule } from '@angular/forms'
     VerifyEmailComponent,
     ExtraDataComponent,
     SocialButtonComponent,
+    AccountDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -40,6 +43,7 @@ import { ReactiveFormsModule } from '@angular/forms'
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
+    MatListModule,
     MatIconModule,
     ReactiveFormsModule,
   ],

@@ -20,12 +20,8 @@
         <span>Mis datos</span>
       </button>
 
-      <button
-        class="action__item"
-        mat-list-item
-        *ngIf="(auth.user$ | async)?.claims?.donor ?? false"
-        [routerLink]="'/donor/donations'"
-      >
+      <!-- *ngIf="(auth.user$ | async)?.claims?.donor ?? false" -->
+      <button class="action__item" mat-list-item [routerLink]="'/donor/donations'">
         <mat-icon class="action__item" fontSet="material-icons-outlined"
           >volunteer_activism</mat-icon
         >

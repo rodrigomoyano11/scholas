@@ -82,7 +82,8 @@ export class DonationsComponent {
     },
   ]
 
-  backButtonAction = (): void => console.log('Works')
+  backButtonAction = (): void => void this.router.navigate(['/auth/account'])
+
   constructor(private router: Router) {}
 
   goToDonationDetails(): void {

@@ -6,19 +6,12 @@ import { ProjectsComponent } from './containers/projects/projects.component'
 import { NewsComponent } from './containers/news/news.component'
 import { SharedModule } from '../shared/shared.module'
 import { MatListModule } from '@angular/material/list'
-import { AccountDetailsComponent } from './containers/account-details/account-details.component'
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button'
 import { DonationsComponent } from './containers/donations/donations.component'
 
 @NgModule({
-  declarations: [
-    HomeComponent,
-    ProjectsComponent,
-    NewsComponent,
-    AccountDetailsComponent,
-    DonationsComponent,
-  ],
+  declarations: [HomeComponent, ProjectsComponent, NewsComponent, DonationsComponent],
   imports: [
     CommonModule,
     DonorRoutingModule,
