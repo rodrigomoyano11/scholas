@@ -8,16 +8,16 @@
 
   <app-list-alert
     description="Hasta el momento, no se han realizado donaciones"
-    [alertCondition]="donations.length === 0"
+    [alertCondition]="donations.data.length === 0"
   >
-    <ng-container *ngFor="let donation of donations; index as i">
+    <ng-container *ngFor="let donation of donations.data; index as i">
       <app-list-item
         [title]="donation.projectName"
         [subtitle]="
           (donation.createdDate | date: 'MM/dd/yyyy') + ' - ' + (donation.amount | currency: 'ARS')
         "
         icon="chevron_right"
-        (clickEvent)="goToDonationDetails()"
+        (clickEvent)="goToDonationDetails(donation.id)"
         [actionItem]="true"
       ></app-list-item>
     </ng-container>
