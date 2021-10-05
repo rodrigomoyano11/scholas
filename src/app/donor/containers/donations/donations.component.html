@@ -8,9 +8,9 @@
 
   <app-list-alert
     description="Hasta el momento, no se han realizado donaciones"
-    [alertCondition]="donations.data.length === 0"
+    [alertCondition]="donations.length === 0"
   >
-    <ng-container *ngFor="let donation of donations.data; index as i">
+    <ng-container *ngFor="let donation of donations; index as i">
       <app-list-item
         [title]="donation.projectName"
         [subtitle]="

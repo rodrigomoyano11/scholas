@@ -1,6 +1,9 @@
 import { Component } from '@angular/core'
 import { Router } from '@angular/router'
-import { DonationsService } from 'src/app/donation/services/donations/donations.service'
+import {
+  DonationsService,
+  DonationTest,
+} from 'src/app/donation/services/donations/donations.service'
 import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
 import { Donation } from 'src/app/shared/models/donation.interface'
 
@@ -28,7 +31,11 @@ export class DonationsComponent {
 
   backButtonAction = (): void => void this.router.navigate(['/auth/account'])
 
-  constructor(private router: Router, public donations: DonationsService) {}
+  donations!: DonationTest[]
+
+  constructor(private router: Router, public donationsService: DonationsService) {
+    this.donations = donationsService.getDonations()
+  }
 
   goToDonationDetails(id: Donation['id']): void {
     void this.router.navigate(['/donation/certificate', id])

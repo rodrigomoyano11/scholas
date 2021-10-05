@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
 import { Donation } from 'src/app/shared/models/donation.interface'
 import { ShareService } from 'src/app/shared/services/share/share.service'
+import { DonationsService, DonationTest } from '../../services/donations/donations.service'
 
 @Component({
   selector: 'app-certificate',
@@ -10,7 +11,7 @@ import { ShareService } from 'src/app/shared/services/share/share.service'
   styleUrls: ['./certificate.component.css'],
 })
 export class CertificateComponent {
-  selectedProjectId: string | null = this.route.snapshot.paramMap.get('id')
+  selectedDonationId: string | null = this.route.snapshot.paramMap.get('id')
 
   toolbarButtons: ToolbarButtons = [
     {
@@ -35,14 +36,25 @@ export class CertificateComponent {
           action: {
             type: 'button',
             click: (): void =>
-              this.selectedProjectId ? this.shareAsLink(this.selectedProjectId) : undefined,
+              this.selectedDonationId ? this.shareAsLink(this.selectedDonationId) : undefined,
           },
         },
       ],
     },
   ]
 
-  constructor(private route: ActivatedRoute, private router: Router, private share: ShareService) {}
+  donation!: DonationTest | null
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private share: ShareService,
+    public donationsService: DonationsService,
+  ) {
+    this.donation = this.selectedDonationId
+      ? donationsService.getDonation(this.selectedDonationId)
+      : null
+  }
 
   shareAsLink(donationId: Donation['id']): void {
     this.share.shareAsLink(

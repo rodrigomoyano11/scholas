@@ -1,10 +1,22 @@
 import { Injectable } from '@angular/core'
 
+export interface DonationTest {
+  id: string
+  status: string
+  type: string
+  amount: number
+  createdDate: string
+  userId: string
+  projectId: number
+  projectName: string
+  paymentId: string
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class DonationsService {
-  data = [
+  private _donations: DonationTest[] = [
     {
       id: '1',
       status: 'approved',
@@ -61,4 +73,15 @@ export class DonationsService {
       paymentId: '897349802',
     },
   ]
+
+  getDonations(): DonationTest[] {
+    return this._donations
+  }
+  getDonationsByUserId(id: string): DonationTest[] {
+    return this._donations.filter((donation) => donation.userId === id)
+  }
+
+  getDonation(id: string): DonationTest | null {
+    return this._donations.find((donation) => donation.id === id) ?? null
+  }
 }
