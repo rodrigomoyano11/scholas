@@ -7,5 +7,6 @@ import { Component, Input } from '@angular/core'
 })
 export class BadgeComponent {
   @Input() type: 'primary' | 'secondary' = 'primary'
+  @Input() status: 'success' | 'warn' | 'error' = 'error'
   @Input() label = ''
 }

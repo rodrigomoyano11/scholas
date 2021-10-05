@@ -8,7 +8,21 @@
   padding: 0.25rem 1rem;
 
   border-radius: 1rem;
+}
 
+.primary.success {
+  background-color: #60ad2d;
+
+  color: #fff;
+}
+
+.primary.warn {
+  background-color: #adab2d;
+
+  color: #fff;
+}
+
+.primary.error {
   background-color: #ad2d44;
 
   color: #fff;
@@ -17,6 +31,17 @@
 .secondary {
   margin-bottom: 0.5rem;
 
-  color: #ad2d44;
   font-weight: bold;
+}
+
+.secondary.success {
+  color: #60ad2d;
+}
+
+.secondary.warn {
+  color: #adab2d;
+}
+
+.secondary.error {
+  color: #ad2d44;
 }
