@@ -71,7 +71,7 @@ export class UploadImageComponent implements OnInit, OnChanges {
           actions: [null, 'Cerrar'],
           title: 'Ha ocurrido un error',
           description: error as string,
-          icon: 'error',
+          icon: 'error_outline',
         },
       })
     }

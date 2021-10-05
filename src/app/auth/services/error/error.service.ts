@@ -14,7 +14,7 @@ export class ErrorService {
         actions: [null, 'Cerrar'],
         title: 'Ha ocurrido un error',
         description: error,
-        icon: 'cancel',
+        icon: 'error_outline',
       },
     })
   }
