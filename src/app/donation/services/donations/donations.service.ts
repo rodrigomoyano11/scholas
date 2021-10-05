@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core'
+import { Donation } from 'src/app/shared/models/donation.interface'
 
 export interface DonationTest {
   id: string
-  status: string
+  status: Donation['status']
   type: string
   amount: number
   createdDate: string
@@ -19,7 +20,7 @@ export class DonationsService {
   private _donations: DonationTest[] = [
     {
       id: '1',
-      status: 'approved',
+      status: 'success',
       type: 'regular',
       amount: 300,
       createdDate: '2021-10-23',
@@ -30,7 +31,7 @@ export class DonationsService {
     },
     {
       id: '2',
-      status: 'approved',
+      status: 'pending',
       type: 'regular',
       amount: 300,
       createdDate: '2017-09-08',
@@ -41,7 +42,7 @@ export class DonationsService {
     },
     {
       id: '3',
-      status: 'approved',
+      status: 'success',
       type: 'regular',
       amount: 300,
       createdDate: '2021-12-15',
@@ -52,7 +53,7 @@ export class DonationsService {
     },
     {
       id: '4',
-      status: 'approved',
+      status: 'failure',
       type: 'regular',
       amount: 700,
       createdDate: '2020-07-05',
@@ -63,7 +64,7 @@ export class DonationsService {
     },
     {
       id: '5',
-      status: 'approved',
+      status: 'success',
       type: 'regular',
       amount: 700,
       createdDate: '2021-03-26',

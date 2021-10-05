@@ -1,3 +1,8 @@
+.primary,
+.secondary {
+  letter-spacing: 0.065rem;
+}
+
 .primary {
   display: flex;
   align-items: center;
