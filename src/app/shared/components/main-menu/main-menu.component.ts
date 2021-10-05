@@ -29,12 +29,6 @@ export class MainMenuComponent {
       access: ['anonymous', 'donor'],
     },
     {
-      name: 'Noticias',
-      link: '/donor/news',
-      type: 'internal',
-      access: ['anonymous', 'donor'],
-    },
-    {
       name: 'Preguntas frecuentes',
       link: '/donor',
       type: 'internal',
@@ -49,12 +43,6 @@ export class MainMenuComponent {
   ]
 
   adminItems: Item[] = [
-    {
-      name: 'Noticias',
-      link: '/admin/news',
-      type: 'internal',
-      access: ['admin'],
-    },
     {
       name: 'Proyectos',
       link: '/admin/projects',

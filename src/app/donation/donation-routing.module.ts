@@ -12,6 +12,8 @@ const routes: Routes = [
     children: [
       { path: 'donate/:id', component: NewDonationComponent },
       { path: 'certificate/:id', component: CertificateComponent },
+
+      { path: '**', component: NotFoundComponent },
     ],
   },
   { path: '**', component: NotFoundComponent },

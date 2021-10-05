@@ -24,6 +24,8 @@ const routes: Routes = [
       { path: 'projects/create', component: CreateProjectFormComponent },
       { path: 'projects/read/:id', component: ProjectDetailsComponent },
       { path: 'projects/update/:id', component: UpdateProjectFormComponent },
+
+      { path: '**', component: NotFoundComponent },
     ],
   },
   { path: '**', component: NotFoundComponent },
