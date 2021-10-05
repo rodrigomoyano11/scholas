@@ -21,6 +21,7 @@ import { DonationCompletionStepComponent } from './components/donation-completio
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { CertificateComponent } from './containers/certificate/certificate.component'
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
     AmountSelectionStepComponent,
     DonationPaymentStepComponent,
     DonationCompletionStepComponent,
+    CertificateComponent,
   ],
   imports: [
     CommonModule,

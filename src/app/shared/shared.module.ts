@@ -78,6 +78,7 @@ import { MatRippleModule } from '@angular/material/core'
     UploadImageComponent,
     AmountProgressComponent,
     VideoPlayerComponent,
+    LogoComponent,
     ImageGalleryComponent,
     ToolbarComponent,
     ProjectCardComponent,
