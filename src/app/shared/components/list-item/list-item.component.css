@@ -6,7 +6,6 @@
 
 .title,
 .subtitle {
-  margin-right: 0.5rem;
   overflow: hidden;
 
   text-overflow: ellipsis;
@@ -34,6 +33,14 @@
 
   font-size: 12px;
   font-weight: 400;
+}
+
+.line {
+  margin-right: 0.75rem !important;
+}
+
+.line--status {
+  padding-top: 0.5rem !important;
 }
 
 .button__icon {

@@ -1,4 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { BadgeComponent } from '../badge/badge.component'
+
+export interface BadgeStatus {
+  type: BadgeComponent['status']
+  label: BadgeComponent['label']
+}
 
 @Component({
   selector: 'app-list-item',
@@ -12,4 +18,5 @@ export class ListItemComponent {
   @Input() subtitle!: string | null
   @Input() disabled = false
   @Input() actionItem!: boolean
+  @Input() status!: BadgeStatus | null
 }
