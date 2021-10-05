@@ -27,9 +27,7 @@
     </mat-step>
     <mat-step [editable]="false" label="Realizá el pago" [completed]="stepperStatus[1]">
       <div class="content">
-        <app-donation-payment-step
-          (stepCompleted)="setStepperStatus(1, $event)"
-        ></app-donation-payment-step>
+        <app-payment (stepCompleted)="setStepperStatus(1, $event)"></app-payment>
       </div>
       <div class="actions">
         <button

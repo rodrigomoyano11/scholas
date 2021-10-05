@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Output } from '@angular/core'
 
 @Component({
-  selector: 'app-donation-payment-step',
-  templateUrl: './donation-payment-step.component.html',
-  styleUrls: ['./donation-payment-step.component.css'],
+  selector: 'app-payment',
+  templateUrl: './payment.component.html',
+  styleUrls: ['./payment.component.css'],
 })
-export class DonationPaymentStepComponent {
+export class PaymentComponent {
   @Output() stepCompleted = new EventEmitter<boolean>()
 
   sendData(): void {

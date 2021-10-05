@@ -16,21 +16,21 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { ReactiveFormsModule } from '@angular/forms'
 import { MatInputModule } from '@angular/material/input'
 import { AmountSelectionStepComponent } from './components/amount-selection-step/amount-selection-step.component'
-import { DonationPaymentStepComponent } from './components/donation-payment-step/donation-payment-step.component'
 import { DonationCompletionStepComponent } from './components/donation-completion-step/donation-completion-step.component'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { CertificateComponent } from './containers/certificate/certificate.component'
+import { PaymentComponent } from './components/payment/payment.component'
 
 @NgModule({
   declarations: [
     HomeComponent,
     NewDonationComponent,
     AmountSelectionStepComponent,
-    DonationPaymentStepComponent,
     DonationCompletionStepComponent,
     CertificateComponent,
+    PaymentComponent,
   ],
   imports: [
     CommonModule,
