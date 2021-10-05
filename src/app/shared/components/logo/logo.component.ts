@@ -6,6 +6,6 @@ import { Component, Input } from '@angular/core'
   styleUrls: ['./logo.component.css'],
 })
 export class LogoComponent {
-  @Input() style: 'horizontal' | 'vertical' = 'horizontal'
+  @Input() type: 'horizontal' | 'vertical' = 'horizontal'
   @Input() color = '#fff'
 }
