@@ -25,12 +25,10 @@
   flex-direction: column;
 }
 
-.status--secondary {
-  margin-bottom: 1rem;
+.status {
+  margin-bottom: 0.5rem;
 
-  color: #ad2d44;
   font-size: 16px;
-  font-weight: bold;
 }
 
 .title {

@@ -32,6 +32,7 @@ import { ListAlertComponent } from './components/list-alert/list-alert.component
 import { MatListModule } from '@angular/material/list'
 import { ProjectDetailsComponent } from './containers/project-details/project-details.component'
 import { MatRippleModule } from '@angular/material/core'
+import { BadgeComponent } from './components/badge/badge.component'
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { MatRippleModule } from '@angular/material/core'
     ListItemComponent,
     ListAlertComponent,
     ProjectDetailsComponent,
+    BadgeComponent,
   ],
   imports: [
     CommonModule,
@@ -85,6 +87,7 @@ import { MatRippleModule } from '@angular/material/core'
     ListItemComponent,
     ListAlertComponent,
     ProjectDetailsComponent,
+    BadgeComponent,
   ],
 })
 export class SharedModule {}

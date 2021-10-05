@@ -8,9 +8,13 @@
     <img class="image" [src]="projectData.coverPhotoURL" />
     <div class="header">
       <div class="header__info">
-        <span *ngIf="userIsAdmin && projectIsPrivate" class="status--secondary mat-body-2"
-          >Dado de baja</span
-        >
+        <app-badge
+          class="status"
+          *ngIf="userIsAdmin && projectIsPrivate"
+          type="secondary"
+          label="Dado de baja"
+        ></app-badge>
+
         <h1 class="title">{{ projectData.name }}</h1>
         <h2 class="subtitle">{{ projectData.locality }} - {{ projectData.province }}</h2>
       </div>

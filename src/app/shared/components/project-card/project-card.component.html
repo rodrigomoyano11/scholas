@@ -2,12 +2,11 @@
   <img [ngClass]="['image', !userIsAdmin ? 'image--donor' : '']" [src]="projectData.image" />
 
   <div class="caption">
-    <span
-      class="status--secondary"
+    <app-badge
+      type="secondary"
+      label="Dado de baja"
       *ngIf="projectIsPrivate && (layout.isDesktop$ | async) !== true"
-    >
-      Dado de baja
-    </span>
+    ></app-badge>
 
     <div class="header">
       <div class="info__container">
@@ -15,12 +14,12 @@
           <mat-card-title class="title">{{ projectData.title }}</mat-card-title>
           <mat-card-subtitle class="subtitle">{{ projectData.subtitle }}</mat-card-subtitle>
         </div>
-        <span
-          class="status--primary"
+
+        <app-badge
+          type="primary"
+          label="Dado de baja"
           *ngIf="projectIsPrivate && (layout.isDesktop$ | async) === true"
-        >
-          Dado de baja
-        </span>
+        ></app-badge>
       </div>
       <mat-card-actions class="actions">
         <ng-container *ngIf="projectData.actions.type === 'button'">
