@@ -1,6 +1,6 @@
 <app-modal-container>
   <!-- [linear]="true" -->
-  <h1>Donar a un proyecto</h1>
+  <h1>Donación</h1>
   <mat-stepper
     class="stepper"
     [disableRipple]="true"
@@ -43,14 +43,15 @@
     </mat-step>
     <mat-step [editable]="false" label="Finalizá la donación" [completed]="stepperStatus[2]">
       <div class="content">
-        <app-donation-completion-step
-          (stepCompleted)="setStepperStatus(2, $event)"
-        ></app-donation-completion-step>
+        <!-- <app-pending-payment (stepCompleted)="setStepperStatus(2, $event)"></app-pending-payment> -->
+        <!-- <app-failure-payment (stepCompleted)="setStepperStatus(2, $event)"></app-failure-payment> -->
+        <app-success-payment (stepCompleted)="setStepperStatus(2, $event)"></app-success-payment>
       </div>
 
       <div class="actions">
         <button type="button" [color]="'primary'" mat-flat-button matStepperNext>
           Ver mi certificado
+          <!-- Intentar nuevamente -->
         </button>
         <button
           type="button"
