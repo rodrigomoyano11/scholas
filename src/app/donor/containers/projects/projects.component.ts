@@ -53,7 +53,7 @@ export class ProjectsComponent implements OnInit {
       },
 
       primaryCTA: (): void => void this.router.navigate(['/donation/donate', project.id]),
-      secondaryCTA: (): void => void this.router.navigate(['/admin/projects', project.id]),
+      secondaryCTA: (): void => void this.router.navigate(['/admin/projects/read/', project.id]),
     }
   }
 

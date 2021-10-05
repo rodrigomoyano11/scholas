@@ -3,7 +3,7 @@
     <span class="title mat-title">Editar proyecto</span>
   </div>
 
-  <form class="project-data-form" (ngSubmit)="submitProjectData()" [formGroup]="editProjectForm">
+  <form class="project-data-form" (ngSubmit)="submitProjectData()" [formGroup]="updateProjectForm">
     <mat-form-field class="project-data-form__field" appearance="outline">
       <mat-label>Nombre</mat-label>
       <input matInput placeholder="Ingresá el nombre del proyecto" formControlName="name" />
@@ -55,9 +55,9 @@
       />
       <mat-hint>
         {{
-          editProjectForm.controls['targetAmount'].value !== ''
+          updateProjectForm.controls['targetAmount'].value !== ''
             ? 'El monto objetivo es de ' +
-              (editProjectForm.controls['targetAmount'].value | currency: 'ARS')
+              (updateProjectForm.controls['targetAmount'].value | currency: 'ARS')
             : ''
         }}</mat-hint
       >

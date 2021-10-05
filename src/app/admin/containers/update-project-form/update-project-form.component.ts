@@ -6,12 +6,12 @@ import { ProjectsService } from '../../../shared/services/projects/projects.serv
 import { ValidationService } from '../../services/validation/validation.service'
 
 @Component({
-  selector: 'app-edit-project-form',
-  templateUrl: './edit-project-form.component.html',
-  styleUrls: ['./edit-project-form.component.css'],
+  selector: 'app-update-project-form',
+  templateUrl: './update-project-form.component.html',
+  styleUrls: ['./update-project-form.component.css'],
 })
-export class EditProjectFormComponent implements OnInit {
-  editProjectForm: FormGroup
+export class UpdateProjectFormComponent implements OnInit {
+  updateProjectForm: FormGroup
 
   selectedProjectId: string | null = this.route.snapshot.paramMap.get('id')
 
@@ -30,7 +30,7 @@ export class EditProjectFormComponent implements OnInit {
     private validation: ValidationService,
     private route: ActivatedRoute,
   ) {
-    this.editProjectForm = this.fb.group({
+    this.updateProjectForm = this.fb.group({
       name: ['', [Validators.required]],
       province: ['', [Validators.required]],
       locality: ['', [Validators.required]],
@@ -44,8 +44,8 @@ export class EditProjectFormComponent implements OnInit {
       video: ['', validation.isValidLink()],
     })
 
-    this.provinceControl = this.editProjectForm.controls['province']
-    this.localityControl = this.editProjectForm.controls['locality']
+    this.provinceControl = this.updateProjectForm.controls['province']
+    this.localityControl = this.updateProjectForm.controls['locality']
   }
 
   async ngOnInit(): Promise<void> {
@@ -73,7 +73,7 @@ export class EditProjectFormComponent implements OnInit {
       this.coverPhotoData = coverPhotoURL ? [coverPhotoURL] : []
       this.photosData = photos ?? []
 
-      this.editProjectForm.patchValue({
+      this.updateProjectForm.patchValue({
         name,
         province,
         locality,
@@ -85,19 +85,19 @@ export class EditProjectFormComponent implements OnInit {
   }
 
   getErrors(controlName: string): string {
-    return this.validation.getErrors(this.editProjectForm.controls[controlName])
+    return this.validation.getErrors(this.updateProjectForm.controls[controlName])
   }
 
   submitProjectData(): void {
     const projectData = {
-      name: this.editProjectForm.controls['name'].value as string,
-      province: this.editProjectForm.controls['province'].value as string,
-      locality: this.editProjectForm.controls['locality'].value as string,
-      description: this.editProjectForm.controls['description'].value as string,
-      targetAmount: this.editProjectForm.controls['targetAmount'].value as string,
-      coverPhoto: (this.editProjectForm.controls['coverPhoto'].value as string[])[0],
-      photos: this.editProjectForm.controls['photos'].value as string[],
-      video: this.editProjectForm.controls['video'].value as string,
+      name: this.updateProjectForm.controls['name'].value as string,
+      province: this.updateProjectForm.controls['province'].value as string,
+      locality: this.updateProjectForm.controls['locality'].value as string,
+      description: this.updateProjectForm.controls['description'].value as string,
+      targetAmount: this.updateProjectForm.controls['targetAmount'].value as string,
+      coverPhoto: (this.updateProjectForm.controls['coverPhoto'].value as string[])[0],
+      photos: this.updateProjectForm.controls['photos'].value as string[],
+      video: this.updateProjectForm.controls['video'].value as string,
     }
 
     void this.projects.editProject(Number(this.selectedProjectId), projectData)
@@ -126,12 +126,12 @@ export class EditProjectFormComponent implements OnInit {
 
   // Photos
   setCoverPhoto(photosInBase64: string[]): void {
-    this.editProjectForm.patchValue({
+    this.updateProjectForm.patchValue({
       coverPhoto: photosInBase64,
     })
   }
   setPhotos(photosInBase64: string[]): void {
-    this.editProjectForm.patchValue({
+    this.updateProjectForm.patchValue({
       photos: photosInBase64,
     })
   }

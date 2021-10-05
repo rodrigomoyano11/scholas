@@ -20,7 +20,7 @@ export class AdminsComponent implements OnInit {
           icon: 'add',
           action: {
             type: 'button',
-            click: (): void => void this.router.navigate(['/admin/new-admin']),
+            click: (): void => void this.router.navigate(['/admin/admins/create']),
           },
         },
       ],

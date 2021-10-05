@@ -5,11 +5,11 @@ import { ValidationService } from 'src/app/auth/services/validation/validation.s
 import { AdminsService } from '../../services/admins/admins.service'
 
 @Component({
-  selector: 'app-new-admin',
-  templateUrl: './new-admin.component.html',
-  styleUrls: ['./new-admin.component.css'],
+  selector: 'app-create-admin',
+  templateUrl: './create-admin.component.html',
+  styleUrls: ['./create-admin.component.css'],
 })
-export class NewAdminComponent implements OnInit {
+export class CreateAdminComponent implements OnInit {
   newAdminForm: FormGroup
 
   constructor(

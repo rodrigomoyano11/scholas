@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { NewsComponent } from './news.component'
+import { UpdateProjectFormComponent } from './update-project-form.component'
 
-describe('NewsComponent', () => {
-  let component: NewsComponent
-  let fixture: ComponentFixture<NewsComponent>
+describe('EditProjectFormComponent', () => {
+  let component: UpdateProjectFormComponent
+  let fixture: ComponentFixture<UpdateProjectFormComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NewsComponent],
+      declarations: [UpdateProjectFormComponent],
     }).compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewsComponent)
+    fixture = TestBed.createComponent(UpdateProjectFormComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

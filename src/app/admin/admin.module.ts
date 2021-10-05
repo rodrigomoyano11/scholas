@@ -3,12 +3,9 @@ import { CommonModule } from '@angular/common'
 import { AdminRoutingModule } from './admin-routing.module'
 import { HomeComponent } from './containers/home/home.component'
 import { AdminsComponent } from './containers/admins/admins.component'
-import { DonorsComponent } from './containers/donors/donors.component'
 import { ProjectsComponent } from './containers/projects/projects.component'
-import { NewsComponent } from './containers/news/news.component'
 import { SharedModule } from '../shared/shared.module'
-import { DonationsComponent } from './containers/donations/donations.component'
-import { NewAdminComponent } from './containers/new-admin/new-admin.component'
+import { CreateAdminComponent } from './containers/create-admin/create-admin.component'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
@@ -19,19 +16,18 @@ import { MatCardModule } from '@angular/material/card'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatSelectModule } from '@angular/material/select'
 import { CreateProjectFormComponent } from './containers/create-project-form/create-project-form.component'
-import { EditProjectFormComponent } from './containers/edit-project-form/edit-project-form.component'
+import { UpdateProjectFormComponent } from './containers/update-project-form/update-project-form.component'
+import { MetricsComponent } from './containers/metrics/metrics.component'
 
 @NgModule({
   declarations: [
     HomeComponent,
     AdminsComponent,
-    DonorsComponent,
     ProjectsComponent,
-    NewsComponent,
-    DonationsComponent,
-    NewAdminComponent,
+    CreateAdminComponent,
     CreateProjectFormComponent,
-    EditProjectFormComponent,
+    UpdateProjectFormComponent,
+    MetricsComponent,
   ],
   imports: [
     CommonModule,

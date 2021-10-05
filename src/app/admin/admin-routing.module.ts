@@ -3,15 +3,12 @@ import { RouterModule, Routes } from '@angular/router'
 import { NotFoundComponent } from '../shared/containers/not-found/not-found.component'
 import { AdminsComponent } from './containers/admins/admins.component'
 import { CreateProjectFormComponent } from './containers/create-project-form/create-project-form.component'
-import { DonationsComponent } from './containers/donations/donations.component'
-import { DonorsComponent } from './containers/donors/donors.component'
-import { EditProjectFormComponent } from './containers/edit-project-form/edit-project-form.component'
+import { UpdateProjectFormComponent } from './containers/update-project-form/update-project-form.component'
 import { HomeComponent } from './containers/home/home.component'
-import { NewAdminComponent } from './containers/new-admin/new-admin.component'
-import { NewsComponent } from './containers/news/news.component'
+import { CreateAdminComponent } from './containers/create-admin/create-admin.component'
 import { ProjectDetailsComponent } from '../shared/containers/project-details/project-details.component'
-
 import { ProjectsComponent } from './containers/projects/projects.component'
+import { MetricsComponent } from './containers/metrics/metrics.component'
 
 const routes: Routes = [
   {
@@ -19,14 +16,14 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       { path: 'admins', component: AdminsComponent },
-      { path: 'new-admin', component: NewAdminComponent },
-      { path: 'donors', component: DonorsComponent },
-      { path: 'donations', component: DonationsComponent },
-      { path: 'news', component: NewsComponent },
+      { path: 'admins/create', component: CreateAdminComponent },
+
+      { path: 'metrics', component: MetricsComponent },
+
       { path: 'projects', component: ProjectsComponent },
-      { path: 'new-project', component: CreateProjectFormComponent },
-      { path: 'edit-project/:id', component: EditProjectFormComponent },
-      { path: 'projects/:id', component: ProjectDetailsComponent },
+      { path: 'projects/create', component: CreateProjectFormComponent },
+      { path: 'projects/read/:id', component: ProjectDetailsComponent },
+      { path: 'projects/update/:id', component: UpdateProjectFormComponent },
     ],
   },
   { path: '**', component: NotFoundComponent },
@@ -37,3 +34,12 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class AdminRoutingModule {}
+
+/* 
+
+{ path: 'projects', component: ProjectsComponent },
+
+
+
+
+*/

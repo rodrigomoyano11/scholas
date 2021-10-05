@@ -57,15 +57,15 @@ export class ProjectDetailsComponent implements OnInit, OnChanges {
               action: {
                 type: 'button',
                 click: (): void =>
-                  void this.router.navigate(['/admin/edit-project', this.projectData.id]),
+                  void this.router.navigate(['/admin/projects/update', this.projectData.id]),
               },
             },
             {
-              label: 'Métricas',
+              label: 'Ver métricas',
               icon: 'analytics',
               action: {
                 type: 'button',
-                click: (): void => console.log('Works'),
+                click: (): void => void this.router.navigate(['/admin/metrics']),
               },
             },
             {

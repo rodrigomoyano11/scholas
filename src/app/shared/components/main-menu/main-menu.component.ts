@@ -63,7 +63,7 @@ export class MainMenuComponent {
     },
     {
       name: 'Métricas',
-      link: '/admin/donations',
+      link: '/admin/metrics',
       type: 'internal',
       access: ['admin'],
     },

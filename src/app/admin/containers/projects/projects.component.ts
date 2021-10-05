@@ -29,7 +29,7 @@ export class ProjectsComponent implements OnInit {
           icon: 'add',
           action: {
             type: 'button',
-            click: (): void => void this.router.navigate(['/admin/new-project']),
+            click: (): void => void this.router.navigate(['/admin/projects/create']),
           },
         },
       ],
@@ -69,12 +69,12 @@ export class ProjectsComponent implements OnInit {
           {
             label: 'Editar detalles',
             icon: 'edit',
-            click: () => this.router.navigate(['/admin/edit-project', project.id]),
+            click: () => void this.router.navigate(['/admin/projects/update', project.id]),
           },
           {
             label: 'Ver métricas',
             icon: 'analytics',
-            click: () => console.log('Works'),
+            click: () => void this.router.navigate(['/admin/metrics']),
           },
           {
             label: `Dar de ${projectIsPrivate ? 'alta' : 'baja'}`,
@@ -86,7 +86,7 @@ export class ProjectsComponent implements OnInit {
       },
 
       primaryCTA: (): void => console.log('Works'),
-      secondaryCTA: (): void => void this.router.navigate(['/admin/projects', project.id]),
+      secondaryCTA: (): void => void this.router.navigate(['/admin/projects/read/', project.id]),
     }
   }
 

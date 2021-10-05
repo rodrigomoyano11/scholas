@@ -23,7 +23,7 @@ export class DonationsComponent {
           icon: 'add',
           action: {
             type: 'button',
-            click: (): void => void this.router.navigate(['/admin/edit-project']),
+            click: (): void => void this.router.navigate(['/admin/projects/update']),
           },
         },
       ],
