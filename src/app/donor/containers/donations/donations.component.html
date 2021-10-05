@@ -19,6 +19,7 @@
         icon="chevron_right"
         (clickEvent)="goToDonationDetails(donation.id)"
         [actionItem]="true"
+        [status]="setListItemStatus(donation.status)"
       ></app-list-item>
     </ng-container>
   </app-list-alert>

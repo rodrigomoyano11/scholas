@@ -4,6 +4,7 @@ import {
   DonationsService,
   DonationTest,
 } from 'src/app/donation/services/donations/donations.service'
+import { BadgeStatus } from 'src/app/shared/components/list-item/list-item.component'
 import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
 import { Donation } from 'src/app/shared/models/donation.interface'
 
@@ -39,5 +40,21 @@ export class DonationsComponent {
 
   goToDonationDetails(id: Donation['id']): void {
     void this.router.navigate(['/donation/certificate', id])
+  }
+
+  setListItemStatus(status: Donation['status']): BadgeStatus | null {
+    const statuses: { [key in Donation['status']]: BadgeStatus | null } = {
+      success: null,
+      pending: {
+        type: 'warn',
+        label: 'Pendiente',
+      },
+      failure: {
+        type: 'error',
+        label: 'Rechazado',
+      },
+    }
+
+    return statuses[status]
   }
 }
