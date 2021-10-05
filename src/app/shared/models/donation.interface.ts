@@ -3,7 +3,7 @@ import { User } from './user.interface'
 
 export interface Donation {
   id: string
-  status: 'pending' | 'approved' | 'rejected'
+  status: 'success' | 'pending' | 'failure'
   type: 'regular' | 'recurring'
   amount: number
   createdDate: string
