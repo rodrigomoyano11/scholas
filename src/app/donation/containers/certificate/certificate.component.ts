@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
-import { Donation } from 'src/app/shared/models/Donation'
+import { Donation } from 'src/app/shared/models/donation.interface'
 import { ShareService } from 'src/app/shared/services/share/share.service'
 
 @Component({

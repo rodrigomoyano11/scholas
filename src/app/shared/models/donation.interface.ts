@@ -1,5 +1,5 @@
-import { Project } from './Project'
-import { User } from './User'
+import { Project } from './project.interface'
+import { User } from './user.interface'
 
 export interface Donation {
   id: string

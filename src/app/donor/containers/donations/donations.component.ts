@@ -2,7 +2,7 @@ import { Component } from '@angular/core'
 import { Router } from '@angular/router'
 import { DonationsService } from 'src/app/donation/services/donations/donations.service'
 import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
-import { Donation } from 'src/app/shared/models/Donation'
+import { Donation } from 'src/app/shared/models/donation.interface'
 
 @Component({
   selector: 'app-donations',

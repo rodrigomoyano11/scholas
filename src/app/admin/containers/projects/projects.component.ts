@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { CardData } from 'src/app/shared/components/project-card/project-card.component'
 import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
-import { GetProjectResponse } from 'src/app/shared/models/Api'
-import { Project } from 'src/app/shared/models/Project'
+import { GetProjectResponse } from 'src/app/shared/models/api.interface'
+import { Project } from 'src/app/shared/models/project.interface'
 import { ProjectsService } from '../../../shared/services/projects/projects.service'
 
 @Component({

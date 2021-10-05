@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { GetLocationsResponse } from 'src/app/shared/models/Api'
+import { GetLocationsResponse } from 'src/app/shared/models/api.interface'
 import { environment } from '../../../environments/environment'
 
 @Injectable({

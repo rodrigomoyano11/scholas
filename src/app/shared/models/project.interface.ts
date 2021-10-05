@@ -1,4 +1,4 @@
-import { Location } from './Location'
+import { Location } from './location.interface'
 
 export interface Project {
   id: number

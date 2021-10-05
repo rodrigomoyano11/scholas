@@ -1,7 +1,7 @@
-import { Location } from './Location'
-import { Project } from './Project'
+import { Location } from './location.interface'
+import { Project } from './project.interface'
 
-import { ExtraData, User } from './User'
+import { ExtraData, User } from './user.interface'
 
 // Users
 export interface GetUserResponse {
@@ -80,7 +80,6 @@ export interface ModifyProjectRequest {
   photosUrl: Project['photos']
   videoURL: Project['videoURL']
 }
-
 export interface ModifyProjectResponse {
   id: Project['id']
 

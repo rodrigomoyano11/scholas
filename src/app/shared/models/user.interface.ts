@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { UserInfo } from 'firebase/auth'
-import { Location } from './Location'
+import { Location } from './location.interface'
 
 export interface User {
   uid: UserInfo['uid']

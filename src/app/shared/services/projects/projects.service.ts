@@ -11,9 +11,9 @@ import {
   GetProjectsResponse,
   ModifyProjectRequest,
   ModifyProjectResponse,
-} from 'src/app/shared/models/Api'
+} from 'src/app/shared/models/api.interface'
 
-import { Project } from 'src/app/shared/models/Project'
+import { Project } from 'src/app/shared/models/project.interface'
 import { environment } from 'src/environments/environment'
 
 interface ProjectFormData {

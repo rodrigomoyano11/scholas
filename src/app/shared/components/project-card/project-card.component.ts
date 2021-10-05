@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core'
-import { GetProjectResponse } from '../../models/Api'
+import { GetProjectResponse } from '../../models/api.interface'
 import { LayoutService } from '../../services/layout/layout.service'
 
 export interface CardData {
