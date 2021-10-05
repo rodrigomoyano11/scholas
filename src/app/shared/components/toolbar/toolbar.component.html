@@ -1,5 +1,5 @@
-<div [ngClass]="['container', fullWidth ? 'full-width' : '']">
-  <div class="title__container">
+<div [ngClass]="['container', fullWidth ? 'full-width' : '', withMargin ? 'with-margin' : '']">
+  <div *ngIf="title || backButton" class="title__container">
     <button
       type="button"
       *ngIf="backButton"
@@ -60,6 +60,18 @@
         >
           <mat-icon fontSet="material-icons-outlined" *ngIf="item.icon">{{ item.icon }}</mat-icon>
           <span class="button__label">{{ item.label.toUpperCase() }}</span>
+        </button>
+
+        <!-- Button Tertiary -->
+        <button
+          type="button--secondary"
+          *ngIf="item.action.type === 'button' && section.style === 'tertiary'"
+          mat-icon-button
+          color="primary"
+          [matTooltip]="item.label"
+          (click)="item.action.click()"
+        >
+          <mat-icon fontSet="material-icons-outlined" *ngIf="item.icon">{{ item.icon }}</mat-icon>
         </button>
 
         <!-- Menu -->

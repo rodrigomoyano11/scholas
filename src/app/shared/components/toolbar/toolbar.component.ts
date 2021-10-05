@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core'
 import { LayoutService } from '../../services/layout/layout.service'
 
 export type ToolbarButtons = {
-  style: 'primary' | 'secondary'
+  style: 'primary' | 'secondary' | 'tertiary'
   data: ButtonData[]
 }[]
 
@@ -27,6 +27,7 @@ export class ToolbarComponent {
   @Input() fullWidth = false
   @Input() buttons: ToolbarButtons = []
   @Input() backButton!: BackButton
+  @Input() withMargin = true
 
   constructor(public layout: LayoutService) {}
 }

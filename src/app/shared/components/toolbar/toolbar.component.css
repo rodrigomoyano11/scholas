@@ -7,9 +7,12 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 1rem;
 
   padding: 0 1rem;
+}
+
+.with-margin {
+  margin-bottom: 1rem;
 }
 
 .full-width {
