@@ -10,7 +10,7 @@ import { ValidationService } from '../../services/validation/validation.service'
   styleUrls: ['./extra-data.component.css'],
 })
 export class ExtraDataComponent implements OnInit {
-  extraDataForm: FormGroup
+  form: FormGroup
 
   minDate: Date
   maxDate: Date
@@ -30,15 +30,15 @@ export class ExtraDataComponent implements OnInit {
     this.minDate = new Date(currentYear - 100, 0, 1)
     this.maxDate = new Date(currentYear - 13, 11, 31)
 
-    this.extraDataForm = this.fb.group({
+    this.form = this.fb.group({
       birthday: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required, validation.isValidPhoneNumber()]],
       province: ['', [Validators.required]],
       locality: ['', [Validators.required]],
     })
 
-    this.provinceControl = this.extraDataForm.controls['province']
-    this.localityControl = this.extraDataForm.controls['locality']
+    this.provinceControl = this.form.controls['province']
+    this.localityControl = this.form.controls['locality']
   }
 
   async ngOnInit(): Promise<void> {
@@ -63,10 +63,10 @@ export class ExtraDataComponent implements OnInit {
   }
 
   getErrors(controlName: string): string {
-    return this.validation.getErrors(this.extraDataForm.controls[controlName])
+    return this.validation.getErrors(this.form.controls[controlName])
   }
 
   submitExtraData(): void {
-    void this.auth.sendExtraData(this.extraDataForm.value)
+    void this.auth.sendExtraData(this.form.value)
   }
 }

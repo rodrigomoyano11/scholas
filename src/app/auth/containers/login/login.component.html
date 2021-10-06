@@ -11,7 +11,7 @@
 
   <div class="form__container">
     <p class="form__title">O usá tu correo electrónico</p>
-    <form class="form" (ngSubmit)="login('email')" [formGroup]="loginForm">
+    <form class="form" (ngSubmit)="login('email')" [formGroup]="form">
       <!-- Email -->
       <mat-form-field class="form__field" appearance="outline">
         <mat-label>Correo electrónico</mat-label>
@@ -43,7 +43,7 @@
           [attr.aria-pressed]="hidePassword"
         >
           <mat-icon class="form__field-icon" fontSet="material-icons-outlined">{{
-            hidePassword ? 'visibility_off' : 'visibility'
+            hidePassword ? 'visibility' : 'visibility_off'
           }}</mat-icon>
         </button>
         <mat-error>{{ getErrors('password') }}</mat-error>
@@ -55,7 +55,7 @@
         class="form__submit"
         [color]="'primary'"
         mat-flat-button
-        [disabled]="!loginForm.valid"
+        [disabled]="!form.valid"
       >
         Iniciar sesión
       </button>

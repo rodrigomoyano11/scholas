@@ -10,7 +10,7 @@ import { ValidationService } from '../../services/validation/validation.service'
   styleUrls: ['./create-project-form.component.css'],
 })
 export class CreateProjectFormComponent implements OnInit {
-  createProjectForm: FormGroup
+  form: FormGroup
 
   provinces: string[] = []
   localities: string[] = []
@@ -23,7 +23,7 @@ export class CreateProjectFormComponent implements OnInit {
     private location: LocationService,
     private validation: ValidationService,
   ) {
-    this.createProjectForm = this.fb.group({
+    this.form = this.fb.group({
       name: ['', [Validators.required]],
       province: ['', [Validators.required]],
       locality: ['', [Validators.required]],
@@ -37,8 +37,8 @@ export class CreateProjectFormComponent implements OnInit {
       video: ['', validation.isValidLink()],
     })
 
-    this.provinceControl = this.createProjectForm.controls['province']
-    this.localityControl = this.createProjectForm.controls['locality']
+    this.provinceControl = this.form.controls['province']
+    this.localityControl = this.form.controls['locality']
   }
 
   async ngOnInit(): Promise<void> {
@@ -49,19 +49,19 @@ export class CreateProjectFormComponent implements OnInit {
 
   // General
   getErrors(controlName: string): string {
-    return this.validation.getErrors(this.createProjectForm.controls[controlName])
+    return this.validation.getErrors(this.form.controls[controlName])
   }
 
   submitProjectData(): void {
     const projectData = {
-      name: this.createProjectForm.controls['name'].value as string,
-      province: this.createProjectForm.controls['province'].value as string,
-      locality: this.createProjectForm.controls['locality'].value as string,
-      description: this.createProjectForm.controls['description'].value as string,
-      targetAmount: this.createProjectForm.controls['targetAmount'].value as string,
-      coverPhoto: (this.createProjectForm.controls['coverPhoto'].value as string[])[0],
-      photos: this.createProjectForm.controls['photos'].value as string[],
-      video: this.createProjectForm.controls['video'].value as string,
+      name: this.form.controls['name'].value as string,
+      province: this.form.controls['province'].value as string,
+      locality: this.form.controls['locality'].value as string,
+      description: this.form.controls['description'].value as string,
+      targetAmount: this.form.controls['targetAmount'].value as string,
+      coverPhoto: (this.form.controls['coverPhoto'].value as string[])[0],
+      photos: this.form.controls['photos'].value as string[],
+      video: this.form.controls['video'].value as string,
     }
 
     void this.projects.createProject(projectData)
@@ -85,12 +85,12 @@ export class CreateProjectFormComponent implements OnInit {
 
   // Photos
   setCoverPhoto(photosInBase64: string[]): void {
-    this.createProjectForm.patchValue({
+    this.form.patchValue({
       coverPhoto: photosInBase64,
     })
   }
   setPhotos(photosInBase64: string[]): void {
-    this.createProjectForm.patchValue({
+    this.form.patchValue({
       photos: photosInBase64,
     })
   }

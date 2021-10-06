@@ -4,7 +4,7 @@
   </div>
   <div class="form-container__content">
     <div class="form__container">
-      <form class="form" (ngSubmit)="submitProjectData()" [formGroup]="createProjectForm">
+      <form class="form" (ngSubmit)="submitProjectData()" [formGroup]="form">
         <!-- Name -->
         <mat-form-field class="form__field" appearance="outline">
           <mat-label>Nombre</mat-label>
@@ -65,9 +65,9 @@
           />
           <mat-hint>
             {{
-              createProjectForm.controls['targetAmount'].value !== ''
+              form.controls['targetAmount'].value !== ''
                 ? 'El monto objetivo sería de ' +
-                  (createProjectForm.controls['targetAmount'].value | currency: 'ARS')
+                  (form.controls['targetAmount'].value | currency: 'ARS')
                 : ''
             }}
           </mat-hint>
@@ -115,7 +115,7 @@
             class="form__submit"
             [color]="'primary'"
             mat-flat-button
-            [disabled]="!createProjectForm.valid"
+            [disabled]="!form.valid"
           >
             Crear proyecto
           </button>

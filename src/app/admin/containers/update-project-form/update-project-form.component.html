@@ -4,7 +4,7 @@
   </div>
   <div class="form-container__content">
     <div class="form__container">
-      <form class="form" (ngSubmit)="submitProjectData()" [formGroup]="updateProjectForm">
+      <form class="form" (ngSubmit)="submitProjectData()" [formGroup]="form">
         <!-- Name -->
         <mat-form-field class="form__field" appearance="outline">
           <mat-label>Nombre</mat-label>
@@ -65,9 +65,9 @@
           />
           <mat-hint>
             {{
-              updateProjectForm.controls['targetAmount'].value !== ''
+              form.controls['targetAmount'].value !== ''
                 ? 'El monto objetivo es de ' +
-                  (updateProjectForm.controls['targetAmount'].value | currency: 'ARS')
+                  (form.controls['targetAmount'].value | currency: 'ARS')
                 : ''
             }}
           </mat-hint>
@@ -123,7 +123,7 @@
             class="form__submit"
             [color]="'primary'"
             mat-flat-button
-            [disabled]="!updateProjectForm.valid"
+            [disabled]="!form.valid"
           >
             Guardar cambios
           </button>

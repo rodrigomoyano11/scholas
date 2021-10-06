@@ -11,7 +11,7 @@
 
   <div class="form__container">
     <p class="form__title">O usá tu correo electrónico</p>
-    <form class="form" (ngSubmit)="register('email')" [formGroup]="registerForm">
+    <form class="form" (ngSubmit)="register('email')" [formGroup]="form">
       <div class="form__field-group">
         <!-- FirstName -->
         <mat-form-field class="form__field" appearance="outline">
@@ -59,7 +59,7 @@
         <input
           matInput
           placeholder="Ingresá tu contraseña"
-          [type]="hidePassword.field1 ? 'password' : 'text'"
+          [type]="hidePassword ? 'password' : 'text'"
           autocomplete="new-password"
           formControlName="password"
         />
@@ -67,11 +67,11 @@
           type="button"
           mat-icon-button
           matSuffix
-          (click)="hidePassword.field1 = !hidePassword.field1"
-          [attr.aria-pressed]="hidePassword.field1"
+          (click)="hidePassword = !hidePassword"
+          [attr.aria-pressed]="hidePassword"
         >
           <mat-icon class="form__field-icon" fontSet="material-icons-outlined">{{
-            hidePassword.field1 ? 'visibility_off' : 'visibility'
+            hidePassword ? 'visibility' : 'visibility_off'
           }}</mat-icon>
         </button>
         <mat-error>{{ getErrors('password') }}</mat-error>
@@ -83,21 +83,10 @@
         <input
           matInput
           placeholder="Ingresá nuevamente tu contraseña"
-          [type]="hidePassword.field2 ? 'password' : 'text'"
+          [type]="'password'"
           autocomplete="new-password"
           formControlName="passwordConfirm"
         />
-        <button
-          type="button"
-          mat-icon-button
-          matSuffix
-          (click)="hidePassword.field2 = !hidePassword.field2"
-          [attr.aria-pressed]="hidePassword.field2"
-        >
-          <mat-icon class="form__field-icon" fontSet="material-icons-outlined">{{
-            hidePassword.field2 ? 'visibility_off' : 'visibility'
-          }}</mat-icon>
-        </button>
         <mat-error>{{ getErrors('passwordConfirm') }}</mat-error>
       </mat-form-field>
 
@@ -107,7 +96,7 @@
         class="form__submit"
         [color]="'primary'"
         mat-flat-button
-        [disabled]="!registerForm.valid"
+        [disabled]="!form.valid"
       >
         Registrarse
       </button>

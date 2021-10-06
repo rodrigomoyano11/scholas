@@ -9,7 +9,7 @@ import { ValidationService } from '../../services/validation/validation.service'
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  loginForm: FormGroup
+  form: FormGroup
   hidePassword = true
 
   constructor(
@@ -17,19 +17,19 @@ export class LoginComponent {
     private validation: ValidationService,
     private auth: AuthService,
   ) {
-    this.loginForm = this.fb.group({
+    this.form = this.fb.group({
       email: ['', [Validators.required, validation.isValidEmail()]],
       password: ['', [Validators.required]],
     })
   }
 
   getErrors(controlName: string): string {
-    return this.validation.getErrors(this.loginForm.controls[controlName])
+    return this.validation.getErrors(this.form.controls[controlName])
   }
 
   login(provider: Provider): void {
-    const password = <string>this.loginForm.controls['password'].value
-    const email = <string>this.loginForm.controls['email'].value
+    const password = <string>this.form.controls['password'].value
+    const email = <string>this.form.controls['email'].value
 
     void this.auth.login(provider, email, password)
   }

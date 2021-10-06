@@ -2,7 +2,7 @@
   <h1 class="form-container__title--primary">¡Queremos conocerte!</h1>
 
   <div class="form__container">
-    <form class="form" (ngSubmit)="submitExtraData()" [formGroup]="extraDataForm">
+    <form class="form" (ngSubmit)="submitExtraData()" [formGroup]="form">
       <!-- Birthday -->
       <mat-form-field class="form__field" appearance="outline">
         <mat-label>Fecha de Nacimiento</mat-label>
@@ -65,7 +65,7 @@
         class="form__submit"
         [color]="'primary'"
         mat-flat-button
-        [disabled]="!extraDataForm.valid"
+        [disabled]="!form.valid"
       >
         Continuar
       </button>

@@ -10,7 +10,7 @@ import { AdminsService } from '../../services/admins/admins.service'
   styleUrls: ['./create-admin.component.css'],
 })
 export class CreateAdminComponent implements OnInit {
-  newAdminForm: FormGroup
+  form: FormGroup
 
   constructor(
     private fb: FormBuilder,
@@ -18,7 +18,7 @@ export class CreateAdminComponent implements OnInit {
     private router: Router,
     private adminsService: AdminsService,
   ) {
-    this.newAdminForm = this.fb.group({
+    this.form = this.fb.group({
       email: ['', [Validators.required, validation.isValidEmail()]],
     })
   }
@@ -28,7 +28,7 @@ export class CreateAdminComponent implements OnInit {
   }
 
   setNewAdmin(): void {
-    const email = <string>this.newAdminForm.controls['email'].value
+    const email = <string>this.form.controls['email'].value
     const uid = this.adminsService.selectUidAdmin(email)
 
     this.adminsService.addAdmin(uid)

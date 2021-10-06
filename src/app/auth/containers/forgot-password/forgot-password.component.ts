@@ -9,24 +9,24 @@ import { ValidationService } from '../../services/validation/validation.service'
   styleUrls: ['./forgot-password.component.css'],
 })
 export class ForgotPasswordComponent {
-  forgotPasswordForm: FormGroup
+  form: FormGroup
 
   constructor(
     private fb: FormBuilder,
     private validation: ValidationService,
     private auth: AuthService,
   ) {
-    this.forgotPasswordForm = this.fb.group({
+    this.form = this.fb.group({
       email: ['', [Validators.required, validation.isValidEmail()]],
     })
   }
 
   getErrors(controlName: string): string {
-    return this.validation.getErrors(this.forgotPasswordForm.controls[controlName])
+    return this.validation.getErrors(this.form.controls[controlName])
   }
 
   resetPassword(): void {
-    const email = <string>this.forgotPasswordForm.controls['email'].value
+    const email = <string>this.form.controls['email'].value
 
     void this.auth.resetPassword(email)
   }

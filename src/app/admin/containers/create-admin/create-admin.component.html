@@ -5,7 +5,7 @@
   </p>
 
   <div class="form__container">
-    <form class="form" (ngSubmit)="setNewAdmin()" [formGroup]="newAdminForm">
+    <form class="form" (ngSubmit)="setNewAdmin()" [formGroup]="form">
       <!-- Email -->
       <mat-form-field class="form__field" appearance="outline">
         <mat-label>Correo electrónico</mat-label>
@@ -16,7 +16,7 @@
           autocomplete="email"
           formControlName="email"
         />
-        <mat-error>{{ validation.getErrors(newAdminForm.controls['email']) }}</mat-error>
+        <mat-error>{{ validation.getErrors(form.controls['email']) }}</mat-error>
       </mat-form-field>
 
       <!-- Submit -->
@@ -25,7 +25,7 @@
         class="form__submit"
         [color]="'primary'"
         mat-flat-button
-        [disabled]="!newAdminForm.valid"
+        [disabled]="!form.valid"
       >
         Agregar administrador
       </button>
