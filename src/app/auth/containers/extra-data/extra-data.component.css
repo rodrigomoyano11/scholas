@@ -1,16 +1,3 @@
-.extra-data-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-
-.extra-data-form__field {
-  width: 100%;
-  padding-bottom: 0.5rem;
-}
-
-.extra-data-form__submit {
-  width: 100%;
+.form-container__title--primary {
+  margin-bottom: 1.5rem;
 }

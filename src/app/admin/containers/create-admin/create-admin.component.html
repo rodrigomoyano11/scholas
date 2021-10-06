@@ -1,32 +1,34 @@
-<app-modal-container [size]="'small'">
-  <h1 class="title">Registro de administrador</h1>
-
-  <p class="description">
+<app-modal-container class="form-container" [size]="'small'">
+  <h1 class="form-container__title--primary">Registro de administrador</h1>
+  <p class="form-container__description">
     Agregá el email de la persona designada para que empiece a ser administrador
   </p>
 
-  <form class="new-admin-form" (ngSubmit)="setNewAdmin()" [formGroup]="newAdminForm">
-    <mat-form-field class="new-admin-form__field" appearance="outline">
-      <mat-label>Correo electrónico</mat-label>
-      <input
-        matInput
-        placeholder="Ingresá tu correo electrónico"
-        type="email"
-        autocomplete="email"
-        formControlName="email"
-      />
+  <div class="form__container">
+    <form class="form" (ngSubmit)="setNewAdmin()" [formGroup]="newAdminForm">
+      <!-- Email -->
+      <mat-form-field class="form__field" appearance="outline">
+        <mat-label>Correo electrónico</mat-label>
+        <input
+          matInput
+          placeholder="Ingresá tu correo electrónico"
+          type="email"
+          autocomplete="email"
+          formControlName="email"
+        />
+        <mat-error>{{ validation.getErrors(newAdminForm.controls['email']) }}</mat-error>
+      </mat-form-field>
 
-      <mat-error>{{ validation.getErrors(newAdminForm.controls['email']) }}</mat-error>
-    </mat-form-field>
-
-    <button
-      type="submit"
-      class="new-admin-form__submit"
-      [color]="'primary'"
-      mat-flat-button
-      [disabled]="!newAdminForm.valid"
-    >
-      Agregar administrador
-    </button>
-  </form>
+      <!-- Submit -->
+      <button
+        type="submit"
+        class="form__submit"
+        [color]="'primary'"
+        mat-flat-button
+        [disabled]="!newAdminForm.valid"
+      >
+        Agregar administrador
+      </button>
+    </form>
+  </div>
 </app-modal-container>

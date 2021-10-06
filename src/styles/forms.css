@@ -1,0 +1,147 @@
+/* Form Container */
+.form-container__content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 2rem;
+}
+
+.form-container__title--primary,
+.form-container__description {
+  text-align: center;
+}
+
+.form-container__title-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0.5rem 2rem;
+
+  background-color: #009993;
+}
+
+.form-container__title-container > .form-container__title--secondary {
+  margin: 0;
+
+  color: #fff;
+}
+
+/* Social buttons */
+.social-buttons__container {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.social-buttons__title {
+  text-align: center;
+}
+
+.social-buttons__buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Form */
+.form__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form__title {
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__field {
+  margin-bottom: 0.5rem;
+}
+
+.form__text-area {
+  resize: none !important;
+}
+
+.form__field-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.form__field-group > .form__field {
+  min-width: 100%;
+}
+
+.form__field-icon {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.form__submit-group {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+}
+
+.form__submit,
+.form__cancel {
+  width: 100%;
+}
+
+/* Form Images Field */
+.img-field__container {
+  width: 100%;
+  padding-bottom: 1.5rem;
+
+  color: rgb(100, 100, 100);
+}
+
+.img-field__heading {
+  margin-bottom: 0.25rem;
+  padding-top: 0.5rem;
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.img-field__description {
+  margin-bottom: 0.25rem;
+
+  font-size: 14px;
+}
+
+.img-field__action {
+  margin: 2rem;
+
+  color: rgb(150, 150, 150);
+}
+
+.img-field__note {
+  margin-top: 0.5rem;
+
+  font-size: 12px;
+}
+
+/* Extra links */
+.extra-links__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 1rem;
+}
+
+.extra-links__button-group {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.extra-links__button-label {
+  margin: 0 !important;
+
+  white-space: nowrap;
+}

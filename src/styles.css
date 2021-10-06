@@ -1,6 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+/* Angular Material Theme */
 @import './theme/scholas.css';
 
+/* Forms */
+@import url('./styles/forms.css');
+
+/* General */
 html,
 body {
   height: 100%;
@@ -18,6 +22,7 @@ body {
   box-sizing: border-box;
 }
 
+/* Angular Material Corrections */
 .cdk-overlay-container {
   z-index: 10000;
 }
