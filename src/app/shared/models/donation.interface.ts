@@ -9,5 +9,6 @@ export interface Donation {
   createdDate: string
   userId: User['uid']
   projectId: Project['id']
-  paymentId: string
+  paymentId: string | null
+  preferenceId: string | null
 }
