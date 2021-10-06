@@ -8,7 +8,4 @@ import { AuthService } from 'src/app/auth/services/auth/auth.service'
 })
 export class AccountDetailsComponent {
   constructor(public auth: AuthService) {}
-  action(): void {
-    //
-  }
 }

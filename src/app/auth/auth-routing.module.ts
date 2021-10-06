@@ -7,6 +7,7 @@ import { ForgotPasswordComponent } from './containers/forgot-password/forgot-pas
 import { HomeComponent } from './containers/home/home.component'
 import { LoginComponent } from './containers/login/login.component'
 import { RegisterComponent } from './containers/register/register.component'
+import { UpdateAccountDetailsComponent } from './containers/update-account-details/update-account-details.component'
 import { VerifyEmailComponent } from './containers/verify-email/verify-email.component'
 
 const routes: Routes = [
@@ -19,6 +20,9 @@ const routes: Routes = [
       { path: 'forgot-password', component: ForgotPasswordComponent },
       { path: 'verify-email', component: VerifyEmailComponent },
       { path: 'account', component: AccountDetailsComponent },
+
+      { path: 'account/update', component: UpdateAccountDetailsComponent },
+
       { path: 'extra-data', component: ExtraDataComponent },
 
       { path: '**', component: NotFoundComponent },

@@ -20,6 +20,7 @@ import SocialButtonComponent from './components/social-button/social-button.comp
 import { ReactiveFormsModule } from '@angular/forms'
 import { AccountDetailsComponent } from './containers/account-details/account-details.component'
 import { MatListModule } from '@angular/material/list'
+import { UpdateAccountDetailsComponent } from './containers/update-account-details/update-account-details.component'
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { MatListModule } from '@angular/material/list'
     ExtraDataComponent,
     SocialButtonComponent,
     AccountDetailsComponent,
+    UpdateAccountDetailsComponent,
   ],
   imports: [
     CommonModule,

@@ -15,7 +15,7 @@
     </div>
 
     <mat-action-list class="action__container">
-      <button class="action__item" mat-list-item (click)="action()">
+      <button class="action__item" mat-list-item [routerLink]="'/auth/account/update'">
         <mat-icon class="action__item" fontSet="material-icons-outlined">person</mat-icon>
         <span>Mis datos</span>
       </button>
