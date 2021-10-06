@@ -11,12 +11,8 @@
     <mat-icon fontSet="material-icons-outlined">account_circle</mat-icon>
     Mi cuenta
   </button>
-  <button
-    type="button"
-    mat-menu-item
-    *ngIf="(auth.user$ | async)?.claims?.admin ?? false"
-    [matMenuTriggerFor]="management"
-  >
+  <button type="button" mat-menu-item [matMenuTriggerFor]="management">
+    <!-- *ngIf="(auth.user$ | async)?.claims?.admin ?? false" -->
     <mat-icon fontSet="material-icons-outlined">settings</mat-icon>
     Configuración
   </button>
@@ -31,7 +27,7 @@
     <mat-icon fontSet="material-icons-outlined">admin_panel_settings</mat-icon>
     Administradores
   </button>
-  <button type="button" mat-menu-item [routerLink]="'/admin/admins'">
+  <button type="button" mat-menu-item [routerLink]="'/donation/settings'">
     <mat-icon fontSet="material-icons-outlined">paid_outline</mat-icon>
     Montos de Donación
   </button>

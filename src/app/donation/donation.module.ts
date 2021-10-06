@@ -24,6 +24,7 @@ import { PaymentComponent } from './components/payment/payment.component'
 import { SuccessPaymentComponent } from './components/success-payment/success-payment.component'
 import { FailurePaymentComponent } from './components/failure-payment/failure-payment.component'
 import { PendingPaymentComponent } from './components/pending-payment/pending-payment.component'
+import { DonationAmountsSettingsComponent } from './containers/donation-amounts-settings/donation-amounts-settings.component'
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { PendingPaymentComponent } from './components/pending-payment/pending-pa
     SuccessPaymentComponent,
     FailurePaymentComponent,
     PendingPaymentComponent,
+    DonationAmountsSettingsComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,22 @@
+@media screen and (max-width: 960px) {
+  .line-break {
+    display: block;
+    margin-top: 0.5rem;
+
+    font-weight: 500;
+  }
+
+  .form__field-group {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .form-container__title--primary,
+  .form-container__description {
+    width: 100%;
+
+    text-align: left;
+  }
+}
