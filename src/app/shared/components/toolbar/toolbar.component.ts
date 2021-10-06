@@ -24,6 +24,7 @@ export type BackButton = () => unknown
 })
 export class ToolbarComponent {
   @Input() title!: string
+  @Input() titleAlignCenter = false
   @Input() fullWidth = false
   @Input() buttons: ToolbarButtons = []
   @Input() backButton!: BackButton

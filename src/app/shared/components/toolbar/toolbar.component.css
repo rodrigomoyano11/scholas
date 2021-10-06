@@ -30,6 +30,21 @@
   margin: 0;
 }
 
+.title--center {
+  width: 100%;
+
+  text-align: center;
+}
+
+.title__container--center {
+  width: 100%;
+}
+
+.title__spacing--center {
+  min-width: 3rem;
+  height: 3rem;
+}
+
 .no-dense,
 .dense {
   display: flex;
