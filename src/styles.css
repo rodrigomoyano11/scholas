@@ -1,5 +1,5 @@
 /* Angular Material Theme */
-@import './theme/scholas.css';
+@import url('./styles/theme.css');
 
 /* Forms */
 @import url('./styles/forms.css');

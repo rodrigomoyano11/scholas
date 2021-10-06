@@ -1,4 +1,6 @@
-n.mat-badge-content {
+/* stylelint-disable */
+
+.mat-badge-content {
   font-weight: 600;
   font-size: 12px;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
