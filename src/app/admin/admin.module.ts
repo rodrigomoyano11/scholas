@@ -17,7 +17,9 @@ import { MatMenuModule } from '@angular/material/menu'
 import { MatSelectModule } from '@angular/material/select'
 import { CreateProjectFormComponent } from './containers/create-project-form/create-project-form.component'
 import { UpdateProjectFormComponent } from './containers/update-project-form/update-project-form.component'
-import { MetricsComponent } from './containers/metrics/metrics.component'
+import { MetricsProjectListComponent } from './containers/metrics-project-list/metrics-project-list.component'
+import { ProjectMetricsComponent } from './containers/project-metrics/project-metrics.component'
+import { ChartsComponent } from './containers/charts/charts.component'
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { MetricsComponent } from './containers/metrics/metrics.component'
     CreateAdminComponent,
     CreateProjectFormComponent,
     UpdateProjectFormComponent,
-    MetricsComponent,
+    MetricsProjectListComponent,
+    ProjectMetricsComponent,
+    ChartsComponent,
   ],
   imports: [
     CommonModule,

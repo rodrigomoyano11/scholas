@@ -8,7 +8,9 @@ import { HomeComponent } from './containers/home/home.component'
 import { CreateAdminComponent } from './containers/create-admin/create-admin.component'
 import { ProjectDetailsComponent } from '../shared/containers/project-details/project-details.component'
 import { ProjectsComponent } from './containers/projects/projects.component'
-import { MetricsComponent } from './containers/metrics/metrics.component'
+import { MetricsProjectListComponent } from './containers/metrics-project-list/metrics-project-list.component'
+import { ProjectMetricsComponent } from './containers/project-metrics/project-metrics.component'
+import { ChartsComponent } from './containers/charts/charts.component'
 
 const routes: Routes = [
   {
@@ -18,12 +20,14 @@ const routes: Routes = [
       { path: 'admins', component: AdminsComponent },
       { path: 'admins/create', component: CreateAdminComponent },
 
-      { path: 'metrics', component: MetricsComponent },
-
       { path: 'projects', component: ProjectsComponent },
       { path: 'projects/create', component: CreateProjectFormComponent },
       { path: 'projects/read/:id', component: ProjectDetailsComponent },
       { path: 'projects/update/:id', component: UpdateProjectFormComponent },
+
+      { path: 'metrics', component: MetricsProjectListComponent },
+      { path: 'metrics/overview/:id', component: ProjectMetricsComponent },
+      { path: 'metrics/charts/:id', component: ChartsComponent },
 
       { path: '**', component: NotFoundComponent },
     ],

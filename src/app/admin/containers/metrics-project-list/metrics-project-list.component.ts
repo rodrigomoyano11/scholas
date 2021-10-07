@@ -5,11 +5,11 @@ import { Project } from 'src/app/shared/models/project.interface'
 import { ProjectsService } from 'src/app/shared/services/projects/projects.service'
 
 @Component({
-  selector: 'app-metrics',
-  templateUrl: './metrics.component.html',
-  styleUrls: ['./metrics.component.css'],
+  selector: 'app-metrics-project-list',
+  templateUrl: './metrics-project-list.component.html',
+  styleUrls: ['./metrics-project-list.component.css'],
 })
-export class MetricsComponent implements OnInit {
+export class MetricsProjectListComponent implements OnInit {
   projectData: CreateProjectResponse[] = []
 
   constructor(private router: Router, public projects: ProjectsService) {}
