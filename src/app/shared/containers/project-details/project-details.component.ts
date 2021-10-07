@@ -44,7 +44,7 @@ export class ProjectDetailsComponent implements OnInit, OnChanges {
 
   async getProjectData(): Promise<void> {
     if (!!this.selectedProjectId) {
-      this.projectData = await this.projects.getProject(+this.selectedProjectId).toPromise()
+      this.projectData = await this.projects.getProject(Number(this.selectedProjectId)).toPromise()
       this.projectIsPrivate = this.projectData.visibility === 'PRIVATE'
 
       const adminButtons: ToolbarButtons = [
