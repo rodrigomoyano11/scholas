@@ -1,5 +1,6 @@
 import { Component } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
+import { AuthService } from 'src/app/auth/services/auth/auth.service'
 import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
 import { Donation } from 'src/app/shared/models/donation.interface'
 import { ShareService } from 'src/app/shared/services/share/share.service'
@@ -50,6 +51,7 @@ export class CertificateComponent {
     private router: Router,
     private share: ShareService,
     public donationsService: DonationsService,
+    public auth: AuthService,
   ) {
     this.donation = this.selectedDonationId
       ? donationsService.getDonation(this.selectedDonationId)

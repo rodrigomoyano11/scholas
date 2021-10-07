@@ -4,7 +4,9 @@
     <div class="content">
       <app-logo class="logo" color="#009993" type="vertical"></app-logo>
       <div class="caption">
-        <h1 class="title mat-title">¡Muchas gracias {{ donation.userId }}!</h1>
+        <h1 class="title mat-title">
+          ¡Muchas gracias {{ ((auth.user$ | async)?.displayName?.split(' ') ?? [''])[0] }}!
+        </h1>
 
         <p class="description mat-body-2">
           Te agradecemos por apoyar la misión del proyecto
