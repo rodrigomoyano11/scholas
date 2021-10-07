@@ -1,1 +1,12 @@
-<p>project-metrics works!</p>
+<app-modal-container *ngIf="projectData; else loading">
+  <app-toolbar
+    [title]="projectData.name"
+    [backButton]="backButtonAction"
+    [fullWidth]="true"
+    [titleAlignCenter]="true"
+  ></app-toolbar>
+</app-modal-container>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>

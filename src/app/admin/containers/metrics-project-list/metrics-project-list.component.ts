@@ -12,7 +12,7 @@ import { ProjectsService } from 'src/app/shared/services/projects/projects.servi
 export class MetricsProjectListComponent implements OnInit {
   projectData: CreateProjectResponse[] = []
 
-  constructor(private router: Router, public projects: ProjectsService) {}
+  constructor(private router: Router, private projects: ProjectsService) {}
 
   ngOnInit(): void {
     this.projects
@@ -21,6 +21,6 @@ export class MetricsProjectListComponent implements OnInit {
   }
 
   goToMetrics(id: Project['id']): void {
-    void this.router.navigate(['/admin/projects/read/', id])
+    void this.router.navigate(['/admin/metrics/overview', id])
   }
 }
