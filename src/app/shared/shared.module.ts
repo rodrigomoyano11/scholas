@@ -35,6 +35,7 @@ import { MatRippleModule } from '@angular/material/core'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { BadgeComponent } from './components/badge/badge.component'
 import { SpinnerComponent } from './components/spinner/spinner.component'
+import { ShortNumberPipe } from './pipes/short-number.pipe'
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component'
     ProjectDetailsComponent,
     BadgeComponent,
     SpinnerComponent,
+    ShortNumberPipe,
   ],
   imports: [
     CommonModule,
@@ -93,6 +95,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component'
     ListAlertComponent,
     ProjectDetailsComponent,
     BadgeComponent,
+    ShortNumberPipe,
   ],
 })
 export class SharedModule {}
