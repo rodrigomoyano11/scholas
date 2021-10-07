@@ -1,5 +1,9 @@
 <mat-card class="main-container">
-  <img [ngClass]="['image', !userIsAdmin ? 'image--donor' : '']" [src]="projectData.image" />
+  <img
+    [ngClass]="['image', !userIsAdmin ? 'image--donor' : '']"
+    [src]="projectData.image"
+    [alt]="projectData.title"
+  />
 
   <div class="caption">
     <app-badge
