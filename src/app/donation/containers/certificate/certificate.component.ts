@@ -2,7 +2,6 @@ import { Component } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
 import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
-import { Donation } from 'src/app/shared/models/donation.interface'
 import { ShareService } from 'src/app/shared/services/share/share.service'
 import { DonationsService, DonationTest } from '../../services/donations/donations.service'
 
@@ -36,8 +35,7 @@ export class CertificateComponent {
           icon: 'share',
           action: {
             type: 'button',
-            click: (): void =>
-              this.selectedDonationId ? this.shareAsLink(this.selectedDonationId) : undefined,
+            click: (): void => (this.selectedDonationId ? this.shareAsLink() : undefined),
           },
         },
       ],
@@ -58,10 +56,7 @@ export class CertificateComponent {
       : null
   }
 
-  shareAsLink(donationId: Donation['id']): void {
-    this.share.shareAsLink(
-      `${window.location.href}/${donationId}`,
-      'Se copió el link de la donación',
-    )
+  shareAsLink(): void {
+    this.share.shareAsLink(window.location.href, 'Se copió el link de la donación')
   }
 }
