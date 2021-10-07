@@ -36,6 +36,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { BadgeComponent } from './components/badge/badge.component'
 import { SpinnerComponent } from './components/spinner/spinner.component'
 import { ShortNumberPipe } from './pipes/short-number.pipe'
+import { AlertMessageComponent } from './components/alert-message/alert-message.component'
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { ShortNumberPipe } from './pipes/short-number.pipe'
     BadgeComponent,
     SpinnerComponent,
     ShortNumberPipe,
+    AlertMessageComponent,
   ],
   imports: [
     CommonModule,
@@ -91,6 +93,7 @@ import { ShortNumberPipe } from './pipes/short-number.pipe'
     ToolbarComponent,
     ProjectCardComponent,
     ListItemComponent,
+    AlertMessageComponent,
     SpinnerComponent,
     ListAlertComponent,
     ProjectDetailsComponent,
