@@ -18,7 +18,6 @@ import { MatInputModule } from '@angular/material/input'
 import { AmountSelectionStepComponent } from './components/amount-selection-step/amount-selection-step.component'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { CertificateComponent } from './containers/certificate/certificate.component'
 import { PaymentComponent } from './components/payment/payment.component'
 import { SuccessPaymentComponent } from './components/success-payment/success-payment.component'
@@ -50,7 +49,6 @@ import { DonationAmountsSettingsComponent } from './containers/donation-amounts-
     MatDialogModule,
     MatStepperModule,
     MatListModule,
-    MatProgressSpinnerModule,
     MatTooltipModule,
     MatCheckboxModule,
     MatFormFieldModule,

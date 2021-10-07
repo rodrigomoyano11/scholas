@@ -32,7 +32,9 @@ import { ListAlertComponent } from './components/list-alert/list-alert.component
 import { MatListModule } from '@angular/material/list'
 import { ProjectDetailsComponent } from './containers/project-details/project-details.component'
 import { MatRippleModule } from '@angular/material/core'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { BadgeComponent } from './components/badge/badge.component'
+import { SpinnerComponent } from './components/spinner/spinner.component'
 
 @NgModule({
   declarations: [
@@ -55,6 +57,7 @@ import { BadgeComponent } from './components/badge/badge.component'
     ListAlertComponent,
     ProjectDetailsComponent,
     BadgeComponent,
+    SpinnerComponent,
   ],
   imports: [
     CommonModule,
@@ -70,6 +73,7 @@ import { BadgeComponent } from './components/badge/badge.component'
     MatCardModule,
     MatRippleModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     LayoutModule,
     IvyCarouselModule,
   ],
@@ -85,6 +89,7 @@ import { BadgeComponent } from './components/badge/badge.component'
     ToolbarComponent,
     ProjectCardComponent,
     ListItemComponent,
+    SpinnerComponent,
     ListAlertComponent,
     ProjectDetailsComponent,
     BadgeComponent,

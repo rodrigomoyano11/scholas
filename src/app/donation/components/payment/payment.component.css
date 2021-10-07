@@ -22,10 +22,6 @@
   text-align: center;
 }
 
-.spinner__container {
-  padding: 1rem;
-}
-
 @media screen and (min-width: 960px) {
   .main-container {
     padding: 3rem 0;
