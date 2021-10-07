@@ -1,4 +1,6 @@
 <mat-list-item *ngIf="!actionItem" class="main-container">
+  <img *ngIf="image" class="image" [src]="image" [alt]="title" />
+
   <div class="line" mat-line>
     <p *ngIf="title" class="title">{{ title }}</p>
   </div>
@@ -16,6 +18,8 @@
 </mat-list-item>
 
 <mat-list-item class="main-container" mat-ripple *ngIf="actionItem" (click)="clickEvent.emit()">
+  <img *ngIf="image" class="image" [src]="image" [alt]="title" />
+
   <div class="line" mat-line>
     <p *ngIf="title" class="title">{{ title }}</p>
   </div>

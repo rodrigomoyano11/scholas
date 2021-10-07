@@ -14,6 +14,7 @@ export interface BadgeStatus {
 export class ListItemComponent {
   @Output() clickEvent = new EventEmitter()
   @Input() icon = 'add'
+  @Input() image!: string | null
   @Input() title!: string | null
   @Input() subtitle!: string | null
   @Input() disabled = false
