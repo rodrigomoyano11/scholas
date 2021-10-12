@@ -12,6 +12,8 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       { path: 'donate/:id', component: NewDonationComponent },
+      { path: 'donate/completed', component: NewDonationComponent },
+
       { path: 'certificate/:id', component: CertificateComponent },
       { path: 'settings', component: DonationAmountsSettingsComponent },
 
