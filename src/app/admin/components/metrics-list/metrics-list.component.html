@@ -1,0 +1,52 @@
+<!-- Other -->
+<mat-table [dataSource]="dataSource" multiTemplateDataRows>
+  <ng-container matColumnDef="{{ column }}" *ngFor="let column of columnsToDisplay">
+    <!-- Headers -->
+    <mat-header-cell *matHeaderCellDef class="header">
+      <span class="header__content">
+        {{ columnNames[column] }}
+      </span>
+    </mat-header-cell>
+
+    <!-- Content data -->
+    <mat-cell *matCellDef="let element" class="data">
+      <div class="data__content">
+        <span class="title">
+          {{
+            column === 'totalAmount' ? '$ ' + (element.totalAmount | shortNumber) : element[column]
+          }}
+        </span>
+        <span class="subtitle">
+          {{ column === 'fullName' ? element.locality + ' - ' + element.province : undefined }}
+        </span>
+        <mat-icon class="icon" *ngIf="column === 'action'">expand_more</mat-icon>
+      </div>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Expandable Content -->
+  <ng-container matColumnDef="expandedDetail">
+    <mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+      <div
+        class="expandable-content__item"
+        [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'"
+      >
+        {{ element.fullName }}
+      </div>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Content -->
+  <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+  <mat-row
+    matRipple
+    *matRowDef="let element; columns: columnsToDisplay"
+    class="data__container"
+    [class.example-expanded-row]="expandedElement === element"
+    (click)="expandedElement = expandedElement === element ? null : element"
+  ></mat-row>
+  <mat-row
+    *matRowDef="let row; columns: ['expandedDetail']"
+    class="expandable-content__container"
+  ></mat-row>
+</mat-table>

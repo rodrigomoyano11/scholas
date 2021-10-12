@@ -33,21 +33,9 @@
 
     <app-list-alert
       description="Hasta el momento, no se han realizado donaciones"
-      [alertCondition]="donations.length === 0"
+      [alertCondition]="false"
     >
-      <ng-container *ngFor="let donation of donations; index as i">
-        <app-list-item
-          [isExpandable]="true"
-          [title]="donation.projectName"
-          [subtitle]="
-            (donation.createdDate | date: 'MM/dd/yyyy') +
-            ' - ' +
-            (donation.amount | currency: 'ARS')
-          "
-          icon="expand_more"
-          [actionItem]="true"
-        ></app-list-item>
-      </ng-container>
+      <app-metrics-list></app-metrics-list>
       <mat-paginator></mat-paginator>
     </app-list-alert>
   </div>
@@ -60,6 +48,6 @@
 <ng-template #isMobile>
   <app-alert-message
     title="No se puede acceder"
-    description="Esta página es accesible solo en una computadora o un dispositivo con una pantalla más grande"
+    description="Esta página es accesible solo desde una computadora o un dispositivo con una pantalla más grande"
   ></app-alert-message>
 </ng-template>

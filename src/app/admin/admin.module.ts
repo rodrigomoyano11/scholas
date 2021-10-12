@@ -22,8 +22,9 @@ import { ProjectMetricsComponent } from './containers/project-metrics/project-me
 import { ChartsComponent } from './containers/charts/charts.component'
 import { MetricsNumbersComponent } from './components/metrics-numbers/metrics-numbers.component'
 import { MatPaginatorModule } from '@angular/material/paginator'
+import { MatTableModule } from '@angular/material/table'
 import { MetricsListComponent } from './components/metrics-list/metrics-list.component'
-import { MetricsListItemComponent } from './components/metrics-list-item/metrics-list-item.component'
+import { MatRippleModule } from '@angular/material/core'
 
 @NgModule({
   declarations: [
@@ -33,7 +34,6 @@ import { MetricsListItemComponent } from './components/metrics-list-item/metrics
     CreateProjectFormComponent,
     HomeComponent,
     MetricsListComponent,
-    MetricsListItemComponent,
     MetricsNumbersComponent,
     MetricsProjectListComponent,
     ProjectMetricsComponent,
@@ -49,6 +49,8 @@ import { MetricsListItemComponent } from './components/metrics-list-item/metrics
     MatInputModule,
     MatListModule,
     MatMenuModule,
+    MatRippleModule,
+    MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
     MatTooltipModule,
