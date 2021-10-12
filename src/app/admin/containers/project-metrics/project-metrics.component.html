@@ -1,12 +1,65 @@
 <app-modal-container *ngIf="projectData; else loading">
-  <app-toolbar
-    [title]="projectData.name"
-    [backButton]="backButtonAction"
-    [fullWidth]="true"
-    [titleAlignCenter]="true"
-  ></app-toolbar>
+  <div class="desktop-content" *ngIf="(layout.isDesktop$ | async) === true; else isMobile">
+    <app-toolbar
+      [title]="projectData.name"
+      [backButton]="backButtonAction"
+      [fullWidth]="true"
+      [titleAlignCenter]="true"
+    ></app-toolbar>
+
+    <div class="metrics-number-container">
+      <app-metrics-numbers
+        [value]="98"
+        description="Cantidad de donantes"
+        type="number"
+      ></app-metrics-numbers>
+      <app-metrics-numbers
+        [value]="98605045655"
+        description="Dinero recaudado"
+        type="currency"
+      ></app-metrics-numbers>
+      <app-metrics-numbers
+        [value]="9845464"
+        description="Dinero restante"
+        type="currency"
+        color="red"
+      ></app-metrics-numbers>
+    </div>
+
+    <!-- (click)="donateToProject(projectData.id)" -->
+    <button class="header-button" type="button" [color]="'primary'" mat-stroked-button>
+      Ver gráficos
+    </button>
+
+    <app-list-alert
+      description="Hasta el momento, no se han realizado donaciones"
+      [alertCondition]="donations.length === 0"
+    >
+      <ng-container *ngFor="let donation of donations; index as i">
+        <app-list-item
+          [isExpandable]="true"
+          [title]="donation.projectName"
+          [subtitle]="
+            (donation.createdDate | date: 'MM/dd/yyyy') +
+            ' - ' +
+            (donation.amount | currency: 'ARS')
+          "
+          icon="expand_more"
+          [actionItem]="true"
+        ></app-list-item>
+      </ng-container>
+      <mat-paginator></mat-paginator>
+    </app-list-alert>
+  </div>
 </app-modal-container>
 
 <ng-template #loading>
   <app-spinner></app-spinner>
+</ng-template>
+
+<ng-template #isMobile>
+  <app-alert-message
+    title="No se puede acceder"
+    description="Esta página es accesible solo en una computadora o un dispositivo con una pantalla más grande"
+  ></app-alert-message>
 </ng-template>

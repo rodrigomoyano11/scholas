@@ -20,32 +20,40 @@ import { UpdateProjectFormComponent } from './containers/update-project-form/upd
 import { MetricsProjectListComponent } from './containers/metrics-project-list/metrics-project-list.component'
 import { ProjectMetricsComponent } from './containers/project-metrics/project-metrics.component'
 import { ChartsComponent } from './containers/charts/charts.component'
+import { MetricsNumbersComponent } from './components/metrics-numbers/metrics-numbers.component'
+import { MatPaginatorModule } from '@angular/material/paginator'
+import { MetricsListComponent } from './components/metrics-list/metrics-list.component'
+import { MetricsListItemComponent } from './components/metrics-list-item/metrics-list-item.component'
 
 @NgModule({
   declarations: [
-    HomeComponent,
     AdminsComponent,
-    ProjectsComponent,
+    ChartsComponent,
     CreateAdminComponent,
     CreateProjectFormComponent,
-    UpdateProjectFormComponent,
+    HomeComponent,
+    MetricsListComponent,
+    MetricsListItemComponent,
+    MetricsNumbersComponent,
     MetricsProjectListComponent,
     ProjectMetricsComponent,
-    ChartsComponent,
+    ProjectsComponent,
+    UpdateProjectFormComponent,
   ],
   imports: [
-    CommonModule,
     AdminRoutingModule,
-    SharedModule,
-    ReactiveFormsModule,
+    CommonModule,
     MatButtonModule,
+    MatCardModule,
     MatIconModule,
     MatInputModule,
     MatListModule,
-    MatCardModule,
-    MatTooltipModule,
     MatMenuModule,
+    MatPaginatorModule,
     MatSelectModule,
+    MatTooltipModule,
+    ReactiveFormsModule,
+    SharedModule,
   ],
 })
 export class AdminModule {}

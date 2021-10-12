@@ -1,0 +1,7 @@
+<div class="main-container">
+  <p [ngClass]="['number', 'mat-h1', color]">
+    {{ type === 'number' ? (value | shortNumber) : '$ ' + (value | shortNumber) }}
+  </p>
+
+  <p class="description mat-body-2">{{ description }}</p>
+</div>
