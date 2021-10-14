@@ -1,50 +1,20 @@
 import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component } from '@angular/core'
+import {
+  DonationsService,
+  DonationTest,
+} from 'src/app/donation/services/donations/donations.service'
 
 interface DonorData {
   fullName: string
   province: string
   locality: string
+  email: string
+  number: string
   donationsQuantity: number
   totalAmount: number
+  donations: DonationTest[]
 }
-const ELEMENT_DATA: DonorData[] = [
-  {
-    fullName: 'Rodrigo Moyano',
-    province: 'San Juan',
-    locality: 'Capital',
-    donationsQuantity: 5,
-    totalAmount: 730,
-  },
-  {
-    fullName: 'Juan José',
-    province: 'San Juan',
-    locality: 'Capital',
-    donationsQuantity: 234,
-    totalAmount: 4540,
-  },
-  {
-    fullName: 'Francisco González',
-    province: 'San Juan',
-    locality: 'Capital',
-    donationsQuantity: 4,
-    totalAmount: 980,
-  },
-  {
-    fullName: 'Macarena Pérez',
-    province: 'San Juan',
-    locality: 'Capital',
-    donationsQuantity: 53,
-    totalAmount: 430,
-  },
-  {
-    fullName: 'Sherlock Holmes',
-    province: 'San Juan',
-    locality: 'Capital',
-    donationsQuantity: 44,
-    totalAmount: 7530,
-  },
-]
 
 @Component({
   selector: 'app-metrics-list',
@@ -66,7 +36,58 @@ export class MetricsListComponent {
     action: ' ',
   }
 
-  dataSource = ELEMENT_DATA
+  dataSource: DonorData[] = [
+    {
+      fullName: 'Rodrigo Moyano',
+      province: 'San Juan',
+      locality: 'Capital',
+      email: 'email@email.com',
+      number: '265 587 4332',
+      donationsQuantity: 5,
+      totalAmount: 730,
+      donations: this.donations.getDonations(),
+    },
+    {
+      fullName: 'Juan José',
+      province: 'San Juan',
+      locality: 'Capital',
+      email: 'email@email.com',
+      number: '265 587 4332',
+      donationsQuantity: 234,
+      totalAmount: 4540,
+      donations: this.donations.getDonations(),
+    },
+    {
+      fullName: 'Francisco González',
+      province: 'San Juan',
+      locality: 'Capital',
+      email: 'email@email.com',
+      number: '265 587 4332',
+      donationsQuantity: 4,
+      totalAmount: 980,
+      donations: this.donations.getDonations(),
+    },
+    {
+      fullName: 'Macarena Pérez',
+      province: 'San Juan',
+      locality: 'Capital',
+      email: 'email@email.com',
+      number: '265 587 4332',
+      donationsQuantity: 53,
+      totalAmount: 430,
+      donations: this.donations.getDonations(),
+    },
+    {
+      fullName: 'Sherlock Holmes',
+      province: 'San Juan',
+      locality: 'Capital',
+      email: 'email@email.com',
+      number: '265 587 4332',
+      donationsQuantity: 44,
+      totalAmount: 7530,
+      donations: this.donations.getDonations(),
+    },
+  ]
   columnsToDisplay: ['fullName', 'donationsQuantity', 'totalAmount', 'action'] = [
     'fullName',
     'donationsQuantity',
@@ -74,4 +95,6 @@ export class MetricsListComponent {
     'action',
   ]
   expandedElement: DonorData | null = null
+
+  constructor(private donations: DonationsService) {}
 }
