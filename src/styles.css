@@ -1,6 +1,9 @@
 /* Angular Material Theme */
 @import url('./styles/theme.css');
 
+/* Angular Material Overlay */
+@import '~@angular/cdk/overlay-prebuilt.css';
+
 /* Forms */
 @import url('./styles/forms.css');
 

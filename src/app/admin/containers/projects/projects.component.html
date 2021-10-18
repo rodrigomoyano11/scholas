@@ -1,20 +1,22 @@
 <app-modal-container>
   <app-toolbar [title]="'Proyectos'" [buttons]="toolbarButtons">
-    <button type="button" mat-menu-item (click)="getProjects('all')">
-      <p>Todos los proyectos</p>
-    </button>
-    <mat-divider></mat-divider>
+    <div menu>
+      <button type="button" mat-menu-item (click)="getProjects('all')">
+        <p>Todos los proyectos</p>
+      </button>
+      <mat-divider></mat-divider>
 
-    <button type="button" mat-menu-item (click)="getProjects('finished')">
-      Proyectos finalizados
-    </button>
-    <button type="button" mat-menu-item (click)="getProjects('inProgress')">
-      Proyectos en curso
-    </button>
-    <button type="button" mat-menu-item (click)="getProjects('public')">Proyectos en alta</button>
-    <button type="button" mat-menu-item (click)="getProjects('private')">
-      Proyectos dados de baja
-    </button>
+      <button type="button" mat-menu-item (click)="getProjects('finished')">
+        Proyectos finalizados
+      </button>
+      <button type="button" mat-menu-item (click)="getProjects('inProgress')">
+        Proyectos en curso
+      </button>
+      <button type="button" mat-menu-item (click)="getProjects('public')">Proyectos en alta</button>
+      <button type="button" mat-menu-item (click)="getProjects('private')">
+        Proyectos dados de baja
+      </button>
+    </div>
   </app-toolbar>
 
   <app-list-alert

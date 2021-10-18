@@ -10,7 +10,7 @@ interface ButtonData {
   label: string
   icon: string | null
   action: {
-    type: 'button' | 'menu'
+    type: 'button' | 'overlay' | 'menu'
     click: () => unknown
   }
 }
@@ -29,6 +29,8 @@ export class ToolbarComponent {
   @Input() buttons: ToolbarButtons = []
   @Input() backButton!: BackButton
   @Input() withMargin = true
+
+  overlayIsOpen = false
 
   constructor(public layout: LayoutService) {}
 }

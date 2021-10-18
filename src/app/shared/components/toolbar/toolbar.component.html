@@ -85,14 +85,10 @@
           <mat-icon fontSet="material-icons-outlined" *ngIf="item.icon">{{ item.icon }}</mat-icon>
         </button>
 
-        <!-- Button quaternary -->
+        <!-- Button Quaternary -->
         <button
           class="button--quaternary"
-          *ngIf="
-            (layout.isDesktop$ | async) === true &&
-            item.action.type === 'button' &&
-            section.style === 'quaternary'
-          "
+          *ngIf="item.action.type === 'button' && section.style === 'quaternary'"
           mat-button
           [matTooltip]="item.label"
           (click)="item.action.click()"
@@ -101,17 +97,55 @@
           <span class="button__label">{{ item.label.toUpperCase() }}</span>
         </button>
 
-        <!-- Menu -->
+        <!-- Overlay -->
+        <ng-container *ngIf="item.action.type === 'overlay'">
+          <button
+            class="button--quaternary"
+            mat-button
+            [matTooltip]="item.label"
+            (click)="overlayIsOpen = !overlayIsOpen"
+            cdkOverlayOrigin
+            #trigger="cdkOverlayOrigin"
+          >
+            <mat-icon fontSet="material-icons-outlined" *ngIf="item.icon">{{
+              overlayIsOpen ? 'close' : item.icon
+            }}</mat-icon>
+            <span class="button__label">
+              {{ overlayIsOpen ? 'Cerrar' : item.label.toUpperCase() }}
+            </span>
+          </button>
+
+          <ng-template
+            cdkConnectedOverlay
+            [cdkConnectedOverlayOrigin]="trigger"
+            [cdkConnectedOverlayOpen]="overlayIsOpen"
+          >
+            <ng-content select="[overlay]"></ng-content>
+          </ng-template>
+        </ng-container>
+
+        <!-- Menu  -->
         <button
           type="button"
-          *ngIf="item.action.type === 'menu'"
+          *ngIf="item.action.type === 'menu' && section.style !== 'quaternary'"
           class="button--primary"
           mat-icon-button
           [matTooltip]="item.label"
           [matMenuTriggerFor]="buttonMenu"
-          (click)="item.action.click()"
         >
           <mat-icon fontSet="material-icons-outlined" *ngIf="item.icon">{{ item.icon }}</mat-icon>
+        </button>
+
+        <!-- Menu Quarternary -->
+        <button
+          class="button--quaternary"
+          *ngIf="item.action.type === 'menu' && section.style === 'quaternary'"
+          mat-button
+          [matTooltip]="item.label"
+          [matMenuTriggerFor]="buttonMenu"
+        >
+          <mat-icon fontSet="material-icons-outlined" *ngIf="item.icon">{{ item.icon }}</mat-icon>
+          <span class="button__label">{{ item.label.toUpperCase() }}</span>
         </button>
       </ng-container>
     </div>
@@ -119,5 +153,5 @@
 </div>
 
 <mat-menu #buttonMenu="matMenu" class="menu">
-  <ng-content></ng-content>
+  <ng-content select="[menu]"></ng-content>
 </mat-menu>
