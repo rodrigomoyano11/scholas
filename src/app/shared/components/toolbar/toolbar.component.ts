@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core'
 import { LayoutService } from '../../services/layout/layout.service'
 
 export type ToolbarButtons = {
-  style: 'primary' | 'secondary' | 'tertiary'
+  style: 'primary' | 'secondary' | 'tertiary' | 'quaternary'
   data: ButtonData[]
 }[]
 

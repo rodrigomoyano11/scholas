@@ -66,6 +66,10 @@
   color: #fff;
 }
 
+.button--quaternary {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .button__label {
   align-self: center;
   margin-left: 0.5rem;
