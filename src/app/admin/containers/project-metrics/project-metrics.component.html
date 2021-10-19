@@ -34,6 +34,43 @@
       <ng-container overlay>
         <app-filters></app-filters>
       </ng-container>
+      <ng-container menu>
+        <button type="button" mat-menu-item>
+          <mat-icon fontSet="material-icons-outlined">sort_by_alpha</mat-icon>
+          Orden alfábetico
+        </button>
+        <mat-divider></mat-divider>
+
+        <button type="button" mat-menu-item>
+          <mat-icon fontSet="material-icons-outlined">numbers</mat-icon>
+          Mayor cantidad de donaciones
+        </button>
+        <button type="button" mat-menu-item>
+          <mat-icon fontSet="material-icons-outlined">numbers</mat-icon>
+          Menor cantidad de donaciones
+        </button>
+        <mat-divider></mat-divider>
+
+        <button type="button" mat-menu-item>
+          <mat-icon fontSet="material-icons-outlined">schedule</mat-icon>
+          De reciente a antigüo
+        </button>
+        <button type="button" mat-menu-item>
+          <mat-icon fontSet="material-icons-outlined">schedule</mat-icon>
+          De antigüo a reciente
+        </button>
+        <mat-divider></mat-divider>
+
+        <button type="button" mat-menu-item>
+          <mat-icon fontSet="material-icons-outlined">paid</mat-icon>
+          Mayor importe donado
+        </button>
+        <button type="button" mat-menu-item>
+          <mat-icon fontSet="material-icons-outlined">paid</mat-icon>
+          Menor importe donado
+        </button>
+        <mat-divider></mat-divider>
+      </ng-container>
     </app-toolbar>
 
     <app-list-alert
