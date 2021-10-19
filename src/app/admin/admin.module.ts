@@ -8,6 +8,7 @@ import { FiltersComponent } from './components/filters/filters.component'
 import { HomeComponent } from './containers/home/home.component'
 import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card'
+import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
 import { MatListModule } from '@angular/material/list'
@@ -47,6 +48,7 @@ import { UpdateProjectFormComponent } from './containers/update-project-form/upd
     CommonModule,
     MatButtonModule,
     MatCardModule,
+    MatCheckboxModule,
     MatIconModule,
     MatInputModule,
     MatListModule,
