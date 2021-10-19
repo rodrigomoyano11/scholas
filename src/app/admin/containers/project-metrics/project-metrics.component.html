@@ -26,10 +26,15 @@
       ></app-metrics-numbers>
     </div>
 
-    <!-- (click)="donateToProject(projectData.id)" -->
     <button class="header-button" type="button" [color]="'primary'" mat-stroked-button>
       Ver gráficos
     </button>
+
+    <app-toolbar title="Donaciones" [buttons]="tableActions" [withMargin]="false">
+      <ng-container overlay>
+        <app-filters></app-filters>
+      </ng-container>
+    </app-toolbar>
 
     <app-list-alert
       description="Hasta el momento, no se han realizado donaciones"

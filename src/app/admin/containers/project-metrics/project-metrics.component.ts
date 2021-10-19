@@ -11,23 +11,41 @@ import { ProjectsService } from 'src/app/shared/services/projects/projects.servi
   styleUrls: ['./project-metrics.component.css'],
 })
 export class ProjectMetricsComponent implements OnInit {
-  toolbarButtons: ToolbarButtons = [
+  backButtonAction = (): void => void this.router.navigate(['/admin/metrics'])
+
+  tableActions: ToolbarButtons = [
     {
-      style: 'secondary',
+      style: 'quaternary',
       data: [
         {
-          label: 'Donar a un proyecto',
-          icon: 'add',
+          label: 'Filtrar',
+          icon: 'filter_list',
+          action: {
+            type: 'overlay',
+            click: (): void => console.log('Works'),
+          },
+        },
+        {
+          label: 'Ordenar',
+          icon: 'sort',
+          action: {
+            type: 'menu',
+            click: (): void => console.log('Works'),
+          },
+        },
+        {
+          label: 'Descargar',
+          icon: 'file_download',
           action: {
             type: 'button',
-            click: (): void => void this.router.navigate(['/admin/projects/update']),
+            click: (): void => console.log('Works'),
           },
         },
       ],
     },
   ]
 
-  backButtonAction = (): void => void this.router.navigate(['/admin/metrics'])
+  filtersIsOpen = false
 
   selectedProjectId: string | null = this.route.snapshot.paramMap.get('id')
   projectData!: CreateProjectResponse
