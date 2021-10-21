@@ -1,0 +1,80 @@
+<div class="form__container mat-elevation-z4">
+  <form class="form" (ngSubmit)="submitExtraData()" [formGroup]="form">
+    <!-- Province -->
+    <div class="field">
+      <p class="field__heading">Provincia</p>
+      <mat-form-field class="form__field" appearance="outline">
+        <mat-select
+          placeholder="Seleccioná una provincia"
+          autocomplete="address-level1"
+          formControlName="province"
+        >
+          <mat-option *ngFor="let province of provinces" [value]="province">
+            {{ province }}
+          </mat-option>
+        </mat-select>
+        <mat-error>{{ getErrors('province') }}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Age Range -->
+    <div class="field">
+      <p class="field__heading">Edad</p>
+      <div class="form__field-group">
+        <mat-form-field class="form__field" appearance="outline">
+          <input matInput placeholder="Edad mínima" type="text" formControlName="age1" />
+          <mat-error>{{ getErrors('age1') }}</mat-error>
+        </mat-form-field>
+        <span>-</span>
+        <mat-form-field class="form__field" appearance="outline">
+          <input matInput placeholder="Edad máxima" type="text" formControlName="age2" />
+          <mat-error>{{ getErrors('age2') }}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Amount Range -->
+    <div class="field">
+      <p class="field__heading">Importe donado</p>
+      <div class="form__field-group">
+        <mat-form-field class="form__field" appearance="outline">
+          <input
+            matInput
+            placeholder="Importe mínimo"
+            type="text"
+            formControlName="donatedAmount1"
+          />
+          <mat-error>{{ getErrors('donatedAmount1') }}</mat-error>
+        </mat-form-field>
+        <span>-</span>
+        <mat-form-field class="form__field" appearance="outline">
+          <input
+            matInput
+            placeholder="Importe máximo"
+            type="text"
+            formControlName="donatedAmount2"
+          />
+          <mat-error>{{ getErrors('donatedAmount2') }}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- PaymentType -->
+    <div class="field--checkbox">
+      <mat-checkbox formControlName="paymentType" [color]="'primary'">
+        Mostrar solo los donantes con pagos mensuales
+      </mat-checkbox>
+    </div>
+
+    <!-- Submit -->
+    <button
+      type="submit"
+      class="form__submit"
+      [color]="'primary'"
+      mat-flat-button
+      [disabled]="!form.valid"
+    >
+      Aplicar filtros
+    </button>
+  </form>
+</div>

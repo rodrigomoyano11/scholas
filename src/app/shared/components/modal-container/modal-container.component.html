@@ -1,0 +1,11 @@
+<div
+  [class]="[
+    'container',
+    'container--' + (size ?? ((layout.isDesktop$ | async) ? 'large' : 'small')),
+    withPadding && 'with-padding'
+  ]"
+  [style.backgroundColor]="backgroundColor"
+  [style.padding]="padding"
+>
+  <ng-content></ng-content>
+</div>

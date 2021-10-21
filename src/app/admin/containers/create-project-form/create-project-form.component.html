@@ -1,0 +1,126 @@
+<app-modal-container class="form-container" [withPadding]="false">
+  <div class="form-container__title-container">
+    <span class="form-container__title--secondary mat-title">Crear proyecto</span>
+  </div>
+  <div class="form-container__content">
+    <div class="form__container">
+      <form class="form" (ngSubmit)="submitProjectData()" [formGroup]="form">
+        <!-- Name -->
+        <mat-form-field class="form__field" appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input
+            matInput
+            placeholder="Ingresá el nombre del proyecto"
+            type="text"
+            formControlName="name"
+          />
+          <mat-error>{{ getErrors('name') }}</mat-error>
+        </mat-form-field>
+
+        <!-- Province -->
+        <mat-form-field class="form__field" appearance="outline">
+          <mat-label>Provincia</mat-label>
+          <mat-select
+            formControlName="province"
+            (selectionChange)="getLocalitiesByProvince($event.value)"
+          >
+            <mat-option *ngFor="let province of provinces" [value]="province">
+              {{ province }}
+            </mat-option>
+          </mat-select>
+          <mat-error>{{ getErrors('province') }}</mat-error>
+        </mat-form-field>
+
+        <!-- Locality -->
+        <mat-form-field class="form__field" appearance="outline">
+          <mat-label>Localidad</mat-label>
+          <mat-select formControlName="locality">
+            <mat-option *ngFor="let locality of localities" [value]="locality">
+              {{ locality }}
+            </mat-option>
+          </mat-select>
+          <mat-error>{{ getErrors('locality') }}</mat-error>
+        </mat-form-field>
+
+        <!-- Description -->
+        <mat-form-field class="form__field" appearance="outline">
+          <mat-label>Información</mat-label>
+          <textarea
+            class="form__text-area"
+            rows="3"
+            matInput
+            placeholder="Ingresá la descripción del proyecto"
+            formControlName="description"
+          ></textarea>
+          <mat-error>{{ getErrors('description') }}</mat-error>
+        </mat-form-field>
+
+        <!-- TargetAmount -->
+        <mat-form-field class="form__field" appearance="outline">
+          <mat-label>Monto objetivo</mat-label>
+          <input
+            matInput
+            placeholder="Ingresá el monto de dinero objetivo a recaudar"
+            formControlName="targetAmount"
+          />
+          <mat-hint>
+            {{
+              form.controls['targetAmount'].value !== ''
+                ? 'El monto objetivo sería de ' +
+                  (form.controls['targetAmount'].value | currency: 'ARS')
+                : ''
+            }}
+          </mat-hint>
+          <mat-error>{{ getErrors('targetAmount') }}</mat-error>
+        </mat-form-field>
+
+        <div class="img-field__container">
+          <!-- CoverPhoto -->
+          <p class="img-field__heading">Foto de Portada</p>
+          <p class="img-field__description">Imagen que aparece al principio del proyecto</p>
+          <app-upload-image [maxUploads]="1" (loaded)="setCoverPhoto($event)"></app-upload-image>
+
+          <!-- Photos -->
+          <p class="img-field__heading">Fotos</p>
+          <p class="img-field__description">Imágenes aparecen en la galeria del proyecto</p>
+          <app-upload-image [maxUploads]="10" (loaded)="setPhotos($event)"></app-upload-image>
+        </div>
+
+        <!-- Video -->
+        <mat-form-field class="form__field" appearance="outline">
+          <mat-label>Video</mat-label>
+          <input
+            matInput
+            placeholder="Ingresá el link del video de YouTube"
+            formControlName="video"
+          />
+          <mat-error>{{ getErrors('video') }}</mat-error>
+        </mat-form-field>
+
+        <div class="form__submit-group">
+          <!-- Cancel -->
+          <button
+            type="button"
+            class="form__cancel"
+            [color]="'primary'"
+            mat-stroked-button
+            [routerLink]="'/admin/projects'"
+          >
+            Cancelar
+          </button>
+
+          <!-- Submit -->
+          <button
+            type="submit"
+            class="form__submit"
+            [color]="'primary'"
+            mat-flat-button
+            [disabled]="!form.valid"
+          >
+            Crear proyecto
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</app-modal-container>

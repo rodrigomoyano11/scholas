@@ -1,5 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+/* Angular Material Theme */
+@import url('./styles/theme.css');
 
+/* Angular Material Overlay */
+@import '~@angular/cdk/overlay-prebuilt.css';
+
+/* Forms */
+@import url('./styles/forms.css');
+
+/* General */
 html,
 body {
   height: 100%;
@@ -9,4 +17,15 @@ body {
   margin: 0;
 
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Angular Material Corrections */
+.cdk-overlay-container {
+  z-index: 10000;
 }

@@ -1,0 +1,11 @@
+<a class="container" [routerLink]="'/'">
+  <ng-container [ngSwitch]="type">
+    <svg *ngSwitchCase="'horizontal'" class="logo" viewBox="0 0 322.24 170.598" [attr.fill]="color">
+      <use xlink:href="assets/vectors/horizontal-logo.svg#horizontal-logo"></use>
+    </svg>
+
+    <svg *ngSwitchCase="'vertical'" class="logo" viewBox="0 0 253.316 246.446" [attr.fill]="color">
+      <use xlink:href="assets/vectors/vertical-logo.svg#vertical-logo"></use>
+    </svg>
+  </ng-container>
+</a>

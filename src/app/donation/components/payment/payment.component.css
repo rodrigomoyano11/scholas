@@ -1,0 +1,29 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 15rem;
+  height: 100%;
+  gap: 1rem;
+
+  padding: 2rem 0;
+}
+
+.caption {
+  margin: 0;
+
+  text-align: center;
+}
+
+@media screen and (min-width: 960px) {
+  .main-container {
+    padding: 3rem 0;
+  }
+}

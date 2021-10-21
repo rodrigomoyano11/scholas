@@ -1,0 +1,155 @@
+/* General */
+.table {
+  width: 100%;
+}
+
+/* Header */
+.header__content {
+  flex: 1;
+
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.header:nth-of-type(1) > *,
+.data:nth-of-type(1) > * {
+  text-align: left;
+}
+
+/* Data */
+
+.data {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+
+  text-align: center;
+}
+
+.header:first-of-type,
+.data:first-of-type {
+  flex: 0 0 40%;
+}
+
+.header:last-of-type,
+.data:last-of-type {
+  flex: 0 0 10%;
+}
+
+/* Content */
+.data__content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.data:nth-child(1) .title {
+  margin-bottom: 0.25rem;
+
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.data:nth-child(1) .subtitle {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.icon {
+  align-self: flex-end;
+
+  color: #009993;
+}
+
+/* Others */
+
+.expandable-content__container {
+  min-height: initial;
+}
+
+.data__container {
+  border-bottom-width: 0;
+}
+
+.expandable-content__item {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+}
+
+.expandable-content__wrapper {
+  gap: 1rem;
+
+  display: flex;
+  width: 100%;
+  padding-top: 1rem;
+  padding-bottom: 2.5rem;
+}
+
+/* Expandable content */
+.contact {
+  display: flex;
+  align-content: center;
+
+  gap: 1rem;
+
+  min-width: 40%;
+}
+
+.contact__profile-photo {
+  width: 5rem;
+  height: 5rem;
+
+  border-radius: 50%;
+}
+
+.contact__caption {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact__title,
+.donations__title {
+  margin-bottom: 0.75rem;
+
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.contact__content {
+  margin-bottom: 0.25rem;
+
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.donations__main-container {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+}
+
+.donations__container {
+  display: flex;
+
+  flex-direction: column;
+  gap: 0.25rem;
+
+  width: 100%;
+  height: 10rem;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+.donations__item {
+  width: 100%;
+  padding: 0.75rem 0;
+}
+
+.donations__content {
+  margin: 0;
+
+  font-size: 16px;
+  font-weight: 500;
+}

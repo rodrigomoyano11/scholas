@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="info">
+    <p class="title">
+      {{
+        currentAmount < 1000
+          ? (currentAmount | currency: 'ARS')
+          : '$ ' + (currentAmount | shortNumber)
+      }}
+    </p>
+    <p class="subtitle" *ngIf="type === 'desktop'">Monto Recaudado</p>
+  </div>
+  <mat-progress-bar
+    class="progress-bar"
+    mode="determinate"
+    [value]="(currentAmount / targetAmount) * 100"
+  ></mat-progress-bar>
+  <div class="info">
+    <p class="title">
+      {{
+        targetAmount < 1000 ? (targetAmount | currency: 'ARS') : '$ ' + (targetAmount | shortNumber)
+      }}
+    </p>
+    <p class="subtitle" *ngIf="type === 'desktop'">Monto Objetivo</p>
+  </div>
+</div>

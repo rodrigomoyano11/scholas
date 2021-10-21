@@ -1,0 +1,23 @@
+:host() {
+  max-width: 14rem;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.user-profile__title {
+  margin: 0;
+  overflow: hidden;
+
+  color: #fff;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-menu__button {
+  color: #fff;
+}

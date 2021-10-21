@@ -1,0 +1,27 @@
+<ng-container [ngSwitch]="method">
+  <button
+    type="button"
+    *ngSwitchCase="'google'"
+    class="button button--google"
+    mat-stroked-button
+    (click)="clicked.emit()"
+  >
+    <mat-icon fontSet="material-icons-outlined" class="button__icon" svgIcon="google"></mat-icon>
+    <span class="button__text">Google</span>
+  </button>
+
+  <button
+    type="button"
+    *ngSwitchCase="'facebook'"
+    class="button button--facebook"
+    mat-stroked-button
+    (click)="clicked.emit()"
+  >
+    <mat-icon
+      fontSet="material-icons-outlined"
+      class="button__icon button__icon--facebook"
+      svgIcon="facebook"
+    ></mat-icon>
+    <span class="button__text">Facebook</span>
+  </button>
+</ng-container>

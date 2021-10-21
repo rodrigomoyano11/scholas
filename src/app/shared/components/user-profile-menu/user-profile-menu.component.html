@@ -1,0 +1,34 @@
+<div class="container">
+  <p class="user-profile__title">Hola {{ userType }}</p>
+
+  <button type="button" mat-icon-button class="user-menu__button" [matMenuTriggerFor]="user">
+    <mat-icon fontSet="material-icons-outlined" class="user-menu__icon">expand_more</mat-icon>
+  </button>
+</div>
+
+<mat-menu #user="matMenu">
+  <button type="button" mat-menu-item [routerLink]="'/auth/account'">
+    <mat-icon fontSet="material-icons-outlined">account_circle</mat-icon>
+    Mi cuenta
+  </button>
+  <button type="button" mat-menu-item [matMenuTriggerFor]="management">
+    <!-- *ngIf="(auth.user$ | async)?.claims?.admin ?? false" -->
+    <mat-icon fontSet="material-icons-outlined">settings</mat-icon>
+    Configuración
+  </button>
+  <button type="button" mat-menu-item (click)="auth.logout()">
+    <mat-icon fontSet="material-icons-outlined">logout</mat-icon>
+    Cerrar sesión
+  </button>
+</mat-menu>
+
+<mat-menu #management="matMenu">
+  <button type="button" mat-menu-item [routerLink]="'/admin/admins'">
+    <mat-icon fontSet="material-icons-outlined">admin_panel_settings</mat-icon>
+    Administradores
+  </button>
+  <button type="button" mat-menu-item [routerLink]="'/donation/settings'">
+    <mat-icon fontSet="material-icons-outlined">paid_outline</mat-icon>
+    Montos de Donación
+  </button>
+</mat-menu>

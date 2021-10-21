@@ -1,0 +1,95 @@
+<app-modal-container *ngIf="projectData; else loading">
+  <div class="desktop-content" *ngIf="(layout.isDesktop$ | async) === true; else isMobile">
+    <app-toolbar
+      [title]="projectData.name"
+      [backButton]="backButtonAction"
+      [fullWidth]="true"
+      [titleAlignCenter]="true"
+    ></app-toolbar>
+
+    <div class="metrics-number-container">
+      <app-metrics-numbers
+        [value]="98"
+        description="Cantidad de donantes"
+        type="number"
+      ></app-metrics-numbers>
+      <app-metrics-numbers
+        [value]="98605045655"
+        description="Dinero recaudado"
+        type="currency"
+      ></app-metrics-numbers>
+      <app-metrics-numbers
+        [value]="9845464"
+        description="Dinero restante"
+        type="currency"
+        color="red"
+      ></app-metrics-numbers>
+    </div>
+
+    <button class="header-button" type="button" [color]="'primary'" mat-stroked-button>
+      Ver gráficos
+    </button>
+
+    <app-toolbar title="Donaciones" [buttons]="tableActions" [withMargin]="false">
+      <ng-container overlay>
+        <app-filters></app-filters>
+      </ng-container>
+      <ng-container menu>
+        <button type="button" mat-menu-item>
+          <mat-icon fontSet="material-icons-outlined">sort_by_alpha</mat-icon>
+          Orden alfábetico
+        </button>
+        <mat-divider></mat-divider>
+
+        <button type="button" mat-menu-item>
+          <mat-icon fontSet="material-icons-outlined">numbers</mat-icon>
+          Mayor cantidad de donaciones
+        </button>
+        <button type="button" mat-menu-item>
+          <mat-icon fontSet="material-icons-outlined">numbers</mat-icon>
+          Menor cantidad de donaciones
+        </button>
+        <mat-divider></mat-divider>
+
+        <button type="button" mat-menu-item>
+          <mat-icon fontSet="material-icons-outlined">schedule</mat-icon>
+          De reciente a antigüo
+        </button>
+        <button type="button" mat-menu-item>
+          <mat-icon fontSet="material-icons-outlined">schedule</mat-icon>
+          De antigüo a reciente
+        </button>
+        <mat-divider></mat-divider>
+
+        <button type="button" mat-menu-item>
+          <mat-icon fontSet="material-icons-outlined">paid</mat-icon>
+          Mayor importe donado
+        </button>
+        <button type="button" mat-menu-item>
+          <mat-icon fontSet="material-icons-outlined">paid</mat-icon>
+          Menor importe donado
+        </button>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </app-toolbar>
+
+    <app-list-alert
+      description="Hasta el momento, no se han realizado donaciones"
+      [alertCondition]="false"
+    >
+      <app-metrics-list></app-metrics-list>
+      <mat-paginator></mat-paginator>
+    </app-list-alert>
+  </div>
+</app-modal-container>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>
+
+<ng-template #isMobile>
+  <app-alert-message
+    title="No se puede acceder"
+    description="Esta página es accesible solo desde una computadora o un dispositivo con una pantalla más grande"
+  ></app-alert-message>
+</ng-template>

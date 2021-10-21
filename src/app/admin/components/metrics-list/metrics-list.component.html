@@ -1,0 +1,81 @@
+<!-- Other -->
+<mat-table [dataSource]="dataSource" multiTemplateDataRows>
+  <ng-container matColumnDef="{{ column }}" *ngFor="let column of columnsToDisplay">
+    <!-- Headers -->
+    <mat-header-cell *matHeaderCellDef class="header">
+      <span class="header__content">
+        {{ columnNames[column] }}
+      </span>
+    </mat-header-cell>
+
+    <!-- Content data -->
+    <mat-cell *matCellDef="let element" class="data">
+      <div class="data__content">
+        <span class="title">
+          {{
+            column === 'totalAmount' ? '$ ' + (element.totalAmount | shortNumber) : element[column]
+          }}
+        </span>
+        <span class="subtitle">
+          {{ column === 'fullName' ? element.locality + ' - ' + element.province : undefined }}
+        </span>
+        <mat-icon class="icon" *ngIf="column === 'action'">
+          {{ element === expandedElement ? 'expand_less' : 'expand_more' }}
+        </mat-icon>
+      </div>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Expandable Content -->
+  <ng-container matColumnDef="expandedDetail">
+    <mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+      <div
+        class="expandable-content__item"
+        [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'"
+      >
+        <div class="expandable-content__wrapper">
+          <div class="contact">
+            <img
+              class="contact__profile-photo"
+              [src]="'assets/vectors/profile-picture-default.svg'"
+              alt="Foto de Perfil"
+            />
+            <div class="contact__caption">
+              <span class="contact__title">Contacto</span>
+              <span class="contact__content">{{ element.email }}</span>
+              <span class="contact__content">{{ element.number }}</span>
+            </div>
+          </div>
+          <div class="donations__main-container">
+            <span class="donations__title">Donaciones</span>
+            <div class="donations__container">
+              <ng-container *ngFor="let donation of element.donations">
+                <mat-divider></mat-divider>
+                <span class="donations__item">
+                  <p class="donations__content">
+                    {{ donation.createdDate | date: 'MM/dd/yyyy' }} -
+                    {{ '$ ' + (donation.amount | shortNumber) }}
+                  </p>
+                </span>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Content -->
+  <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+  <mat-row
+    matRipple
+    *matRowDef="let element; columns: columnsToDisplay"
+    class="data__container"
+    [class.example-expanded-row]="expandedElement === element"
+    (click)="expandedElement = expandedElement === element ? null : element"
+  ></mat-row>
+  <mat-row
+    *matRowDef="let row; columns: ['expandedDetail']"
+    class="expandable-content__container"
+  ></mat-row>
+</mat-table>

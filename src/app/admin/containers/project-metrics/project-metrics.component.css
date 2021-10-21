@@ -1,0 +1,24 @@
+.spinner-container {
+  display: flex;
+  z-index: 1;
+  justify-content: center;
+}
+
+.desktop-content {
+  width: 100%;
+}
+
+.metrics-number-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+
+  margin: 1.5rem 0;
+}
+
+.header-button {
+  width: 100%;
+  margin-bottom: 4rem;
+
+  text-transform: uppercase;
+}

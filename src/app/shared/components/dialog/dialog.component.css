@@ -1,0 +1,41 @@
+:host {
+  height: max-content;
+}
+
+.dialog-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dialog-title__icon {
+  margin-bottom: 1rem;
+}
+
+.dialog-title__label {
+  margin: 0;
+
+  text-align: center;
+}
+
+.dialog-content {
+  display: flex;
+  justify-content: center;
+}
+
+.dialog-content__description {
+  max-width: 14rem;
+
+  text-align: center;
+}
+
+.dialog-actions {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.dialog-actions__button {
+  width: 100%;
+}

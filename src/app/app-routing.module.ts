@@ -5,29 +5,32 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    loadChildren: () =>
-      import('./landing-page/landing-page.module').then(
-        (m) => m.LandingPageModule
-      )
+    redirectTo: 'donor',
   },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule)
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
+    path: 'donor',
+    loadChildren: () => import('./donor/donor.module').then((m) => m.DonorModule),
+  },
+  {
+    path: 'donation',
+    loadChildren: () => import('./donation/donation.module').then((m) => m.DonationModule),
   },
   {
     path: 'admin',
-    loadChildren: () =>
-      import('./admin/admin.module').then((m) => m.AdminModule)
+    loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
   },
   {
     path: '**',
-    loadChildren: () =>
-      import('./shared/shared.module').then((m) => m.SharedModule)
-  }
+    loadChildren: () => import('./shared/shared.module').then((m) => m.SharedModule),
+  },
 ]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

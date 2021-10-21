@@ -1,1 +1,120 @@
-<p>register works!</p>
+<app-modal-container class="form-container" [size]="'small'">
+  <h1 class="form-container__title--primary">Registrate</h1>
+
+  <div class="social-buttons__container">
+    <p class="social-buttons__title">Usá una de tus redes sociales</p>
+    <div class="social-buttons__buttons">
+      <app-social-button [method]="'google'" (clicked)="register('google')"></app-social-button>
+      <app-social-button [method]="'facebook'" (clicked)="register('facebook')"></app-social-button>
+    </div>
+  </div>
+
+  <div class="form__container">
+    <p class="form__title">O usá tu correo electrónico</p>
+    <form class="form" (ngSubmit)="register('email')" [formGroup]="form">
+      <div class="form__field-group">
+        <!-- FirstName -->
+        <mat-form-field class="form__field" appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input
+            matInput
+            placeholder="Ingresá tu nombre"
+            type="text"
+            autocomplete="given-name"
+            formControlName="firstName"
+          />
+          <mat-error>{{ getErrors('firstName') }}</mat-error>
+        </mat-form-field>
+
+        <!-- LastName -->
+        <mat-form-field class="form__field" appearance="outline">
+          <mat-label>Apellido</mat-label>
+          <input
+            matInput
+            placeholder="Ingresá tu apellido"
+            type="text"
+            autocomplete="family-name"
+            formControlName="lastName"
+          />
+          <mat-error>{{ getErrors('lastName') }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Email -->
+      <mat-form-field class="form__field" appearance="outline">
+        <mat-label>Correo electrónico</mat-label>
+        <input
+          matInput
+          placeholder="Ingresá tu correo electrónico"
+          type="email"
+          autocomplete="email"
+          formControlName="email"
+        />
+        <mat-error>{{ getErrors('email') }}</mat-error>
+      </mat-form-field>
+
+      <!-- Password -->
+      <mat-form-field class="form__field" appearance="outline">
+        <mat-label>Contraseña</mat-label>
+        <input
+          matInput
+          placeholder="Ingresá tu contraseña"
+          [type]="hidePassword ? 'password' : 'text'"
+          autocomplete="new-password"
+          formControlName="password"
+        />
+        <button
+          type="button"
+          mat-icon-button
+          matSuffix
+          (click)="hidePassword = !hidePassword"
+          [attr.aria-pressed]="hidePassword"
+        >
+          <mat-icon class="form__field-icon" fontSet="material-icons-outlined">{{
+            hidePassword ? 'visibility' : 'visibility_off'
+          }}</mat-icon>
+        </button>
+        <mat-error>{{ getErrors('password') }}</mat-error>
+      </mat-form-field>
+
+      <!-- PasswordConfirm -->
+      <mat-form-field class="form__field" appearance="outline">
+        <mat-label>Repetir contraseña</mat-label>
+        <input
+          matInput
+          placeholder="Ingresá nuevamente tu contraseña"
+          [type]="'password'"
+          autocomplete="new-password"
+          formControlName="passwordConfirm"
+        />
+        <mat-error>{{ getErrors('passwordConfirm') }}</mat-error>
+      </mat-form-field>
+
+      <!-- Submit -->
+      <button
+        type="submit"
+        class="form__submit"
+        [color]="'primary'"
+        mat-flat-button
+        [disabled]="!form.valid"
+      >
+        Registrarse
+      </button>
+    </form>
+  </div>
+
+  <div class="extra-links__container">
+    <div class="extra-links__button-group">
+      <p class="extra-links__button-label">¿Ya tenés una cuenta?</p>
+      <button
+        class="extra-links__button"
+        type="button"
+        mat-button
+        [color]="'primary'"
+        [routerLink]="'/auth/login'"
+      >
+        Iniciá sesión aquí
+      </button>
+    </div>
+  </div>
+</app-modal-container>

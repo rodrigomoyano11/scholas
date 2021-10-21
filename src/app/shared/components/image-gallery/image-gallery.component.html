@@ -1,0 +1,15 @@
+<div class="container">
+  <ng-container *ngIf="(layout.isDesktop$ | async) === true; else mobile">
+    <carousel [images]="imagesConverted"></carousel>
+  </ng-container>
+</div>
+
+<ng-template #mobile>
+  <carousel
+    [images]="imagesConverted"
+    [objectFit]="'cover'"
+    [cellWidth]="'100%'"
+    [autoplay]="true"
+    [dots]="true"
+  ></carousel>
+</ng-template>

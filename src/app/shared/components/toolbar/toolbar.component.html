@@ -1,0 +1,162 @@
+<div [ngClass]="['container', fullWidth ? 'full-width' : '', withMargin ? 'with-margin' : '']">
+  <div
+    *ngIf="title || backButton"
+    [ngClass]="['title__container', titleAlignCenter ? 'title__container--center' : '']"
+  >
+    <button
+      type="button"
+      *ngIf="backButton"
+      class="button--primary"
+      mat-icon-button
+      [matTooltip]="'Volver'"
+      (click)="backButton()"
+    >
+      <mat-icon fontSet="material-icons-outlined">chevron_left</mat-icon>
+    </button>
+
+    <h1 *ngIf="title" [ngClass]="['title', titleAlignCenter ? 'title--center' : '']">
+      {{ title }}
+    </h1>
+
+    <div *ngIf="titleAlignCenter" class="title__spacing--center"></div>
+  </div>
+
+  <ng-container *ngFor="let section of buttons">
+    <div
+      [ngClass]="[
+        section.style === 'primary' || section.style === 'quaternary' ? 'no-dense' : 'dense'
+      ]"
+    >
+      <ng-container *ngFor="let item of section.data">
+        <!-- Button Primary -->
+        <button
+          type="button"
+          *ngIf="item.action.type === 'button' && section.style === 'primary'"
+          class="button--primary"
+          mat-icon-button
+          [matTooltip]="item.label"
+          (click)="item.action.click()"
+        >
+          <mat-icon fontSet="material-icons-outlined" *ngIf="item.icon">{{ item.icon }}</mat-icon>
+        </button>
+
+        <!-- Button Secondary - Mobile -->
+        <button
+          class="button--secondary"
+          *ngIf="
+            (layout.isDesktop$ | async) === false &&
+            item.action.type === 'button' &&
+            section.style === 'secondary'
+          "
+          mat-icon-button
+          color="primary"
+          [matTooltip]="item.label"
+          (click)="item.action.click()"
+        >
+          <mat-icon fontSet="material-icons-outlined" *ngIf="item.icon">{{ item.icon }}</mat-icon>
+        </button>
+
+        <!-- Button Secondary - Desktop -->
+        <button
+          class="button--secondary"
+          *ngIf="
+            (layout.isDesktop$ | async) === true &&
+            item.action.type === 'button' &&
+            section.style === 'secondary'
+          "
+          mat-button
+          color="primary"
+          [matTooltip]="item.label"
+          (click)="item.action.click()"
+        >
+          <mat-icon fontSet="material-icons-outlined" *ngIf="item.icon">{{ item.icon }}</mat-icon>
+          <span class="button__label">{{ item.label.toUpperCase() }}</span>
+        </button>
+
+        <!-- Button Tertiary -->
+        <button
+          class="button--secondary"
+          *ngIf="item.action.type === 'button' && section.style === 'tertiary'"
+          mat-icon-button
+          color="primary"
+          [matTooltip]="item.label"
+          (click)="item.action.click()"
+        >
+          <mat-icon fontSet="material-icons-outlined" *ngIf="item.icon">{{ item.icon }}</mat-icon>
+        </button>
+
+        <!-- Button Quaternary -->
+        <button
+          class="button--quaternary"
+          *ngIf="item.action.type === 'button' && section.style === 'quaternary'"
+          mat-button
+          [matTooltip]="item.label"
+          (click)="item.action.click()"
+        >
+          <mat-icon fontSet="material-icons-outlined" *ngIf="item.icon">{{ item.icon }}</mat-icon>
+          <span class="button__label">{{ item.label.toUpperCase() }}</span>
+        </button>
+
+        <!-- Overlay -->
+        <ng-container *ngIf="item.action.type === 'overlay'">
+          <button
+            class="button--quaternary"
+            mat-button
+            [matTooltip]="item.label"
+            (click)="overlayIsOpen = !overlayIsOpen"
+            cdkOverlayOrigin
+            #trigger="cdkOverlayOrigin"
+          >
+            <mat-icon fontSet="material-icons-outlined" *ngIf="item.icon">{{
+              overlayIsOpen ? 'close' : item.icon
+            }}</mat-icon>
+            <span class="button__label">
+              {{ overlayIsOpen ? 'Cerrar' : item.label.toUpperCase() }}
+            </span>
+          </button>
+
+          <ng-template
+            cdkConnectedOverlay
+            [cdkConnectedOverlayOrigin]="trigger"
+            [cdkConnectedOverlayOpen]="overlayIsOpen"
+            [cdkConnectedOverlayWidth]="400"
+            [cdkConnectedOverlayHasBackdrop]="true"
+            [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+            (backdropClick)="overlayIsOpen = !overlayIsOpen"
+            [cdkConnectedOverlayDisableClose]="true"
+          >
+            <ng-content select="[overlay]"></ng-content>
+          </ng-template>
+        </ng-container>
+
+        <!-- Menu  -->
+        <button
+          type="button"
+          *ngIf="item.action.type === 'menu' && section.style !== 'quaternary'"
+          class="button--primary"
+          mat-icon-button
+          [matTooltip]="item.label"
+          [matMenuTriggerFor]="buttonMenu"
+        >
+          <mat-icon fontSet="material-icons-outlined" *ngIf="item.icon">{{ item.icon }}</mat-icon>
+        </button>
+
+        <!-- Menu Quarternary -->
+        <button
+          class="button--quaternary"
+          *ngIf="item.action.type === 'menu' && section.style === 'quaternary'"
+          mat-button
+          [matTooltip]="item.label"
+          [matMenuTriggerFor]="buttonMenu"
+        >
+          <mat-icon fontSet="material-icons-outlined" *ngIf="item.icon">{{ item.icon }}</mat-icon>
+          <span class="button__label">{{ item.label.toUpperCase() }}</span>
+        </button>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>
+
+<mat-menu #buttonMenu="matMenu" class="menu">
+  <ng-content select="[menu]"></ng-content>
+</mat-menu>

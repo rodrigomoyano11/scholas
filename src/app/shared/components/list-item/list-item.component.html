@@ -1,0 +1,36 @@
+<mat-list-item *ngIf="!actionItem" class="main-container">
+  <img *ngIf="image" class="image" [src]="image" [alt]="title" />
+
+  <div class="line" mat-line>
+    <p *ngIf="title" class="title">{{ title }}</p>
+  </div>
+  <div class="line" mat-line>
+    <p *ngIf="subtitle" class="subtitle">{{ subtitle }}</p>
+  </div>
+
+  <div *ngIf="status" class="line" mat-line>
+    <app-badge [status]="status.type" type="secondary" [label]="status.label"></app-badge>
+  </div>
+
+  <button type="button" mat-icon-button (click)="clickEvent.emit()" [disabled]="disabled">
+    <mat-icon fontSet="material-icons-outlined" class="button__icon">{{ icon }}</mat-icon>
+  </button>
+</mat-list-item>
+
+<mat-list-item class="main-container" mat-ripple *ngIf="actionItem" (click)="clickEvent.emit()">
+  <img *ngIf="image" class="image" [src]="image" [alt]="title" />
+
+  <div class="line" mat-line>
+    <p *ngIf="title" class="title">{{ title }}</p>
+  </div>
+  <div class="line" mat-line>
+    <p *ngIf="subtitle" class="subtitle">{{ subtitle }}</p>
+  </div>
+  <div *ngIf="status" class="line line--status" mat-line>
+    <app-badge [status]="status.type" type="secondary" [label]="status.label"></app-badge>
+  </div>
+
+  <mat-icon fontSet="material-icons-outlined" class="button__icon">{{ icon }}</mat-icon>
+</mat-list-item>
+
+<mat-divider></mat-divider>

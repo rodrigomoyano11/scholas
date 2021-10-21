@@ -10,9 +10,9 @@ module.exports = {
       'always',
       {
         except: ['first-nested'],
-        ignore: ['after-declaration']
-      }
+        ignore: ['after-declaration'],
+      },
     ],
-    'order/properties-order': [sortOrderSmacss({ emptyLineBefore: 'always' })]
-  }
+    'order/properties-order': [sortOrderSmacss({ emptyLineBefore: 'always' })],
+  },
 }

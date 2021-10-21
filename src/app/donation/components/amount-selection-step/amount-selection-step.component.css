@@ -1,0 +1,131 @@
+/* stylelint-disable selector-pseudo-element-no-unknown */
+
+:host,
+.amount-selection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  width: 100%;
+}
+
+:host {
+  justify-content: space-between;
+  height: 100%;
+}
+
+/* Options */
+.toggle__container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  margin: 0;
+
+  border: none !important;
+  gap: 0.5rem;
+}
+
+.toggle__button {
+  display: flex;
+  align-items: center;
+  height: 4rem;
+
+  border: 0.03125rem solid #30aaa6 !important;
+  border-radius: 0.25rem;
+
+  color: #30aaa6;
+
+  font-size: 20px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.mat-button-toggle-checked {
+  border: 0.125rem solid #009993 !important;
+
+  background-color: rgb(245, 245, 245);
+
+  color: #009993;
+}
+
+/* Field */
+.field {
+  width: 100%;
+
+  border-color: #30aaa6;
+
+  color: #30aaa6;
+  font-size: 16px;
+  text-align: center;
+}
+
+.field__input {
+  position: relative;
+  top: -0.2em;
+}
+
+.field__input::placeholder {
+  color: #30aaa6;
+  font-weight: 500;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #30aaa6;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: #009993;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  margin: 0 !important;
+}
+
+.checkbox {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 960px) {
+  ::ng-deep .mat-checkbox-layout {
+    align-items: flex-start !important;
+  }
+
+  ::ng-deep .mat-checkbox-inner-container {
+    display: flex;
+    align-items: flex-start;
+    margin: 0 !important;
+    margin-top: 0.25rem !important;
+    margin-right: 0.5rem !important;
+  }
+
+  ::ng-deep .mat-checkbox-label {
+    white-space: normal;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .amount-selection {
+    gap: 1rem;
+  }
+
+  .toggle__container {
+    gap: 1rem;
+  }
+
+  .checkbox {
+    width: auto;
+  }
+
+  .toggle__button {
+    height: 6rem;
+
+    font-size: 24px;
+  }
+
+  .field {
+    font-size: 24px;
+  }
+}

@@ -1,0 +1,103 @@
+<mat-card class="main-container">
+  <img
+    [ngClass]="['image', !userIsAdmin ? 'image--donor' : '']"
+    [src]="projectData.image"
+    [alt]="projectData.title"
+  />
+
+  <div class="caption">
+    <app-badge
+      type="secondary"
+      label="Dado de baja"
+      *ngIf="projectIsPrivate && (layout.isDesktop$ | async) !== true"
+    ></app-badge>
+
+    <div class="header">
+      <div class="info__container">
+        <div class="info">
+          <mat-card-title class="title">{{ projectData.title }}</mat-card-title>
+          <mat-card-subtitle class="subtitle">{{ projectData.subtitle }}</mat-card-subtitle>
+        </div>
+
+        <app-badge
+          type="primary"
+          label="Dado de baja"
+          *ngIf="projectIsPrivate && (layout.isDesktop$ | async) === true"
+        ></app-badge>
+      </div>
+      <mat-card-actions class="actions">
+        <ng-container *ngIf="projectData.actions.type === 'button'">
+          <ng-container *ngFor="let item of projectData.actions.data">
+            <button
+              class="action"
+              type="button"
+              mat-icon-button
+              xPosition="before"
+              [matTooltip]="item.label ?? ''"
+              (click)="item.click()"
+            >
+              <mat-icon fontSet="material-icons-outlined">{{ item.icon ?? 'more_vert' }}</mat-icon>
+            </button>
+          </ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="projectData.actions.type === 'menu'">
+          <button
+            class="action"
+            type="button"
+            mat-icon-button
+            xPosition="before"
+            [matTooltip]="'Más opciones'"
+            [matMenuTriggerFor]="menu"
+          >
+            <mat-icon fontSet="material-icons-outlined">more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <ng-container *ngFor="let item of projectData.actions.data">
+              <button class="action__item" type="button" mat-menu-item (click)="item.click()">
+                <mat-icon fontSet="material-icons-outlined">{{ item.icon }}</mat-icon>
+                {{ item.label }}
+              </button>
+            </ng-container>
+          </mat-menu>
+        </ng-container>
+      </mat-card-actions>
+    </div>
+
+    <mat-card-content class="content">
+      <p [ngClass]="['description', !userIsAdmin ? 'description--donor' : '']">
+        {{ projectData.description }}
+      </p>
+
+      <app-amount-progress
+        *ngIf="!userIsAdmin"
+        [type]="'mobile'"
+        [currentAmount]="3893 || projectData.currentAmount"
+        [targetAmount]="7456 || projectData.targetAmount"
+      ></app-amount-progress>
+
+      <div class="CTA__container">
+        <button
+          class="CTA--primary"
+          *ngIf="!userIsAdmin"
+          type="button"
+          [color]="'primary'"
+          (click)="projectData.primaryCTA()"
+          mat-flat-button
+        >
+          Donar
+        </button>
+        <button
+          class="CTA--secondary"
+          type="button"
+          [color]="'primary'"
+          (click)="projectData.secondaryCTA()"
+          mat-button
+          [matTooltip]="'Ver más'"
+        >
+          Ver más
+        </button>
+      </div>
+    </mat-card-content>
+  </div>
+</mat-card>

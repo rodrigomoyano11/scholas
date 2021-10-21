@@ -1,0 +1,100 @@
+<app-modal-container class="form-container">
+  <h1 class="form-container__title--primary">Montos de Donación</h1>
+  <p class="form-container__description">
+    Si querés modificar los importes fijos de las donaciones, ingresá el monto deseado en el campo
+    correspondiente.
+    <span class="line-break"
+      >Tené en cuenta que aparecerán en el mismo orden en el que aparecen abajo.</span
+    >
+  </p>
+
+  <div class="form__container">
+    <form class="form" (ngSubmit)="handleSubmit()" [formGroup]="form">
+      <div class="form__field-group">
+        <!-- DonationAmount1 -->
+        <mat-form-field class="form__field" appearance="outline">
+          <mat-label>Monto N°1</mat-label>
+          <input
+            matInput
+            placeholder="Ingresá el monto de dinero objetivo a recaudar"
+            formControlName="donationAmount1"
+          />
+          <mat-hint>
+            {{
+              form.controls['donationAmount1'].value !== ''
+                ? 'El monto N°1 es de ' + (form.controls['donationAmount1'].value | currency: 'ARS')
+                : ''
+            }}
+          </mat-hint>
+          <mat-error>{{ getErrors('donationAmount1') }}</mat-error>
+        </mat-form-field>
+
+        <!-- DonationAmount2 -->
+        <mat-form-field class="form__field" appearance="outline">
+          <mat-label>Monto N°2</mat-label>
+          <input
+            matInput
+            placeholder="Ingresá el monto de dinero objetivo a recaudar"
+            formControlName="donationAmount2"
+          />
+          <mat-hint>
+            {{
+              form.controls['donationAmount2'].value !== ''
+                ? 'El monto N°2 es de ' + (form.controls['donationAmount2'].value | currency: 'ARS')
+                : ''
+            }}
+          </mat-hint>
+          <mat-error>{{ getErrors('donationAmount2') }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form__field-group">
+        <!-- DonationAmount3 -->
+        <mat-form-field class="form__field" appearance="outline">
+          <mat-label>Monto N°3</mat-label>
+          <input
+            matInput
+            placeholder="Ingresá el monto de dinero objetivo a recaudar"
+            formControlName="donationAmount3"
+          />
+          <mat-hint>
+            {{
+              form.controls['donationAmount3'].value !== ''
+                ? 'El monto N°3 es de ' + (form.controls['donationAmount3'].value | currency: 'ARS')
+                : ''
+            }}
+          </mat-hint>
+          <mat-error>{{ getErrors('donationAmount3') }}</mat-error>
+        </mat-form-field>
+
+        <!-- DonationAmount4 -->
+        <mat-form-field class="form__field" appearance="outline">
+          <mat-label>Monto N°4</mat-label>
+          <input
+            matInput
+            placeholder="Ingresá el monto de dinero objetivo a recaudar"
+            formControlName="donationAmount4"
+          />
+          <mat-hint>
+            {{
+              form.controls['donationAmount4'].value !== ''
+                ? 'El monto N°4 es de ' + (form.controls['donationAmount4'].value | currency: 'ARS')
+                : ''
+            }}
+          </mat-hint>
+          <mat-error>{{ getErrors('donationAmount4') }}</mat-error>
+        </mat-form-field>
+      </div>
+      <!-- Submit -->
+      <button
+        type="submit"
+        class="form__submit"
+        [color]="'primary'"
+        mat-flat-button
+        [disabled]="!form.valid"
+      >
+        Guardar cambios
+      </button>
+    </form>
+  </div>
+</app-modal-container>

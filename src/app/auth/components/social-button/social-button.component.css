@@ -1,0 +1,22 @@
+:host() {
+  width: 100%;
+}
+
+.button {
+  width: 100%;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.button--google {
+  background-color: #fff;
+}
+
+.button__icon {
+  max-height: 100%;
+  margin-right: 0.5rem;
+}
+
+.button__icon--facebook {
+  color: #4267b2;
+}

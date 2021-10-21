@@ -1,0 +1,52 @@
+.primary,
+.secondary {
+  letter-spacing: 0.065rem;
+}
+
+.primary {
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  justify-content: center;
+  height: fit-content;
+  margin-bottom: 1rem;
+  padding: 0.25rem 1rem;
+
+  border-radius: 1rem;
+}
+
+.primary.success {
+  background-color: #60ad2d;
+
+  color: #fff;
+}
+
+.primary.warn {
+  background-color: #adab2d;
+
+  color: #fff;
+}
+
+.primary.error {
+  background-color: #ad2d44;
+
+  color: #fff;
+}
+
+.secondary {
+  margin-bottom: 0.5rem;
+
+  font-weight: bold;
+}
+
+.secondary.success {
+  color: #60ad2d;
+}
+
+.secondary.warn {
+  color: #adab2d;
+}
+
+.secondary.error {
+  color: #ad2d44;
+}

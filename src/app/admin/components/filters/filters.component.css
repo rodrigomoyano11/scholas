@@ -1,0 +1,46 @@
+:host {
+  width: 100%;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.field--checkbox {
+  margin-bottom: 1rem;
+}
+
+.field__heading {
+  margin-bottom: 0.25rem;
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form__container {
+  padding: 1rem;
+
+  border-radius: 0.25rem;
+
+  background-color: #fff;
+}
+
+.form__field {
+  margin: 0;
+}
+
+.form__field-group {
+  grid-template-columns: 1fr 0.1fr 1fr;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.form__field-group > span {
+  margin-top: 1.25rem;
+  margin-left: 0.25rem;
+
+  font-size: 20px;
+  font-weight: 500;
+}

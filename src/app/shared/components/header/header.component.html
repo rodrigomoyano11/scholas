@@ -1,0 +1,36 @@
+<header>
+  <mat-toolbar class="header">
+    <div class="header__content-limiter">
+      <app-main-menu class="main-menu"></app-main-menu>
+
+      <app-user-profile-menu
+        class="user-profile-menu"
+        *ngIf="(auth.user$ | async)?.isLogged"
+      ></app-user-profile-menu>
+
+      <app-logo class="logo"></app-logo>
+
+      <div
+        class="call-to-action"
+        *ngIf="!(auth.user$ | async)?.isLogged && (layout.isDesktop$ | async)"
+      >
+        <button
+          type="button"
+          class="call-to-action__button--secondary"
+          mat-stroked-button
+          [routerLink]="'/auth/login'"
+        >
+          Iniciar sesión
+        </button>
+        <button
+          type="button"
+          class="call-to-action__button--primary"
+          mat-flat-button
+          [routerLink]="'/auth/register'"
+        >
+          Registrarse
+        </button>
+      </div>
+    </div>
+  </mat-toolbar>
+</header>

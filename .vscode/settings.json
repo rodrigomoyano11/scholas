@@ -17,6 +17,7 @@
     // Dependencies
     "node_modules/": true,
     "package-lock.json": true,
+    "yarn.lock": true,
 
     // Formatter
     ".prettierrc": true,
@@ -26,6 +27,7 @@
     ".eslintrc": true,
     ".eslintcache": true,
     ".stylelintrc.js": true,
+    ".stylelintignore": true,
     ".stylelintcache": true,
 
     // Tests
