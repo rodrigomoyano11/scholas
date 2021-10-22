@@ -9,5 +9,5 @@ export const environment = {
     appId: '1:392012977402:web:1eed44468bebab5bdc6543',
     measurementId: 'G-EZN648D5LM',
   },
-  apiUrl: 'https://proyecto-scholas.herokuapp.com',
+  apiUrl: 'https://scholas-aws.herokuapp.com',
 }
