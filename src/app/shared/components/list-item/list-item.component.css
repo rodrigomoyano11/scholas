@@ -24,9 +24,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
 
   -webkit-user-drag: none;
@@ -59,13 +56,14 @@
 .button__icon {
   color: #009993;
 
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
 
   -webkit-user-drag: none;
   -webkit-tap-highlight-color: transparent;
+}
+
+.button__icon--disabled {
+  color: rgb(0 0 0 / 54%);
 }
 
 @media screen and (min-width: 960px) {
