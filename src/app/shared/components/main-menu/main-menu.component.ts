@@ -22,24 +22,24 @@ export class MainMenuComponent {
       type: 'internal',
       access: ['anonymous', 'donor'],
     },
-    {
-      name: 'Quienes somos',
-      link: '/donor',
-      type: 'internal',
-      access: ['anonymous', 'donor'],
-    },
-    {
-      name: 'Preguntas frecuentes',
-      link: '/donor',
-      type: 'internal',
-      access: ['anonymous', 'donor'],
-    },
-    {
-      name: 'Contacto',
-      link: '/donor',
-      type: 'internal',
-      access: ['anonymous', 'donor'],
-    },
+    // {
+    //   name: 'Quienes somos',
+    //   link: '/donor',
+    //   type: 'internal',
+    //   access: ['anonymous', 'donor'],
+    // },
+    // {
+    //   name: 'Preguntas frecuentes',
+    //   link: '/donor',
+    //   type: 'internal',
+    //   access: ['anonymous', 'donor'],
+    // },
+    // {
+    //   name: 'Contacto',
+    //   link: '/donor',
+    //   type: 'internal',
+    //   access: ['anonymous', 'donor'],
+    // },
   ]
 
   adminItems: Item[] = [
