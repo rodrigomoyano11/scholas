@@ -60,7 +60,10 @@ export interface CreateProjectResponse {
   targetAmount: Project['metrics']['targetAmount']
   currentAmount: Project['metrics']['currentAmount']
   remainingAmount: Project['metrics']['remainingAmount']
-  province: Project['location']['province']
+  province: {
+    id: number
+    name: Project['location']['province']
+  }
   locality: Project['location']['locality']
   coverPhotoURL: Project['coverPhotoURL']
   photos: Project['photos']
@@ -94,7 +97,10 @@ export interface ModifyProjectResponse {
   currentAmount: Project['metrics']['currentAmount']
   remainingAmount: Project['metrics']['remainingAmount']
 
-  province: Project['location']['province']
+  province: {
+    id: number
+    name: Project['location']['province']
+  }
   locality: Project['location']['locality']
   coverPhotoURL: Project['coverPhotoURL']
   photos: Project['photos']
