@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { Router } from '@angular/router'
 import { Observable } from 'rxjs'
+import { LocationService } from 'src/app/auth/services/location.service'
 import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
 import {
   CreateProjectRequest,
@@ -43,14 +44,19 @@ export class ProjectsService {
     },
   }
 
-  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private dialog: MatDialog,
+    private location: LocationService,
+  ) {}
 
   async createProject(data: ProjectFormData): Promise<void> {
     const body: CreateProjectRequest = {
       name: data.name,
       description: data.description,
       targetAmount: Number(data.targetAmount),
-      province: data.province,
+      province: (await this.location.getIdByProvince(data.province)).toString(),
       locality: data.locality,
       videoURL: data.video,
       coverPhotoURL: data.coverPhoto,
@@ -80,7 +86,7 @@ export class ProjectsService {
       description: data.description,
       targetAmount: Number(data.targetAmount),
       videoURL: data.video,
-      province: data.province,
+      province: (await this.location.getIdByProvince(data.province)).toString(),
       locality: data.locality,
       coverPhotoURL: data.coverPhoto,
       photosUrl: data.photos,

@@ -54,7 +54,7 @@ export class ProjectsComponent implements OnInit {
       image: project.coverPhotoURL,
 
       title: project.name,
-      subtitle: `${project.locality ?? ''} - ${project.province ?? ''}`,
+      subtitle: `${project.locality ?? ''} - ${project.province.name ?? ''}`,
       description: project.description,
 
       status: project.status,

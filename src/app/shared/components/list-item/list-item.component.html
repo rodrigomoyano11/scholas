@@ -13,7 +13,11 @@
   </div>
 
   <button type="button" mat-icon-button (click)="clickEvent.emit()" [disabled]="disabled">
-    <mat-icon fontSet="material-icons-outlined" class="button__icon">{{ icon }}</mat-icon>
+    <mat-icon
+      fontSet="material-icons-outlined"
+      [ngClass]="['button__icon', disabled ? 'button__icon--disabled' : '']"
+      >{{ icon }}</mat-icon
+    >
   </button>
 </mat-list-item>
 

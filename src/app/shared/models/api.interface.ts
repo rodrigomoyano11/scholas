@@ -6,7 +6,10 @@ import { ExtraData, User } from './user.interface'
 // Users
 export interface GetUserResponse {
   birthday: ExtraData['birthday']
-  province: Location['province']
+  province: {
+    id: number
+    name: Project['location']['province']
+  }
   locality: Location['locality']
   displayName: User['displayName']
   email: User['email']
@@ -60,7 +63,10 @@ export interface CreateProjectResponse {
   targetAmount: Project['metrics']['targetAmount']
   currentAmount: Project['metrics']['currentAmount']
   remainingAmount: Project['metrics']['remainingAmount']
-  province: Project['location']['province']
+  province: {
+    id: number
+    name: Project['location']['province']
+  }
   locality: Project['location']['locality']
   coverPhotoURL: Project['coverPhotoURL']
   photos: Project['photos']
@@ -94,7 +100,10 @@ export interface ModifyProjectResponse {
   currentAmount: Project['metrics']['currentAmount']
   remainingAmount: Project['metrics']['remainingAmount']
 
-  province: Project['location']['province']
+  province: {
+    id: number
+    name: Project['location']['province']
+  }
   locality: Project['location']['locality']
   coverPhotoURL: Project['coverPhotoURL']
   photos: Project['photos']
@@ -113,9 +122,14 @@ export type GetProjectResponse = CreateProjectResponse
 
 // Utils
 
-export type GetLocationsResponse = [
+export type GetProvincesAndLocalitiesResponse = [
   {
     name: string
-    departments: string[]
+    localities: string[]
   },
 ]
+
+export type GetProvincesResponse = {
+  id: number
+  name: string
+}[]

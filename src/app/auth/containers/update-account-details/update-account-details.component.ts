@@ -1,9 +1,20 @@
+import { HttpClient } from '@angular/common/http'
 import { Component, OnInit } from '@angular/core'
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
+import { GetUserResponse } from 'src/app/shared/models/api.interface'
+import { environment } from 'src/environments/environment'
 import { AuthService } from '../../services/auth/auth.service'
 import { LocationService } from '../../services/location.service'
 import { ValidationService } from '../../services/validation/validation.service'
+
+export interface UpdateAccountDetailsForm {
+  fullName: string
+  birthday: string
+  phoneNumber: string
+  province: string
+  locality: string
+}
 
 @Component({
   selector: 'app-update-account-details',
@@ -29,15 +40,14 @@ export class UpdateAccountDetailsComponent implements OnInit {
     private auth: AuthService,
     public location: LocationService,
     private router: Router,
+    private http: HttpClient,
   ) {
     const currentYear = new Date().getFullYear()
     this.minDate = new Date(currentYear - 100, 0, 1)
     this.maxDate = new Date(currentYear - 13, 11, 31)
 
     this.form = this.fb.group({
-      firstName: ['', [Validators.required, validation.isValidFirstName()]],
-      lastName: ['', [Validators.required, validation.isValidLastName()]],
-      email: ['', [Validators.required, validation.isValidEmail()]],
+      fullName: ['', [Validators.required]],
       birthday: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required, validation.isValidPhoneNumber()]],
       province: ['', [Validators.required]],
@@ -48,10 +58,37 @@ export class UpdateAccountDetailsComponent implements OnInit {
     this.localityControl = this.form.controls['locality']
   }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.provinceControl.disable()
     this.localityControl.disable()
+
+    this.setInitialValues()
+  }
+
+  // General
+  setInitialValues(): void {
+    this.auth.user$.subscribe((user) => {
+      user.uid &&
+        void this.http
+          .get<GetUserResponse>(`${environment.apiUrl}/users/${user.uid}`)
+          .toPromise()
+          .then((response) =>
+            this.form.patchValue({
+              fullName: response.displayName,
+              birthday: response.birthday,
+              phoneNumber: response.phoneNumber,
+              province: response.province.name,
+              locality: response.locality,
+            }),
+          )
+          .then(() => void this.setInitialLocationValues())
+    })
+  }
+
+  // Location
+  async setInitialLocationValues(): Promise<void> {
     await this.getProvinces()
+    await this.getLocalitiesByProvince(this.provinceControl.value as string)
   }
 
   async getProvinces(): Promise<void> {
@@ -69,11 +106,15 @@ export class UpdateAccountDetailsComponent implements OnInit {
     localityHasData && this.localityControl.enable()
   }
 
+  // Errors
   getErrors(controlName: string): string {
     return this.validation.getErrors(this.form.controls[controlName])
   }
 
-  submitExtraData(): void {
-    // void this.auth.sendExtraData(this.form.value)
+  // Submit
+  async submitExtraData(): Promise<void> {
+    await this.auth.editAccountDetails(this.form.value as UpdateAccountDetailsForm)
+    await this.router.navigate(['auth/account'])
+    window.location.reload()
   }
 }
