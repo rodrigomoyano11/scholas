@@ -12,6 +12,10 @@
           (this.auth.user$ | async)?.displayName ?? (this.auth.user$ | async)?.claims ?? 'Donante'
         }}
       </p>
+
+      <p class="email">
+        {{ (this.auth.user$ | async)?.email ?? (this.auth.user$ | async)?.claims ?? '' }}
+      </p>
     </div>
 
     <mat-action-list class="action__container">
