@@ -7,5 +7,15 @@ import { AuthService } from 'src/app/auth/services/auth/auth.service'
   styleUrls: ['./account-details.component.css'],
 })
 export class AccountDetailsComponent {
-  constructor(public auth: AuthService) {}
+  photoURL!: string
+  displayName!: string
+  email!: string
+
+  constructor(public auth: AuthService) {
+    this.auth.user$.subscribe((user) => {
+      this.photoURL = user.photoURL ?? 'assets/vectors/profile-picture-default.svg'
+      this.displayName = user.displayName ?? 'Donante'
+      this.email = user.email ?? ''
+    })
+  }
 }

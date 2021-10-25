@@ -8,45 +8,17 @@
 
   <div class="form__container">
     <form class="form" (ngSubmit)="submitExtraData()" [formGroup]="form">
-      <div class="form__field-group">
-        <!-- FirstName -->
-        <mat-form-field class="form__field" appearance="outline">
-          <mat-label>Nombre</mat-label>
-          <input
-            matInput
-            placeholder="Ingresá tu nombre"
-            type="text"
-            autocomplete="given-name"
-            formControlName="firstName"
-          />
-          <mat-error>{{ getErrors('firstName') }}</mat-error>
-        </mat-form-field>
-
-        <!-- LastName -->
-        <mat-form-field class="form__field" appearance="outline">
-          <mat-label>Apellido</mat-label>
-          <input
-            matInput
-            placeholder="Ingresá tu apellido"
-            type="text"
-            autocomplete="family-name"
-            formControlName="lastName"
-          />
-          <mat-error>{{ getErrors('lastName') }}</mat-error>
-        </mat-form-field>
-      </div>
-
-      <!-- Email -->
+      <!-- FullName -->
       <mat-form-field class="form__field" appearance="outline">
-        <mat-label>Correo electrónico</mat-label>
+        <mat-label>Nombre y apellido</mat-label>
         <input
           matInput
-          placeholder="Ingresá tu correo electrónico"
-          type="email"
-          autocomplete="email"
-          formControlName="email"
+          placeholder="Ingresá tu nombre y apellido"
+          type="text"
+          autocomplete="name"
+          formControlName="fullName"
         />
-        <mat-error>{{ getErrors('email') }}</mat-error>
+        <mat-error>{{ getErrors('fullName') }}</mat-error>
       </mat-form-field>
 
       <!-- Birthday -->

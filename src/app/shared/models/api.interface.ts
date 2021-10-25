@@ -6,7 +6,10 @@ import { ExtraData, User } from './user.interface'
 // Users
 export interface GetUserResponse {
   birthday: ExtraData['birthday']
-  province: Location['province']
+  province: {
+    id: number
+    name: Project['location']['province']
+  }
   locality: Location['locality']
   displayName: User['displayName']
   email: User['email']

@@ -1,21 +1,9 @@
 <app-modal-container size="small">
   <div class="content">
     <div class="user-info">
-      <img
-        class="profile-photo"
-        [src]="(this.auth.user$ | async)?.photoURL ?? 'assets/vectors/profile-picture-default.svg'"
-        alt="Foto de Perfil"
-      />
-
-      <p class="username">
-        {{
-          (this.auth.user$ | async)?.displayName ?? (this.auth.user$ | async)?.claims ?? 'Donante'
-        }}
-      </p>
-
-      <p class="email">
-        {{ (this.auth.user$ | async)?.email ?? (this.auth.user$ | async)?.claims ?? '' }}
-      </p>
+      <img class="profile-photo" [src]="photoURL" alt="Foto de Perfil" />
+      <p class="username">{{ displayName }}</p>
+      <p class="email">{{ email }}</p>
     </div>
 
     <mat-action-list class="action__container">

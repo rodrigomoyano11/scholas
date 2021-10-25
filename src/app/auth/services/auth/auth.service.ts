@@ -32,6 +32,7 @@ import {
   GetUserResponse,
 } from 'src/app/shared/models/api.interface'
 import { LocationService } from '../location.service'
+import { UpdateAccountDetailsForm } from '../../containers/update-account-details/update-account-details.component'
 
 export type Provider = 'google' | 'facebook' | 'email'
 
@@ -273,6 +274,35 @@ export class AuthService {
       .toPromise()
 
     return response === 'Usuario actualizado'
+  }
+
+  async editAccountDetails(data: UpdateAccountDetailsForm): Promise<void> {
+    try {
+      const { fullName, birthday, province, locality, phoneNumber } = data
+
+      const { uid } = await this.user$.pipe(take(1)).toPromise()
+
+      const body = {
+        displayName: fullName,
+        birthday: convertDate(birthday),
+        province: await this.location.getIdByProvince(province),
+        locality,
+        phoneNumber: convertPhoneNumber(phoneNumber),
+      }
+
+      await this.http
+        .put(`${environment.apiUrl}/users/?uid=${uid}`, body, {
+          responseType: 'text',
+        })
+        .toPromise()
+      await this._updateUser()
+    } catch (error: any) {
+      error.code
+        ? this.errorHandler.openDialog(error.code as string)
+        : error.error
+        ? this.errorHandler.openDialog(error.error as string)
+        : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
+    }
   }
 
   async sendExtraData(extraData: ExtraDataSentForm): Promise<void> {
