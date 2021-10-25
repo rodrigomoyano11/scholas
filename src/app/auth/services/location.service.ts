@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { GetLocationsResponse } from 'src/app/shared/models/api.interface'
+import { GetLocationsResponse, GetProvincesResponse } from 'src/app/shared/models/api.interface'
+import { Location } from 'src/app/shared/models/location.interface'
 import { environment } from '../../../environments/environment'
 
 @Injectable({
@@ -25,10 +26,20 @@ export class LocationService {
     return this.locationData.map((location) => location.name)
   }
 
+  async getIdByProvince(selectedProvince: Location['province']): Promise<number> {
+    const provinces = await this.http
+      .get<GetProvincesResponse>(`${environment.apiUrl}/province`)
+      .toPromise()
+
+    const provinceId = provinces.find((province) => province.name === selectedProvince)?.id
+
+    return provinceId ?? 0
+  }
+
   async getLocalitiesByProvince(province: string): Promise<string[]> {
     !this.locationData && (await this.getLocationData())
 
     const selectedProvince = this.locationData.find((location) => location.name === province)
-    return selectedProvince?.departments.map((locality) => locality) ?? []
+    return selectedProvince?.localities.map((locality) => locality) ?? []
   }
 }

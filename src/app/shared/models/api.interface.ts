@@ -116,6 +116,11 @@ export type GetProjectResponse = CreateProjectResponse
 export type GetLocationsResponse = [
   {
     name: string
-    departments: string[]
+    localities: string[]
   },
 ]
+
+export type GetProvincesResponse = {
+  id: number
+  name: string
+}[]
