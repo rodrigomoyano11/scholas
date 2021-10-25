@@ -31,10 +31,11 @@ import {
   CreateUserResponse,
   GetUserResponse,
 } from 'src/app/shared/models/api.interface'
+import { LocationService } from '../location.service'
 
 export type Provider = 'google' | 'facebook' | 'email'
 
-interface ExtraDataSent {
+export interface ExtraDataSentForm {
   birthday: string
   phoneNumber: string
   province: string
@@ -69,6 +70,7 @@ export class AuthService {
     private snackBar: MatSnackBar,
     private http: HttpClient,
     private errorHandler: ErrorService,
+    private location: LocationService,
   ) {
     this.user$.next(this._defaultData)
 
@@ -118,7 +120,7 @@ export class AuthService {
       return void this._verifyEmail()
     } catch (error: any) {
       error.code
-        ? this.errorHandler.openDialog(error.code)
+        ? this.errorHandler.openDialog(error.code as string)
         : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
     }
   }
@@ -135,7 +137,7 @@ export class AuthService {
         .toPromise()
     } catch (error: any) {
       error.code
-        ? this.errorHandler.openDialog(error.code)
+        ? this.errorHandler.openDialog(error.code as string)
         : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
 
       return false
@@ -163,7 +165,7 @@ export class AuthService {
       }, 3000)
     } catch (error: any) {
       error.code
-        ? this.errorHandler.openDialog(error.code)
+        ? this.errorHandler.openDialog(error.code as string)
         : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
     }
   }
@@ -184,7 +186,7 @@ export class AuthService {
       return !!(province && locality && phoneNumber && birthday !== '1900-01-01')
     } catch (error: any) {
       error.code
-        ? this.errorHandler.openDialog(error.code)
+        ? this.errorHandler.openDialog(error.code as string)
         : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
 
       return false
@@ -230,7 +232,7 @@ export class AuthService {
       })
     } catch (error: any) {
       error.code
-        ? this.errorHandler.openDialog(error.code)
+        ? this.errorHandler.openDialog(error.code as string)
         : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
     }
   }
@@ -240,7 +242,7 @@ export class AuthService {
       const body: CreateUserRequest = {
         displayName: this._displayName,
         birthday: '1900-01-01',
-        province: null,
+        province: '1',
         locality: null,
         phoneNumber: null,
       }
@@ -252,7 +254,7 @@ export class AuthService {
       return !!response?.id
     } catch (error: any) {
       error.code
-        ? this.errorHandler.openDialog(error.code)
+        ? this.errorHandler.openDialog(error.code as string)
         : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
 
       return false
@@ -261,15 +263,19 @@ export class AuthService {
 
   private async _sendUserData(uid: User['uid'], body: CreateUserRequest): Promise<boolean> {
     const response = await this.http
-      .put(`${environment.apiUrl}/users/?uid=${uid}`, body, {
-        responseType: 'text',
-      })
+      .put(
+        `${environment.apiUrl}/users/?uid=${uid}`,
+        { ...body, province: await this.location.getIdByProvince(body.province) },
+        {
+          responseType: 'text',
+        },
+      )
       .toPromise()
 
     return response === 'Usuario actualizado'
   }
 
-  async sendExtraData(extraData: ExtraDataSent): Promise<void> {
+  async sendExtraData(extraData: ExtraDataSentForm): Promise<void> {
     try {
       const { birthday, phoneNumber, province, locality } = extraData
 
@@ -289,9 +295,9 @@ export class AuthService {
       return void this._verifyEmail()
     } catch (error: any) {
       error.code
-        ? this.errorHandler.openDialog(error.code)
+        ? this.errorHandler.openDialog(error.code as string)
         : error.error
-        ? this.errorHandler.openDialog(error.error)
+        ? this.errorHandler.openDialog(error.error as string)
         : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
     }
   }
@@ -309,7 +315,7 @@ export class AuthService {
       void this._updateUser()
     } catch (error: any) {
       error.code
-        ? this.errorHandler.openDialog(error.code)
+        ? this.errorHandler.openDialog(error.code as string)
         : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
     }
   }
@@ -324,7 +330,7 @@ export class AuthService {
       return void this.router.navigate(['/'])
     } catch (error: any) {
       error.code
-        ? this.errorHandler.openDialog(error.code)
+        ? this.errorHandler.openDialog(error.code as string)
         : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
     }
   }
@@ -342,43 +348,33 @@ export class AuthService {
       return void this.router.navigate(['/'])
     } catch (error: any) {
       error.code
-        ? this.errorHandler.openDialog(error.code)
+        ? this.errorHandler.openDialog(error.code as string)
         : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
     }
   }
 
   // TODO: Refactorizar la siguiente función para que reciba el UID desde los argumentos
   async deleteUser(): Promise<void> {
-    try {
-      const { uid } = await this.user$.pipe(take(1)).toPromise()
+    // try {
+    //   const { uid } = await this.user$.pipe(take(1)).toPromise()
 
-      await this.http
-        .delete(`${environment.apiUrl}/users/${uid}`, { responseType: 'text' })
-        .toPromise()
-      await this.logout()
-      this.snackBar.open('Tu cuenta ha sido eliminada correctamente', 'Cerrar', { duration: 5000 })
-      return void this.router.navigate(['/'])
-    } catch (error) {
-      void this.snackBar.open('Hubo un error al eliminar tu cuenta', 'Cerrar', { duration: 5000 })
-      return void this.router.navigate(['/'])
-    }
+    //   await this.http
+    //     .delete(`${environment.apiUrl}/users/${uid}`, { responseType: 'text' })
+    //     .toPromise()
+    //   await this.logout()
+    //   this.snackBar.open('Tu cuenta ha sido eliminada correctamente', 'Cerrar', { duration: 5000 })
+    //   return void this.router.navigate(['/'])
+    // } catch (error) {
+    //   void this.snackBar.open('Hubo un error al eliminar tu cuenta', 'Cerrar', { duration: 5000 })
+    //   return void this.router.navigate(['/'])
+    // }
+
+    await this.auth.signOut()
+    this.snackBar.open('Tu cuenta ha sido eliminada correctamente', 'Cerrar', { duration: 5000 })
+    return void this.router.navigate(['/'])
   }
 
   async _updateUser(): Promise<void> {
     this._user && (await getIdToken(this._user, true))
   }
 }
-
-/*
-
-{
-  "headers":{"normalizedNames":{},
-"lazyUpdate":null},
-"status":500,
-"statusText":"OK",
-"url":"https://proyecto-scholas.herokuapp.com/users/?uid=1kGp1Kc8eHedsZnHHSrz0pKNN0K3",
-"ok":false,
-"name":"HttpErrorResponse",
-"message":"Http failure response for https://proyecto-scholas.herokuapp.com/users/?uid=1kGp1Kc8eHedsZnHHSrz0pKNN0K3: 500 OK",
-"error":"The user with the provided phone number already exists (PHONE_NUMBER_EXISTS)."}
-*/
