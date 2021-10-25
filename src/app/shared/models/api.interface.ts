@@ -113,7 +113,7 @@ export type GetProjectResponse = CreateProjectResponse
 
 // Utils
 
-export type GetLocationsResponse = [
+export type GetProvincesAndLocalitiesResponse = [
   {
     name: string
     localities: string[]

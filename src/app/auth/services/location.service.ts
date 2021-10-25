@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { GetLocationsResponse, GetProvincesResponse } from 'src/app/shared/models/api.interface'
+import {
+  GetProvincesAndLocalitiesResponse,
+  GetProvincesResponse,
+} from 'src/app/shared/models/api.interface'
 import { Location } from 'src/app/shared/models/location.interface'
 import { environment } from '../../../environments/environment'
 
@@ -8,7 +11,7 @@ import { environment } from '../../../environments/environment'
   providedIn: 'root',
 })
 export class LocationService {
-  locationData!: GetLocationsResponse
+  locationData!: GetProvincesAndLocalitiesResponse
 
   constructor(private http: HttpClient) {
     void this.getLocationData()
@@ -16,7 +19,7 @@ export class LocationService {
 
   async getLocationData(): Promise<void> {
     this.locationData = await this.http
-      .get<GetLocationsResponse>(`${environment.apiUrl}/location`)
+      .get<GetProvincesAndLocalitiesResponse>(`${environment.apiUrl}/location`)
       .toPromise()
   }
 
