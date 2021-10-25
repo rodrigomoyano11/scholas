@@ -334,19 +334,34 @@ export class AuthService {
 
   // Permissions and Claims
 
-  async setPermissions(type: 'donor' | 'admin', uid: User['uid']): Promise<void> {
+  async setPermissions(type: 'donor' | 'admin', uid: User['uid']): Promise<void | boolean> {
     try {
       const body = type === 'admin' ? { admin: true, donor: false } : { admin: false, donor: true }
-
       await this.http
         .put<User['claims']>(`${environment.apiUrl}/users/claims/${uid}`, body)
         .toPromise()
 
       void this._updateUser()
+
+      return true
     } catch (error: any) {
-      error.code
-        ? this.errorHandler.openDialog(error.code as string)
-        : this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
+      // const error = {
+      //   message: 'Error generico',
+      //   detail: 'No user record found for the given identifier (USER_NOT_FOUND).',
+      //   code: '1',
+      //   path: '/users/claims/LOoOBqkqAsSsLlGF2UuTLc4VwfZ2',
+      // }
+
+      console.log(error)
+      if (error.error.code) {
+        this.errorHandler.openDialog(
+          error.error.detail === 'No user record found for the given identifier (USER_NOT_FOUND).'
+            ? 'No se ha encontrado un usuario que corresponda con el correo ingresado'
+            : (error.code as string),
+        )
+      } else this.errorHandler.openDialog(typeof error === 'string' ? error : JSON.stringify(error))
+
+      return false
     }
   }
 

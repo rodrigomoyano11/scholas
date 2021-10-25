@@ -42,19 +42,21 @@ export class AdminsService {
     void this.auth
       .setPermissions('admin', uid)
 
-      .then(() =>
-        this.dialog
-          .open<DialogComponent, DialogData>(DialogComponent, {
-            data: {
-              actions: [null, 'Cerrar'],
-              title: 'Importante',
-              description:
-                'Para que se apliquen los cambios, el nuevo administrador deberá cerrar sesión y volver a ingresar a su cuenta.',
-              icon: 'info',
-            },
-          })
-          .afterClosed()
-          .toPromise(),
+      .then(
+        (hasError) =>
+          hasError &&
+          this.dialog
+            .open<DialogComponent, DialogData>(DialogComponent, {
+              data: {
+                actions: [null, 'Cerrar'],
+                title: 'Importante',
+                description:
+                  'Para que se apliquen los cambios, el nuevo administrador deberá cerrar sesión y volver a ingresar a su cuenta.',
+                icon: 'info',
+              },
+            })
+            .afterClosed()
+            .toPromise(),
       )
       .then(() => this.getAdmins())
   }
