@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { AuthService } from '../../services/auth/auth.service'
+import { AuthService, ExtraDataSentForm } from '../../services/auth/auth.service'
 import { LocationService } from '../../services/location.service'
 import { ValidationService } from '../../services/validation/validation.service'
 
@@ -67,6 +67,6 @@ export class ExtraDataComponent implements OnInit {
   }
 
   submitExtraData(): void {
-    void this.auth.sendExtraData(this.form.value)
+    void this.auth.sendExtraData(this.form.value as ExtraDataSentForm)
   }
 }
