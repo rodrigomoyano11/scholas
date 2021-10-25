@@ -75,7 +75,7 @@ export class UpdateProjectFormComponent implements OnInit {
 
       this.form.patchValue({
         name,
-        province,
+        province: province.name,
         locality,
         description,
         targetAmount,
@@ -106,7 +106,7 @@ export class UpdateProjectFormComponent implements OnInit {
   // Location
   async setInitialLocationValues(): Promise<void> {
     await this.getProvinces()
-    await this.getLocalitiesByProvince(this.provinceControl.value)
+    await this.getLocalitiesByProvince(this.provinceControl.value as string)
   }
 
   async getProvinces(): Promise<void> {
