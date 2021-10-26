@@ -1,6 +1,7 @@
 <app-header class="header"></app-header>
-<main class="main-content">
-  <div class="main-content__content-limiter">
+
+<main [ngClass]="['main-content', contentWithMargin ? 'with-margin' : '']">
+  <div [ngClass]="['main-content__content-limiter', contentAlignToCenter ? 'align-to-center' : '']">
     <ng-content></ng-content>
   </div>
 </main>
