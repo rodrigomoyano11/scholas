@@ -40,12 +40,3 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class AdminRoutingModule {}
-
-/* 
-
-{ path: 'projects', component: ProjectsComponent },
-
-
-
-
-*/

@@ -80,7 +80,6 @@ export class AuthService {
   }
 
   // Login/Register Methods
-
   async register(provider: Provider, email = '', password = '', displayName = ''): Promise<void> {
     if (displayName !== '') this._displayName = displayName
 
@@ -128,7 +127,6 @@ export class AuthService {
   }
 
   // Verifications
-
   private async _verifyToken(token: User['token']): Promise<boolean> {
     try {
       if (!token) return false
@@ -196,7 +194,6 @@ export class AuthService {
   }
 
   // User data operations
-
   private _getUserData(): void {
     try {
       const idToken$ = idToken(this.auth)
@@ -346,14 +343,6 @@ export class AuthService {
 
       return true
     } catch (error: any) {
-      // const error = {
-      //   message: 'Error generico',
-      //   detail: 'No user record found for the given identifier (USER_NOT_FOUND).',
-      //   code: '1',
-      //   path: '/users/claims/LOoOBqkqAsSsLlGF2UuTLc4VwfZ2',
-      // }
-
-      console.log(error)
       if (error.error.code) {
         this.errorHandler.openDialog(
           error.error.detail === 'No user record found for the given identifier (USER_NOT_FOUND).'
@@ -399,22 +388,7 @@ export class AuthService {
     }
   }
 
-  // TODO: Refactorizar la siguiente función para que reciba el UID desde los argumentos
   async deleteUser(): Promise<void> {
-    // try {
-    //   const { uid } = await this.user$.pipe(take(1)).toPromise()
-
-    //   await this.http
-    //     .delete(`${environment.apiUrl}/users/${uid}`, { responseType: 'text' })
-    //     .toPromise()
-    //   await this.logout()
-    //   this.snackBar.open('Tu cuenta ha sido eliminada correctamente', 'Cerrar', { duration: 5000 })
-    //   return void this.router.navigate(['/'])
-    // } catch (error) {
-    //   void this.snackBar.open('Hubo un error al eliminar tu cuenta', 'Cerrar', { duration: 5000 })
-    //   return void this.router.navigate(['/'])
-    // }
-
     await this.auth.signOut()
     this.snackBar.open('Tu cuenta ha sido eliminada correctamente', 'Cerrar', { duration: 5000 })
     return void this.router.navigate(['/'])
