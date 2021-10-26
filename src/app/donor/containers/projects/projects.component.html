@@ -1,10 +1,12 @@
-<app-modal-container>
-  <app-list-alert
-    description="No se han encontrado proyectos"
-    [alertCondition]="(cardData?.length ?? 0) === 0"
-  >
-    <ng-container *ngFor="let item of cardData">
-      <app-project-card [projectData]="item"> </app-project-card>
-    </ng-container>
-  </app-list-alert>
-</app-modal-container>
+<app-layout>
+  <app-modal-container>
+    <app-list-alert
+      description="No se han encontrado proyectos"
+      [alertCondition]="(cardData?.length ?? 0) === 0"
+    >
+      <ng-container *ngFor="let item of cardData">
+        <app-project-card [projectData]="item"> </app-project-card>
+      </ng-container>
+    </app-list-alert>
+  </app-modal-container>
+</app-layout>
