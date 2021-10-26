@@ -9,7 +9,7 @@ pipeline {
             remote.user = ubuntu
             remote.identityFile = identity
             sshCommand remote: remote, command: 'cd /home/ubuntu/scholas/front_scholas ; git checkout dev ; git pull'
-            sshCommand remote: remote, command: 'cd /home/ubuntu/scholas ; docker-compose build web-app   ; docker-compose up -d'
+            sshCommand remote: remote, command: 'cd /home/ubuntu/scholas ; docker-compose build ; docker-compose up -d'
             sshCommand remote: remote, command: 'docker image prune -af'
           }
         }
