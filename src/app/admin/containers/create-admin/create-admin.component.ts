@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
-import { ValidationService } from 'src/app/auth/services/validation/validation.service'
+import { ValidationService } from 'src/app/shared/services/validation/validation.service'
 import { AdminsService } from '../../services/admins/admins.service'
 
 @Component({
