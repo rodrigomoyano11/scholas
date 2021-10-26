@@ -11,82 +11,82 @@
   <div class="form__container">
     <form class="form" (ngSubmit)="handleSubmit()" [formGroup]="form">
       <div class="form__field-group">
-        <!-- DonationAmount1 -->
+        <!-- amount1 -->
         <mat-form-field class="form__field" appearance="outline">
           <mat-label>Monto N°1</mat-label>
           <input
             matInput
             placeholder="Ingresá el monto de dinero objetivo a recaudar"
-            formControlName="donationAmount1"
+            formControlName="amount1"
           />
           <mat-hint>
             {{
-              getErrors('donationAmount1') !== 'El monto ingresado debe ser un número' &&
-              form.controls['donationAmount1'].value !== ''
-                ? 'El monto N°1 es de ' + (form.controls['donationAmount1'].value | currency: 'ARS')
+              getErrors('amount1') !== 'El monto ingresado debe ser un número' &&
+              form.controls['amount1'].value !== ''
+                ? 'El monto N°1 es de ' + (form.controls['amount1'].value | currency: 'ARS')
                 : ''
             }}
           </mat-hint>
-          <mat-error>{{ getErrors('donationAmount1') }}</mat-error>
+          <mat-error>{{ getErrors('amount1') }}</mat-error>
         </mat-form-field>
 
-        <!-- DonationAmount2 -->
+        <!-- amount2 -->
         <mat-form-field class="form__field" appearance="outline">
           <mat-label>Monto N°2</mat-label>
           <input
             matInput
             placeholder="Ingresá el monto de dinero objetivo a recaudar"
-            formControlName="donationAmount2"
+            formControlName="amount2"
           />
           <mat-hint>
             {{
-              getErrors('donationAmount2') !== 'El monto ingresado debe ser un número' &&
-              form.controls['donationAmount2'].value !== ''
-                ? 'El monto N°2 es de ' + (form.controls['donationAmount2'].value | currency: 'ARS')
+              getErrors('amount2') !== 'El monto ingresado debe ser un número' &&
+              form.controls['amount2'].value !== ''
+                ? 'El monto N°2 es de ' + (form.controls['amount2'].value | currency: 'ARS')
                 : ''
             }}
           </mat-hint>
-          <mat-error>{{ getErrors('donationAmount2') }}</mat-error>
+          <mat-error>{{ getErrors('amount2') }}</mat-error>
         </mat-form-field>
       </div>
 
       <div class="form__field-group">
-        <!-- DonationAmount3 -->
+        <!-- amount3 -->
         <mat-form-field class="form__field" appearance="outline">
           <mat-label>Monto N°3</mat-label>
           <input
             matInput
             placeholder="Ingresá el monto de dinero objetivo a recaudar"
-            formControlName="donationAmount3"
+            formControlName="amount3"
           />
           <mat-hint>
             {{
-              getErrors('donationAmount3') !== 'El monto ingresado debe ser un número' &&
-              form.controls['donationAmount3'].value !== ''
-                ? 'El monto N°3 es de ' + (form.controls['donationAmount3'].value | currency: 'ARS')
+              getErrors('amount3') !== 'El monto ingresado debe ser un número' &&
+              form.controls['amount3'].value !== ''
+                ? 'El monto N°3 es de ' + (form.controls['amount3'].value | currency: 'ARS')
                 : ''
             }}
           </mat-hint>
-          <mat-error>{{ getErrors('donationAmount3') }}</mat-error>
+          <mat-error>{{ getErrors('amount3') }}</mat-error>
         </mat-form-field>
 
-        <!-- DonationAmount4 -->
+        <!-- amount4 -->
         <mat-form-field class="form__field" appearance="outline">
           <mat-label>Monto N°4</mat-label>
           <input
             matInput
             placeholder="Ingresá el monto de dinero objetivo a recaudar"
-            formControlName="donationAmount4"
+            formControlName="amount4"
           />
           <mat-hint>
             {{
-              getErrors('donationAmount4') !== 'El monto ingresado debe ser un número' &&
-              form.controls['donationAmount4'].value !== ''
-                ? 'El monto N°4 es de ' + (form.controls['donationAmount4'].value | currency: 'ARS')
+              getErrors('amount4') !== 'El monto ingresado debe ser un número' &&
+              form.controls['amount4'].value !== ''
+                ? 'El monto N°4 es de ' + (form.controls['amount4'].value | currency: 'ARS')
                 : ''
             }}
           </mat-hint>
-          <mat-error>{{ getErrors('donationAmount4') }}</mat-error>
+          <mat-error>{{ getErrors('amount4') }}</mat-error>
         </mat-form-field>
       </div>
       <!-- Submit -->
