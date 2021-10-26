@@ -1,0 +1,31 @@
+:host {
+  width: 100%;
+}
+
+.title {
+  margin-bottom: 0.5rem;
+
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 32px;
+  text-align: center;
+}
+
+.chart-container {
+  display: flex;
+  width: 100%;
+
+  padding-bottom: 1.5rem;
+}
+
+.chart-container--sm {
+  min-height: 8rem;
+}
+
+.chart-container--md {
+  min-height: 16rem;
+}
+
+.chart-container--lg {
+  min-height: 32rem;
+}
