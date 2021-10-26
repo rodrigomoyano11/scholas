@@ -9,6 +9,8 @@ import { LayoutService } from '../../services/layout/layout.service'
 export class ModalContainerComponent {
   @Input() size!: 'small' | 'medium' | 'large'
   @Input() withPadding = true
+  @Input() withBorderRadius = true
+  @Input() adjustHeight = false
   @Input() backgroundColor = '#fff'
   @Input() padding!: string
 
