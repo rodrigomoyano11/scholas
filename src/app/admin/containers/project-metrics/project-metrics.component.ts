@@ -62,4 +62,8 @@ export class ProjectMetricsComponent implements OnInit {
       this.projectData = await this.projects.getProject(Number(this.selectedProjectId)).toPromise()
     }
   }
+
+  goToCharts(): void {
+    void this.router.navigate(['admin/metrics/charts', this.selectedProjectId])
+  }
 }
