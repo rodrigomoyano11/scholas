@@ -35,18 +35,18 @@ export class ValidationService {
   isValidTargetAmount(): ValidatorFn {
     const RegExp = /^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$/
 
-    return (control) => (RegExp.test(control.value) ? null : { targetAmount: true })
+    return (control) => (RegExp.test(control.value as string) ? null : { targetAmount: true })
   }
 
   isNumber(): ValidatorFn {
     const RegExp = /^-?\d*\.?\d*$/
 
-    return (control) => (RegExp.test(control.value) ? null : { number: true })
+    return (control) => (RegExp.test(control.value as string) ? null : { number: true })
   }
   isValidLink(): ValidatorFn {
     const RegExp =
       /^$|(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
 
-    return (control) => (RegExp.test(control.value) ? null : { link: true })
+    return (control) => (RegExp.test(control.value as string) ? null : { link: true })
   }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { LocationService } from 'src/app/shared/services/location/location.service'
+import { ValidationService } from 'src/app/shared/services/validation/validation.service'
 import { ProjectsService } from '../../../shared/services/projects/projects.service'
-import { ValidationService } from '../../services/validation/validation.service'
 
 @Component({
   selector: 'app-create-project-form',

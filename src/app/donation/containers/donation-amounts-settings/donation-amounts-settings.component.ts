@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { ValidationService } from 'src/app/admin/services/validation/validation.service'
+import { ValidationService } from 'src/app/shared/services/validation/validation.service'
 
 @Component({
   selector: 'app-donation-amounts-settings',
