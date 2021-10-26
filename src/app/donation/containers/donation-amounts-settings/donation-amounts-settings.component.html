@@ -21,6 +21,7 @@
           />
           <mat-hint>
             {{
+              getErrors('donationAmount1') !== 'El monto ingresado debe ser un número' &&
               form.controls['donationAmount1'].value !== ''
                 ? 'El monto N°1 es de ' + (form.controls['donationAmount1'].value | currency: 'ARS')
                 : ''
@@ -39,6 +40,7 @@
           />
           <mat-hint>
             {{
+              getErrors('donationAmount2') !== 'El monto ingresado debe ser un número' &&
               form.controls['donationAmount2'].value !== ''
                 ? 'El monto N°2 es de ' + (form.controls['donationAmount2'].value | currency: 'ARS')
                 : ''
@@ -59,6 +61,7 @@
           />
           <mat-hint>
             {{
+              getErrors('donationAmount3') !== 'El monto ingresado debe ser un número' &&
               form.controls['donationAmount3'].value !== ''
                 ? 'El monto N°3 es de ' + (form.controls['donationAmount3'].value | currency: 'ARS')
                 : ''
@@ -77,6 +80,7 @@
           />
           <mat-hint>
             {{
+              getErrors('donationAmount4') !== 'El monto ingresado debe ser un número' &&
               form.controls['donationAmount4'].value !== ''
                 ? 'El monto N°4 es de ' + (form.controls['donationAmount4'].value | currency: 'ARS')
                 : ''
