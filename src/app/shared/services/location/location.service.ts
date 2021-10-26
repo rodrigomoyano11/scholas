@@ -1,11 +1,8 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import {
-  GetProvincesAndLocalitiesResponse,
-  GetProvincesResponse,
-} from 'src/app/shared/models/api.interface'
-import { Location } from 'src/app/shared/models/location.interface'
-import { environment } from '../../../environments/environment'
+import { environment } from 'src/environments/environment'
+import { GetProvincesAndLocalitiesResponse, GetProvincesResponse } from '../../models/api.interface'
+import { Location } from '../../models/location.interface'
 
 @Injectable({
   providedIn: 'root',

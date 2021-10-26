@@ -31,8 +31,9 @@ import {
   CreateUserResponse,
   GetUserResponse,
 } from 'src/app/shared/models/api.interface'
-import { LocationService } from '../location.service'
+
 import { UpdateAccountDetailsForm } from '../../containers/update-account-details/update-account-details.component'
+import { LocationService } from 'src/app/shared/services/location/location.service'
 
 export type Provider = 'google' | 'facebook' | 'email'
 
