@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
+import { IsAdminGuard } from './shared/guards/isAdmin/is-admin.guard'
+import { IsLoggedGuard } from './shared/guards/isLogged/is-logged.guard'
 
 const routes: Routes = [
   {
@@ -21,6 +23,7 @@ const routes: Routes = [
   },
   {
     path: 'admin',
+    canLoad: [IsLoggedGuard, IsAdminGuard],
     loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
   },
   {

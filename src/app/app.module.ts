@@ -12,6 +12,7 @@ import { MatDialogModule } from '@angular/material/dialog'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { registerLocaleData } from '@angular/common'
 import AR from '@angular/common/locales/es-AR'
+import { IsLoggedGuard } from './shared/guards/isLogged/is-logged.guard'
 
 registerLocaleData(AR)
 
@@ -28,7 +29,7 @@ registerLocaleData(AR)
     provideAuth(() => getAuth()),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'es-AR' }],
+  providers: [{ provide: LOCALE_ID, useValue: 'es-AR' }, IsLoggedGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
