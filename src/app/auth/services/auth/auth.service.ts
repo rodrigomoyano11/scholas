@@ -355,6 +355,22 @@ export class AuthService {
     }
   }
 
+  // Verifications
+  async userIsLogged(): Promise<boolean> {
+    const user = await this.user$.pipe(take(1)).toPromise()
+    return !!user.token
+  }
+
+  async userIsAdmin(): Promise<boolean> {
+    const user = await this.user$.pipe(take(1)).toPromise()
+    return user.claims?.admin ?? false
+  }
+
+  async userIsDonor(): Promise<boolean> {
+    const user = await this.user$.pipe(take(1)).toPromise()
+    return user.claims?.donor ?? false
+  }
+
   // Others operations
 
   async logout(): Promise<void> {
