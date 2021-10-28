@@ -121,15 +121,28 @@ export type GetProjectsResponse = GetProjectResponse[]
 export type GetProjectResponse = CreateProjectResponse
 
 // Utils
-
 export type GetProvincesAndLocalitiesResponse = [
   {
     name: string
     localities: string[]
   },
 ]
-
 export type GetProvincesResponse = {
   id: number
   name: string
 }[]
+
+export type GetDonationAmountsResponse = {
+  id: number
+  amount1: number
+  amount2: number
+  amount3: number
+  amount4: number
+}[]
+
+export interface EditDonationAmountsRequest {
+  amount1: number
+  amount2: number
+  amount3: number
+  amount4: number
+}

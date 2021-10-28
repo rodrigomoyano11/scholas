@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { Router } from '@angular/router'
 import { Observable } from 'rxjs'
-import { LocationService } from 'src/app/auth/services/location.service'
 import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
 import {
   CreateProjectRequest,
@@ -16,6 +15,7 @@ import {
 
 import { Project } from 'src/app/shared/models/project.interface'
 import { environment } from 'src/environments/environment'
+import { LocationService } from '../location/location.service'
 
 interface ProjectFormData {
   name: string

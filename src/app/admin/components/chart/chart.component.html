@@ -1,0 +1,29 @@
+<h2 class="title">{{ title }}</h2>
+
+<div [class]="['chart-container', 'chart-container--' + size]">
+  <ngx-charts-bar-vertical
+    class="chart"
+    *ngIf="type === 'vertical'"
+    [scheme]="colorScheme"
+    [results]="data"
+    [xAxis]="true"
+    [yAxis]="true"
+    [showGridLines]="false"
+    [rotateXAxisTicks]="false"
+    [barPadding]="12"
+  >
+  </ngx-charts-bar-vertical>
+
+  <ngx-charts-bar-horizontal
+    class="chart"
+    *ngIf="type === 'horizontal'"
+    [scheme]="colorScheme"
+    [results]="data"
+    [xAxis]="true"
+    [yAxis]="true"
+    [showGridLines]="false"
+    [rotateXAxisTicks]="false"
+    [barPadding]="12"
+  >
+  </ngx-charts-bar-horizontal>
+</div>

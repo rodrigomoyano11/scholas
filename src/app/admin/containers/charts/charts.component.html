@@ -1,1 +1,18 @@
-<p>charts works!</p>
+<app-modal-container>
+  <!-- [title]="projectData.name"
+    -->
+  <app-toolbar
+    title="Gráficos"
+    [fullWidth]="true"
+    [titleAlignCenter]="true"
+    [backButton]="backButtonAction"
+  ></app-toolbar>
+
+  <div class="content">
+    <app-chart title="Provincia" type="horizontal" [data]="provincesData" size="lg"></app-chart>
+    <app-chart title="Edad" type="vertical" [data]="agesData"></app-chart>
+    <app-chart title="Importe donado" type="vertical" [data]="donationAmountsData"></app-chart>
+  </div>
+
+  <p>El segundo valor del rango no se incluye en la columna, sino en la siguiente</p>
+</app-modal-container>

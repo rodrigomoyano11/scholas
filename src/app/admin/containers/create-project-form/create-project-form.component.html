@@ -65,6 +65,7 @@
           />
           <mat-hint>
             {{
+              getErrors('targetAmount') !== 'El monto ingresado debe ser un número' &&
               form.controls['targetAmount'].value !== ''
                 ? 'El monto objetivo sería de ' +
                   (form.controls['targetAmount'].value | currency: 'ARS')

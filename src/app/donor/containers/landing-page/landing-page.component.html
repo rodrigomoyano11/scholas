@@ -1,0 +1,78 @@
+<app-layout [contentWithMargin]="false" [contentAlignToCenter]="false">
+  <app-modal-container
+    class="main-container"
+    [withBorderRadius]="false"
+    [adjustHeight]="true"
+    [withPadding]="false"
+  >
+    <section class="hero">
+      <div class="hero__content">
+        <div class="hero__caption">
+          <h2 class="title mat-display-1">La cultura del encuentro</h2>
+
+          <div class="line__container">
+            <div class="line line--sm"></div>
+            <div class="line"></div>
+            <div class="line line--sm"></div>
+          </div>
+        </div>
+      </div>
+      <button
+        class="button button--CTA"
+        type="button"
+        [color]="'primary'"
+        mat-flat-button
+        (click)="donateToProject()"
+      >
+        Donar
+      </button>
+    </section>
+
+    <section class="main-content">
+      <section class="section">
+        <h2 class="title">Un llamado a crear la cultura del encuentro</h2>
+        <div class="line__container">
+          <div class="line"></div>
+          <div class="line line--sm"></div>
+        </div>
+        <p class="mat-h3">
+          Desde sus inicios, el Papa Francisco soñó Scholas como la posibilidad de dar una respuesta
+          concreta al llamado de esta época, confiriéndole la tarea de educar en la apertura al
+          otro, en la escucha que al reunir los pedazos de un mundo atomizado y vacío de sentido,
+          comience a crear una nueva cultura: la cultura del encuentro.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2 class="title">Lo que hacemos</h2>
+        <div class="line__container">
+          <div class="line"></div>
+          <div class="line line--sm"></div>
+        </div>
+
+        <app-alert-message
+          class="alert-message"
+          *ngIf="(cardData?.length ?? 0) === 0; else projects"
+          description="No se han encontrado proyectos"
+        ></app-alert-message>
+      </section>
+    </section>
+  </app-modal-container>
+</app-layout>
+
+<ng-template #projects>
+  <div class="projects__container">
+    <ng-container *ngFor="let item of cardData.slice(0, 3)">
+      <app-project-card [projectData]="item" class="project"> </app-project-card>
+    </ng-container>
+    <button
+      class="button"
+      type="button"
+      [color]="'primary'"
+      mat-stroked-button
+      (click)="donateToProject()"
+    >
+      Ver más proyectos
+    </button>
+  </div>
+</ng-template>

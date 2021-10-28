@@ -31,8 +31,9 @@ import {
   CreateUserResponse,
   GetUserResponse,
 } from 'src/app/shared/models/api.interface'
-import { LocationService } from '../location.service'
+
 import { UpdateAccountDetailsForm } from '../../containers/update-account-details/update-account-details.component'
+import { LocationService } from 'src/app/shared/services/location/location.service'
 
 export type Provider = 'google' | 'facebook' | 'email'
 
@@ -79,7 +80,6 @@ export class AuthService {
   }
 
   // Login/Register Methods
-
   async register(provider: Provider, email = '', password = '', displayName = ''): Promise<void> {
     if (displayName !== '') this._displayName = displayName
 
@@ -101,7 +101,10 @@ export class AuthService {
       isNewUser = getAdditionalUserInfo(credential)?.isNewUser ?? false
 
       const token = await getIdToken(credential.user)
-      const isVerifiedToken = await this._verifyToken(token)
+
+      localStorage.setItem('token', token)
+
+      const isVerifiedToken = await this.verifyToken(token)
 
       if (!isVerifiedToken) return this.logout()
 
@@ -127,8 +130,7 @@ export class AuthService {
   }
 
   // Verifications
-
-  private async _verifyToken(token: User['token']): Promise<boolean> {
+  async verifyToken(token: User['token']): Promise<boolean> {
     try {
       if (!token) return false
 
@@ -195,7 +197,6 @@ export class AuthService {
   }
 
   // User data operations
-
   private _getUserData(): void {
     try {
       const idToken$ = idToken(this.auth)
@@ -207,7 +208,11 @@ export class AuthService {
           return
         }
 
-        void getIdTokenResult(currentUser).then(({ claims }) => {
+        void getIdTokenResult(currentUser).then(({ claims, token }) => {
+          localStorage.setItem('token', token)
+
+          localStorage.setItem('claims', claims.admin ? 'admin' : 'donor')
+
           const { uid, displayName, photoURL, email, phoneNumber, emailVerified } = currentUser
 
           this._userData = {
@@ -345,14 +350,6 @@ export class AuthService {
 
       return true
     } catch (error: any) {
-      // const error = {
-      //   message: 'Error generico',
-      //   detail: 'No user record found for the given identifier (USER_NOT_FOUND).',
-      //   code: '1',
-      //   path: '/users/claims/LOoOBqkqAsSsLlGF2UuTLc4VwfZ2',
-      // }
-
-      console.log(error)
       if (error.error.code) {
         this.errorHandler.openDialog(
           error.error.detail === 'No user record found for the given identifier (USER_NOT_FOUND).'
@@ -365,11 +362,36 @@ export class AuthService {
     }
   }
 
+  // Verifications
+
+  async isTokenVerified(): Promise<boolean> {
+    const token = localStorage.getItem('token')
+    return await this.verifyToken(token)
+  }
+
+  async userIsLogged(): Promise<boolean> {
+    const user = await this.user$.pipe(take(1)).toPromise()
+
+    return !!user.token
+  }
+
+  async userIsAdmin(): Promise<boolean> {
+    const user = await this.user$.pipe(take(1)).toPromise()
+    return (await this.isTokenVerified()) && (user.claims?.admin ?? false)
+  }
+
+  async userIsDonor(): Promise<boolean> {
+    const user = await this.user$.pipe(take(1)).toPromise()
+    return user.claims?.donor ?? false
+  }
+
   // Others operations
 
   async logout(): Promise<void> {
     try {
       await this.auth.signOut()
+      localStorage.removeItem('token')
+      localStorage.removeItem('claims')
       this._displayName = null
       this.snackBar.open('Se ha cerrado tu sesión correctamente', 'Cerrar', { duration: 5000 })
       return void this.router.navigate(['/'])
@@ -398,28 +420,18 @@ export class AuthService {
     }
   }
 
-  // TODO: Refactorizar la siguiente función para que reciba el UID desde los argumentos
   async deleteUser(): Promise<void> {
-    // try {
-    //   const { uid } = await this.user$.pipe(take(1)).toPromise()
-
-    //   await this.http
-    //     .delete(`${environment.apiUrl}/users/${uid}`, { responseType: 'text' })
-    //     .toPromise()
-    //   await this.logout()
-    //   this.snackBar.open('Tu cuenta ha sido eliminada correctamente', 'Cerrar', { duration: 5000 })
-    //   return void this.router.navigate(['/'])
-    // } catch (error) {
-    //   void this.snackBar.open('Hubo un error al eliminar tu cuenta', 'Cerrar', { duration: 5000 })
-    //   return void this.router.navigate(['/'])
-    // }
-
     await this.auth.signOut()
+    localStorage.removeItem('token')
+    localStorage.removeItem('claims')
     this.snackBar.open('Tu cuenta ha sido eliminada correctamente', 'Cerrar', { duration: 5000 })
     return void this.router.navigate(['/'])
   }
 
   async _updateUser(): Promise<void> {
-    this._user && (await getIdToken(this._user, true))
+    if (this._user) {
+      const token = await getIdToken(this._user, true)
+      localStorage.setItem('token', token)
+    }
   }
 }

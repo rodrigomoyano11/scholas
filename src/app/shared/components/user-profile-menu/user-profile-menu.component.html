@@ -11,8 +11,12 @@
     <mat-icon fontSet="material-icons-outlined">account_circle</mat-icon>
     Mi cuenta
   </button>
-  <button type="button" mat-menu-item [matMenuTriggerFor]="management">
-    <!-- *ngIf="(auth.user$ | async)?.claims?.admin ?? false" -->
+  <button
+    type="button"
+    mat-menu-item
+    [matMenuTriggerFor]="management"
+    *ngIf="(auth.user$ | async)?.claims?.admin ?? false"
+  >
     <mat-icon fontSet="material-icons-outlined">settings</mat-icon>
     Configuración
   </button>

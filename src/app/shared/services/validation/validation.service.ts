@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-
 import { Injectable } from '@angular/core'
 import { AbstractControl, ValidatorFn } from '@angular/forms'
 import { PhoneNumberUtil } from 'google-libphonenumber'
@@ -18,6 +17,10 @@ export class ValidationService {
     const errors: string[] = []
 
     const messages: { [key: string]: string } = {
+      name: `Ingresá un nombre válido`,
+      link: `Ingresá un enlace válido`,
+      number: `El monto ingresado debe ser un número`,
+      targetAmount: `El monto ingresado debe ser mayor a cero`,
       email: `Ingresá un correo electrónico válido`,
       phoneNumber: `Ingresá un número de teléfono válido`,
       required: `Este campo es obligatorio`,
@@ -46,26 +49,20 @@ export class ValidationService {
   isValidFirstName(): ValidatorFn {
     const RegExp = /^(?=.{1,40}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$/
 
-    return (control) => (RegExp.test(control.value) ? null : { firstName: true })
+    return (control) => (RegExp.test(control.value as string) ? null : { firstName: true })
   }
 
   isValidLastName(): ValidatorFn {
     const RegExp = /^(?=.{1,40}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$/
 
-    return (control) => (RegExp.test(control.value) ? null : { lastName: true })
+    return (control) => (RegExp.test(control.value as string) ? null : { lastName: true })
   }
 
   isValidEmail(): ValidatorFn {
     const RegExp =
       /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+[^<>()\.,;:\s@\"]{2,})$/
 
-    return (control) => (RegExp.test(control.value) ? null : { email: true })
-  }
-
-  isStrongPassword(): ValidatorFn {
-    const RegExp = /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])/
-
-    return (control) => (RegExp.test(control.value) ? null : { strongPassword: true })
+    return (control) => (RegExp.test(control.value as string) ? null : { email: true })
   }
 
   isValidPhoneNumber(regionCode = 'AR'): ValidatorFn {
@@ -74,11 +71,20 @@ export class ValidationService {
 
     return (control) => {
       try {
-        const phoneNumber = phoneNumberUtil.parseAndKeepRawInput(control.value, regionCode)
+        const phoneNumber = phoneNumberUtil.parseAndKeepRawInput(
+          control.value as string,
+          regionCode,
+        )
         validNumber = phoneNumberUtil.isValidNumberForRegion(phoneNumber, regionCode)
       } catch (e) {}
       return validNumber ? null : { phoneNumber: true }
     }
+  }
+
+  isStrongPassword(): ValidatorFn {
+    const RegExp = /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])/
+
+    return (control) => (RegExp.test(control.value as string) ? null : { strongPassword: true })
   }
 
   isControlsMatch(controlName: string, matchingControlName: string) {
@@ -94,5 +100,24 @@ export class ValidationService {
         return matchingControl?.setErrors({ matchPassword: true })
       }
     }
+  }
+
+  isValidTargetAmount(): ValidatorFn {
+    const RegExp = /^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$/
+
+    return (control) => (RegExp.test(control.value as string) ? null : { targetAmount: true })
+  }
+
+  isNumber(): ValidatorFn {
+    const RegExp = /^-?\d*\.?\d*$/
+
+    return (control) => (RegExp.test(control.value as string) ? null : { number: true })
+  }
+
+  isValidLink(): ValidatorFn {
+    const RegExp =
+      /^$|(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+
+    return (control) => (RegExp.test(control.value as string) ? null : { link: true })
   }
 }

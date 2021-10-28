@@ -6,7 +6,6 @@ import { CreateProjectFormComponent } from './containers/create-project-form/cre
 import { UpdateProjectFormComponent } from './containers/update-project-form/update-project-form.component'
 import { HomeComponent } from './containers/home/home.component'
 import { CreateAdminComponent } from './containers/create-admin/create-admin.component'
-import { ProjectDetailsComponent } from '../shared/containers/project-details/project-details.component'
 import { ProjectsComponent } from './containers/projects/projects.component'
 import { MetricsProjectListComponent } from './containers/metrics-project-list/metrics-project-list.component'
 import { ProjectMetricsComponent } from './containers/project-metrics/project-metrics.component'
@@ -22,7 +21,6 @@ const routes: Routes = [
 
       { path: 'projects', component: ProjectsComponent },
       { path: 'projects/create', component: CreateProjectFormComponent },
-      { path: 'projects/read/:id', component: ProjectDetailsComponent },
       { path: 'projects/update/:id', component: UpdateProjectFormComponent },
 
       { path: 'metrics', component: MetricsProjectListComponent },
@@ -40,12 +38,3 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class AdminRoutingModule {}
-
-/* 
-
-{ path: 'projects', component: ProjectsComponent },
-
-
-
-
-*/

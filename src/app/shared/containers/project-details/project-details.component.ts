@@ -14,10 +14,8 @@ import { ProjectsService } from '../../services/projects/projects.service'
   styleUrls: ['./project-details.component.css'],
 })
 export class ProjectDetailsComponent implements OnInit, OnChanges {
-  toolbarButtons: ToolbarButtons = []
+  toolbarButtons!: ToolbarButtons
   toolbarBackButton!: BackButton
-
-  userIsAdmin = true
 
   projectIsPrivate!: boolean
 
@@ -35,7 +33,6 @@ export class ProjectDetailsComponent implements OnInit, OnChanges {
 
   async ngOnInit(): Promise<void> {
     await this.getProjectData()
-    // this.auth.user$.subscribe((user) => (this.userIsAdmin = !(user.claims?.admin ?? false)))
   }
 
   ngOnChanges(): void {
@@ -47,7 +44,11 @@ export class ProjectDetailsComponent implements OnInit, OnChanges {
       this.projectData = await this.projects.getProject(Number(this.selectedProjectId)).toPromise()
       this.projectIsPrivate = this.projectData.visibility === 'PRIVATE'
 
-      const adminButtons: ToolbarButtons = [
+      this.toolbarBackButton = (await this.auth.userIsAdmin())
+        ? (): void => void this.router.navigate(['/admin/projects'])
+        : (): void => void this.router.navigate(['/donor/projects'])
+
+      this.toolbarButtons = [
         {
           style: 'secondary',
           data: [
@@ -65,7 +66,8 @@ export class ProjectDetailsComponent implements OnInit, OnChanges {
               icon: 'analytics',
               action: {
                 type: 'button',
-                click: (): void => void this.router.navigate(['/admin/metrics']),
+                click: (): void =>
+                  void this.router.navigate(['/admin/metrics/overview', this.projectData.id]),
               },
             },
             {
@@ -83,11 +85,6 @@ export class ProjectDetailsComponent implements OnInit, OnChanges {
           ],
         },
       ]
-
-      this.toolbarButtons = this.userIsAdmin ? adminButtons : []
-      this.toolbarBackButton = this.userIsAdmin
-        ? (): void => void this.router.navigate(['/admin/projects'])
-        : (): void => void this.router.navigate(['/donor/projects'])
     }
   }
 

@@ -5,8 +5,8 @@ import { Router } from '@angular/router'
 import { GetUserResponse } from 'src/app/shared/models/api.interface'
 import { environment } from 'src/environments/environment'
 import { AuthService } from '../../services/auth/auth.service'
-import { LocationService } from '../../services/location.service'
-import { ValidationService } from '../../services/validation/validation.service'
+import { LocationService } from '../../../shared/services/location/location.service'
+import { ValidationService } from 'src/app/shared/services/validation/validation.service'
 
 export interface UpdateAccountDetailsForm {
   fullName: string

@@ -1,5 +1,9 @@
+import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
+import { GetDonationAmountsResponse } from 'src/app/shared/models/api.interface'
 import { Donation } from 'src/app/shared/models/donation.interface'
+import { environment } from 'src/environments/environment'
+import { DonationAmountSettingsForm } from '../../containers/donation-amounts-settings/donation-amounts-settings.component'
 
 export interface DonationTest {
   id: string
@@ -75,6 +79,13 @@ export class DonationsService {
     },
   ]
 
+  donationAmountsConfig!: number[]
+
+  constructor(private http: HttpClient) {
+    void this.getDonationAmounts()
+  }
+
+  // Donations
   getDonations(): DonationTest[] {
     return this._donations
   }
@@ -84,5 +95,29 @@ export class DonationsService {
 
   getDonation(id: string): DonationTest | null {
     return this._donations.find((donation) => donation.id === id) ?? null
+  }
+
+  // Donation Amounts
+
+  async getDonationAmounts(): Promise<void> {
+    const response = (
+      await this.http
+        .get<GetDonationAmountsResponse>(`${environment.apiUrl}/amount?id=1`)
+        .toPromise()
+    )[0]
+    this.donationAmountsConfig = [
+      response.amount1,
+      response.amount2,
+      response.amount3,
+      response.amount4,
+    ]
+  }
+  async editDonationAmounts(amountsConfig: DonationAmountSettingsForm): Promise<void> {
+    const { amount1, amount2, amount3, amount4 } = amountsConfig
+
+    const body = { amount1, amount2, amount3, amount4 }
+
+    await this.http.put(`${environment.apiUrl}/amount?id=1`, body).toPromise()
+    await this.getDonationAmounts()
   }
 }

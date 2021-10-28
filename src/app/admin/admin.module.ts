@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
 import { MatListModule } from '@angular/material/list'
 import { MatMenuModule } from '@angular/material/menu'
+import { NgxChartsModule } from '@swimlane/ngx-charts'
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatRippleModule } from '@angular/material/core'
 import { MatSelectModule } from '@angular/material/select'
@@ -27,6 +28,7 @@ import { ProjectsComponent } from './containers/projects/projects.component'
 import { ReactiveFormsModule } from '@angular/forms'
 import { SharedModule } from '../shared/shared.module'
 import { UpdateProjectFormComponent } from './containers/update-project-form/update-project-form.component'
+import { ChartComponent } from './components/chart/chart.component'
 
 @NgModule({
   declarations: [
@@ -42,11 +44,13 @@ import { UpdateProjectFormComponent } from './containers/update-project-form/upd
     ProjectMetricsComponent,
     ProjectsComponent,
     UpdateProjectFormComponent,
+    ChartComponent,
   ],
   imports: [
     AdminRoutingModule,
     CommonModule,
     MatButtonModule,
+    NgxChartsModule,
     MatCardModule,
     MatCheckboxModule,
     MatIconModule,

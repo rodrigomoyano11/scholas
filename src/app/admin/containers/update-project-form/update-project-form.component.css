@@ -47,7 +47,7 @@
   width: 100%;
   padding-bottom: 1.5rem;
 
-  color: rgb(100, 100, 100);
+  color: rgb(100 100 100);
 }
 
 .img__heading {
@@ -67,7 +67,7 @@
 .img__action {
   margin: 2rem;
 
-  color: rgb(150, 150, 150);
+  color: rgb(150 150 150);
 }
 
 .img__note {

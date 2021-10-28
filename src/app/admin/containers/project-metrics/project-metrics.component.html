@@ -26,7 +26,13 @@
       ></app-metrics-numbers>
     </div>
 
-    <button class="header-button" type="button" [color]="'primary'" mat-stroked-button>
+    <button
+      class="header-button"
+      type="button"
+      [color]="'primary'"
+      mat-stroked-button
+      (click)="goToCharts()"
+    >
       Ver gráficos
     </button>
 

@@ -25,6 +25,12 @@
   justify-self: flex-end;
 }
 
+@media screen and (max-width: 960px) {
+  .logo {
+    padding: 0.25rem 0;
+  }
+}
+
 @media screen and (min-width: 960px) {
   .header__content-limiter {
     grid-template-columns: repeat(3, 1fr);

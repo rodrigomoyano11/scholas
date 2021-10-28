@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { NotFoundComponent } from '../shared/containers/not-found/not-found.component'
+import { IsLoggedGuard } from '../shared/guards/isLogged/is-logged.guard'
 import { AccountDetailsComponent } from './containers/account-details/account-details.component'
 import { ExtraDataComponent } from './containers/extra-data/extra-data.component'
 import { ForgotPasswordComponent } from './containers/forgot-password/forgot-password.component'
@@ -16,14 +17,22 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       { path: 'register', component: RegisterComponent },
-      { path: 'login', component: LoginComponent },
+      {
+        path: 'login',
+        component: LoginComponent,
+        children: [{ path: '**', component: LoginComponent }],
+      },
       { path: 'forgot-password', component: ForgotPasswordComponent },
-      { path: 'verify-email', component: VerifyEmailComponent },
-      { path: 'account', component: AccountDetailsComponent },
+      { path: 'verify-email', canActivate: [IsLoggedGuard], component: VerifyEmailComponent },
+      { path: 'account', component: AccountDetailsComponent, canActivate: [IsLoggedGuard] },
 
-      { path: 'account/update', component: UpdateAccountDetailsComponent },
+      {
+        path: 'account/update',
+        canActivate: [IsLoggedGuard],
+        component: UpdateAccountDetailsComponent,
+      },
 
-      { path: 'extra-data', component: ExtraDataComponent },
+      { path: 'extra-data', canActivate: [IsLoggedGuard], component: ExtraDataComponent },
 
       { path: '**', component: NotFoundComponent },
     ],

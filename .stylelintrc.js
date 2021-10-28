@@ -7,6 +7,7 @@ module.exports = {
     'no-eol-whitespace': [true, { ignore: ['empty-lines'] }],
     'no-empty-source': null,
     'selector-class-pattern': null,
+    'string-quotes': 'single',
     'declaration-empty-line-before': [
       'always',
       {

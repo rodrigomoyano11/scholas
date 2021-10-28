@@ -8,9 +8,10 @@ import { MatListModule } from '@angular/material/list'
 import { NgModule } from '@angular/core'
 import { ProjectsComponent } from './containers/projects/projects.component'
 import { SharedModule } from '../shared/shared.module'
+import { LandingPageComponent } from './containers/landing-page/landing-page.component'
 
 @NgModule({
-  declarations: [HomeComponent, ProjectsComponent, DonationsComponent],
+  declarations: [HomeComponent, ProjectsComponent, DonationsComponent, LandingPageComponent],
   imports: [
     CommonModule,
     DonorRoutingModule,
