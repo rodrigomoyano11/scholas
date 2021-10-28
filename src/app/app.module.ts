@@ -13,6 +13,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { registerLocaleData } from '@angular/common'
 import AR from '@angular/common/locales/es-AR'
 import { IsLoggedGuard } from './shared/guards/isLogged/is-logged.guard'
+import { SharedModule } from './shared/shared.module'
 
 registerLocaleData(AR)
 
@@ -26,6 +27,7 @@ registerLocaleData(AR)
     HttpClientModule,
     MatDialogModule,
     MatSnackBarModule,
+    SharedModule,
     provideAuth(() => getAuth()),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
   ],

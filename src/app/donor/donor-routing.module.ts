@@ -9,16 +9,14 @@ import { LandingPageComponent } from './containers/landing-page/landing-page.com
 import { ProjectsComponent } from './containers/projects/projects.component'
 
 const routes: Routes = [
+  { path: '', pathMatch: 'full', component: LandingPageComponent },
   {
     path: '',
     component: HomeComponent,
     children: [
-      { path: '', component: LandingPageComponent },
-
       {
         path: 'projects',
         component: ProjectsComponent,
-        canActivate: [IsLoggedGuard, IsDonorGuard],
       },
 
       {

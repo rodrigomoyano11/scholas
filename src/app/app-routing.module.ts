@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
+import { ProjectDetailsComponent } from './shared/containers/project-details/project-details.component'
 import { IsAdminGuard } from './shared/guards/isAdmin/is-admin.guard'
 import { IsLoggedGuard } from './shared/guards/isLogged/is-logged.guard'
 
@@ -9,6 +10,7 @@ const routes: Routes = [
     pathMatch: 'full',
     redirectTo: 'donor',
   },
+  { path: 'projects/read/:id', component: ProjectDetailsComponent },
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
