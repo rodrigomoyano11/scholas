@@ -17,7 +17,6 @@ const routes: Routes = [
       {
         path: 'donate/:id',
         canActivate: [IsLoggedGuard, IsDonorGuard],
-        data: { redirectTo: '/donor/projects', withId: false },
         component: NewDonationComponent,
       },
       {
@@ -25,7 +24,6 @@ const routes: Routes = [
         canActivate: [IsLoggedGuard, IsDonorGuard],
         component: NewDonationComponent,
       },
-
       {
         path: 'certificate/:id',
         canActivate: [IsLoggedGuard, IsDonorGuard],
