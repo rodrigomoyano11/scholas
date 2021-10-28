@@ -11,38 +11,15 @@
 </button>
 
 <mat-menu #mainMenu="matMenu">
-  <!-- Sections -->
-  <button type="button" mat-menu-item>
+  <button type="button" mat-menu-item [routerLink]="'/donor'">
+    <mat-icon fontSet="material-icons-outlined">home</mat-icon>
+    Inicio
+  </button>
+
+  <button type="button" mat-menu-item [routerLink]="'/donor/projects'">
     <mat-icon fontSet="material-icons-outlined">work_outline</mat-icon>
     Proyectos
   </button>
-  <!-- <button type="button" mat-menu-item>
-    <mat-icon fontSet="material-icons-outlined">people</mat-icon>
-    Quienes somos
-  </button>
-  <button type="button" mat-menu-item>
-    <mat-icon fontSet="material-icons-outlined">help_outline</mat-icon>
-    Preguntas frecuentes
-  </button>
-  <button type="button" mat-menu-item>
-    <mat-icon fontSet="material-icons-outlined">mail</mat-icon>
-    Contacto
-  </button> -->
-
-  <!-- Navigation -->
-
-  <!-- <mat-divider></mat-divider>
-  <ng-container
-    *ngFor="
-      let item of (auth.user$ | async)?.isLogged && (auth.user$ | async)?.claims?.admin
-        ? adminItems
-        : donorItems
-    "
-  >
-    <button type="button" class="mobile-menu__item" mat-menu-item [routerLink]="item.link">
-      {{ item.name }}
-    </button>
-  </ng-container> -->
 </mat-menu>
 
 <!-- Desktop Menu -->
