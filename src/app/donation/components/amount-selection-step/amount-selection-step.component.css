@@ -32,7 +32,7 @@
   align-items: center;
   height: 4rem;
 
-  border: 0.03125rem solid #30aaa6 !important;
+  border: 0.0312rem solid #30aaa6 !important;
   border-radius: 0.25rem;
 
   color: #30aaa6;
@@ -45,7 +45,7 @@
 .mat-button-toggle-checked {
   border: 0.125rem solid #009993 !important;
 
-  background-color: rgb(245, 245, 245);
+  background-color: rgb(245 245 245);
 
   color: #009993;
 }

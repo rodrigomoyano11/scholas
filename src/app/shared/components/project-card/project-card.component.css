@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   height: min-content;
 
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  border: 1px solid rgb(0 0 0 / 12%);
 
   box-shadow: none;
 }
@@ -53,7 +53,7 @@
 }
 
 .description {
-  display: -webkit-box;
+  display: box;
 
   overflow: hidden;
 
