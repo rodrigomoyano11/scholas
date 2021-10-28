@@ -8,21 +8,20 @@ type GuardResult = Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | 
 @Injectable({
   providedIn: 'root',
 })
-export class IsAnonymousGuard implements CanActivate, CanActivateChild, CanLoad {
+export class IsNotAdminGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(private auth: AuthService, private router: Router) {}
 
   // General
   async hasPermissions(): Promise<boolean> {
     try {
-      const conditions = await Promise.all([
-        this.auth.userIsLogged(),
-        this.auth.userIsDonor(),
-        this.auth.userIsAdmin(),
-      ])
+      const userIsAdmin = await this.auth.userIsAdmin()
+      const response = !userIsAdmin
 
-      const response = conditions.every((condition) => condition === false)
-      if (!response) void this.router.navigate(['/auth/login'])
-      return response
+      if (!response) {
+        void this.router.navigate(['/admin/projects'])
+        return false
+      }
+      return true
     } catch {
       return false
     }

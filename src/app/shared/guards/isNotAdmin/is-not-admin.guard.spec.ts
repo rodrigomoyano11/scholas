@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing'
 
-import { IsAnonymousGuard } from './is-anonymous.guard'
+import { IsNotAdminGuard } from './is-not-admin.guard'
 
-describe('IsAnonymousGuard', () => {
-  let guard: IsAnonymousGuard
+describe('IsNotAdminGuard', () => {
+  let guard: IsNotAdminGuard
 
   beforeEach(() => {
     TestBed.configureTestingModule({})
-    guard = TestBed.inject(IsAnonymousGuard)
+    guard = TestBed.inject(IsNotAdminGuard)
   })
 
   it('should be created', () => {
