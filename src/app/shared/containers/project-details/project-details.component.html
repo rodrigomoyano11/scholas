@@ -1,57 +1,69 @@
-<app-modal-container>
-  <app-toolbar
-    [fullWidth]="true"
-    [backButton]="toolbarBackButton"
-    [buttons]="toolbarButtons"
-  ></app-toolbar>
-  <div *ngIf="projectData" class="project-info">
-    <img class="image" [src]="projectData.coverPhotoURL" />
-    <div class="header">
-      <div class="header__info">
-        <app-badge
-          class="status"
-          *ngIf="userIsAdmin && projectIsPrivate"
-          type="secondary"
-          label="Dado de baja"
-        ></app-badge>
+<app-layout>
+  <app-modal-container>
+    <!-- Donor Version -->
+    <app-toolbar
+      *ngIf="((auth.user$ | async)?.claims?.admin ?? false) === false"
+      [fullWidth]="true"
+      [backButton]="toolbarBackButton"
+    ></app-toolbar>
 
-        <h1 class="title">{{ projectData.name }}</h1>
-        <h2 class="subtitle">{{ projectData.locality }} - {{ projectData.province.name }}</h2>
+    <!-- Admin Version -->
+    <app-toolbar
+      *ngIf="((auth.user$ | async)?.claims?.admin ?? false) === true"
+      [fullWidth]="true"
+      [backButton]="toolbarBackButton"
+      [buttons]="toolbarButtons"
+    ></app-toolbar>
+
+    <div *ngIf="projectData" class="project-info">
+      <img class="image" [src]="projectData.coverPhotoURL" />
+      <div class="header">
+        <div class="header__info">
+          <app-badge
+            class="status"
+            *ngIf="((auth.user$ | async)?.claims?.admin ?? false) === true && projectIsPrivate"
+            type="secondary"
+            label="Dado de baja"
+          ></app-badge>
+
+          <h1 class="title">{{ projectData.name }}</h1>
+          <h2 class="subtitle">{{ projectData.locality }} - {{ projectData.province.name }}</h2>
+        </div>
+        <div class="header__actions">
+          <button
+            type="button"
+            class="action--share"
+            mat-icon-button
+            [matTooltip]="'Compartir'"
+            (click)="shareAsLink()"
+          >
+            <mat-icon fontSet="material-icons-outlined" class="action--share__icon">share</mat-icon>
+          </button>
+        </div>
       </div>
-      <div class="header__actions">
+      <div class="content">
+        <p class="description mat-body-2">{{ projectData.description }}</p>
+        <app-amount-progress
+          [type]="(layout.isDesktop$ | async) === true ? 'desktop' : 'mobile'"
+          [currentAmount]="3893 || projectData.currentAmount"
+          [targetAmount]="7456 || projectData.targetAmount"
+        ></app-amount-progress>
+
+        <app-image-gallery class="image-gallery" [images]="projectData.photos"></app-image-gallery>
+
+        <app-video-player class="video" [video]="projectData.videoURL"></app-video-player>
+
         <button
+          class="CTA"
+          *ngIf="((auth.user$ | async)?.claims?.admin ?? false) === false"
           type="button"
-          class="action--share"
-          mat-icon-button
-          [matTooltip]="'Compartir'"
-          (click)="shareAsLink()"
+          [color]="'primary'"
+          (click)="donateToProject(projectData.id)"
+          mat-flat-button
         >
-          <mat-icon fontSet="material-icons-outlined" class="action--share__icon">share</mat-icon>
+          Donar
         </button>
       </div>
     </div>
-    <div class="content">
-      <p class="description mat-body-2">{{ projectData.description }}</p>
-      <app-amount-progress
-        [type]="(layout.isDesktop$ | async) === true ? 'desktop' : 'mobile'"
-        [currentAmount]="3893 || projectData.currentAmount"
-        [targetAmount]="7456 || projectData.targetAmount"
-      ></app-amount-progress>
-
-      <app-image-gallery class="image-gallery" [images]="projectData.photos"></app-image-gallery>
-
-      <app-video-player class="video" [video]="projectData.videoURL"></app-video-player>
-
-      <button
-        class="CTA"
-        *ngIf="!userIsAdmin"
-        type="button"
-        [color]="'primary'"
-        (click)="donateToProject(projectData.id)"
-        mat-flat-button
-      >
-        Donar
-      </button>
-    </div>
-  </div>
-</app-modal-container>
+  </app-modal-container>
+</app-layout>
