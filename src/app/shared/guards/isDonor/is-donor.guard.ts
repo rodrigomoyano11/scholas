@@ -1,12 +1,5 @@
 import { Injectable } from '@angular/core'
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  CanActivateChild,
-  CanLoad,
-  Router,
-  UrlTree,
-} from '@angular/router'
+import { CanActivate, CanActivateChild, CanLoad, Router, UrlTree } from '@angular/router'
 import { Observable } from 'rxjs'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
 
@@ -19,17 +12,12 @@ export class IsDonorGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(private auth: AuthService, private router: Router) {}
 
   // General
-  async hasPermissions(route: ActivatedRouteSnapshot): Promise<boolean> {
+  async hasPermissions(): Promise<boolean> {
     try {
-      const withId = !!route.data['withId']
-      const id = withId ? route.paramMap.get('id') : undefined
-
-      const redirectTo = (route.data['redirectTo'] ?? '/auth/login') as string
-
       const conditions = await Promise.all([this.auth.userIsLogged(), this.auth.userIsDonor()])
 
       const response = conditions.every((condition) => condition === true)
-      if (!response) void this.router.navigate([redirectTo, withId ? id : ''])
+      if (!response) void this.router.navigate(['/auth/login'])
       return response
     } catch {
       return false
@@ -37,19 +25,13 @@ export class IsDonorGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   // Guard Functions
-  canActivate(route: ActivatedRouteSnapshot): GuardResult {
-    return this.hasPermissions(route)
+  canActivate(): GuardResult {
+    return this.hasPermissions()
   }
-  canActivateChild(route: ActivatedRouteSnapshot): GuardResult {
-    return this.hasPermissions(route)
+  canActivateChild(): GuardResult {
+    return this.hasPermissions()
   }
   canLoad(): GuardResult {
-    return Promise.all([this.auth.userIsDonor()])
-      .then((conditions) => {
-        const response = conditions.every((condition) => condition === true)
-        if (!response) void this.router.navigate(['/auth/login'])
-        return response
-      })
-      .catch(() => false)
+    return this.hasPermissions()
   }
 }
