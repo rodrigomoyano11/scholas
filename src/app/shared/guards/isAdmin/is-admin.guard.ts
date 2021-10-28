@@ -20,19 +20,23 @@ export class IsAdminGuard implements CanActivate, CanActivateChild, CanLoad {
 
       const response = conditions.every((condition) => condition === true)
       if (!response) {
-        void this.router.navigate(['/auth/login'])
-        void this.dialog
-          .open<DialogComponent, DialogData>(DialogComponent, {
-            data: {
-              actions: [null, 'Cerrar'],
-              title: 'Importante',
-              description:
-                'Debes iniciar sesión con una cuenta de administrador para poder ingresar',
-              icon: 'info',
-            },
-          })
-          .afterClosed()
-          .toPromise()
+        const claims = localStorage.getItem('claims')
+        if (claims !== 'admin') {
+          void this.router.navigate(['/auth/login'])
+          void this.dialog
+            .open<DialogComponent, DialogData>(DialogComponent, {
+              data: {
+                actions: [null, 'Cerrar'],
+                title: 'Importante',
+                description:
+                  'Debes iniciar sesión con una cuenta de administrador para poder ingresar',
+                icon: 'info',
+              },
+            })
+            .afterClosed()
+            .toPromise()
+        }
+        return true
       }
       return response
     } catch {

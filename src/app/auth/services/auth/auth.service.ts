@@ -101,7 +101,10 @@ export class AuthService {
       isNewUser = getAdditionalUserInfo(credential)?.isNewUser ?? false
 
       const token = await getIdToken(credential.user)
-      const isVerifiedToken = await this._verifyToken(token)
+
+      localStorage.setItem('token', token)
+
+      const isVerifiedToken = await this.verifyToken(token)
 
       if (!isVerifiedToken) return this.logout()
 
@@ -127,7 +130,7 @@ export class AuthService {
   }
 
   // Verifications
-  private async _verifyToken(token: User['token']): Promise<boolean> {
+  async verifyToken(token: User['token']): Promise<boolean> {
     try {
       if (!token) return false
 
@@ -205,7 +208,11 @@ export class AuthService {
           return
         }
 
-        void getIdTokenResult(currentUser).then(({ claims }) => {
+        void getIdTokenResult(currentUser).then(({ claims, token }) => {
+          localStorage.setItem('token', token)
+
+          localStorage.setItem('claims', claims.admin ? 'admin' : 'donor')
+
           const { uid, displayName, photoURL, email, phoneNumber, emailVerified } = currentUser
 
           this._userData = {
@@ -356,14 +363,21 @@ export class AuthService {
   }
 
   // Verifications
+
+  async isTokenVerified(): Promise<boolean> {
+    const token = localStorage.getItem('token')
+    return await this.verifyToken(token)
+  }
+
   async userIsLogged(): Promise<boolean> {
     const user = await this.user$.pipe(take(1)).toPromise()
+
     return !!user.token
   }
 
   async userIsAdmin(): Promise<boolean> {
     const user = await this.user$.pipe(take(1)).toPromise()
-    return user.claims?.admin ?? false
+    return (await this.isTokenVerified()) && (user.claims?.admin ?? false)
   }
 
   async userIsDonor(): Promise<boolean> {
@@ -376,6 +390,8 @@ export class AuthService {
   async logout(): Promise<void> {
     try {
       await this.auth.signOut()
+      localStorage.removeItem('token')
+      localStorage.removeItem('claims')
       this._displayName = null
       this.snackBar.open('Se ha cerrado tu sesión correctamente', 'Cerrar', { duration: 5000 })
       return void this.router.navigate(['/'])
@@ -406,11 +422,16 @@ export class AuthService {
 
   async deleteUser(): Promise<void> {
     await this.auth.signOut()
+    localStorage.removeItem('token')
+    localStorage.removeItem('claims')
     this.snackBar.open('Tu cuenta ha sido eliminada correctamente', 'Cerrar', { duration: 5000 })
     return void this.router.navigate(['/'])
   }
 
   async _updateUser(): Promise<void> {
-    this._user && (await getIdToken(this._user, true))
+    if (this._user) {
+      const token = await getIdToken(this._user, true)
+      localStorage.setItem('token', token)
+    }
   }
 }

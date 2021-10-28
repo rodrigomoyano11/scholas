@@ -16,7 +16,15 @@ export class IsLoggedGuard implements CanActivate, CanActivateChild, CanLoad {
       const conditions = await Promise.all([this.auth.userIsLogged()])
 
       const response = conditions.every((condition) => condition === true)
-      if (!response) void this.router.navigate(['/auth/login'])
+      if (!response) {
+        const claims = localStorage.getItem('claims')
+
+        if (claims !== 'admin') {
+          void this.router.navigate(['/auth/login'])
+        } else {
+          return true
+        }
+      }
       return response
     } catch {
       return false
