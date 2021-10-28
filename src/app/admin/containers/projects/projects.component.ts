@@ -74,7 +74,7 @@ export class ProjectsComponent implements OnInit {
           {
             label: 'Ver métricas',
             icon: 'analytics',
-            click: () => void this.router.navigate(['/admin/metrics']),
+            click: () => void this.router.navigate(['/admin/metrics/overview', project.id]),
           },
           {
             label: `Dar de ${projectIsPrivate ? 'alta' : 'baja'}`,
