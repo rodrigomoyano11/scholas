@@ -10,6 +10,8 @@ import { Location } from '../../models/location.interface'
 export class LocationService {
   locationData!: GetProvincesAndLocalitiesResponse
 
+  provincesData!: GetProvincesResponse
+
   constructor(private http: HttpClient) {
     void this.getLocationData()
   }
@@ -20,6 +22,12 @@ export class LocationService {
       .toPromise()
   }
 
+  async getProvinceData(): Promise<void> {
+    this.provincesData = await this.http
+      .get<GetProvincesResponse>(`${environment.apiUrl}/province`)
+      .toPromise()
+  }
+
   async getProvinces(): Promise<string[]> {
     !this.locationData && (await this.getLocationData())
 
@@ -27,13 +35,20 @@ export class LocationService {
   }
 
   async getIdByProvince(selectedProvince: Location['province']): Promise<number> {
-    const provinces = await this.http
-      .get<GetProvincesResponse>(`${environment.apiUrl}/province`)
-      .toPromise()
+    if (!this.provincesData) await this.getProvinceData()
+    const provinces = this.provincesData
 
     const provinceId = provinces.find((province) => province.name === selectedProvince)?.id
 
     return provinceId ?? 0
+  }
+  async getProvinceById(id: number): Promise<string> {
+    if (!this.provincesData) await this.getProvinceData()
+    const provinces = this.provincesData
+
+    const provinceName = provinces.find((province) => province.id === id)?.name
+
+    return provinceName ?? ''
   }
 
   async getLocalitiesByProvince(province: string): Promise<string[]> {
