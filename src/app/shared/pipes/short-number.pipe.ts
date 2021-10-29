@@ -10,6 +10,7 @@ export class ShortNumberPipe implements PipeTransform {
     if (typeof number === 'string') return null
     if (isNaN(number)) return null
     if (number === 0) return null
+    if (number < 10_000) return `${number}`
 
     let absoluteNumber = Math.abs(number)
     const rounder = 10 ** 1
