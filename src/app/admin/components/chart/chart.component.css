@@ -29,3 +29,7 @@
 .chart-container--lg {
   min-height: 32rem;
 }
+
+.chart-container--xl {
+  min-height: 48rem;
+}

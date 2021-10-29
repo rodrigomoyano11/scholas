@@ -1,2 +1,12 @@
+**/theme.css
+dist/*
+
+**/*.html
 **/*.js
-src/theme/*
+**/*.ts
+**/*.md
+**/*.jpg
+**/_redirects
+**/*.webp
+**/*.svg
+**/*.ico

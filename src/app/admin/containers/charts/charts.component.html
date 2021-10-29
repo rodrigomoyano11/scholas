@@ -1,18 +1,44 @@
 <app-modal-container>
-  <!-- [title]="projectData.name"
-    -->
-  <app-toolbar
-    title="Gráficos"
-    [fullWidth]="true"
-    [titleAlignCenter]="true"
-    [backButton]="backButtonAction"
-  ></app-toolbar>
+  <ng-container *ngIf="projectData; else loading">
+    <app-toolbar
+      [title]="projectData.name"
+      [fullWidth]="true"
+      [titleAlignCenter]="true"
+      [backButton]="backButtonAction"
+    ></app-toolbar>
 
-  <div class="content">
-    <app-chart title="Provincia" type="horizontal" [data]="provincesData" size="lg"></app-chart>
-    <app-chart title="Edad" type="vertical" [data]="agesData"></app-chart>
-    <app-chart title="Importe donado" type="vertical" [data]="donationAmountsData"></app-chart>
-  </div>
+    <div class="content">
+      <app-chart
+        title="Edad"
+        type="vertical"
+        [data]="ageData"
+        *ngIf="ageData; else loading"
+      ></app-chart>
 
-  <p>El segundo valor del rango no se incluye en la columna, sino en la siguiente</p>
+      <div class="chart-container">
+        <app-chart
+          title="Importe donado"
+          type="vertical"
+          [data]="donationAmountData"
+          *ngIf="donationAmountData; else loading"
+        >
+        </app-chart>
+        <p class="mat-small">
+          El segundo valor del rango no se incluye en la columna, sino en la siguiente
+        </p>
+      </div>
+
+      <app-chart
+        title="Provincia"
+        type="horizontal"
+        [data]="provinceData"
+        size="xl"
+        *ngIf="provinceData; else loading"
+      ></app-chart>
+    </div>
+  </ng-container>
 </app-modal-container>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>
