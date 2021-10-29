@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 
 import { take } from 'rxjs/operators'
+import { DonationsService } from 'src/app/donation/services/donations/donations.service'
 import { CreateProjectResponse, GetMetricsResponse } from 'src/app/shared/models/api.interface'
 import { ShortNumberPipe } from 'src/app/shared/pipes/short-number.pipe'
 import { LocationService } from 'src/app/shared/services/location/location.service'
@@ -40,8 +41,6 @@ type DonationAmountRanges = {
   providers: [ShortNumberPipe],
 })
 export class ChartsComponent implements OnInit {
-  donationAmountsConfig = [500, 1000, 2000, 5000]
-
   selectedProjectId: string | null = this.route.snapshot.paramMap.get('id')
   projectData!: CreateProjectResponse
 
@@ -60,6 +59,7 @@ export class ChartsComponent implements OnInit {
     private metrics: MetricsService,
     private router: Router,
     private route: ActivatedRoute,
+    private donations: DonationsService,
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -157,6 +157,6 @@ export class ChartsComponent implements OnInit {
 
   // Utils
   private formatDonationAmount(index: number): string {
-    return `$ ${this.shortNumberPipe.transform(this.donationAmountsConfig[index]) ?? '0'}`
+    return `$ ${this.shortNumberPipe.transform(this.donations.donationAmountsConfig[index]) ?? '0'}`
   }
 }
