@@ -8,7 +8,7 @@ import { ScaleType } from '@swimlane/ngx-charts'
 })
 export class ChartComponent {
   @Input() type: 'horizontal' | 'vertical' = 'vertical'
-  @Input() size: 'sm' | 'md' | 'lg' = 'md'
+  @Input() size: 'sm' | 'md' | 'lg' | 'xl' = 'md'
   @Input() data: Array<unknown> = []
   @Input() title = ''
 
