@@ -120,6 +120,24 @@ export type GetProjectsResponse = GetProjectResponse[]
 
 export type GetProjectResponse = CreateProjectResponse
 
+// Metrics
+export interface GetMetricsResponse {
+  headers: unknown
+  body: {
+    Provinces: { [key: string]: number }
+    Amounts: {
+      amount0: number
+      amount1: number
+      amount2: number
+      amount3: number
+      amount4: number
+    }
+    Ages: { [key: string]: number }
+  }
+  statusCodeValue: unknown
+  statusCode: unknown
+}
+
 // Utils
 export type GetProvincesAndLocalitiesResponse = [
   {
