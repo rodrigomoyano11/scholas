@@ -1,20 +1,20 @@
 <div class="amount-selection">
   <mat-button-toggle-group class="toggle__container">
-    <mat-button-toggle class="toggle__button" value="500">{{
-      500 | currency: 'ARS':'symbol':'1.0-2'
-    }}</mat-button-toggle>
+    <mat-button-toggle class="toggle__button" [value]="donations.donationAmountsConfig[0]">
+      {{ '$ ' + (donations.donationAmountsConfig[0] | shortNumber) }}
+    </mat-button-toggle>
 
-    <mat-button-toggle class="toggle__button" value="1000">{{
-      1000 | currency: 'ARS':'symbol':'1.0-2'
-    }}</mat-button-toggle>
+    <mat-button-toggle class="toggle__button" [value]="donations.donationAmountsConfig[1]">
+      {{ '$ ' + (donations.donationAmountsConfig[1] | shortNumber) }}
+    </mat-button-toggle>
 
-    <mat-button-toggle class="toggle__button" value="2000">{{
-      2000 | currency: 'ARS':'symbol':'1.0-2'
-    }}</mat-button-toggle>
+    <mat-button-toggle class="toggle__button" [value]="donations.donationAmountsConfig[2]">
+      {{ '$ ' + (donations.donationAmountsConfig[2] | shortNumber) }}
+    </mat-button-toggle>
 
-    <mat-button-toggle class="toggle__button" value="5000">{{
-      5000 | currency: 'ARS':'symbol':'1.0-2'
-    }}</mat-button-toggle>
+    <mat-button-toggle class="toggle__button" [value]="donations.donationAmountsConfig[3]">
+      {{ '$ ' + (donations.donationAmountsConfig[3] | shortNumber) }}
+    </mat-button-toggle>
   </mat-button-toggle-group>
 
   <mat-form-field class="field" appearance="outline">
