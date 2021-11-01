@@ -33,7 +33,7 @@ export class AmountSelectionStepComponent {
   }
 
   sendData(): void {
-    const toggleGroupValue = (this.toggleGroupControl.value as number).toString() ?? ''
+    const toggleGroupValue = (this.toggleGroupControl.value as number)?.toString() ?? ''
     const textInputValue = (this.textInputControl.value ?? '') as string
     const checkboxValue = (this.checkboxControl.value ?? false) as boolean
 

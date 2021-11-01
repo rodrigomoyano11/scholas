@@ -24,6 +24,7 @@ import { PendingPaymentComponent } from './components/pending-payment/pending-pa
 import { ReactiveFormsModule } from '@angular/forms'
 import { SharedModule } from '../shared/shared.module'
 import { SuccessPaymentComponent } from './components/success-payment/success-payment.component'
+import { RecurringPaymentComponent } from './components/recurring-payment/recurring-payment.component'
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { SuccessPaymentComponent } from './components/success-payment/success-pa
     PaymentComponent,
     PendingPaymentComponent,
     SuccessPaymentComponent,
+    RecurringPaymentComponent,
   ],
   imports: [
     CommonModule,

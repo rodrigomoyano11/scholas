@@ -6,13 +6,14 @@
     [disableRipple]="true"
     [labelPosition]="(layout.isDesktop$ | async) === true ? 'end' : 'bottom'"
     [orientation]="(layout.isDesktop$ | async) === true ? 'horizontal' : 'vertical'"
+    [selectedIndex]="selectedIndex"
   >
     <mat-step [editable]="false" label="Seleccioná el monto" [completed]="stepperStatus[0]">
       <div class="content">
         <app-amount-selection-step
           (stepCompleted)="setStepperStatus(0, $event)"
-          (donationAmount)="onEvent($event.toString())"
-          (donationType)="onEvent($event)"
+          (donationAmount)="amount = $event"
+          (donationType)="type = $event"
         ></app-amount-selection-step>
       </div>
       <div class="actions">
@@ -22,11 +23,13 @@
           mat-flat-button
           matStepperNext
           [disabled]="!stepperStatus[0]"
+          (click)="handleAmountSelectionComplete()"
         >
           Siguiente
         </button>
       </div>
     </mat-step>
+
     <mat-step [editable]="false" label="Realizá el pago" [completed]="stepperStatus[1]">
       <div class="content">
         <app-payment (stepCompleted)="setStepperStatus(1, $event)"></app-payment>
@@ -45,13 +48,36 @@
     </mat-step>
     <mat-step [editable]="false" label="Finalizá la donación" [completed]="stepperStatus[2]">
       <div class="content">
-        <!-- <app-pending-payment (stepCompleted)="setStepperStatus(2, $event)"></app-pending-payment> -->
-        <!-- <app-failure-payment (stepCompleted)="setStepperStatus(2, $event)"></app-failure-payment> -->
-        <app-success-payment (stepCompleted)="setStepperStatus(2, $event)"></app-success-payment>
+        <app-recurring-payment
+          *ngIf="state === 'recurring'"
+          (stepCompleted)="setStepperStatus(2, $event)"
+        ></app-recurring-payment>
+
+        <app-failure-payment
+          *ngIf="state === 'failure'"
+          (stepCompleted)="setStepperStatus(2, $event)"
+        ></app-failure-payment>
+
+        <app-pending-payment
+          *ngIf="state === 'pending'"
+          (stepCompleted)="setStepperStatus(2, $event)"
+        >
+        </app-pending-payment>
+
+        <app-success-payment
+          *ngIf="state === 'success'"
+          (stepCompleted)="setStepperStatus(2, $event)"
+        ></app-success-payment>
       </div>
 
       <div class="actions">
-        <button type="button" [color]="'primary'" mat-flat-button matStepperNext>
+        <button
+          type="button"
+          [color]="'primary'"
+          mat-flat-button
+          matStepperNext
+          *ngIf="state !== 'recurring'"
+        >
           Ver mi certificado
           <!-- Intentar nuevamente -->
         </button>
@@ -60,7 +86,7 @@
           [color]="'primary'"
           mat-button
           matStepperNext
-          [disabled]="stepperStatus[2]"
+          [disabled]="!stepperStatus[2]"
           [routerLink]="'/donor'"
         >
           Volver a la página principal
