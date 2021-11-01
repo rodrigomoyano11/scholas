@@ -21,4 +21,7 @@ export class NewDonationComponent {
   setStepperStatus(stepIndex: number, value: boolean): void {
     this.stepperStatus[stepIndex] = value
   }
+  onEvent(value: string): void {
+    console.log(value)
+  }
 }

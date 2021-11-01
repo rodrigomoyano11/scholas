@@ -11,6 +11,8 @@
       <div class="content">
         <app-amount-selection-step
           (stepCompleted)="setStepperStatus(0, $event)"
+          (donationAmount)="onEvent($event.toString())"
+          (donationType)="onEvent($event)"
         ></app-amount-selection-step>
       </div>
       <div class="actions">
@@ -19,7 +21,7 @@
           [color]="'primary'"
           mat-flat-button
           matStepperNext
-          [disabled]="stepperStatus[0]"
+          [disabled]="!stepperStatus[0]"
         >
           Siguiente
         </button>
