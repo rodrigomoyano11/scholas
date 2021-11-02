@@ -1,28 +1,54 @@
-<div class="amount-selection">
-  <mat-button-toggle-group class="toggle__container">
-    <mat-button-toggle class="toggle__button" value="500">{{
-      500 | currency: 'ARS':'symbol':'1.0-2'
-    }}</mat-button-toggle>
+<div class="amount-selection" *ngIf="donations.donationAmountsConfig">
+  <mat-button-toggle-group
+    class="toggle__container"
+    (change)="onToggleGroupFocus()"
+    [formControl]="toggleGroupControl"
+  >
+    <mat-button-toggle class="toggle__button" [value]="donations.donationAmountsConfig[0]">
+      {{ '$ ' + (donations.donationAmountsConfig[0] | shortNumber) }}
+    </mat-button-toggle>
 
-    <mat-button-toggle class="toggle__button" value="1000">{{
-      1000 | currency: 'ARS':'symbol':'1.0-2'
-    }}</mat-button-toggle>
+    <mat-button-toggle class="toggle__button" [value]="donations.donationAmountsConfig[1]">
+      {{ '$ ' + (donations.donationAmountsConfig[1] | shortNumber) }}
+    </mat-button-toggle>
 
-    <mat-button-toggle class="toggle__button" value="2000">{{
-      2000 | currency: 'ARS':'symbol':'1.0-2'
-    }}</mat-button-toggle>
+    <mat-button-toggle class="toggle__button" [value]="donations.donationAmountsConfig[2]">
+      {{ '$ ' + (donations.donationAmountsConfig[2] | shortNumber) }}
+    </mat-button-toggle>
 
-    <mat-button-toggle class="toggle__button" value="5000">{{
-      5000 | currency: 'ARS':'symbol':'1.0-2'
-    }}</mat-button-toggle>
+    <mat-button-toggle class="toggle__button" [value]="donations.donationAmountsConfig[3]">
+      {{ '$ ' + (donations.donationAmountsConfig[3] | shortNumber) }}
+    </mat-button-toggle>
   </mat-button-toggle-group>
 
   <mat-form-field class="field" appearance="outline">
-    <input matInput class="field__input" placeholder="OTRO" />
-    <!-- <mat-error>{{ getErrors('password') }}</mat-error> -->
+    <input
+      matInput
+      class="field__input"
+      placeholder="OTRO"
+      autocomplete="off"
+      (focus)="onInputFocus()"
+      (input)="onInputFocus()"
+      [formControl]="textInputControl"
+      type="number"
+    />
+    <mat-hint class="field__hint">
+      {{
+        textInputControl.value === '' || textInputControl.value === null
+          ? ''
+          : textInputControl.value <= 0
+          ? 'El importe ingresado debe ser mayor de cero'
+          : 'El monto seleccionado sería de ' + (textInputControl.value | currency: 'ARS')
+      }}
+    </mat-hint>
   </mat-form-field>
 </div>
 
-<mat-checkbox [color]="'primary'" class="checkbox"
-  >Me gustaría comprometerme para apoyar todos los meses a este proyecto</mat-checkbox
+<mat-checkbox
+  [color]="'primary'"
+  class="checkbox"
+  [formControl]="checkboxControl"
+  (change)="onCheckboxChange()"
 >
+  Me gustaría comprometerme para apoyar todos los meses a este proyecto
+</mat-checkbox>

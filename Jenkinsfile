@@ -4,7 +4,7 @@ pipeline {
     stage('Deploy through SSH') {
       steps {
         script {
-          def remote = [name: 'ubuntu', host: '34.205.134.28', user: 'ubuntu', allowAnyHosts: true]
+          def remote = [name: 'ubuntu', host: '3.238.7.184', user: 'ubuntu', allowAnyHosts: true]
           withCredentials([sshUserPrivateKey(credentialsId: 'ec2-scholas-dev', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'ubuntu')]) {
             remote.user = ubuntu
             remote.identityFile = identity

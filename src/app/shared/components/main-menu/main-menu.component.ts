@@ -16,12 +16,12 @@ interface Item {
 })
 export class MainMenuComponent {
   donorItems: Item[] = [
-    {
-      name: 'Proyectos',
-      link: '/donor/projects',
-      type: 'internal',
-      access: ['anonymous', 'donor'],
-    },
+    // {
+    //   name: 'Proyectos',
+    //   link: '/donor/projects',
+    //   type: 'internal',
+    //   access: ['anonymous', 'donor'],
+    // },
     // {
     //   name: 'Quienes somos',
     //   link: '/donor',

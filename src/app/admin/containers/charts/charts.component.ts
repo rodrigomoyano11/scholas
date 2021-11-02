@@ -50,7 +50,8 @@ export class ChartsComponent implements OnInit {
 
   chartData!: GetMetricsResponse['body']
 
-  backButtonAction = (): void => void this.router.navigate(['/admin/metrics/overview/1'])
+  backButtonAction = (): void =>
+    void this.router.navigate(['/admin/metrics/overview/', this.selectedProjectId])
 
   constructor(
     private shortNumberPipe: ShortNumberPipe,

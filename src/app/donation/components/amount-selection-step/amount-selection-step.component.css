@@ -53,12 +53,17 @@
 /* Field */
 .field {
   width: 100%;
+  margin-bottom: 1rem;
 
   border-color: #30aaa6;
 
   color: #30aaa6;
   font-size: 16px;
   text-align: center;
+}
+
+.field__hint {
+  font-size: 14px;
 }
 
 .field__input {
@@ -69,6 +74,10 @@
 .field__input::placeholder {
   color: #30aaa6;
   font-weight: 500;
+}
+
+.field__input:focus::placeholder {
+  color: rgb(0 0 0 / 54%);
 }
 
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
