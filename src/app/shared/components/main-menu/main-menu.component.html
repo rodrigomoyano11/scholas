@@ -20,6 +20,15 @@
     <mat-icon fontSet="material-icons-outlined">work_outline</mat-icon>
     Proyectos
   </button>
+  <button
+    type="button"
+    mat-menu-item
+    [routerLink]="'/admin/metrics'"
+    *ngIf="(auth.user$ | async)?.claims?.admin ?? false"
+  >
+    <mat-icon fontSet="material-icons-outlined">analytics</mat-icon>
+    Métricas
+  </button>
 </mat-menu>
 
 <!-- Desktop Menu -->
