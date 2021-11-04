@@ -45,8 +45,8 @@
         <p class="description mat-body-2">{{ projectData.description }}</p>
         <app-amount-progress
           [type]="(layout.isDesktop$ | async) === true ? 'desktop' : 'mobile'"
-          [currentAmount]="3893 || projectData.currentAmount"
-          [targetAmount]="7456 || projectData.targetAmount"
+          [currentAmount]="projectData.currentAmount"
+          [targetAmount]="projectData.targetAmount"
         ></app-amount-progress>
 
         <app-image-gallery class="image-gallery" [images]="projectData.photos"></app-image-gallery>
