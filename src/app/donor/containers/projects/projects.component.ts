@@ -4,6 +4,7 @@ import { CardData } from 'src/app/shared/components/project-card/project-card.co
 import { GetProjectResponse } from 'src/app/shared/models/api.interface'
 import { Project } from 'src/app/shared/models/project.interface'
 import { ShareService } from 'src/app/shared/services/share/share.service'
+import { environment } from 'src/environments/environment'
 import { ProjectsService } from '../../../shared/services/projects/projects.service'
 
 @Component({
@@ -66,6 +67,9 @@ export class ProjectsComponent implements OnInit {
   }
 
   shareAsLink(projectId: Project['id']): void {
-    this.share.shareAsLink(`${window.location.href}/${projectId}`, 'Se copió el link del proyecto')
+    this.share.shareAsLink(
+      `${environment.apiUrl}/projects/read/${projectId}`,
+      'Se copió el link del proyecto',
+    )
   }
 }

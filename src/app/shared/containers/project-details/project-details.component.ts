@@ -6,6 +6,7 @@ import { GetProjectResponse } from 'src/app/shared/models/api.interface'
 import { Project } from 'src/app/shared/models/project.interface'
 import { LayoutService } from 'src/app/shared/services/layout/layout.service'
 import { ShareService } from 'src/app/shared/services/share/share.service'
+import { environment } from 'src/environments/environment'
 import { ProjectsService } from '../../services/projects/projects.service'
 
 @Component({
@@ -93,7 +94,10 @@ export class ProjectDetailsComponent implements OnInit, OnChanges {
   }
 
   shareAsLink(): void {
-    this.share.shareAsLink(window.location.href, 'Se copió el link del proyecto')
+    this.share.shareAsLink(
+      `${environment.apiUrl}/projects/read/${this.selectedProjectId ?? 'error'}`,
+      'Se copió el link del proyecto',
+    )
   }
 
   donateToProject(id: Project['id']): void {
