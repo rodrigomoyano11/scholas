@@ -34,6 +34,8 @@ import {
 
 import { UpdateAccountDetailsForm } from '../../containers/update-account-details/update-account-details.component'
 import { LocationService } from 'src/app/shared/services/location/location.service'
+import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
+import { MatDialog } from '@angular/material/dialog'
 
 export type Provider = 'google' | 'facebook' | 'email'
 
@@ -73,6 +75,7 @@ export class AuthService {
     private http: HttpClient,
     private errorHandler: ErrorService,
     private location: LocationService,
+    private dialog: MatDialog,
   ) {
     this.user$.next(this._defaultData)
 
@@ -421,6 +424,19 @@ export class AuthService {
   }
 
   async deleteUser(): Promise<void> {
+    const isApproved = (await this.dialog
+      .open<DialogComponent, DialogData>(DialogComponent, {
+        data: {
+          actions: ['No', 'Sí, eliminar'],
+          title: '¿Estás seguro de eliminar tu cuenta?',
+          description:
+            'Una vez solicitas el cierre/baja, el mismo es definitivo. No podrás volver a reactivar la cuenta o solicitar una cuenta nueva a futuro.',
+        },
+      })
+      .afterClosed()
+      .toPromise()) as boolean
+    if (!isApproved) return
+
     await this.auth.signOut()
     localStorage.removeItem('token')
     localStorage.removeItem('claims')
