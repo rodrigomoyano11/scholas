@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment'
 import { AuthService } from '../../services/auth/auth.service'
 import { LocationService } from '../../../shared/services/location/location.service'
 import { ValidationService } from 'src/app/shared/services/validation/validation.service'
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 export interface UpdateAccountDetailsForm {
   fullName: string
@@ -41,6 +42,7 @@ export class UpdateAccountDetailsComponent implements OnInit {
     public location: LocationService,
     private router: Router,
     private http: HttpClient,
+    private snackBar: MatSnackBar,
   ) {
     const currentYear = new Date().getFullYear()
     this.minDate = new Date(currentYear - 100, 0, 1)
@@ -114,6 +116,7 @@ export class UpdateAccountDetailsComponent implements OnInit {
   // Submit
   async submitExtraData(): Promise<void> {
     await this.auth.editAccountDetails(this.form.value as UpdateAccountDetailsForm)
+    this.snackBar.open('Los cambios han sido guardados correctamente', 'Cerrar', { duration: 5000 })
     await this.router.navigate(['auth/account'])
     window.location.reload()
   }

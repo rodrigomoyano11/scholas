@@ -1,5 +1,6 @@
 import { Component } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
 import { ErrorService } from 'src/app/auth/services/error/error.service'
 import { ValidationService } from 'src/app/shared/services/validation/validation.service'
@@ -27,6 +28,7 @@ export class DonationAmountsSettingsComponent {
     private donations: DonationsService,
     private router: Router,
     private errorHandler: ErrorService,
+    private snackBar: MatSnackBar,
   ) {
     this.form = this.fb.group({
       amount1: ['', [Validators.required, validation.isNumber(), validation.isValidTargetAmount()]],
@@ -78,6 +80,9 @@ export class DonationAmountsSettingsComponent {
       )
 
     await this.donations.editDonationAmounts(formValues)
+
+    this.snackBar.open('Los cambios han sido guardados correctamente', 'Cerrar', { duration: 5000 })
+
     await this.router.navigate(['/'])
   }
 }

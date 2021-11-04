@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
 import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
 import { ShareService } from 'src/app/shared/services/share/share.service'
+import { environment } from 'src/environments/environment'
 import { DonationsService, DonationTest } from '../../services/donations/donations.service'
 
 @Component({
@@ -57,6 +58,9 @@ export class CertificateComponent {
   }
 
   shareAsLink(): void {
-    this.share.shareAsLink(window.location.href, 'Se copió el link de la donación')
+    this.share.shareAsLink(
+      `${environment.apiUrl}/donation/certificate/${this.selectedDonationId ?? 'error'}`,
+      'Se copió el link de la donación',
+    )
   }
 }
