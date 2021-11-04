@@ -5,6 +5,7 @@ import { take } from 'rxjs/operators'
 import { DonationsService } from 'src/app/donation/services/donations/donations.service'
 import { CreateProjectResponse, GetMetricsResponse } from 'src/app/shared/models/api.interface'
 import { ShortNumberPipe } from 'src/app/shared/pipes/short-number.pipe'
+import { LayoutService } from 'src/app/shared/services/layout/layout.service'
 import { LocationService } from 'src/app/shared/services/location/location.service'
 import { ProjectsService } from 'src/app/shared/services/projects/projects.service'
 import { MetricsService } from '../../services/metrics/metrics.service'
@@ -61,6 +62,7 @@ export class ChartsComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private donations: DonationsService,
+    public layout: LayoutService,
   ) {}
 
   async ngOnInit(): Promise<void> {
