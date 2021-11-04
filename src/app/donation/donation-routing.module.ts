@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router'
 import { NotFoundComponent } from '../shared/containers/not-found/not-found.component'
 import { IsAdminGuard } from '../shared/guards/isAdmin/is-admin.guard'
 import { IsDonorGuard } from '../shared/guards/isDonor/is-donor.guard'
-import { IsLoggedGuard } from '../shared/guards/isLogged/is-logged.guard'
+import {} from '../shared/guards/isLogged/is-logged.guard'
 import { CertificateComponent } from './containers/certificate/certificate.component'
 import { DonationAmountsSettingsComponent } from './containers/donation-amounts-settings/donation-amounts-settings.component'
 import { HomeComponent } from './containers/home/home.component'
@@ -16,22 +16,22 @@ const routes: Routes = [
     children: [
       {
         path: 'donate/:id',
-        canActivate: [IsLoggedGuard, IsDonorGuard],
+        canActivate: [IsDonorGuard],
         component: NewDonationComponent,
       },
       {
         path: 'donate/completed',
-        canActivate: [IsLoggedGuard, IsDonorGuard],
+        canActivate: [IsDonorGuard],
         component: NewDonationComponent,
       },
       {
         path: 'certificate/:id',
-        canActivate: [IsLoggedGuard, IsDonorGuard],
+        canActivate: [IsDonorGuard],
         component: CertificateComponent,
       },
       {
         path: 'settings',
-        canActivate: [IsLoggedGuard, IsAdminGuard],
+        canActivate: [IsAdminGuard],
         component: DonationAmountsSettingsComponent,
       },
 

@@ -16,29 +16,26 @@ export class IsAdminGuard implements CanActivate, CanActivateChild, CanLoad {
   // General
   async hasPermissions(): Promise<boolean> {
     try {
-      const conditions = await Promise.all([this.auth.userIsLogged(), this.auth.userIsAdmin()])
+      const userIsAdmin = await this.auth.userIsAdmin()
 
-      const response = conditions.every((condition) => condition === true)
-      if (!response) {
-        const claims = localStorage.getItem('claims')
-        if (claims !== 'admin') {
-          void this.router.navigate(['/auth/login'])
-          void this.dialog
-            .open<DialogComponent, DialogData>(DialogComponent, {
-              data: {
-                actions: [null, 'Cerrar'],
-                title: 'Importante',
-                description:
-                  'Debes iniciar sesión con una cuenta de administrador para poder ingresar',
-                icon: 'info',
-              },
-            })
-            .afterClosed()
-            .toPromise()
-        }
-        return true
+      if (!userIsAdmin) {
+        void this.router.navigate(['/auth/login'])
+        void this.dialog
+          .open<DialogComponent, DialogData>(DialogComponent, {
+            data: {
+              actions: [null, 'Cerrar'],
+              title: 'Importante',
+              description:
+                'Debes iniciar sesión con una cuenta de administrador para poder ingresar',
+              icon: 'info',
+            },
+          })
+          .afterClosed()
+          .toPromise()
+
+        return false
       }
-      return response
+      return true
     } catch {
       return false
     }

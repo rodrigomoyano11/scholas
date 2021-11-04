@@ -21,6 +21,7 @@ const routes: Routes = [
   },
   {
     path: 'donation',
+    canLoad: [IsLoggedGuard],
     loadChildren: () => import('./donation/donation.module').then((m) => m.DonationModule),
   },
   {

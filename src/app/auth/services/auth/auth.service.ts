@@ -377,20 +377,31 @@ export class AuthService {
     return await this.verifyToken(token)
   }
 
-  async userIsLogged(): Promise<boolean> {
-    const user = await this.user$.pipe(take(1)).toPromise()
+  async verifyAdminClaim(): Promise<boolean> {
+    const { uid } = await this.user$.pipe(take(1)).toPromise()
 
-    return !!user.token
+    const response = await this.http
+      .get<never>(`${environment.apiUrl}/auth/claims?uid=${uid}`)
+      .pipe(map(({ body }) => body))
+      .toPromise()
+
+    return response
+  }
+
+  async userIsLogged(): Promise<boolean> {
+    return !!(await this.isTokenVerified())
   }
 
   async userIsAdmin(): Promise<boolean> {
-    const user = await this.user$.pipe(take(1)).toPromise()
-    return (await this.isTokenVerified()) && (user.claims?.admin ?? false)
+    const claims = localStorage.getItem('claims')
+    if (claims !== 'admin') return false
+    return await this.verifyAdminClaim()
   }
 
   async userIsDonor(): Promise<boolean> {
-    const user = await this.user$.pipe(take(1)).toPromise()
-    return user.claims?.donor ?? false
+    const claims = localStorage.getItem('claims')
+    if (claims !== 'donor') return false
+    return await this.isTokenVerified()
   }
 
   // Others operations
