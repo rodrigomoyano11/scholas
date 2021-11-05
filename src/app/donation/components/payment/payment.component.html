@@ -1,5 +1,7 @@
 <div class="main-container">
   <app-spinner></app-spinner>
 
-  <p class="caption mat-title">Te estamos redirigiendo a Mercado Pago</p>
+  <p class="caption mat-title">
+    {{ isRecurring ? 'Estamos procesando tu solicitud' : 'Te estamos redirigiendo a Mercado Pago' }}
+  </p>
 </div>

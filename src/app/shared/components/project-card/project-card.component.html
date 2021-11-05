@@ -72,8 +72,8 @@
       <app-amount-progress
         *ngIf="!userIsAdmin"
         [type]="'mobile'"
-        [currentAmount]="3893 || projectData.currentAmount"
-        [targetAmount]="7456 || projectData.targetAmount"
+        [currentAmount]="projectData.currentAmount"
+        [targetAmount]="projectData.targetAmount"
       ></app-amount-progress>
 
       <div class="CTA__container">

@@ -1,1 +1,14 @@
-<p>not-found works!</p>
+<app-layout>
+  <app-modal-container size="small">
+    <div class="content">
+      <app-alert-message
+        title="Error 404"
+        description="Es posible que el link no esté disponible o que se haya eliminado la página"
+      ></app-alert-message>
+
+      <button type="button" class="button" mat-stroked-button [routerLink]="'/donor'">
+        Volver a la página principal
+      </button>
+    </div>
+  </app-modal-container>
+</app-layout>

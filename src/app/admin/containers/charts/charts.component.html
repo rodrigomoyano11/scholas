@@ -1,44 +1,53 @@
 <app-modal-container>
-  <ng-container *ngIf="projectData; else loading">
-    <app-toolbar
-      [title]="projectData.name"
-      [fullWidth]="true"
-      [titleAlignCenter]="true"
-      [backButton]="backButtonAction"
-    ></app-toolbar>
+  <div class="desktop-content" *ngIf="(layout.isDesktop$ | async) === true; else isMobile">
+    <ng-container *ngIf="projectData; else loading">
+      <app-toolbar
+        [title]="projectData.name"
+        [fullWidth]="true"
+        [titleAlignCenter]="true"
+        [backButton]="backButtonAction"
+      ></app-toolbar>
 
-    <div class="content">
-      <app-chart
-        title="Edad"
-        type="vertical"
-        [data]="ageData"
-        *ngIf="ageData; else loading"
-      ></app-chart>
-
-      <div class="chart-container">
+      <div class="content">
         <app-chart
-          title="Importe donado"
+          title="Edad"
           type="vertical"
-          [data]="donationAmountData"
-          *ngIf="donationAmountData; else loading"
-        >
-        </app-chart>
-        <p class="mat-small">
-          El segundo valor del rango no se incluye en la columna, sino en la siguiente
-        </p>
-      </div>
+          [data]="ageData"
+          *ngIf="ageData; else loading"
+        ></app-chart>
 
-      <app-chart
-        title="Provincia"
-        type="horizontal"
-        [data]="provinceData"
-        size="xl"
-        *ngIf="provinceData; else loading"
-      ></app-chart>
-    </div>
-  </ng-container>
+        <div class="chart-container">
+          <app-chart
+            title="Importe donado"
+            type="vertical"
+            [data]="donationAmountData"
+            *ngIf="donationAmountData; else loading"
+          >
+          </app-chart>
+          <p class="mat-small">
+            El segundo valor del rango no se incluye en la columna, sino en la siguiente
+          </p>
+        </div>
+
+        <app-chart
+          title="Provincia"
+          type="horizontal"
+          [data]="provinceData"
+          size="xl"
+          *ngIf="provinceData; else loading"
+        ></app-chart>
+      </div>
+    </ng-container>
+  </div>
 </app-modal-container>
 
 <ng-template #loading>
   <app-spinner></app-spinner>
+</ng-template>
+
+<ng-template #isMobile>
+  <app-alert-message
+    title="No se puede acceder"
+    description="Esta página es accesible solo desde una computadora o un dispositivo con una pantalla más grande"
+  ></app-alert-message>
 </ng-template>

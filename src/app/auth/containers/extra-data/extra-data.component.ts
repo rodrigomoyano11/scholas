@@ -20,6 +20,8 @@ export class ExtraDataComponent implements OnInit {
   provinceControl: AbstractControl
   localityControl: AbstractControl
 
+  isLoading = false
+
   constructor(
     private validation: ValidationService,
     private fb: FormBuilder,
@@ -67,6 +69,9 @@ export class ExtraDataComponent implements OnInit {
   }
 
   submitExtraData(): void {
-    void this.auth.sendExtraData(this.form.value as ExtraDataSentForm)
+    this.isLoading = true
+    void this.auth
+      .sendExtraData(this.form.value as ExtraDataSentForm)
+      .then(() => (this.isLoading = false))
   }
 }

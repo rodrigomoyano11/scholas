@@ -12,6 +12,8 @@ export class LoginComponent {
   form: FormGroup
   hidePassword = true
 
+  isLoading = false
+
   constructor(
     private fb: FormBuilder,
     private validation: ValidationService,
@@ -31,6 +33,7 @@ export class LoginComponent {
     const password = <string>this.form.controls['password'].value
     const email = <string>this.form.controls['email'].value
 
-    void this.auth.login(provider, email, password)
+    this.isLoading = true
+    void this.auth.login(provider, email, password).then(() => (this.isLoading = false))
   }
 }

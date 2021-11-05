@@ -5,6 +5,7 @@ import { GetProjectResponse } from 'src/app/shared/models/api.interface'
 import { Project } from 'src/app/shared/models/project.interface'
 import { ProjectsService } from 'src/app/shared/services/projects/projects.service'
 import { ShareService } from 'src/app/shared/services/share/share.service'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-landing-page',
@@ -66,7 +67,10 @@ export class LandingPageComponent implements OnInit {
   }
 
   shareAsLink(projectId: Project['id']): void {
-    this.share.shareAsLink(`${window.location.href}/${projectId}`, 'Se copió el link del proyecto')
+    this.share.shareAsLink(
+      `${environment.apiUrl}/projects/read/${projectId}`,
+      'Se copió el link del proyecto',
+    )
   }
 
   donateToProject(id?: Project['id']): void {

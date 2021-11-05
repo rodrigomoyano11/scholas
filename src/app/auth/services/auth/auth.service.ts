@@ -34,6 +34,8 @@ import {
 
 import { UpdateAccountDetailsForm } from '../../containers/update-account-details/update-account-details.component'
 import { LocationService } from 'src/app/shared/services/location/location.service'
+import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
+import { MatDialog } from '@angular/material/dialog'
 
 export type Provider = 'google' | 'facebook' | 'email'
 
@@ -73,6 +75,7 @@ export class AuthService {
     private http: HttpClient,
     private errorHandler: ErrorService,
     private location: LocationService,
+    private dialog: MatDialog,
   ) {
     this.user$.next(this._defaultData)
 
@@ -88,6 +91,7 @@ export class AuthService {
 
   async login(provider: Provider, email = '', password = '', isNewUser = false): Promise<void> {
     try {
+      // Login methods
       const methods = {
         google: () => signInWithPopup(this.auth, new GoogleAuthProvider()),
         facebook: () => signInWithPopup(this.auth, new FacebookAuthProvider()),
@@ -96,30 +100,34 @@ export class AuthService {
             ? createUserWithEmailAndPassword(this.auth, email, password)
             : signInWithEmailAndPassword(this.auth, email, password),
       }
-
       const credential = await methods[provider]()
-      isNewUser = getAdditionalUserInfo(credential)?.isNewUser ?? false
 
+      // Token operations
       const token = await getIdToken(credential.user)
-
       localStorage.setItem('token', token)
-
       const isVerifiedToken = await this.verifyToken(token)
-
       if (!isVerifiedToken) return this.logout()
 
-      const { claims, uid } = await this.user$.pipe(take(1)).toPromise()
-
+      // Display upgrade
       this._displayName = credential.user.displayName
 
+      // User Registration
+      const { claims, uid } = await this.user$.pipe(take(1)).toPromise()
+      isNewUser = getAdditionalUserInfo(credential)?.isNewUser ?? false
       if (isNewUser) {
+        // Permissions
         if (claims && !claims.admin) await this.setPermissions('donor', uid)
+
+        // User Creation in DB
         const isUserCreated = await this._createUser(uid)
-        if (!isUserCreated) return this.deleteUser()
+        if (!isUserCreated) return console.error('Auth: User not created')
       }
+
+      // Verifications
       const isExtraDataComplete = await this._verifyExtraDataCompleted(uid)
       if (!isExtraDataComplete) return void this.router.navigate(['/auth/extra-data'])
 
+      // Completed registration operations
       await this.router.navigate(['/'])
       return void this._verifyEmail()
     } catch (error: any) {
@@ -245,10 +253,10 @@ export class AuthService {
 
   private async _createUser(uid: User['uid']): Promise<boolean> {
     try {
-      const body: CreateUserRequest = {
+      const body = {
         displayName: this._displayName,
         birthday: '1900-01-01',
-        province: '1',
+        province: 1,
         locality: null,
         phoneNumber: null,
       }
@@ -369,20 +377,31 @@ export class AuthService {
     return await this.verifyToken(token)
   }
 
-  async userIsLogged(): Promise<boolean> {
-    const user = await this.user$.pipe(take(1)).toPromise()
+  async verifyAdminClaim(): Promise<boolean> {
+    const { uid } = await this.user$.pipe(take(1)).toPromise()
 
-    return !!user.token
+    const response = await this.http
+      .get<never>(`${environment.apiUrl}/auth/claims?uid=${uid}`)
+      .pipe(map(({ body }) => body))
+      .toPromise()
+
+    return response
+  }
+
+  async userIsLogged(): Promise<boolean> {
+    return !!(await this.isTokenVerified())
   }
 
   async userIsAdmin(): Promise<boolean> {
-    const user = await this.user$.pipe(take(1)).toPromise()
-    return (await this.isTokenVerified()) && (user.claims?.admin ?? false)
+    const claims = localStorage.getItem('claims')
+    if (claims !== 'admin') return false
+    return await this.verifyAdminClaim()
   }
 
   async userIsDonor(): Promise<boolean> {
-    const user = await this.user$.pipe(take(1)).toPromise()
-    return user.claims?.donor ?? false
+    const claims = localStorage.getItem('claims')
+    if (claims !== 'donor') return false
+    return await this.isTokenVerified()
   }
 
   // Others operations
@@ -421,6 +440,18 @@ export class AuthService {
   }
 
   async deleteUser(): Promise<void> {
+    const isApproved = (await this.dialog
+      .open<DialogComponent, DialogData>(DialogComponent, {
+        data: {
+          actions: ['No', 'Sí, eliminar'],
+          title: '¿Estás seguro de eliminar tu cuenta?',
+          description: 'La eliminación es definitiva. No podrás volver a reactivar la cuenta.',
+        },
+      })
+      .afterClosed()
+      .toPromise()) as boolean
+    if (!isApproved) return
+
     await this.auth.signOut()
     localStorage.removeItem('token')
     localStorage.removeItem('claims')

@@ -1,21 +1,24 @@
 <app-modal-container>
-  <!-- [linear]="true" -->
   <h1>Donación</h1>
   <mat-stepper
     class="stepper"
+    [selectedIndex]="selectedIndex"
     [disableRipple]="true"
     [labelPosition]="(layout.isDesktop$ | async) === true ? 'end' : 'bottom'"
     [orientation]="(layout.isDesktop$ | async) === true ? 'horizontal' : 'vertical'"
-    [selectedIndex]="selectedIndex"
+    [linear]="true"
+    #stepper
   >
-    <mat-step [editable]="false" label="Seleccioná el monto" [completed]="stepperStatus[0]">
+    <mat-step label="Seleccioná el monto" [completed]="stepperStatus[0]" [editable]="false">
       <div class="content">
         <app-amount-selection-step
           (stepCompleted)="setStepperStatus(0, $event)"
           (donationAmount)="amount = $event"
           (donationType)="type = $event"
-        ></app-amount-selection-step>
+        >
+        </app-amount-selection-step>
       </div>
+
       <div class="actions">
         <button
           type="button"
@@ -30,44 +33,34 @@
       </div>
     </mat-step>
 
-    <mat-step [editable]="false" label="Realizá el pago" [completed]="stepperStatus[1]">
+    <mat-step label="Realizá el pago" [completed]="stepperStatus[1]" [editable]="false">
       <div class="content">
-        <app-payment (stepCompleted)="setStepperStatus(1, $event)"></app-payment>
+        <app-payment (stepCompleted)="goNext(stepper, 1)" [isRecurring]="state === 'recurring'">
+        </app-payment>
       </div>
-      <div class="actions">
+
+      <!-- <div class="actions">
         <button
           type="button"
           [color]="'primary'"
           mat-flat-button
           matStepperNext
-          [disabled]="stepperStatus[1]"
+          [disabled]="!stepperStatus[1]"
         >
           Siguiente
         </button>
-      </div>
+      </div> -->
     </mat-step>
-    <mat-step [editable]="false" label="Finalizá la donación" [completed]="stepperStatus[2]">
+
+    <mat-step label="Finalizá la donación" [completed]="stepperStatus[2]" [editable]="false">
       <div class="content">
-        <app-recurring-payment
-          *ngIf="state === 'recurring'"
-          (stepCompleted)="setStepperStatus(2, $event)"
-        ></app-recurring-payment>
+        <app-recurring-payment *ngIf="state === 'recurring'"></app-recurring-payment>
 
-        <app-failure-payment
-          *ngIf="state === 'failure'"
-          (stepCompleted)="setStepperStatus(2, $event)"
-        ></app-failure-payment>
+        <app-failure-payment *ngIf="state === 'failure'"></app-failure-payment>
 
-        <app-pending-payment
-          *ngIf="state === 'pending'"
-          (stepCompleted)="setStepperStatus(2, $event)"
-        >
-        </app-pending-payment>
+        <app-pending-payment *ngIf="state === 'pending'"></app-pending-payment>
 
-        <app-success-payment
-          *ngIf="state === 'success'"
-          (stepCompleted)="setStepperStatus(2, $event)"
-        ></app-success-payment>
+        <app-success-payment *ngIf="state === 'success'"></app-success-payment>
       </div>
 
       <div class="actions">
@@ -76,19 +69,24 @@
           [color]="'primary'"
           mat-flat-button
           matStepperNext
-          *ngIf="state !== 'recurring'"
+          *ngIf="state === 'success'"
+          (click)="finalizeDonation('success')"
         >
           Ver mi certificado
-          <!-- Intentar nuevamente -->
         </button>
+
         <button
           type="button"
           [color]="'primary'"
-          mat-button
+          mat-flat-button
           matStepperNext
-          [disabled]="!stepperStatus[2]"
-          [routerLink]="'/donor'"
+          *ngIf="state === 'failure'"
+          (click)="finalizeDonation('failure')"
         >
+          Intentar nuevamente
+        </button>
+
+        <button type="button" [color]="'primary'" mat-button matStepperNext [routerLink]="'/donor'">
           Volver a la página principal
         </button>
       </div>

@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router'
 import { NotFoundComponent } from '../shared/containers/not-found/not-found.component'
 
 import { IsDonorGuard } from '../shared/guards/isDonor/is-donor.guard'
-import { IsLoggedGuard } from '../shared/guards/isLogged/is-logged.guard'
 import { IsNotAdminGuard } from '../shared/guards/isNotAdmin/is-not-admin.guard'
 import { DonationsComponent } from './containers/donations/donations.component'
 import { HomeComponent } from './containers/home/home.component'
@@ -23,7 +22,7 @@ const routes: Routes = [
       },
       {
         path: 'donations',
-        canActivate: [IsLoggedGuard, IsDonorGuard],
+        canActivate: [IsDonorGuard],
         component: DonationsComponent,
       },
 

@@ -11,6 +11,7 @@ import { AuthService, Provider } from '../../services/auth/auth.service'
 export class RegisterComponent {
   form: FormGroup
   hidePassword = true
+  isLoading = false
 
   constructor(
     private fb: FormBuilder,
@@ -50,6 +51,9 @@ export class RegisterComponent {
     const firstName = <string>this.form.controls['firstName'].value
     const lastName = <string>this.form.controls['lastName'].value
 
-    void this.auth.register(provider, email, password, `${firstName} ${lastName}`)
+    this.isLoading = true
+    void this.auth
+      .register(provider, email, password, `${firstName} ${lastName}`)
+      .then(() => (this.isLoading = false))
   }
 }

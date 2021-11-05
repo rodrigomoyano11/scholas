@@ -14,11 +14,11 @@ export class IsDonorGuard implements CanActivate, CanActivateChild, CanLoad {
   // General
   async hasPermissions(): Promise<boolean> {
     try {
-      const conditions = await Promise.all([this.auth.userIsLogged(), this.auth.userIsDonor()])
+      const userIsDonor = await this.auth.userIsDonor()
 
-      const response = conditions.every((condition) => condition === true)
-      if (!response) void this.router.navigate(['/auth/login'])
-      return response
+      if (!userIsDonor) void this.router.navigate(['/auth/login'])
+
+      return true
     } catch {
       return false
     }

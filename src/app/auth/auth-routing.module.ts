@@ -16,23 +16,42 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     children: [
-      { path: 'register', component: RegisterComponent },
+      {
+        path: 'register',
+        component: RegisterComponent,
+      },
+      {
+        path: 'extra-data',
+        canActivate: [IsLoggedGuard],
+        component: ExtraDataComponent,
+      },
+
       {
         path: 'login',
         component: LoginComponent,
         children: [{ path: '**', component: LoginComponent }],
       },
-      { path: 'forgot-password', component: ForgotPasswordComponent },
-      { path: 'verify-email', canActivate: [IsLoggedGuard], component: VerifyEmailComponent },
-      { path: 'account', component: AccountDetailsComponent, canActivate: [IsLoggedGuard] },
 
+      {
+        path: 'forgot-password',
+        component: ForgotPasswordComponent,
+      },
+      {
+        path: 'verify-email',
+        canActivate: [IsLoggedGuard],
+        component: VerifyEmailComponent,
+      },
+
+      {
+        path: 'account',
+        canActivate: [IsLoggedGuard],
+        component: AccountDetailsComponent,
+      },
       {
         path: 'account/update',
         canActivate: [IsLoggedGuard],
         component: UpdateAccountDetailsComponent,
       },
-
-      { path: 'extra-data', canActivate: [IsLoggedGuard], component: ExtraDataComponent },
 
       { path: '**', component: NotFoundComponent },
     ],

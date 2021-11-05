@@ -15,12 +15,12 @@ export class IsNotAdminGuard implements CanActivate, CanActivateChild, CanLoad {
   async hasPermissions(): Promise<boolean> {
     try {
       const userIsAdmin = await this.auth.userIsAdmin()
-      const response = !userIsAdmin
 
-      if (!response) {
+      if (userIsAdmin) {
         void this.router.navigate(['/admin/projects'])
         return false
       }
+
       return true
     } catch {
       return false

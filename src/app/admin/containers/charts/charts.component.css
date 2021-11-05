@@ -11,3 +11,7 @@
 .chart-container {
   gap: 1rem;
 }
+
+.desktop-content {
+  width: 100%;
+}
