@@ -30,6 +30,7 @@ import {
   CreateUserRequest,
   CreateUserResponse,
   GetUserResponse,
+  GetUserIdResponse,
 } from 'src/app/shared/models/api.interface'
 
 import { UpdateAccountDetailsForm } from '../../containers/update-account-details/update-account-details.component'
@@ -128,6 +129,7 @@ export class AuthService {
       if (!isExtraDataComplete) return void this.router.navigate(['/auth/extra-data'])
 
       // Completed registration operations
+      void this.setUserId()
       await this.router.navigate(['/'])
       return void this._verifyEmail()
     } catch (error: any) {
@@ -411,6 +413,7 @@ export class AuthService {
       await this.auth.signOut()
       localStorage.removeItem('token')
       localStorage.removeItem('claims')
+      localStorage.removeItem('userId')
       this._displayName = null
       this.snackBar.open('Se ha cerrado tu sesión correctamente', 'Cerrar', { duration: 5000 })
       return void this.router.navigate(['/'])
@@ -464,5 +467,13 @@ export class AuthService {
       const token = await getIdToken(this._user, true)
       localStorage.setItem('token', token)
     }
+  }
+
+  async setUserId(): Promise<void> {
+    const uid = (await this.user$.pipe(take(1)).toPromise()).uid
+    const { id } = await this.http
+      .get<GetUserIdResponse>(`${environment.apiUrl}/users/${uid}`)
+      .toPromise()
+    localStorage.setItem('userId', id.toString())
   }
 }

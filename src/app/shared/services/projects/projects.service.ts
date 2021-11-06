@@ -113,7 +113,7 @@ export class ProjectsService {
     await this.router.navigate(['/admin/projects'])
   }
 
-  getProject(id: Project['id']): Observable<GetProjectResponse> {
+  getProject(id: number): Observable<GetProjectResponse> {
     return this.http.get<GetProjectResponse>(`${environment.apiUrl}/projects/${id}`)
   }
 

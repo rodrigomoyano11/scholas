@@ -45,7 +45,7 @@ export class MetricsListComponent {
       number: '265 587 4332',
       donationsQuantity: 5,
       totalAmount: 730,
-      donations: this.donations.getDonations(),
+      donations: this.donations._donations,
     },
     {
       fullName: 'Juan José',
@@ -55,7 +55,7 @@ export class MetricsListComponent {
       number: '265 587 4332',
       donationsQuantity: 234,
       totalAmount: 4540,
-      donations: this.donations.getDonations(),
+      donations: this.donations._donations,
     },
     {
       fullName: 'Francisco González',
@@ -65,7 +65,7 @@ export class MetricsListComponent {
       number: '265 587 4332',
       donationsQuantity: 4,
       totalAmount: 980,
-      donations: this.donations.getDonations(),
+      donations: this.donations._donations,
     },
     {
       fullName: 'Macarena Pérez',
@@ -75,7 +75,7 @@ export class MetricsListComponent {
       number: '265 587 4332',
       donationsQuantity: 53,
       totalAmount: 430,
-      donations: this.donations.getDonations(),
+      donations: this.donations._donations,
     },
     {
       fullName: 'Sherlock Holmes',
@@ -85,7 +85,7 @@ export class MetricsListComponent {
       number: '265 587 4332',
       donationsQuantity: 44,
       totalAmount: 7530,
-      donations: this.donations.getDonations(),
+      donations: this.donations._donations,
     },
   ]
   columnsToDisplay: ['fullName', 'donationsQuantity', 'totalAmount', 'action'] = [

@@ -1,17 +1,20 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
+import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
 import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
-import { ShareService } from 'src/app/shared/services/share/share.service'
-import { environment } from 'src/environments/environment'
-import { DonationsService, DonationTest } from '../../services/donations/donations.service'
+import {
+  DonationsService,
+  DonationWithProjectName,
+} from '../../services/donations/donations.service'
 
 @Component({
   selector: 'app-certificate',
   templateUrl: './certificate.component.html',
   styleUrls: ['./certificate.component.css'],
 })
-export class CertificateComponent {
+export class CertificateComponent implements OnInit {
   selectedDonationId: string | null = this.route.snapshot.paramMap.get('id')
 
   toolbarButtons: ToolbarButtons = [
@@ -43,24 +46,32 @@ export class CertificateComponent {
     },
   ]
 
-  donation!: DonationTest | null
+  donation: DonationWithProjectName | undefined = undefined
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private share: ShareService,
-    public donationsService: DonationsService,
+    private dialog: MatDialog,
+    private donationsService: DonationsService,
     public auth: AuthService,
-  ) {
-    this.donation = this.selectedDonationId
-      ? donationsService.getDonation(this.selectedDonationId)
-      : null
+  ) {}
+  async ngOnInit(): Promise<void> {
+    this.donation = await this.donationsService.getDonationById(Number(this.selectedDonationId))
+
+    if (this.donation?.status !== 'SUCCESS') this.toolbarButtons.pop()
   }
 
   shareAsLink(): void {
-    this.share.shareAsLink(
-      `${environment.apiUrl}/donation/certificate/${this.selectedDonationId ?? 'error'}`,
-      'Se copió el link de la donación',
-    )
+    void this.dialog
+      .open<DialogComponent, DialogData>(DialogComponent, {
+        data: {
+          actions: [null, 'Cerrar'],
+          title: 'Importante',
+          description: 'Para compartir tu certificado deberías hacer una captura de pantalla',
+          icon: 'info',
+        },
+      })
+      .afterClosed()
+      .toPromise()
   }
 }
