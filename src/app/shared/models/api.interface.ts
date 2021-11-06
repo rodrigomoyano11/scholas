@@ -40,6 +40,10 @@ export interface CreateUserResponse {
   phoneNumber: ExtraData['phoneNumber']
 }
 
+export interface GetUserIdResponse {
+  id: number
+}
+
 // Projects
 type Status = 'STARTED' | 'IN_PROGRESS' | 'FINISHED'
 type Visibility = 'PUBLIC' | 'PRIVATE'
@@ -137,6 +141,19 @@ export interface GetMetricsResponse {
   statusCodeValue: unknown
   statusCode: unknown
 }
+
+// Donations
+export type GetDonationsByUserResponse = {
+  id: number
+  projectId: number
+  userId: number
+  status: 'SUCCESS' | 'PENDING' | 'FAILURE' | null
+  type: 'RECURRING' | 'REGULAR'
+  paymentId: null | string
+  amount: number
+  registerAt: string
+  preferenceId: null | string
+}[]
 
 // Utils
 export type GetProvincesAndLocalitiesResponse = [
