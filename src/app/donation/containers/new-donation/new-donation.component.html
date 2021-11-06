@@ -38,18 +38,6 @@
         <app-payment (stepCompleted)="goNext(stepper, 1)" [isRecurring]="state === 'recurring'">
         </app-payment>
       </div>
-
-      <!-- <div class="actions">
-        <button
-          type="button"
-          [color]="'primary'"
-          mat-flat-button
-          matStepperNext
-          [disabled]="!stepperStatus[1]"
-        >
-          Siguiente
-        </button>
-      </div> -->
     </mat-step>
 
     <mat-step label="Finalizá la donación" [completed]="stepperStatus[2]" [editable]="false">
