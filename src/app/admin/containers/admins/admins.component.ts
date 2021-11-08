@@ -27,6 +27,8 @@ export class AdminsComponent implements OnInit {
     },
   ]
 
+  isLoading = false
+
   constructor(
     public adminsService: AdminsService,
     public layout: LayoutService,
@@ -34,6 +36,10 @@ export class AdminsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true
     this.adminsService.getAdmins()
+    setTimeout(() => {
+      this.isLoading = false
+    }, 1000)
   }
 }

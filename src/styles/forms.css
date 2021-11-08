@@ -9,6 +9,8 @@
 .form-container__title--primary,
 .form-container__description {
   text-align: center;
+
+  user-select: none;
 }
 
 .form-container__title-container {
@@ -18,6 +20,8 @@
   padding: 0.5rem 2rem;
 
   background-color: #009993;
+
+  user-select: none;
 }
 
 .form-container__title-container > .form-container__title--secondary {
@@ -30,6 +34,8 @@
 .social-buttons__container {
   width: 100%;
   margin-bottom: 1rem;
+
+  user-select: none;
 }
 
 .social-buttons__title {
@@ -50,6 +56,8 @@
 
 .form__title {
   text-align: center;
+
+  user-select: none;
 }
 
 .form {
@@ -96,6 +104,8 @@
   padding-bottom: 1.5rem;
 
   color: rgb(100 100 100);
+
+  user-select: none;
 }
 
 .img-field__heading {
@@ -130,6 +140,8 @@
   flex-direction: column;
   width: 100%;
   padding-top: 1rem;
+
+  user-select: none;
 }
 
 .extra-links__button-group {

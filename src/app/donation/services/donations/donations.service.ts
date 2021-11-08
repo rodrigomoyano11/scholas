@@ -1,28 +1,16 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { take } from 'rxjs/operators'
-import { AuthService } from 'src/app/auth/services/auth/auth.service'
-import { GetDonationAmountsResponse } from 'src/app/shared/models/api.interface'
+import { lastValueFrom, take } from 'rxjs'
+import {
+  GetDonationAmountsResponse,
+  GetDonationsByUserAndProjectResponse,
+  GetDonationsByUserResponse,
+} from 'src/app/shared/models/api.interface'
 import { Donation } from 'src/app/shared/models/donation.interface'
 import { Project } from 'src/app/shared/models/project.interface'
+import { ProjectsService } from 'src/app/shared/services/projects/projects.service'
 import { environment } from 'src/environments/environment'
 import { DonationAmountSettingsForm } from '../../containers/donation-amounts-settings/donation-amounts-settings.component'
-
-export interface DonationTest {
-  id: string
-  status: Donation['status']
-  type: string
-  amount: number
-  createdDate: string
-  userId: string
-  projectId: number
-  projectName: string
-  paymentId: string
-}
-
-interface GetUserIdResponse {
-  id: number
-}
 
 export interface MercadoPagoResponse {
   collection_id: string
@@ -38,118 +26,140 @@ export interface MercadoPagoResponse {
   merchant_account_id: string
 }
 
+export interface DonationTest {
+  amount: number
+  registerAt: string
+  userId: number
+  projectId: number
+  paymentId: string | null
+  preferenceId: string | null
+}
+
 type CreateDonationData = {
   donation: Donation['amount']
   type: Donation['type']
   projectId: Project['id']
 }
 
+export interface DonationWithProjectName {
+  projectName: string
+  id: number
+  projectId: number
+  userId: number
+  status: 'SUCCESS' | 'PENDING' | 'FAILURE' | null
+  type: 'RECURRING' | 'REGULAR'
+  paymentId: string | null
+  amount: number
+  registerAt: string
+  preferenceId: string | null
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class DonationsService {
-  private _donations: DonationTest[] = [
+  _donations = [
     {
-      id: '1',
-      status: 'success',
-      type: 'regular',
-      amount: 300,
-      createdDate: '2021-10-23',
-      userId: '30454656495658',
+      id: 1,
       projectId: 1,
-      projectName: 'Hogar de Niños "Dr. Marcial Rawson"',
-      paymentId: '23475876',
-    },
-    {
-      id: '2',
-      status: 'pending',
-      type: 'regular',
-      amount: 300,
-      createdDate: '2017-09-08',
-      userId: '30454656495658',
-      projectId: 1,
-      projectName: 'Hospital de Oncología "Dr. René Favaloro"',
-      paymentId: '23475876',
-    },
-    {
-      id: '3',
-      status: 'success',
-      type: 'regular',
-      amount: 300,
-      createdDate: '2021-12-15',
-      userId: '30454656495658',
-      projectId: 1,
-      projectName: 'Escuela de Mar y Playa',
-      paymentId: '23475876',
-    },
-    {
-      id: '4',
-      status: 'failure',
-      type: 'regular',
-      amount: 700,
-      createdDate: '2020-07-05',
-      userId: '89745394587099',
-      projectId: 2,
-      projectName: 'Comedero "Manuel Belgrano"',
-      paymentId: '75460977',
-    },
-    {
-      id: '5',
-      status: 'success',
-      type: 'regular',
-      amount: 700,
-      createdDate: '2021-03-26',
-      userId: '89347935023745',
-      projectId: 3,
-      projectName: 'Scholas San Juan',
-      paymentId: '897349802',
+      userId: 4,
+      status: null,
+      type: 'RECURRING',
+      paymentId: null,
+      amount: 500.0,
+      registerAt: '2021-11-05T09:03:02.000+00:00',
+      preferenceId: null,
     },
   ]
 
   donationAmountsConfig!: number[]
 
-  constructor(private http: HttpClient, private auth: AuthService) {
+  constructor(private http: HttpClient, private projects: ProjectsService) {
     void this.getDonationAmounts()
   }
 
   // User Data
-  async getUserId(): Promise<number> {
-    const uid = (await this.auth.user$.pipe(take(1)).toPromise()).uid
-    const response = await this.http
-      .get<GetUserIdResponse>(`${environment.apiUrl}/users/${uid}`)
-      .toPromise()
-
-    return response.id
+  getUserId(): number {
+    const userId = localStorage.getItem('userId')
+    return Number(userId)
   }
 
   // Donations
-  getDonations(): DonationTest[] {
-    return this._donations
+  getDonations() {
+    return Promise.resolve(this._donations)
   }
-  getDonationsByUserId(id: string): DonationTest[] {
-    return this._donations.filter((donation) => donation.userId === id)
+
+  async getDonationsByUserId(id: number): Promise<DonationWithProjectName[]> {
+    const donations = await lastValueFrom(
+      this.http.get<GetDonationsByUserResponse>(
+        `${environment.apiUrl}/donations/list?userId=${id}`,
+      ),
+    )
+
+    const projects = await lastValueFrom(this.projects.getProjects().pipe(take(1)))
+
+    const donationsWithProjectNames = donations.map((donation) => {
+      const projectName = projects.find((project) => project.id === donation.projectId)?.name ?? ''
+      return {
+        ...donation,
+        projectName,
+      }
+    })
+
+    return donationsWithProjectNames
   }
-  getDonation(id: string): DonationTest | null {
+
+  async getDonationsByUserAndProject(
+    userId: number,
+    projectId: Project['id'],
+  ): Promise<DonationWithProjectName[]> {
+    const url = `${environment.apiUrl}/donations/list?userId=${userId}&projectId=${projectId}`
+
+    const donations = await lastValueFrom(
+      this.http.get<GetDonationsByUserAndProjectResponse[]>(url),
+    )
+
+    const projects = await lastValueFrom(this.projects.getProjects().pipe(take(1)))
+
+    const donationsWithProjectNames = donations.map((donation) => {
+      const projectName = projects.find((project) => project.id === donation.projectId)?.name ?? ''
+      return {
+        ...donation,
+        projectName,
+      }
+    })
+
+    return donationsWithProjectNames
+  }
+
+  async getDonationById(id: number): Promise<DonationWithProjectName | undefined> {
+    const donationsWithProjectNames = await this.getDonationsByUserId(this.getUserId())
+
+    return donationsWithProjectNames.find((donation) => donation.id === id)
+  }
+
+  // TODO: Borrar la siguiente función
+  getDonation(id: number) {
     return this._donations.find((donation) => donation.id === id) ?? null
   }
 
   async createDonation({ donation, type, projectId }: CreateDonationData): Promise<string> {
-    const body = { donation, projectId, type, userId: await this.getUserId() }
+    const body = { donation, projectId, type, userId: this.getUserId() }
 
-    const response = await this.http
-      .post<Response>(`${environment.apiUrl}/donations/create`, body)
-      .toPromise()
+    const response = await lastValueFrom(
+      this.http.post<Response>(`${environment.apiUrl}/donations/create`, body),
+    )
 
     return (response.body as unknown as string) ?? ''
   }
 
   async editDonation(payment_id: string, preference_id: string): Promise<void> {
-    await this.http
-      .put<unknown>(
+    await lastValueFrom(
+      this.http.put<unknown>(
         `${environment.apiUrl}/donations/edit?paymentId=${payment_id}&preferenceId=${preference_id}`,
         {},
-      )
-      .toPromise()
+      ),
+    )
   }
 
   setDonationStatus(status: string): 'failure' | 'pending' | 'success' {
@@ -166,9 +176,9 @@ export class DonationsService {
 
   async getDonationAmounts(): Promise<void> {
     const response = (
-      await this.http
-        .get<GetDonationAmountsResponse>(`${environment.apiUrl}/amount?id=1`)
-        .toPromise()
+      await lastValueFrom(
+        this.http.get<GetDonationAmountsResponse>(`${environment.apiUrl}/amount?id=1`),
+      )
     )[0]
     this.donationAmountsConfig = [
       response.amount1,
@@ -182,7 +192,7 @@ export class DonationsService {
 
     const body = { amount1, amount2, amount3, amount4 }
 
-    await this.http.put(`${environment.apiUrl}/amount?id=1`, body).toPromise()
+    await lastValueFrom(this.http.put(`${environment.apiUrl}/amount?id=1`, body))
     await this.getDonationAmounts()
   }
 }

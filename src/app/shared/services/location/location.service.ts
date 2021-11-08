@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
+import { lastValueFrom } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { GetProvincesAndLocalitiesResponse, GetProvincesResponse } from '../../models/api.interface'
 import { Location } from '../../models/location.interface'
@@ -17,15 +18,15 @@ export class LocationService {
   }
 
   async getLocationData(): Promise<void> {
-    this.locationData = await this.http
-      .get<GetProvincesAndLocalitiesResponse>(`${environment.apiUrl}/location`)
-      .toPromise()
+    this.locationData = await lastValueFrom(
+      this.http.get<GetProvincesAndLocalitiesResponse>(`${environment.apiUrl}/location`),
+    )
   }
 
   async getProvinceData(): Promise<void> {
-    this.provincesData = await this.http
-      .get<GetProvincesResponse>(`${environment.apiUrl}/province`)
-      .toPromise()
+    this.provincesData = await lastValueFrom(
+      this.http.get<GetProvincesResponse>(`${environment.apiUrl}/province`),
+    )
   }
 
   async getProvinces(): Promise<string[]> {

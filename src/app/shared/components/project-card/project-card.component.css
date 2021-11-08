@@ -8,6 +8,8 @@
   border: 1px solid rgb(0 0 0 / 12%);
 
   box-shadow: none;
+
+  user-select: none;
 }
 
 .image {

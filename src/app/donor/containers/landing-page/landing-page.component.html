@@ -50,11 +50,13 @@
           <div class="line line--sm"></div>
         </div>
 
-        <app-alert-message
-          class="alert-message"
-          *ngIf="(cardData?.length ?? 0) === 0; else projects"
-          description="No se han encontrado proyectos"
-        ></app-alert-message>
+        <ng-container *ngIf="!isLoading; else loading">
+          <app-alert-message
+            class="alert-message"
+            *ngIf="(cardData?.length ?? 0) === 0; else projects"
+            description="No se han encontrado proyectos"
+          ></app-alert-message>
+        </ng-container>
       </section>
     </section>
   </app-modal-container>
@@ -75,4 +77,8 @@
       Ver más proyectos
     </button>
   </div>
+</ng-template>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
 </ng-template>

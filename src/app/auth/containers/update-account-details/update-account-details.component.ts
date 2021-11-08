@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth/auth.service'
 import { LocationService } from '../../../shared/services/location/location.service'
 import { ValidationService } from 'src/app/shared/services/validation/validation.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { lastValueFrom } from 'rxjs'
 
 export interface UpdateAccountDetailsForm {
   fullName: string
@@ -23,6 +24,9 @@ export interface UpdateAccountDetailsForm {
   styleUrls: ['./update-account-details.component.css'],
 })
 export class UpdateAccountDetailsComponent implements OnInit {
+  isLoading = true
+  submitIsLoading = false
+
   backButtonAction = (): void => void this.router.navigate(['/auth/account'])
 
   form: FormGroup
@@ -71,9 +75,9 @@ export class UpdateAccountDetailsComponent implements OnInit {
   setInitialValues(): void {
     this.auth.user$.subscribe((user) => {
       user.uid &&
-        void this.http
-          .get<GetUserResponse>(`${environment.apiUrl}/users/${user.uid}`)
-          .toPromise()
+        void lastValueFrom(
+          this.http.get<GetUserResponse>(`${environment.apiUrl}/users/${user.uid}`),
+        )
           .then((response) =>
             this.form.patchValue({
               fullName: response.displayName,
@@ -84,6 +88,7 @@ export class UpdateAccountDetailsComponent implements OnInit {
             }),
           )
           .then(() => void this.setInitialLocationValues())
+          .then(() => (this.isLoading = false))
     })
   }
 
@@ -115,6 +120,7 @@ export class UpdateAccountDetailsComponent implements OnInit {
 
   // Submit
   async submitExtraData(): Promise<void> {
+    this.submitIsLoading = true
     await this.auth.editAccountDetails(this.form.value as UpdateAccountDetailsForm)
     this.snackBar.open('Los cambios han sido guardados correctamente', 'Cerrar', { duration: 5000 })
     await this.router.navigate(['auth/account'])

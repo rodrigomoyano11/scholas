@@ -7,85 +7,110 @@
       [titleAlignCenter]="true"
     ></app-toolbar>
 
-    <div class="metrics-number-container">
-      <app-metrics-numbers
-        [value]="98"
-        description="Cantidad de donantes"
-        type="number"
-      ></app-metrics-numbers>
-      <app-metrics-numbers
-        [value]="98605045655"
-        description="Dinero recaudado"
-        type="currency"
-      ></app-metrics-numbers>
-      <app-metrics-numbers
-        [value]="9845464"
-        description="Dinero restante"
-        type="currency"
-        color="red"
-      ></app-metrics-numbers>
-    </div>
+    <ng-container *ngIf="projectData.donorsQuantity !== 0; else hasNotDonations">
+      <div class="metrics-number-container">
+        <app-metrics-numbers
+          [value]="projectData.donorsQuantity"
+          description="Cantidad de donantes"
+          type="number"
+        ></app-metrics-numbers>
+        <app-metrics-numbers
+          [value]="projectData.currentAmount"
+          description="Dinero recaudado"
+          type="currency"
+        ></app-metrics-numbers>
+        <app-metrics-numbers
+          [value]="projectData.remainingAmount"
+          description="Dinero restante"
+          type="currency"
+          color="red"
+        ></app-metrics-numbers>
+      </div>
 
-    <button
-      class="header-button"
-      type="button"
-      [color]="'primary'"
-      mat-stroked-button
-      (click)="goToCharts()"
-    >
-      Ver gráficos
-    </button>
+      <button
+        class="header-button"
+        type="button"
+        [color]="'primary'"
+        mat-stroked-button
+        (click)="goToCharts()"
+      >
+        Ver gráficos
+      </button>
 
-    <app-toolbar title="Donaciones" [buttons]="tableActions" [withMargin]="false">
-      <ng-container overlay>
-        <app-filters></app-filters>
-      </ng-container>
-      <ng-container menu>
-        <button type="button" mat-menu-item>
-          <mat-icon fontSet="material-icons-outlined">sort_by_alpha</mat-icon>
-          Orden alfábetico
-        </button>
-        <mat-divider></mat-divider>
+      <app-toolbar title="Donaciones" [buttons]="tableActions" [withMargin]="false">
+        <ng-container overlay>
+          <app-filters (dataSubmitted)="setFilters($event)"></app-filters>
+        </ng-container>
+        <ng-container menu>
+          <button
+            type="button"
+            mat-menu-item
+            (click)="setOrder('orderAlphabetically', 'ascending')"
+          >
+            <mat-icon fontSet="material-icons-outlined">sort_by_alpha</mat-icon>
+            Orden alfábetico
+          </button>
+          <mat-divider></mat-divider>
 
-        <button type="button" mat-menu-item>
-          <mat-icon fontSet="material-icons-outlined">numbers</mat-icon>
-          Mayor cantidad de donaciones
-        </button>
-        <button type="button" mat-menu-item>
-          <mat-icon fontSet="material-icons-outlined">numbers</mat-icon>
-          Menor cantidad de donaciones
-        </button>
-        <mat-divider></mat-divider>
+          <button
+            type="button"
+            mat-menu-item
+            (click)="setOrder('orderByDonationCount', 'descending')"
+          >
+            <mat-icon fontSet="material-icons-outlined">numbers</mat-icon>
+            Mayor cantidad de donaciones
+          </button>
+          <button
+            type="button"
+            mat-menu-item
+            (click)="setOrder('orderByDonationCount', 'ascending')"
+          >
+            <mat-icon fontSet="material-icons-outlined">numbers</mat-icon>
+            Menor cantidad de donaciones
+          </button>
+          <mat-divider></mat-divider>
 
-        <button type="button" mat-menu-item>
-          <mat-icon fontSet="material-icons-outlined">schedule</mat-icon>
-          De reciente a antigüo
-        </button>
-        <button type="button" mat-menu-item>
-          <mat-icon fontSet="material-icons-outlined">schedule</mat-icon>
-          De antigüo a reciente
-        </button>
-        <mat-divider></mat-divider>
+          <button
+            type="button"
+            mat-menu-item
+            (click)="setOrder('orderRecentOrAncient', 'descending')"
+          >
+            <mat-icon fontSet="material-icons-outlined">schedule</mat-icon>
+            De reciente a antigüo
+          </button>
+          <button
+            type="button"
+            mat-menu-item
+            (click)="setOrder('orderRecentOrAncient', 'ascending')"
+          >
+            <mat-icon fontSet="material-icons-outlined">schedule</mat-icon>
+            De antigüo a reciente
+          </button>
+          <mat-divider></mat-divider>
 
-        <button type="button" mat-menu-item>
-          <mat-icon fontSet="material-icons-outlined">paid</mat-icon>
-          Mayor importe donado
-        </button>
-        <button type="button" mat-menu-item>
-          <mat-icon fontSet="material-icons-outlined">paid</mat-icon>
-          Menor importe donado
-        </button>
-        <mat-divider></mat-divider>
-      </ng-container>
-    </app-toolbar>
+          <button
+            type="button"
+            mat-menu-item
+            (click)="setOrder('orderByDonationAmount', 'descending')"
+          >
+            <mat-icon fontSet="material-icons-outlined">paid</mat-icon>
+            Mayor importe donado
+          </button>
+          <button
+            type="button"
+            mat-menu-item
+            (click)="setOrder('orderByDonationAmount', 'ascending')"
+          >
+            <mat-icon fontSet="material-icons-outlined">paid</mat-icon>
+            Menor importe donado
+          </button>
+          <mat-divider></mat-divider>
+        </ng-container>
+      </app-toolbar>
 
-    <app-list-alert
-      description="Hasta el momento, no se han realizado donaciones"
-      [alertCondition]="false"
-    >
-      <app-metrics-list></app-metrics-list>
+      <app-metrics-list [filtersData]="filtersData" [ordersData]="ordersData"></app-metrics-list>
       <mat-paginator></mat-paginator>
-    </app-list-alert>
+    </ng-container>
   </div>
 </app-modal-container>
 
@@ -98,4 +123,13 @@
     title="No se puede acceder"
     description="Esta página es accesible solo desde una computadora o un dispositivo con una pantalla más grande"
   ></app-alert-message>
+</ng-template>
+
+<ng-template #hasNotDonations>
+  <div class="list-alert__container">
+    <app-alert-message
+      title="Proyecto sin donaciones"
+      description="Hasta el momento, no se han realizado donaciones a este proyecto"
+    ></app-alert-message>
+  </div>
 </ng-template>

@@ -2,7 +2,9 @@
   <mat-icon fontSet="material-icons-outlined" color="primary" class="icon">favorite</mat-icon>
 
   <div class="caption">
-    <h1 class="title mat-title">¡Muchas gracias Lucía!</h1>
+    <h1 class="title mat-title">
+      ¡Muchas gracias {{ ((auth.user$ | async)?.displayName?.split(' ') ?? [''])[0] }}!
+    </h1>
 
     <p class="description mat-body-2">
       Te contactaremos muy pronto para poder continuar con tu donación

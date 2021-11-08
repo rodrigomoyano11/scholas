@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { CanActivate, CanActivateChild, CanLoad, Router, UrlTree } from '@angular/router'
-import { Observable } from 'rxjs'
+import { lastValueFrom, Observable } from 'rxjs'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
 import { DialogComponent, DialogData } from '../../components/dialog/dialog.component'
 
@@ -20,18 +20,19 @@ export class IsAdminGuard implements CanActivate, CanActivateChild, CanLoad {
 
       if (!userIsAdmin) {
         void this.router.navigate(['/auth/login'])
-        void this.dialog
-          .open<DialogComponent, DialogData>(DialogComponent, {
-            data: {
-              actions: [null, 'Cerrar'],
-              title: 'Importante',
-              description:
-                'Debes iniciar sesión con una cuenta de administrador para poder ingresar',
-              icon: 'info',
-            },
-          })
-          .afterClosed()
-          .toPromise()
+        void lastValueFrom(
+          this.dialog
+            .open<DialogComponent, DialogData>(DialogComponent, {
+              data: {
+                actions: [null, 'Cerrar'],
+                title: 'Importante',
+                description:
+                  'Debes iniciar sesión con una cuenta de administrador para poder ingresar',
+                icon: 'info',
+              },
+            })
+            .afterClosed(),
+        )
 
         return false
       }

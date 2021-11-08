@@ -19,6 +19,13 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  appearance: none;
+
+  margin: 0;
+}
+
 *,
 *::before,
 *::after {
@@ -28,4 +35,22 @@ body {
 /* Angular Material Corrections */
 .cdk-overlay-container {
   z-index: 10000;
+}
+
+.mat-snack-bar-container {
+  background: #009993;
+
+  color: #fff;
+}
+
+.mat-simple-snackbar-action {
+  color: #fff;
+
+  /* color: #009993 !important; */
+
+  /* color: #30aaa6 !important; */
+}
+
+.mat-simple-snackbar-action > button {
+  background-color: #30aaa6bd;
 }

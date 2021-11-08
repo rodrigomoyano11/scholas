@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
+import { lastValueFrom } from 'rxjs'
 import { LocationService } from 'src/app/shared/services/location/location.service'
 import { ValidationService } from 'src/app/shared/services/validation/validation.service'
 import { ProjectsService } from '../../../shared/services/projects/projects.service'
@@ -11,6 +12,8 @@ import { ProjectsService } from '../../../shared/services/projects/projects.serv
   styleUrls: ['./update-project-form.component.css'],
 })
 export class UpdateProjectFormComponent implements OnInit {
+  isLoading = false
+
   form: FormGroup
 
   selectedProjectId: string | null = this.route.snapshot.paramMap.get('id')
@@ -68,7 +71,7 @@ export class UpdateProjectFormComponent implements OnInit {
         coverPhotoURL,
         photos,
         videoURL,
-      } = await this.projects.getProject(Number(this.selectedProjectId)).toPromise()
+      } = await lastValueFrom(this.projects.getProject(Number(this.selectedProjectId)))
 
       this.coverPhotoData = coverPhotoURL ? [coverPhotoURL] : []
       this.photosData = photos ?? []
@@ -89,6 +92,7 @@ export class UpdateProjectFormComponent implements OnInit {
   }
 
   submitProjectData(): void {
+    this.isLoading = true
     const projectData = {
       name: this.form.controls['name'].value as string,
       province: this.form.controls['province'].value as string,
@@ -100,7 +104,9 @@ export class UpdateProjectFormComponent implements OnInit {
       video: this.form.controls['video'].value as string,
     }
 
-    void this.projects.editProject(Number(this.selectedProjectId), projectData)
+    void this.projects
+      .editProject(Number(this.selectedProjectId), projectData)
+      .then(() => (this.isLoading = false))
   }
 
   // Location

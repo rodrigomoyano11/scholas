@@ -1,19 +1,40 @@
 <app-modal-container size="small" backgroundColor="#009993" padding="1.5rem">
-  <div *ngIf="donation" class="main-container">
-    <app-toolbar [buttons]="toolbarButtons" [fullWidth]="true" [withMargin]="false"></app-toolbar>
-    <div class="content">
-      <app-logo class="logo" color="#009993" type="vertical"></app-logo>
-      <div class="caption">
-        <h1 class="title mat-title">
-          ¡Muchas gracias {{ ((auth.user$ | async)?.displayName?.split(' ') ?? [''])[0] }}!
-        </h1>
+  <div class="main-container">
+    <ng-container *ngIf="donation; else loading">
+      <app-toolbar [buttons]="toolbarButtons" [fullWidth]="true" [withMargin]="false"></app-toolbar>
+      <ng-container *ngIf="donation.status !== 'SUCCESS'; else donationIsNotSuccess">
+        <div class="content">
+          <app-logo class="logo" color="#009993" type="vertical"></app-logo>
+          <div class="caption">
+            <h1 class="title mat-title">
+              ¡Muchas gracias {{ ((auth.user$ | async)?.displayName?.split(' ') ?? [''])[0] }}!
+            </h1>
 
-        <p class="description mat-body-2">
-          Te agradecemos por apoyar la misión del proyecto
-          <span class="emphasis-1">{{ donation.projectName }}</span> con tu donación
-        </p>
-      </div>
-      <p class="date emphasis-2">{{ donation.createdDate }}</p>
-    </div>
+            <p class="description mat-body-2">
+              Te agradecemos por apoyar la misión del proyecto
+              <span class="emphasis-1">{{ donation.projectName }}</span>
+              con tu donación
+            </p>
+          </div>
+          <p class="date emphasis-2">
+            {{ donation.registerAt | date: 'dd/MM/yyyy' }}
+          </p>
+        </div>
+      </ng-container>
+    </ng-container>
   </div>
 </app-modal-container>
+
+<ng-template #donationIsNotSuccess>
+  <app-alert-message
+    [description]="
+      donation?.status === 'PENDING'
+        ? 'El certificado no está disponible porque la donación todavía está pendiente'
+        : 'El certificado no está disponible porque la donación fue rechazada'
+    "
+  ></app-alert-message>
+</ng-template>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>

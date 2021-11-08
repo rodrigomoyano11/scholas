@@ -4,9 +4,9 @@ import { LayoutService } from 'src/app/shared/services/layout/layout.service'
 import { Donation } from 'src/app/shared/models/donation.interface'
 import { DonationsService, MercadoPagoResponse } from '../../services/donations/donations.service'
 import { ActivatedRoute, Router } from '@angular/router'
-import { take } from 'rxjs/operators'
 import { MatStepper } from '@angular/material/stepper'
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { lastValueFrom, take } from 'rxjs'
 
 @Component({
   selector: 'app-new-donation',
@@ -52,8 +52,6 @@ export class NewDonationComponent {
     this.setStepperStatus(2, true)
   }
 
-  // http://localhost:4200/donation/donate/completed?payment_id=1243035262&status=approved&preference_id=96795050-c61dedb8-b20c-4cc0-884a-b72643cc7066
-
   async handleAmountSelectionComplete(): Promise<void> {
     const donationData = {
       donation: this.amount,
@@ -64,10 +62,7 @@ export class NewDonationComponent {
     if (this.type === 'recurring') {
       this.state = 'recurring'
 
-      // await this.donations.createDonation(donationData)
       this.setStepperStatus(1, true)
-
-      // this.selectedIndex = 2
 
       return
     }
@@ -83,9 +78,9 @@ export class NewDonationComponent {
     this.setStepperStatus(1, true)
     this.selectedIndex = 2
 
-    const MercadoPagoData = (await this.route.queryParams
-      .pipe(take(1))
-      .toPromise()) as MercadoPagoResponse
+    const MercadoPagoData = (await lastValueFrom(
+      this.route.queryParams.pipe(take(1)),
+    )) as unknown as MercadoPagoResponse
 
     await this.donations.editDonation(MercadoPagoData.payment_id, MercadoPagoData.preference_id)
 
@@ -94,7 +89,7 @@ export class NewDonationComponent {
 
   finalizeDonation(status: 'success' | 'failure'): void {
     if (status === 'success') {
-      void this.router.navigate(['donation/certificate/', this.selectedProjectId])
+      void this.router.navigate(['/donor/donations'])
       return
     }
 

@@ -13,6 +13,8 @@ import { environment } from 'src/environments/environment'
   styleUrls: ['./landing-page.component.css'],
 })
 export class LandingPageComponent implements OnInit {
+  isLoading = true
+
   cardData: CardData[] = []
 
   constructor(
@@ -26,6 +28,7 @@ export class LandingPageComponent implements OnInit {
   }
 
   setCardData(project: GetProjectResponse): CardData {
+    this.isLoading = false
     return {
       type: 'donor',
 

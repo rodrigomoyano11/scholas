@@ -1,19 +1,20 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
 import {
   DonationsService,
-  DonationTest,
+  DonationWithProjectName,
 } from 'src/app/donation/services/donations/donations.service'
 import { BadgeStatus } from 'src/app/shared/components/list-item/list-item.component'
 import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
-import { Donation } from 'src/app/shared/models/donation.interface'
+import { GetDonationsByUserResponse } from 'src/app/shared/models/api.interface'
 
 @Component({
   selector: 'app-donations',
   templateUrl: './donations.component.html',
   styleUrls: ['./donations.component.css'],
 })
-export class DonationsComponent {
+export class DonationsComponent implements OnInit {
   toolbarButtons: ToolbarButtons = [
     {
       style: 'secondary',
@@ -32,29 +33,57 @@ export class DonationsComponent {
 
   backButtonAction = (): void => void this.router.navigate(['/auth/account'])
 
-  donations!: DonationTest[]
+  isLoading = false
 
-  constructor(private router: Router, public donationsService: DonationsService) {
-    this.donations = donationsService.getDonations()
+  donations: DonationWithProjectName[] = []
+  projectNames: {
+    id: number
+    name: string
+  }[] = []
+
+  constructor(
+    private router: Router,
+    public donationsService: DonationsService,
+    private snackBar: MatSnackBar,
+  ) {}
+  async ngOnInit(): Promise<void> {
+    const userId = this.donationsService.getUserId()
+
+    this.isLoading = true
+    this.donations = (await this.donationsService.getDonationsByUserId(userId)).sort((a, b) => {
+      if (a.registerAt > b.registerAt) return -1
+      return 1
+    })
+    this.isLoading = false
   }
 
-  goToDonationDetails(id: Donation['id']): void {
-    void this.router.navigate(['/donation/certificate', id])
+  goToDonationDetails(id: number, status: GetDonationsByUserResponse[0]['status']): void {
+    if (status === 'SUCCESS') void this.router.navigate(['/donation/certificate', id])
+
+    this.snackBar.open(
+      `El certificado no está disponible porque la donación ${
+        status === 'PENDING' ? 'todavía está pendiente' : 'fue rechazada'
+      }`,
+      'Cerrar',
+      {
+        duration: 5000,
+      },
+    )
   }
 
-  setListItemStatus(status: Donation['status']): BadgeStatus | null {
-    const statuses: { [key in Donation['status']]: BadgeStatus | null } = {
-      success: null,
-      pending: {
+  setListItemStatus(status: 'SUCCESS' | 'PENDING' | 'FAILURE' | null): BadgeStatus | null {
+    const statuses: { [key in 'SUCCESS' | 'PENDING' | 'FAILURE']: BadgeStatus | null } = {
+      SUCCESS: null,
+      PENDING: {
         type: 'warn',
         label: 'Pendiente',
       },
-      failure: {
+      FAILURE: {
         type: 'error',
         label: 'Rechazado',
       },
     }
 
-    return statuses[status]
+    return status ? statuses[status] : statuses.FAILURE
   }
 }
