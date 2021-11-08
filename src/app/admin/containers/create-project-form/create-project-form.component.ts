@@ -10,6 +10,8 @@ import { ProjectsService } from '../../../shared/services/projects/projects.serv
   styleUrls: ['./create-project-form.component.css'],
 })
 export class CreateProjectFormComponent implements OnInit {
+  isLoading = false
+
   form: FormGroup
 
   provinces: string[] = []
@@ -53,6 +55,7 @@ export class CreateProjectFormComponent implements OnInit {
   }
 
   submitProjectData(): void {
+    this.isLoading = true
     const projectData = {
       name: this.form.controls['name'].value as string,
       province: this.form.controls['province'].value as string,
@@ -64,7 +67,7 @@ export class CreateProjectFormComponent implements OnInit {
       video: this.form.controls['video'].value as string,
     }
 
-    void this.projects.createProject(projectData)
+    void this.projects.createProject(projectData).then(() => (this.isLoading = false))
   }
 
   // Location

@@ -2,6 +2,7 @@
   <div class="form-container__title-container">
     <span class="form-container__title--secondary mat-title">Crear proyecto</span>
   </div>
+
   <div class="form-container__content">
     <div class="form__container">
       <form class="form" (ngSubmit)="submitProjectData()" [formGroup]="form">
@@ -99,29 +100,35 @@
         </mat-form-field>
 
         <div class="form__submit-group">
-          <!-- Cancel -->
-          <button
-            type="button"
-            class="form__cancel"
-            [color]="'primary'"
-            mat-stroked-button
-            [routerLink]="'/admin/projects'"
-          >
-            Cancelar
-          </button>
+          <ng-container *ngIf="!isLoading; else loading">
+            <!-- Cancel -->
+            <button
+              type="button"
+              class="form__cancel"
+              [color]="'primary'"
+              mat-stroked-button
+              [routerLink]="'/admin/projects'"
+            >
+              Cancelar
+            </button>
 
-          <!-- Submit -->
-          <button
-            type="submit"
-            class="form__submit"
-            [color]="'primary'"
-            mat-flat-button
-            [disabled]="!form.valid"
-          >
-            Crear proyecto
-          </button>
+            <!-- Submit -->
+            <button
+              type="submit"
+              class="form__submit"
+              [color]="'primary'"
+              mat-flat-button
+              [disabled]="!form.valid"
+            >
+              Crear proyecto
+            </button>
+          </ng-container>
         </div>
       </form>
     </div>
   </div>
 </app-modal-container>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>

@@ -11,6 +11,8 @@ import { ProjectsService } from '../../../shared/services/projects/projects.serv
   styleUrls: ['./update-project-form.component.css'],
 })
 export class UpdateProjectFormComponent implements OnInit {
+  isLoading = false
+
   form: FormGroup
 
   selectedProjectId: string | null = this.route.snapshot.paramMap.get('id')
@@ -89,6 +91,7 @@ export class UpdateProjectFormComponent implements OnInit {
   }
 
   submitProjectData(): void {
+    this.isLoading = true
     const projectData = {
       name: this.form.controls['name'].value as string,
       province: this.form.controls['province'].value as string,
@@ -100,7 +103,9 @@ export class UpdateProjectFormComponent implements OnInit {
       video: this.form.controls['video'].value as string,
     }
 
-    void this.projects.editProject(Number(this.selectedProjectId), projectData)
+    void this.projects
+      .editProject(Number(this.selectedProjectId), projectData)
+      .then(() => (this.isLoading = false))
   }
 
   // Location
