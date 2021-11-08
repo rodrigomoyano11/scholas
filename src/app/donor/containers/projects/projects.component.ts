@@ -13,6 +13,7 @@ import { ProjectsService } from '../../../shared/services/projects/projects.serv
   styleUrls: ['./projects.component.css'],
 })
 export class ProjectsComponent implements OnInit {
+  isLoading = true
   cardData: CardData[] = []
 
   constructor(
@@ -26,6 +27,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   setCardData(project: GetProjectResponse): CardData {
+    this.isLoading = false
     return {
       type: 'donor',
 

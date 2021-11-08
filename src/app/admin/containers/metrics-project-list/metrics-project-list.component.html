@@ -1,20 +1,26 @@
 <app-modal-container>
   <app-toolbar [title]="'Métricas'"></app-toolbar>
 
-  <app-list-alert
-    title="Agregá un nuevo proyecto"
-    description="No se han encontrado proyectos"
-    [alertCondition]="projectData.length === 0"
-  >
-    <ng-container *ngFor="let project of projectData">
-      <app-list-item
-        [image]="project.coverPhotoURL"
-        [title]="project.name"
-        [subtitle]="project.description"
-        icon="chevron_right"
-        (clickEvent)="goToMetrics(project.id)"
-        [actionItem]="true"
-      ></app-list-item>
-    </ng-container>
-  </app-list-alert>
+  <ng-container *ngIf="!isLoading; else loading">
+    <app-list-alert
+      title="Agregá un nuevo proyecto"
+      description="No se han encontrado proyectos"
+      [alertCondition]="projectData.length === 0"
+    >
+      <ng-container *ngFor="let project of projectData">
+        <app-list-item
+          [image]="project.coverPhotoURL"
+          [title]="project.name"
+          [subtitle]="project.description"
+          icon="chevron_right"
+          (clickEvent)="goToMetrics(project.id)"
+          [actionItem]="true"
+        ></app-list-item>
+      </ng-container>
+    </app-list-alert>
+  </ng-container>
 </app-modal-container>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>

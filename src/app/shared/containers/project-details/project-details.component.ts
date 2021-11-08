@@ -16,6 +16,8 @@ import { ProjectsService } from '../../services/projects/projects.service'
   styleUrls: ['./project-details.component.css'],
 })
 export class ProjectDetailsComponent implements OnInit, OnChanges {
+  isLoading = true
+
   toolbarButtons!: ToolbarButtons
   toolbarBackButton!: BackButton
 
@@ -35,6 +37,7 @@ export class ProjectDetailsComponent implements OnInit, OnChanges {
 
   async ngOnInit(): Promise<void> {
     await this.getProjectData()
+    this.isLoading = false
   }
 
   ngOnChanges(): void {

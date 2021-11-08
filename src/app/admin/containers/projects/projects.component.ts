@@ -12,6 +12,8 @@ import { ProjectsService } from '../../../shared/services/projects/projects.serv
   styleUrls: ['./projects.component.css'],
 })
 export class ProjectsComponent implements OnInit {
+  isLoading = true
+
   toolbarButtons: ToolbarButtons = [
     {
       style: 'primary',
@@ -46,6 +48,7 @@ export class ProjectsComponent implements OnInit {
 
   setCardData(project: GetProjectResponse): CardData {
     const projectIsPrivate = project.visibility === 'PRIVATE'
+    this.isLoading = false
 
     return {
       type: 'admin',

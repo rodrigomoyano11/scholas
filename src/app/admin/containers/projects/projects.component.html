@@ -1,30 +1,38 @@
 <app-modal-container>
-  <app-toolbar [title]="'Proyectos'" [buttons]="toolbarButtons">
-    <div menu>
-      <button type="button" mat-menu-item (click)="getProjects('all')">
-        <p>Todos los proyectos</p>
-      </button>
-      <mat-divider></mat-divider>
+  <ng-container *ngIf="!isLoading; else loading">
+    <app-toolbar [title]="'Proyectos'" [buttons]="toolbarButtons">
+      <div menu>
+        <button type="button" mat-menu-item (click)="getProjects('all')">
+          <p>Todos los proyectos</p>
+        </button>
+        <mat-divider></mat-divider>
 
-      <button type="button" mat-menu-item (click)="getProjects('finished')">
-        Proyectos finalizados
-      </button>
-      <button type="button" mat-menu-item (click)="getProjects('inProgress')">
-        Proyectos en curso
-      </button>
-      <button type="button" mat-menu-item (click)="getProjects('public')">Proyectos en alta</button>
-      <button type="button" mat-menu-item (click)="getProjects('private')">
-        Proyectos dados de baja
-      </button>
-    </div>
-  </app-toolbar>
+        <button type="button" mat-menu-item (click)="getProjects('finished')">
+          Proyectos finalizados
+        </button>
+        <button type="button" mat-menu-item (click)="getProjects('inProgress')">
+          Proyectos en curso
+        </button>
+        <button type="button" mat-menu-item (click)="getProjects('public')">
+          Proyectos en alta
+        </button>
+        <button type="button" mat-menu-item (click)="getProjects('private')">
+          Proyectos dados de baja
+        </button>
+      </div>
+    </app-toolbar>
 
-  <app-list-alert
-    description="No se han encontrado proyectos"
-    [alertCondition]="(cardData?.length ?? 0) === 0"
-  >
-    <ng-container *ngFor="let item of cardData">
-      <app-project-card [projectData]="item"> </app-project-card>
-    </ng-container>
-  </app-list-alert>
+    <app-list-alert
+      description="No se han encontrado proyectos"
+      [alertCondition]="(cardData?.length ?? 0) === 0"
+    >
+      <ng-container *ngFor="let item of cardData">
+        <app-project-card [projectData]="item"> </app-project-card>
+      </ng-container>
+    </app-list-alert>
+  </ng-container>
 </app-modal-container>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>

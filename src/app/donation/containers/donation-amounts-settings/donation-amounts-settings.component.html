@@ -8,97 +8,106 @@
     >
   </p>
 
-  <div class="form__container">
-    <form class="form" (ngSubmit)="handleSubmit()" [formGroup]="form">
-      <div class="form__field-group">
-        <!-- amount1 -->
-        <mat-form-field class="form__field" appearance="outline">
-          <mat-label>Monto N°1</mat-label>
-          <input
-            matInput
-            placeholder="Ingresá el monto de dinero objetivo a recaudar"
-            formControlName="amount1"
-          />
-          <mat-hint>
-            {{
-              getErrors('amount1') !== 'El monto ingresado debe ser un número' &&
-              form.controls['amount1'].value !== ''
-                ? 'El monto N°1 es de ' + (form.controls['amount1'].value | currency: 'ARS')
-                : ''
-            }}
-          </mat-hint>
-          <mat-error>{{ getErrors('amount1') }}</mat-error>
-        </mat-form-field>
+  <ng-container *ngIf="!isLoading; else loading">
+    <div class="form__container">
+      <form class="form" (ngSubmit)="handleSubmit()" [formGroup]="form">
+        <div class="form__field-group">
+          <!-- amount1 -->
+          <mat-form-field class="form__field" appearance="outline">
+            <mat-label>Monto N°1</mat-label>
+            <input
+              matInput
+              placeholder="Ingresá el monto de dinero objetivo a recaudar"
+              formControlName="amount1"
+            />
+            <mat-hint>
+              {{
+                getErrors('amount1') !== 'El monto ingresado debe ser un número' &&
+                form.controls['amount1'].value !== ''
+                  ? 'El monto N°1 es de ' + (form.controls['amount1'].value | currency: 'ARS')
+                  : ''
+              }}
+            </mat-hint>
+            <mat-error>{{ getErrors('amount1') }}</mat-error>
+          </mat-form-field>
 
-        <!-- amount2 -->
-        <mat-form-field class="form__field" appearance="outline">
-          <mat-label>Monto N°2</mat-label>
-          <input
-            matInput
-            placeholder="Ingresá el monto de dinero objetivo a recaudar"
-            formControlName="amount2"
-          />
-          <mat-hint>
-            {{
-              getErrors('amount2') !== 'El monto ingresado debe ser un número' &&
-              form.controls['amount2'].value !== ''
-                ? 'El monto N°2 es de ' + (form.controls['amount2'].value | currency: 'ARS')
-                : ''
-            }}
-          </mat-hint>
-          <mat-error>{{ getErrors('amount2') }}</mat-error>
-        </mat-form-field>
-      </div>
+          <!-- amount2 -->
+          <mat-form-field class="form__field" appearance="outline">
+            <mat-label>Monto N°2</mat-label>
+            <input
+              matInput
+              placeholder="Ingresá el monto de dinero objetivo a recaudar"
+              formControlName="amount2"
+            />
+            <mat-hint>
+              {{
+                getErrors('amount2') !== 'El monto ingresado debe ser un número' &&
+                form.controls['amount2'].value !== ''
+                  ? 'El monto N°2 es de ' + (form.controls['amount2'].value | currency: 'ARS')
+                  : ''
+              }}
+            </mat-hint>
+            <mat-error>{{ getErrors('amount2') }}</mat-error>
+          </mat-form-field>
+        </div>
 
-      <div class="form__field-group">
-        <!-- amount3 -->
-        <mat-form-field class="form__field" appearance="outline">
-          <mat-label>Monto N°3</mat-label>
-          <input
-            matInput
-            placeholder="Ingresá el monto de dinero objetivo a recaudar"
-            formControlName="amount3"
-          />
-          <mat-hint>
-            {{
-              getErrors('amount3') !== 'El monto ingresado debe ser un número' &&
-              form.controls['amount3'].value !== ''
-                ? 'El monto N°3 es de ' + (form.controls['amount3'].value | currency: 'ARS')
-                : ''
-            }}
-          </mat-hint>
-          <mat-error>{{ getErrors('amount3') }}</mat-error>
-        </mat-form-field>
+        <div class="form__field-group">
+          <!-- amount3 -->
+          <mat-form-field class="form__field" appearance="outline">
+            <mat-label>Monto N°3</mat-label>
+            <input
+              matInput
+              placeholder="Ingresá el monto de dinero objetivo a recaudar"
+              formControlName="amount3"
+            />
+            <mat-hint>
+              {{
+                getErrors('amount3') !== 'El monto ingresado debe ser un número' &&
+                form.controls['amount3'].value !== ''
+                  ? 'El monto N°3 es de ' + (form.controls['amount3'].value | currency: 'ARS')
+                  : ''
+              }}
+            </mat-hint>
+            <mat-error>{{ getErrors('amount3') }}</mat-error>
+          </mat-form-field>
 
-        <!-- amount4 -->
-        <mat-form-field class="form__field" appearance="outline">
-          <mat-label>Monto N°4</mat-label>
-          <input
-            matInput
-            placeholder="Ingresá el monto de dinero objetivo a recaudar"
-            formControlName="amount4"
-          />
-          <mat-hint>
-            {{
-              getErrors('amount4') !== 'El monto ingresado debe ser un número' &&
-              form.controls['amount4'].value !== ''
-                ? 'El monto N°4 es de ' + (form.controls['amount4'].value | currency: 'ARS')
-                : ''
-            }}
-          </mat-hint>
-          <mat-error>{{ getErrors('amount4') }}</mat-error>
-        </mat-form-field>
-      </div>
-      <!-- Submit -->
-      <button
-        type="submit"
-        class="form__submit"
-        [color]="'primary'"
-        mat-flat-button
-        [disabled]="!form.valid"
-      >
-        Guardar cambios
-      </button>
-    </form>
-  </div>
+          <!-- amount4 -->
+          <mat-form-field class="form__field" appearance="outline">
+            <mat-label>Monto N°4</mat-label>
+            <input
+              matInput
+              placeholder="Ingresá el monto de dinero objetivo a recaudar"
+              formControlName="amount4"
+            />
+            <mat-hint>
+              {{
+                getErrors('amount4') !== 'El monto ingresado debe ser un número' &&
+                form.controls['amount4'].value !== ''
+                  ? 'El monto N°4 es de ' + (form.controls['amount4'].value | currency: 'ARS')
+                  : ''
+              }}
+            </mat-hint>
+            <mat-error>{{ getErrors('amount4') }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <ng-container *ngIf="!submitIsLoading; else loading">
+          <!-- Submit -->
+          <button
+            type="submit"
+            class="form__submit"
+            [color]="'primary'"
+            mat-flat-button
+            [disabled]="!form.valid"
+          >
+            Guardar cambios
+          </button>
+        </ng-container>
+      </form>
+    </div>
+  </ng-container>
 </app-modal-container>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>

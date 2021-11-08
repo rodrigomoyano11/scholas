@@ -6,87 +6,95 @@
     [titleAlignCenter]="true"
   ></app-toolbar>
 
-  <div class="form__container">
-    <form class="form" (ngSubmit)="submitExtraData()" [formGroup]="form">
-      <!-- FullName -->
-      <mat-form-field class="form__field" appearance="outline">
-        <mat-label>Nombre y apellido</mat-label>
-        <input
-          matInput
-          placeholder="Ingresá tu nombre y apellido"
-          type="text"
-          autocomplete="name"
-          formControlName="fullName"
-        />
-        <mat-error>{{ getErrors('fullName') }}</mat-error>
-      </mat-form-field>
+  <ng-container *ngIf="!isLoading; else loading">
+    <div class="form__container">
+      <form class="form" (ngSubmit)="submitExtraData()" [formGroup]="form">
+        <!-- FullName -->
+        <mat-form-field class="form__field" appearance="outline">
+          <mat-label>Nombre y apellido</mat-label>
+          <input
+            matInput
+            placeholder="Ingresá tu nombre y apellido"
+            type="text"
+            autocomplete="name"
+            formControlName="fullName"
+          />
+          <mat-error>{{ getErrors('fullName') }}</mat-error>
+        </mat-form-field>
 
-      <!-- Birthday -->
-      <mat-form-field class="form__field" appearance="outline">
-        <mat-label>Fecha de Nacimiento</mat-label>
-        <input
-          matInput
-          [min]="minDate"
-          [max]="maxDate"
-          [matDatepicker]="picker"
-          placeholder="Ingresá tu fecha de nacimiento"
-          autocomplete="bday"
-          formControlName="birthday"
-        />
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-        <mat-error>{{ getErrors('birthday') }}</mat-error>
-      </mat-form-field>
+        <!-- Birthday -->
+        <mat-form-field class="form__field" appearance="outline">
+          <mat-label>Fecha de Nacimiento</mat-label>
+          <input
+            matInput
+            [min]="minDate"
+            [max]="maxDate"
+            [matDatepicker]="picker"
+            placeholder="Ingresá tu fecha de nacimiento"
+            autocomplete="bday"
+            formControlName="birthday"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error>{{ getErrors('birthday') }}</mat-error>
+        </mat-form-field>
 
-      <!-- PhoneNumber -->
-      <mat-form-field class="form__field" appearance="outline">
-        <mat-label>Teléfono</mat-label>
-        <input
-          matInput
-          placeholder="Ingresá tu número de teléfono"
-          type="tel"
-          autocomplete="tel"
-          formControlName="phoneNumber"
-        />
-        <mat-error>{{ getErrors('phoneNumber') }}</mat-error>
-      </mat-form-field>
+        <!-- PhoneNumber -->
+        <mat-form-field class="form__field" appearance="outline">
+          <mat-label>Teléfono</mat-label>
+          <input
+            matInput
+            placeholder="Ingresá tu número de teléfono"
+            type="tel"
+            autocomplete="tel"
+            formControlName="phoneNumber"
+          />
+          <mat-error>{{ getErrors('phoneNumber') }}</mat-error>
+        </mat-form-field>
 
-      <!-- Province -->
-      <mat-form-field class="form__field" appearance="outline">
-        <mat-label>Provincia</mat-label>
-        <mat-select
-          autocomplete="address-level1"
-          formControlName="province"
-          (selectionChange)="getLocalitiesByProvince($event.value)"
-        >
-          <mat-option *ngFor="let province of provinces" [value]="province">
-            {{ province }}
-          </mat-option>
-        </mat-select>
-        <mat-error>{{ getErrors('province') }}</mat-error>
-      </mat-form-field>
+        <!-- Province -->
+        <mat-form-field class="form__field" appearance="outline">
+          <mat-label>Provincia</mat-label>
+          <mat-select
+            autocomplete="address-level1"
+            formControlName="province"
+            (selectionChange)="getLocalitiesByProvince($event.value)"
+          >
+            <mat-option *ngFor="let province of provinces" [value]="province">
+              {{ province }}
+            </mat-option>
+          </mat-select>
+          <mat-error>{{ getErrors('province') }}</mat-error>
+        </mat-form-field>
 
-      <!-- Locality -->
-      <mat-form-field class="form__field" appearance="outline">
-        <mat-label>Localidad</mat-label>
-        <mat-select autocomplete="address-level2" formControlName="locality">
-          <mat-option *ngFor="let locality of localities" [value]="locality">
-            {{ locality }}
-          </mat-option>
-        </mat-select>
-        <mat-error>{{ getErrors('locality') }}</mat-error>
-      </mat-form-field>
+        <!-- Locality -->
+        <mat-form-field class="form__field" appearance="outline">
+          <mat-label>Localidad</mat-label>
+          <mat-select autocomplete="address-level2" formControlName="locality">
+            <mat-option *ngFor="let locality of localities" [value]="locality">
+              {{ locality }}
+            </mat-option>
+          </mat-select>
+          <mat-error>{{ getErrors('locality') }}</mat-error>
+        </mat-form-field>
 
-      <!-- Submit -->
-      <button
-        type="submit"
-        class="form__submit"
-        [color]="'primary'"
-        mat-flat-button
-        [disabled]="!form.valid"
-      >
-        Guardar cambios
-      </button>
-    </form>
-  </div>
+        <ng-container *ngIf="!submitIsLoading; else loading">
+          <!-- Submit -->
+          <button
+            type="submit"
+            class="form__submit"
+            [color]="'primary'"
+            mat-flat-button
+            [disabled]="!form.valid"
+          >
+            Guardar cambios
+          </button>
+        </ng-container>
+      </form>
+    </div>
+  </ng-container>
 </app-modal-container>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>

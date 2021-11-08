@@ -22,6 +22,9 @@ export class DonationAmountsSettingsComponent {
   form: FormGroup
   hidePassword = true
 
+  isLoading = true
+  submitIsLoading = false
+
   constructor(
     private fb: FormBuilder,
     private validation: ValidationService,
@@ -48,6 +51,7 @@ export class DonationAmountsSettingsComponent {
         amount3: amountsConfig[2].toString(),
         amount4: amountsConfig[3].toString(),
       })
+      this.isLoading = false
     })
   }
 
@@ -73,6 +77,7 @@ export class DonationAmountsSettingsComponent {
   }
 
   async handleSubmit(): Promise<void> {
+    this.submitIsLoading = true
     const formValues = this.form.value as DonationAmountSettingsForm
     if (this.hasAmountError(formValues))
       return this.errorHandler.openDialog(
@@ -83,6 +88,6 @@ export class DonationAmountsSettingsComponent {
 
     this.snackBar.open('Los cambios han sido guardados correctamente', 'Cerrar', { duration: 5000 })
 
-    await this.router.navigate(['/'])
+    await this.router.navigate(['/']).then(() => (this.submitIsLoading = false))
   }
 }

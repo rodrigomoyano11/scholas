@@ -24,6 +24,9 @@ export interface UpdateAccountDetailsForm {
   styleUrls: ['./update-account-details.component.css'],
 })
 export class UpdateAccountDetailsComponent implements OnInit {
+  isLoading = true
+  submitIsLoading = false
+
   backButtonAction = (): void => void this.router.navigate(['/auth/account'])
 
   form: FormGroup
@@ -85,6 +88,7 @@ export class UpdateAccountDetailsComponent implements OnInit {
             }),
           )
           .then(() => void this.setInitialLocationValues())
+          .then(() => (this.isLoading = false))
     })
   }
 
@@ -116,6 +120,7 @@ export class UpdateAccountDetailsComponent implements OnInit {
 
   // Submit
   async submitExtraData(): Promise<void> {
+    this.submitIsLoading = true
     await this.auth.editAccountDetails(this.form.value as UpdateAccountDetailsForm)
     this.snackBar.open('Los cambios han sido guardados correctamente', 'Cerrar', { duration: 5000 })
     await this.router.navigate(['auth/account'])

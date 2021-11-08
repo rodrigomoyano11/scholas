@@ -10,14 +10,16 @@ import { ProjectsService } from 'src/app/shared/services/projects/projects.servi
   styleUrls: ['./metrics-project-list.component.css'],
 })
 export class MetricsProjectListComponent implements OnInit {
+  isLoading = true
   projectData: CreateProjectResponse[] = []
 
   constructor(private router: Router, private projects: ProjectsService) {}
 
   ngOnInit(): void {
-    this.projects
-      .getProjects()
-      .subscribe((projects) => projects.forEach((project) => this.projectData.push(project)))
+    this.projects.getProjects().subscribe((projects) => {
+      projects.forEach((project) => this.projectData.push(project))
+      this.isLoading = false
+    })
   }
 
   goToMetrics(id: Project['id']): void {

@@ -1,19 +1,25 @@
 <app-modal-container>
   <app-toolbar [title]="'Administradores'" [buttons]="toolbarButtons"></app-toolbar>
 
-  <app-list-alert
-    title="Agregá un nuevo administrador"
-    description="No se han encontrado administradores"
-    [alertCondition]="((adminsService.admins$ | async)?.length ?? 0) === 0"
-  >
-    <ng-container *ngFor="let admin of adminsService.admins$ | async; index as i">
-      <app-list-item
-        [title]="admin.displayName"
-        [subtitle]="admin.email"
-        icon="delete_outline"
-        [disabled]="((adminsService.admins$ | async)?.length ?? 1) <= 1"
-        (clickEvent)="adminsService.deleteAdmin(admin.uid)"
-      ></app-list-item>
-    </ng-container>
-  </app-list-alert>
+  <ng-container *ngIf="!isLoading; else loading">
+    <app-list-alert
+      title="Agregá un nuevo administrador"
+      description="No se han encontrado administradores"
+      [alertCondition]="((adminsService.admins$ | async)?.length ?? 0) === 0"
+    >
+      <ng-container *ngFor="let admin of adminsService.admins$ | async; index as i">
+        <app-list-item
+          [title]="admin.displayName"
+          [subtitle]="admin.email"
+          icon="delete_outline"
+          [disabled]="((adminsService.admins$ | async)?.length ?? 1) <= 1"
+          (clickEvent)="adminsService.deleteAdmin(admin.uid)"
+        ></app-list-item>
+      </ng-container>
+    </app-list-alert>
+  </ng-container>
 </app-modal-container>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>
