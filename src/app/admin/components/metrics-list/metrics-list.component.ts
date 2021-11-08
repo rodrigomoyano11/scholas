@@ -112,8 +112,6 @@ export class MetricsListComponent implements OnInit {
 
           this.expandedElement = modifiedData
 
-          console.log(donationsByUser)
-
           return modifiedData
         }
 
