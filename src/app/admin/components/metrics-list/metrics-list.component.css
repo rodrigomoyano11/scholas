@@ -177,3 +177,7 @@
 
   user-select: none;
 }
+
+.donations__description {
+  width: 16rem;
+}

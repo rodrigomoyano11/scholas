@@ -1,9 +1,10 @@
 import { animate, state, style, transition, trigger } from '@angular/animations'
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { DonationsService } from 'src/app/donation/services/donations/donations.service'
-import { GetDonorsByProjectResponse } from 'src/app/shared/models/api.interface'
+import { GetDonorsByFiltersResponse } from 'src/app/shared/models/api.interface'
 import { DonationWithProjectName } from '../../../donation/services/donations/donations.service'
+import { FiltersData } from '../../containers/project-metrics/project-metrics.component'
 import { MetricsService } from '../../services/metrics/metrics.service'
 
 interface DonorData {
@@ -31,7 +32,10 @@ interface DonorData {
     ]),
   ],
 })
-export class MetricsListComponent implements OnInit {
+export class MetricsListComponent implements OnInit, OnChanges {
+  // Inputs
+  @Input() filtersData!: FiltersData
+
   // General settings
   columnNames = {
     fullName: 'Donante',
@@ -48,7 +52,7 @@ export class MetricsListComponent implements OnInit {
 
   // Data
   donorsData!: DonorData[]
-  metricsData!: GetDonorsByProjectResponse['body']
+  metricsData!: GetDonorsByFiltersResponse['body']
   selectedProjectId: string | null = this.route.snapshot.paramMap.get('id')
 
   // States
@@ -60,12 +64,47 @@ export class MetricsListComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.metricsData = await this.metrics.getDonorsByProject(Number(this.selectedProjectId))
-
-    this.getDonorsData()
+    await this.getDonorsData()
+    this.convertDonorsData()
   }
 
-  getDonorsData(): void {
+  async ngOnChanges(): Promise<void> {
+    await this.getDonorsData()
+    this.convertDonorsData()
+  }
+
+  async getDonorsData(): Promise<void> {
+    console.log(this.filtersData)
+
+    const projectId = Number(this.selectedProjectId)
+
+    if (!this.filtersData) {
+      this.metricsData = await this.metrics.getDonorsByFilters({
+        projectId,
+      })
+      return
+    }
+
+    const { province, age1, age2, amount1, amount2, paymentType: isRecurring } = this.filtersData
+
+    this.metricsData = await this.metrics.getDonorsByFilters({
+      projectId,
+      provinceId: province ?? undefined,
+
+      age1: Number(age1) ?? undefined,
+      age2: Number(age2) ?? undefined,
+
+      mount1: Number(amount1) ?? undefined,
+      mount2: Number(amount2) ?? undefined,
+
+      page: 0,
+      type: isRecurring ? 'recurring' : 'regular',
+
+      size: 30, // Items per page
+    })
+  }
+
+  convertDonorsData(): void {
     if (!this.metricsData) return
 
     const { data: donors } = this.metricsData

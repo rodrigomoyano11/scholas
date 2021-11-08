@@ -4,7 +4,18 @@ import { lastValueFrom } from 'rxjs'
 import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
 import { CreateProjectResponse } from 'src/app/shared/models/api.interface'
 import { LayoutService } from 'src/app/shared/services/layout/layout.service'
+import { LocationService } from 'src/app/shared/services/location/location.service'
 import { ProjectsService } from 'src/app/shared/services/projects/projects.service'
+import { FiltersFormData } from '../../components/filters/filters.component'
+
+export interface FiltersData {
+  province: number | null
+  age1: string | null
+  age2: string | null
+  amount1: string | null
+  amount2: string | null
+  paymentType: boolean
+}
 
 @Component({
   selector: 'app-project-metrics',
@@ -46,7 +57,7 @@ export class ProjectMetricsComponent implements OnInit {
     },
   ]
 
-  filtersIsOpen = false
+  filtersData!: FiltersData
 
   selectedProjectId: string | null = this.route.snapshot.paramMap.get('id')
   projectData!: CreateProjectResponse
@@ -56,6 +67,7 @@ export class ProjectMetricsComponent implements OnInit {
     private route: ActivatedRoute,
     private projects: ProjectsService,
     public layout: LayoutService,
+    private location: LocationService,
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -68,5 +80,14 @@ export class ProjectMetricsComponent implements OnInit {
 
   goToCharts(): void {
     void this.router.navigate(['admin/metrics/charts', this.selectedProjectId])
+  }
+
+  async setFilters(data: FiltersFormData): Promise<void> {
+    const { province } = data
+
+    this.filtersData = {
+      ...data,
+      province: province ? await this.location.getIdByProvince(province) : null,
+    }
   }
 }
