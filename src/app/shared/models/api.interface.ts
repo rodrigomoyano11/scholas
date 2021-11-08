@@ -142,30 +142,6 @@ export interface GetMetricsResponse {
   statusCode: unknown
 }
 
-export interface GetDonorsByProjectResponse {
-  body: {
-    totalItems: number
-    data: {
-      user: {
-        id: number
-        uid: string
-        displayName: string
-        birthday: string
-        province: GetProvincesResponse[0]
-        locality: string
-        email: string
-        photoURL: string
-        phoneNumber: string
-        isDeleted: boolean
-      }
-      donationCount: number
-      amount: number
-    }[]
-    totalPage: number
-    currentPage: number
-  }
-}
-
 export interface GetDonorsByFiltersResponse {
   body: {
     totalItems: number
