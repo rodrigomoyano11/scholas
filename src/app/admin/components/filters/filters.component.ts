@@ -41,7 +41,7 @@ export class FiltersComponent implements OnInit {
     public location: LocationService,
   ) {
     this.form = this.fb.group({
-      province: ['', []],
+      province: '',
 
       age1: '',
       age2: '',
@@ -90,5 +90,21 @@ export class FiltersComponent implements OnInit {
     }
 
     this.dataSubmitted.emit(formData)
+  }
+
+  cleanFilters(): void {
+    this.form.patchValue({
+      province: '',
+
+      age1: '',
+      age2: '',
+
+      donatedAmount1: '',
+      donatedAmount2: '',
+
+      paymentType: '',
+    })
+
+    this.submitExtraData()
   }
 }

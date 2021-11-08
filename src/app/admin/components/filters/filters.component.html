@@ -66,15 +66,28 @@
       </mat-checkbox>
     </div>
 
-    <!-- Submit -->
-    <button
-      type="submit"
-      class="form__submit"
-      [color]="'primary'"
-      mat-flat-button
-      [disabled]="!form.valid"
-    >
-      Aplicar filtros
-    </button>
+    <div class="form__submit-group">
+      <!-- Submit -->
+      <button
+        type="submit"
+        class="form__submit"
+        [color]="'primary'"
+        mat-flat-button
+        [disabled]="!form.valid"
+      >
+        Aplicar filtros
+      </button>
+
+      <!-- Cancel -->
+      <button
+        type="button"
+        class="form__cancel"
+        [color]="'primary'"
+        mat-stroked-button
+        (click)="cleanFilters()"
+      >
+        Limpiar filtros
+      </button>
+    </div>
   </form>
 </div>
