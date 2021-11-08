@@ -36,3 +36,21 @@ input[type='number']::-webkit-inner-spin-button {
 .cdk-overlay-container {
   z-index: 10000;
 }
+
+.mat-snack-bar-container {
+  background: #009993;
+
+  color: #fff;
+}
+
+.mat-simple-snackbar-action {
+  color: #fff;
+
+  /* color: #009993 !important; */
+
+  /* color: #30aaa6 !important; */
+}
+
+.mat-simple-snackbar-action > button {
+  background-color: #30aaa6bd;
+}
