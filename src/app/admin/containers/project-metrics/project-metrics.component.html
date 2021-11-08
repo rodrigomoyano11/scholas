@@ -42,37 +42,65 @@
           <app-filters (dataSubmitted)="setFilters($event)"></app-filters>
         </ng-container>
         <ng-container menu>
-          <button type="button" mat-menu-item>
+          <button
+            type="button"
+            mat-menu-item
+            (click)="setOrder('orderAlphabetically', 'ascending')"
+          >
             <mat-icon fontSet="material-icons-outlined">sort_by_alpha</mat-icon>
             Orden alfábetico
           </button>
           <mat-divider></mat-divider>
 
-          <button type="button" mat-menu-item>
+          <button
+            type="button"
+            mat-menu-item
+            (click)="setOrder('orderByDonationCount', 'descending')"
+          >
             <mat-icon fontSet="material-icons-outlined">numbers</mat-icon>
             Mayor cantidad de donaciones
           </button>
-          <button type="button" mat-menu-item>
+          <button
+            type="button"
+            mat-menu-item
+            (click)="setOrder('orderByDonationCount', 'ascending')"
+          >
             <mat-icon fontSet="material-icons-outlined">numbers</mat-icon>
             Menor cantidad de donaciones
           </button>
           <mat-divider></mat-divider>
 
-          <button type="button" mat-menu-item>
+          <button
+            type="button"
+            mat-menu-item
+            (click)="setOrder('orderRecentOrAncient', 'descending')"
+          >
             <mat-icon fontSet="material-icons-outlined">schedule</mat-icon>
             De reciente a antigüo
           </button>
-          <button type="button" mat-menu-item>
+          <button
+            type="button"
+            mat-menu-item
+            (click)="setOrder('orderRecentOrAncient', 'ascending')"
+          >
             <mat-icon fontSet="material-icons-outlined">schedule</mat-icon>
             De antigüo a reciente
           </button>
           <mat-divider></mat-divider>
 
-          <button type="button" mat-menu-item>
+          <button
+            type="button"
+            mat-menu-item
+            (click)="setOrder('orderByDonationAmount', 'descending')"
+          >
             <mat-icon fontSet="material-icons-outlined">paid</mat-icon>
             Mayor importe donado
           </button>
-          <button type="button" mat-menu-item>
+          <button
+            type="button"
+            mat-menu-item
+            (click)="setOrder('orderByDonationAmount', 'ascending')"
+          >
             <mat-icon fontSet="material-icons-outlined">paid</mat-icon>
             Menor importe donado
           </button>
@@ -80,7 +108,7 @@
         </ng-container>
       </app-toolbar>
 
-      <app-metrics-list [filtersData]="filtersData"></app-metrics-list>
+      <app-metrics-list [filtersData]="filtersData" [ordersData]="ordersData"></app-metrics-list>
       <mat-paginator></mat-paginator>
     </ng-container>
   </div>

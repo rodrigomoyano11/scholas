@@ -17,6 +17,15 @@ export interface FiltersData {
   paymentType: boolean
 }
 
+export interface OrdersData {
+  type:
+    | 'orderAlphabetically'
+    | 'orderRecentOrAncient'
+    | 'orderByDonationCount'
+    | 'orderByDonationAmount'
+  value: 'ascending' | 'descending'
+}
+
 @Component({
   selector: 'app-project-metrics',
   templateUrl: './project-metrics.component.html',
@@ -58,6 +67,7 @@ export class ProjectMetricsComponent implements OnInit {
   ]
 
   filtersData!: FiltersData
+  ordersData!: OrdersData
 
   selectedProjectId: string | null = this.route.snapshot.paramMap.get('id')
   projectData!: CreateProjectResponse
@@ -88,6 +98,13 @@ export class ProjectMetricsComponent implements OnInit {
     this.filtersData = {
       ...data,
       province: province ? await this.location.getIdByProvince(province) : null,
+    }
+  }
+
+  setOrder(type: OrdersData['type'], value: OrdersData['value']): void {
+    this.ordersData = {
+      type,
+      value,
     }
   }
 }

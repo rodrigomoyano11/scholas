@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router'
 import { DonationsService } from 'src/app/donation/services/donations/donations.service'
 import { GetDonorsByFiltersResponse } from 'src/app/shared/models/api.interface'
 import { DonationWithProjectName } from '../../../donation/services/donations/donations.service'
-import { FiltersData } from '../../containers/project-metrics/project-metrics.component'
-import { MetricsService } from '../../services/metrics/metrics.service'
+import { FiltersData, OrdersData } from '../../containers/project-metrics/project-metrics.component'
+import { GetDonorsByFiltersArgs, MetricsService } from '../../services/metrics/metrics.service'
 
 interface DonorData {
   id: number
@@ -35,6 +35,7 @@ interface DonorData {
 export class MetricsListComponent implements OnInit, OnChanges {
   // Inputs
   @Input() filtersData!: FiltersData
+  @Input() ordersData!: OrdersData
 
   // General settings
   columnNames = {
@@ -74,21 +75,34 @@ export class MetricsListComponent implements OnInit, OnChanges {
   }
 
   async getDonorsData(): Promise<void> {
-    console.log(this.filtersData)
-
     const projectId = Number(this.selectedProjectId)
+
+    const selectedOrder: GetDonorsByFiltersArgs = this.ordersData
+      ? Object.fromEntries([[this.ordersData.type, this.ordersData.value]])
+      : {
+          orderAlphabetically: 'ascending',
+        }
 
     if (!this.filtersData) {
       this.metricsData = await this.metrics.getDonorsByFilters({
         projectId,
+
+        ...selectedOrder,
       })
+
       return
     }
 
     const { province, age1, age2, amount1, amount2, paymentType: isRecurring } = this.filtersData
 
     this.metricsData = await this.metrics.getDonorsByFilters({
+      // General
       projectId,
+
+      page: 0, // Current Page
+      size: 30, // Items per page
+
+      // Filters
       provinceId: province ?? undefined,
 
       age1: Number(age1) ?? undefined,
@@ -97,10 +111,10 @@ export class MetricsListComponent implements OnInit, OnChanges {
       mount1: Number(amount1) ?? undefined,
       mount2: Number(amount2) ?? undefined,
 
-      page: 0,
       type: isRecurring ? 'recurring' : 'regular',
 
-      size: 30, // Items per page
+      // Orders
+      ...selectedOrder,
     })
   }
 
