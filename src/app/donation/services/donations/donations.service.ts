@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { lastValueFrom, take } from 'rxjs'
-import { AuthService } from 'src/app/auth/services/auth/auth.service'
 import {
   GetDonationAmountsResponse,
+  GetDonationsByUserAndProjectResponse,
   GetDonationsByUserResponse,
 } from 'src/app/shared/models/api.interface'
 import { Donation } from 'src/app/shared/models/donation.interface'
@@ -74,11 +74,7 @@ export class DonationsService {
 
   donationAmountsConfig!: number[]
 
-  constructor(
-    private http: HttpClient,
-    private auth: AuthService,
-    private projects: ProjectsService,
-  ) {
+  constructor(private http: HttpClient, private projects: ProjectsService) {
     void this.getDonationAmounts()
   }
 
@@ -98,6 +94,29 @@ export class DonationsService {
       this.http.get<GetDonationsByUserResponse>(
         `${environment.apiUrl}/donations/list?userId=${id}`,
       ),
+    )
+
+    const projects = await lastValueFrom(this.projects.getProjects().pipe(take(1)))
+
+    const donationsWithProjectNames = donations.map((donation) => {
+      const projectName = projects.find((project) => project.id === donation.projectId)?.name ?? ''
+      return {
+        ...donation,
+        projectName,
+      }
+    })
+
+    return donationsWithProjectNames
+  }
+
+  async getDonationsByUserAndProject(
+    userId: number,
+    projectId: Project['id'],
+  ): Promise<DonationWithProjectName[]> {
+    const url = `${environment.apiUrl}/donations/list?userId=${userId}&projectId=${projectId}`
+
+    const donations = await lastValueFrom(
+      this.http.get<GetDonationsByUserAndProjectResponse[]>(url),
     )
 
     const projects = await lastValueFrom(this.projects.getProjects().pipe(take(1)))
