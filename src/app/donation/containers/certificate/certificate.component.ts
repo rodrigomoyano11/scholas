@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
+import { lastValueFrom } from 'rxjs'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
 import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
 import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
@@ -62,16 +63,17 @@ export class CertificateComponent implements OnInit {
   }
 
   shareAsLink(): void {
-    void this.dialog
-      .open<DialogComponent, DialogData>(DialogComponent, {
-        data: {
-          actions: [null, 'Cerrar'],
-          title: 'Importante',
-          description: 'Para compartir tu certificado deberías hacer una captura de pantalla',
-          icon: 'info',
-        },
-      })
-      .afterClosed()
-      .toPromise()
+    void lastValueFrom(
+      this.dialog
+        .open<DialogComponent, DialogData>(DialogComponent, {
+          data: {
+            actions: [null, 'Cerrar'],
+            title: 'Importante',
+            description: 'Para compartir tu certificado deberías hacer una captura de pantalla',
+            icon: 'info',
+          },
+        })
+        .afterClosed(),
+    )
   }
 }

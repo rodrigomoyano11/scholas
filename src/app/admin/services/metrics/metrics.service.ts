@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { Observable } from 'rxjs'
+import { lastValueFrom, Observable } from 'rxjs'
 import { GetDonorsByProjectResponse, GetMetricsResponse } from 'src/app/shared/models/api.interface'
 import { Project } from 'src/app/shared/models/project.interface'
 import { environment } from 'src/environments/environment'
@@ -17,9 +17,9 @@ export class MetricsService {
 
   async getDonorsByProject(id: Project['id']): Promise<GetDonorsByProjectResponse['body']> {
     const response = (
-      await this.http
-        .get<GetDonorsByProjectResponse>(`${environment.apiUrl}/metrics?projectId=${id}`)
-        .toPromise()
+      await lastValueFrom(
+        this.http.get<GetDonorsByProjectResponse>(`${environment.apiUrl}/metrics?projectId=${id}`),
+      )
     ).body
 
     return response

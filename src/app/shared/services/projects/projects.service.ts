@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { Router } from '@angular/router'
-import { Observable } from 'rxjs'
+import { lastValueFrom, Observable } from 'rxjs'
 import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
 import {
   CreateProjectRequest,
@@ -63,19 +63,22 @@ export class ProjectsService {
       photos: data.photos,
     }
 
-    await this.http.post<CreateProjectResponse>(`${environment.apiUrl}/projects`, body).toPromise()
+    await lastValueFrom(
+      this.http.post<CreateProjectResponse>(`${environment.apiUrl}/projects`, body),
+    )
 
-    await this.dialog
-      .open<DialogComponent, DialogData>(DialogComponent, {
-        data: {
-          actions: [null, 'Cerrar'],
-          title: 'Alta de proyecto completada',
-          description: 'El proceso de alta de proyecto ha sido completado exitosamente',
-          icon: 'check_circle',
-        },
-      })
-      .afterClosed()
-      .toPromise()
+    await lastValueFrom(
+      this.dialog
+        .open<DialogComponent, DialogData>(DialogComponent, {
+          data: {
+            actions: [null, 'Cerrar'],
+            title: 'Alta de proyecto completada',
+            description: 'El proceso de alta de proyecto ha sido completado exitosamente',
+            icon: 'check_circle',
+          },
+        })
+        .afterClosed(),
+    )
 
     await this.router.navigate(['/admin/projects'])
   }
@@ -92,23 +95,24 @@ export class ProjectsService {
       photosUrl: data.photos,
     }
 
-    await this.http
-      .put<ModifyProjectResponse>(`${environment.apiUrl}/projects/${id}`, body, {
+    await lastValueFrom(
+      this.http.put<ModifyProjectResponse>(`${environment.apiUrl}/projects/${id}`, body, {
         responseType: 'text' as 'json',
-      })
-      .toPromise()
+      }),
+    )
 
-    await this.dialog
-      .open<DialogComponent, DialogData>(DialogComponent, {
-        data: {
-          actions: [null, 'Cerrar'],
-          title: 'Edición de proyecto completada',
-          description: 'El proceso de edición de proyecto ha sido completado exitosamente',
-          icon: 'check_circle',
-        },
-      })
-      .afterClosed()
-      .toPromise()
+    await lastValueFrom(
+      this.dialog
+        .open<DialogComponent, DialogData>(DialogComponent, {
+          data: {
+            actions: [null, 'Cerrar'],
+            title: 'Edición de proyecto completada',
+            description: 'El proceso de edición de proyecto ha sido completado exitosamente',
+            icon: 'check_circle',
+          },
+        })
+        .afterClosed(),
+    )
 
     await this.router.navigate(['/admin/projects'])
   }
@@ -134,25 +138,26 @@ export class ProjectsService {
     visibility: Project['visibility'],
   ): Promise<unknown | void> {
     const message = visibility === 'private' ? 'baja' : 'alta'
-    const isApproved = (await this.dialog
-      .open<DialogComponent, DialogData>(DialogComponent, {
-        data: {
-          actions: ['Cancelar', `Dar de ${message}`],
-          title: null,
-          description: `¿Estás seguro de dar de ${message} este proyecto?`,
-        },
-      })
-      .afterClosed()
-      .toPromise()) as boolean
+    const isApproved = (await lastValueFrom(
+      this.dialog
+        .open<DialogComponent, DialogData>(DialogComponent, {
+          data: {
+            actions: ['Cancelar', `Dar de ${message}`],
+            title: null,
+            description: `¿Estás seguro de dar de ${message} este proyecto?`,
+          },
+        })
+        .afterClosed(),
+    )) as boolean
 
     if (!isApproved) return
 
-    return this.http
-      .put<unknown>(
+    return lastValueFrom(
+      this.http.put<unknown>(
         `${environment.apiUrl}/projects/visibility/${id}`,
         { visibility: this.paramsOptions.visibility[visibility] },
         { responseType: 'text' as 'json' },
-      )
-      .toPromise()
+      ),
+    )
   }
 }

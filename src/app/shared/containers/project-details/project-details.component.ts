@@ -1,5 +1,6 @@
 import { Component, OnChanges, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
+import { lastValueFrom } from 'rxjs'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
 import { BackButton, ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
 import { GetProjectResponse } from 'src/app/shared/models/api.interface'
@@ -42,7 +43,9 @@ export class ProjectDetailsComponent implements OnInit, OnChanges {
 
   async getProjectData(): Promise<void> {
     if (!!this.selectedProjectId) {
-      this.projectData = await this.projects.getProject(Number(this.selectedProjectId)).toPromise()
+      this.projectData = await lastValueFrom(
+        this.projects.getProject(Number(this.selectedProjectId)),
+      )
       this.projectIsPrivate = this.projectData.visibility === 'PRIVATE'
 
       this.toolbarBackButton = (await this.auth.userIsAdmin())

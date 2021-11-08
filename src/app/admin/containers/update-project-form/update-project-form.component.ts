@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
+import { lastValueFrom } from 'rxjs'
 import { LocationService } from 'src/app/shared/services/location/location.service'
 import { ValidationService } from 'src/app/shared/services/validation/validation.service'
 import { ProjectsService } from '../../../shared/services/projects/projects.service'
@@ -70,7 +71,7 @@ export class UpdateProjectFormComponent implements OnInit {
         coverPhotoURL,
         photos,
         videoURL,
-      } = await this.projects.getProject(Number(this.selectedProjectId)).toPromise()
+      } = await lastValueFrom(this.projects.getProject(Number(this.selectedProjectId)))
 
       this.coverPhotoData = coverPhotoURL ? [coverPhotoURL] : []
       this.photosData = photos ?? []

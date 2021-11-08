@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
-import { BehaviorSubject, zip } from 'rxjs'
+import { BehaviorSubject, lastValueFrom, zip } from 'rxjs'
 import { map, take } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { HttpClient } from '@angular/common/http'
@@ -113,7 +113,7 @@ export class AuthService {
       this._displayName = credential.user.displayName
 
       // User Registration
-      const { claims, uid } = await this.user$.pipe(take(1)).toPromise()
+      const { claims, uid } = await lastValueFrom(this.user$.pipe(take(1)))
       isNewUser = getAdditionalUserInfo(credential)?.isNewUser ?? false
       if (isNewUser) {
         // Permissions
@@ -144,10 +144,11 @@ export class AuthService {
     try {
       if (!token) return false
 
-      return this.http
-        .get<never>(`${environment.apiUrl}/auth/${token}`)
-        .pipe(map(({ body }) => !!body && body !== 'Token is invalid'))
-        .toPromise()
+      return lastValueFrom(
+        this.http
+          .get<never>(`${environment.apiUrl}/auth/${token}`)
+          .pipe(map(({ body }) => !!body && body !== 'Token is invalid')),
+      )
     } catch (error: any) {
       error.code
         ? this.errorHandler.openDialog(error.code as string)
@@ -159,7 +160,7 @@ export class AuthService {
 
   private async _verifyEmail(): Promise<void> {
     try {
-      const { isEmailVerified } = await this.user$.pipe(take(1)).toPromise()
+      const { isEmailVerified } = await lastValueFrom(this.user$.pipe(take(1)))
 
       if (isEmailVerified || !this._user) return
 
@@ -185,9 +186,9 @@ export class AuthService {
 
   private async _verifyExtraDataCompleted(uid: User['uid']): Promise<boolean> {
     try {
-      const response = await this.http
-        .get<GetUserResponse>(`${environment.apiUrl}/users/${uid}`)
-        .toPromise()
+      const response = await lastValueFrom(
+        this.http.get<GetUserResponse>(`${environment.apiUrl}/users/${uid}`),
+      )
 
       if (!response.email) {
         await this.logout()
@@ -263,9 +264,9 @@ export class AuthService {
         phoneNumber: null,
       }
 
-      const response = await this.http
-        .post<CreateUserResponse>(`${environment.apiUrl}/users/?uid=${uid}`, body)
-        .toPromise()
+      const response = await lastValueFrom(
+        this.http.post<CreateUserResponse>(`${environment.apiUrl}/users/?uid=${uid}`, body),
+      )
 
       return !!response?.id
     } catch (error: any) {
@@ -278,15 +279,15 @@ export class AuthService {
   }
 
   private async _sendUserData(uid: User['uid'], body: CreateUserRequest): Promise<boolean> {
-    const response = await this.http
-      .put(
+    const response = await lastValueFrom(
+      this.http.put(
         `${environment.apiUrl}/users/?uid=${uid}`,
         { ...body, province: await this.location.getIdByProvince(body.province) },
         {
           responseType: 'text',
         },
-      )
-      .toPromise()
+      ),
+    )
 
     return response === 'Usuario actualizado'
   }
@@ -295,7 +296,7 @@ export class AuthService {
     try {
       const { fullName, birthday, province, locality, phoneNumber } = data
 
-      const { uid } = await this.user$.pipe(take(1)).toPromise()
+      const { uid } = await lastValueFrom(this.user$.pipe(take(1)))
 
       const body = {
         displayName: fullName,
@@ -305,11 +306,12 @@ export class AuthService {
         phoneNumber: convertPhoneNumber(phoneNumber),
       }
 
-      await this.http
-        .put(`${environment.apiUrl}/users/?uid=${uid}`, body, {
+      await lastValueFrom(
+        this.http.put(`${environment.apiUrl}/users/?uid=${uid}`, body, {
           responseType: 'text',
-        })
-        .toPromise()
+        }),
+      )
+
       await this._updateUser()
     } catch (error: any) {
       error.code
@@ -324,7 +326,7 @@ export class AuthService {
     try {
       const { birthday, phoneNumber, province, locality } = extraData
 
-      const { uid, displayName } = await this.user$.pipe(take(1)).toPromise()
+      const { uid, displayName } = await lastValueFrom(this.user$.pipe(take(1)))
 
       await this._sendUserData(uid, {
         displayName,
@@ -352,9 +354,9 @@ export class AuthService {
   async setPermissions(type: 'donor' | 'admin', uid: User['uid']): Promise<void | boolean> {
     try {
       const body = type === 'admin' ? { admin: true, donor: false } : { admin: false, donor: true }
-      await this.http
-        .put<User['claims']>(`${environment.apiUrl}/users/claims/${uid}`, body)
-        .toPromise()
+      await lastValueFrom(
+        this.http.put<User['claims']>(`${environment.apiUrl}/users/claims/${uid}`, body),
+      )
 
       void this._updateUser()
 
@@ -380,12 +382,13 @@ export class AuthService {
   }
 
   async verifyAdminClaim(): Promise<boolean> {
-    const { uid } = await this.user$.pipe(take(1)).toPromise()
+    const { uid } = await lastValueFrom(this.user$.pipe(take(1)))
 
-    const response = await this.http
-      .get<never>(`${environment.apiUrl}/auth/claims?uid=${uid}`)
-      .pipe(map(({ body }) => body))
-      .toPromise()
+    const response = await lastValueFrom(
+      this.http
+        .get<never>(`${environment.apiUrl}/auth/claims?uid=${uid}`)
+        .pipe(map(({ body }) => body)),
+    )
 
     return response
   }
@@ -443,16 +446,17 @@ export class AuthService {
   }
 
   async deleteUser(): Promise<void> {
-    const isApproved = (await this.dialog
-      .open<DialogComponent, DialogData>(DialogComponent, {
-        data: {
-          actions: ['No', 'Sí, eliminar'],
-          title: '¿Estás seguro de eliminar tu cuenta?',
-          description: 'La eliminación es definitiva. No podrás volver a reactivar la cuenta.',
-        },
-      })
-      .afterClosed()
-      .toPromise()) as boolean
+    const isApproved = (await lastValueFrom(
+      this.dialog
+        .open<DialogComponent, DialogData>(DialogComponent, {
+          data: {
+            actions: ['No', 'Sí, eliminar'],
+            title: '¿Estás seguro de eliminar tu cuenta?',
+            description: 'La eliminación es definitiva. No podrás volver a reactivar la cuenta.',
+          },
+        })
+        .afterClosed(),
+    )) as boolean
     if (!isApproved) return
 
     await this.auth.signOut()
@@ -470,10 +474,10 @@ export class AuthService {
   }
 
   async setUserId(): Promise<void> {
-    const uid = (await this.user$.pipe(take(1)).toPromise()).uid
-    const { id } = await this.http
-      .get<GetUserIdResponse>(`${environment.apiUrl}/users/${uid}`)
-      .toPromise()
+    const uid = (await lastValueFrom(this.user$.pipe(take(1)))).uid
+    const { id } = await lastValueFrom(
+      this.http.get<GetUserIdResponse>(`${environment.apiUrl}/users/${uid}`),
+    )
     localStorage.setItem('userId', id.toString())
   }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-
-import { take } from 'rxjs/operators'
+import { lastValueFrom, take } from 'rxjs'
 import { DonationsService } from 'src/app/donation/services/donations/donations.service'
 import { CreateProjectResponse, GetMetricsResponse } from 'src/app/shared/models/api.interface'
 import { ShortNumberPipe } from 'src/app/shared/pipes/short-number.pipe'
@@ -73,16 +72,17 @@ export class ChartsComponent implements OnInit {
 
   async getProjectData(): Promise<void> {
     if (!!this.selectedProjectId) {
-      this.projectData = await this.projects.getProject(Number(this.selectedProjectId)).toPromise()
+      this.projectData = await lastValueFrom(
+        this.projects.getProject(Number(this.selectedProjectId)),
+      )
     }
   }
 
   async getChartData(): Promise<void> {
     if (!this.selectedProjectId) return
-    const chartData = await this.metrics
-      .getChartData(Number(this.selectedProjectId))
-      .pipe(take(1))
-      .toPromise()
+    const chartData = await lastValueFrom(
+      this.metrics.getChartData(Number(this.selectedProjectId)).pipe(take(1)),
+    )
 
     this.chartData = chartData.body
   }

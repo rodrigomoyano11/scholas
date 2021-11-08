@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
+import { lastValueFrom } from 'rxjs'
 import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
 import { CreateProjectResponse } from 'src/app/shared/models/api.interface'
 import { LayoutService } from 'src/app/shared/services/layout/layout.service'
@@ -59,7 +60,9 @@ export class ProjectMetricsComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     if (!!this.selectedProjectId) {
-      this.projectData = await this.projects.getProject(Number(this.selectedProjectId)).toPromise()
+      this.projectData = await lastValueFrom(
+        this.projects.getProject(Number(this.selectedProjectId)),
+      )
     }
   }
 

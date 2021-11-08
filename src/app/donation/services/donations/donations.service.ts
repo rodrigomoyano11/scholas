@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { take } from 'rxjs/operators'
+import { lastValueFrom, take } from 'rxjs'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
 import {
   GetDonationAmountsResponse,
@@ -94,11 +94,13 @@ export class DonationsService {
   }
 
   async getDonationsByUserId(id: number): Promise<DonationWithProjectName[]> {
-    const donations = await this.http
-      .get<GetDonationsByUserResponse>(`${environment.apiUrl}/donations/list?userId=${id}`)
-      .toPromise()
+    const donations = await lastValueFrom(
+      this.http.get<GetDonationsByUserResponse>(
+        `${environment.apiUrl}/donations/list?userId=${id}`,
+      ),
+    )
 
-    const projects = await this.projects.getProjects().pipe(take(1)).toPromise()
+    const projects = await lastValueFrom(this.projects.getProjects().pipe(take(1)))
 
     const donationsWithProjectNames = donations.map((donation) => {
       const projectName = projects.find((project) => project.id === donation.projectId)?.name ?? ''
@@ -125,20 +127,20 @@ export class DonationsService {
   async createDonation({ donation, type, projectId }: CreateDonationData): Promise<string> {
     const body = { donation, projectId, type, userId: this.getUserId() }
 
-    const response = await this.http
-      .post<Response>(`${environment.apiUrl}/donations/create`, body)
-      .toPromise()
+    const response = await lastValueFrom(
+      this.http.post<Response>(`${environment.apiUrl}/donations/create`, body),
+    )
 
     return (response.body as unknown as string) ?? ''
   }
 
   async editDonation(payment_id: string, preference_id: string): Promise<void> {
-    await this.http
-      .put<unknown>(
+    await lastValueFrom(
+      this.http.put<unknown>(
         `${environment.apiUrl}/donations/edit?paymentId=${payment_id}&preferenceId=${preference_id}`,
         {},
-      )
-      .toPromise()
+      ),
+    )
   }
 
   setDonationStatus(status: string): 'failure' | 'pending' | 'success' {
@@ -155,9 +157,9 @@ export class DonationsService {
 
   async getDonationAmounts(): Promise<void> {
     const response = (
-      await this.http
-        .get<GetDonationAmountsResponse>(`${environment.apiUrl}/amount?id=1`)
-        .toPromise()
+      await lastValueFrom(
+        this.http.get<GetDonationAmountsResponse>(`${environment.apiUrl}/amount?id=1`),
+      )
     )[0]
     this.donationAmountsConfig = [
       response.amount1,
@@ -171,7 +173,7 @@ export class DonationsService {
 
     const body = { amount1, amount2, amount3, amount4 }
 
-    await this.http.put(`${environment.apiUrl}/amount?id=1`, body).toPromise()
+    await lastValueFrom(this.http.put(`${environment.apiUrl}/amount?id=1`, body))
     await this.getDonationAmounts()
   }
 }

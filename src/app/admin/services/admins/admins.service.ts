@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
-import { Observable, of } from 'rxjs'
+import { lastValueFrom, Observable, of } from 'rxjs'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
 import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
 import { GetUsersResponse } from 'src/app/shared/models/api.interface'
@@ -45,33 +45,35 @@ export class AdminsService {
       .then(
         (hasError) =>
           hasError &&
-          this.dialog
-            .open<DialogComponent, DialogData>(DialogComponent, {
-              data: {
-                actions: [null, 'Cerrar'],
-                title: 'Importante',
-                description:
-                  'Para que se apliquen los cambios, el nuevo administrador deberá cerrar sesión y volver a ingresar a su cuenta.',
-                icon: 'info',
-              },
-            })
-            .afterClosed()
-            .toPromise(),
+          lastValueFrom(
+            this.dialog
+              .open<DialogComponent, DialogData>(DialogComponent, {
+                data: {
+                  actions: [null, 'Cerrar'],
+                  title: 'Importante',
+                  description:
+                    'Para que se apliquen los cambios, el nuevo administrador deberá cerrar sesión y volver a ingresar a su cuenta.',
+                  icon: 'info',
+                },
+              })
+              .afterClosed(),
+          ),
       )
       .then(() => this.getAdmins())
   }
 
   async deleteAdmin(uid: User['uid']): Promise<void> {
-    const isApproved = (await this.dialog
-      .open<DialogComponent, DialogData>(DialogComponent, {
-        data: {
-          actions: ['No', 'Sí, eliminar'],
-          title: null,
-          description: '¿Estás seguro de eliminar a este administrador?',
-        },
-      })
-      .afterClosed()
-      .toPromise()) as boolean
+    const isApproved = (await lastValueFrom(
+      this.dialog
+        .open<DialogComponent, DialogData>(DialogComponent, {
+          data: {
+            actions: ['No', 'Sí, eliminar'],
+            title: null,
+            description: '¿Estás seguro de eliminar a este administrador?',
+          },
+        })
+        .afterClosed(),
+    )) as boolean
 
     if (isApproved) void this.auth.setPermissions('donor', uid).then(() => this.getAdmins())
   }

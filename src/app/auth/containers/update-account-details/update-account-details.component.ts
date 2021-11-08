@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth/auth.service'
 import { LocationService } from '../../../shared/services/location/location.service'
 import { ValidationService } from 'src/app/shared/services/validation/validation.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { lastValueFrom } from 'rxjs'
 
 export interface UpdateAccountDetailsForm {
   fullName: string
@@ -71,9 +72,9 @@ export class UpdateAccountDetailsComponent implements OnInit {
   setInitialValues(): void {
     this.auth.user$.subscribe((user) => {
       user.uid &&
-        void this.http
-          .get<GetUserResponse>(`${environment.apiUrl}/users/${user.uid}`)
-          .toPromise()
+        void lastValueFrom(
+          this.http.get<GetUserResponse>(`${environment.apiUrl}/users/${user.uid}`),
+        )
           .then((response) =>
             this.form.patchValue({
               fullName: response.displayName,
