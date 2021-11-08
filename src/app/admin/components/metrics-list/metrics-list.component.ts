@@ -103,7 +103,10 @@ export class MetricsListComponent implements OnInit {
     this.donorsData = await Promise.all(
       this.donorsData.map(async (data) => {
         if (data === this.expandedElement) {
-          const donationsByUser = await this.donations.getDonationsByUserId(data.id)
+          const donationsByUser = await this.donations.getDonationsByUserAndProject(
+            data.id,
+            Number(this.selectedProjectId),
+          )
 
           const modifiedData = {
             ...data,
