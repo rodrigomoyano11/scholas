@@ -9,17 +9,17 @@
 
     <div class="metrics-number-container">
       <app-metrics-numbers
-        [value]="98"
+        [value]="projectData.donorsQuantity"
         description="Cantidad de donantes"
         type="number"
       ></app-metrics-numbers>
       <app-metrics-numbers
-        [value]="98605045655"
+        [value]="projectData.currentAmount"
         description="Dinero recaudado"
         type="currency"
       ></app-metrics-numbers>
       <app-metrics-numbers
-        [value]="9845464"
+        [value]="projectData.remainingAmount"
         description="Dinero restante"
         type="currency"
         color="red"
