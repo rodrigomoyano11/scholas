@@ -50,7 +50,10 @@ export class DonationsComponent implements OnInit {
     const userId = this.donationsService.getUserId()
 
     this.isLoading = true
-    this.donations = await this.donationsService.getDonationsByUserId(userId)
+    this.donations = (await this.donationsService.getDonationsByUserId(userId)).sort((a, b) => {
+      if (a.registerAt > b.registerAt) return -1
+      return 1
+    })
     this.isLoading = false
   }
 
