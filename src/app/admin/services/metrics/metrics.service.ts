@@ -92,10 +92,13 @@ export class MetricsService {
         params = params.set('orderRecentOrAncient', orderRecentOrAncient === 'ascending' ? 1 : 2)
       }
       if (orderByDonationCount) {
-        params = params.set('donationCount', orderByDonationCount === 'ascending' ? 'ASC' : 'DES')
+        params = params.set('donationCount', orderByDonationCount === 'ascending' ? 'ASC' : 'DESC')
       }
       if (orderByDonationAmount) {
-        params = params.set('donationAmount', orderByDonationAmount === 'ascending' ? 'ASC' : 'DES')
+        params = params.set(
+          'donationAmount',
+          orderByDonationAmount === 'ascending' ? 'ASC' : 'DESC',
+        )
       }
     } else {
       throw new Error('getDonorsByFilters --> This function only receives a single order ')
