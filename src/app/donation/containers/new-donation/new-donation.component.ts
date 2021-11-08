@@ -89,7 +89,7 @@ export class NewDonationComponent {
 
   finalizeDonation(status: 'success' | 'failure'): void {
     if (status === 'success') {
-      void this.router.navigate(['donation/certificate/', this.selectedProjectId])
+      void this.router.navigate(['/donor/donations'])
       return
     }
 
