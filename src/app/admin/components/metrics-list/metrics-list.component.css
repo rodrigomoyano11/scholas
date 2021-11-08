@@ -153,3 +153,13 @@
   font-size: 16px;
   font-weight: 500;
 }
+
+.donations__info {
+  margin: 0;
+  margin-top: 0.25rem;
+
+  color: rgb(0 0 0 / 54%);
+
+  font-size: 14px;
+  font-weight: 400;
+}

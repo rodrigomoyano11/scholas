@@ -1,19 +1,22 @@
 import { animate, state, style, transition, trigger } from '@angular/animations'
-import { Component } from '@angular/core'
-import {
-  DonationsService,
-  DonationTest,
-} from 'src/app/donation/services/donations/donations.service'
+import { Component, OnInit } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
+import { DonationsService } from 'src/app/donation/services/donations/donations.service'
+import { GetDonorsByProjectResponse } from 'src/app/shared/models/api.interface'
+import { DonationWithProjectName } from '../../../donation/services/donations/donations.service'
+import { MetricsService } from '../../services/metrics/metrics.service'
 
 interface DonorData {
+  id: number
   fullName: string
   province: string
   locality: string
   email: string
+  photo: string | null
   number: string
   donationsQuantity: number
   totalAmount: number
-  donations: DonationTest[]
+  donations?: DonationWithProjectName[]
 }
 
 @Component({
@@ -28,73 +31,94 @@ interface DonorData {
     ]),
   ],
 })
-export class MetricsListComponent {
+export class MetricsListComponent implements OnInit {
+  // General settings
   columnNames = {
     fullName: 'Donante',
     donationsQuantity: 'Cantidad de Donaciones',
     totalAmount: 'Importe donado',
     action: ' ',
   }
-
-  dataSource: DonorData[] = [
-    {
-      fullName: 'Rodrigo Moyano',
-      province: 'San Juan',
-      locality: 'Capital',
-      email: 'email@email.com',
-      number: '265 587 4332',
-      donationsQuantity: 5,
-      totalAmount: 730,
-      donations: this.donations._donations,
-    },
-    {
-      fullName: 'Juan José',
-      province: 'San Juan',
-      locality: 'Capital',
-      email: 'email@email.com',
-      number: '265 587 4332',
-      donationsQuantity: 234,
-      totalAmount: 4540,
-      donations: this.donations._donations,
-    },
-    {
-      fullName: 'Francisco González',
-      province: 'San Juan',
-      locality: 'Capital',
-      email: 'email@email.com',
-      number: '265 587 4332',
-      donationsQuantity: 4,
-      totalAmount: 980,
-      donations: this.donations._donations,
-    },
-    {
-      fullName: 'Macarena Pérez',
-      province: 'San Juan',
-      locality: 'Capital',
-      email: 'email@email.com',
-      number: '265 587 4332',
-      donationsQuantity: 53,
-      totalAmount: 430,
-      donations: this.donations._donations,
-    },
-    {
-      fullName: 'Sherlock Holmes',
-      province: 'San Juan',
-      locality: 'Capital',
-      email: 'email@email.com',
-      number: '265 587 4332',
-      donationsQuantity: 44,
-      totalAmount: 7530,
-      donations: this.donations._donations,
-    },
-  ]
   columnsToDisplay: ['fullName', 'donationsQuantity', 'totalAmount', 'action'] = [
     'fullName',
     'donationsQuantity',
     'totalAmount',
     'action',
   ]
-  expandedElement: DonorData | null = null
 
-  constructor(private donations: DonationsService) {}
+  // Data
+  donorsData!: DonorData[]
+  metricsData!: GetDonorsByProjectResponse['body']
+  selectedProjectId: string | null = this.route.snapshot.paramMap.get('id')
+
+  // States
+  expandedElement: DonorData | null = null
+  constructor(
+    private donations: DonationsService,
+    private metrics: MetricsService,
+    private route: ActivatedRoute,
+  ) {}
+
+  async ngOnInit(): Promise<void> {
+    this.metricsData = await this.metrics.getDonorsByProject(Number(this.selectedProjectId))
+
+    this.getDonorsData()
+  }
+
+  getDonorsData(): void {
+    if (!this.metricsData) return
+
+    const { data: donors } = this.metricsData
+
+    this.donorsData = donors.map(
+      ({ donationCount: donationsQuantity, amount: totalAmount, user }) => {
+        const {
+          id,
+          displayName: fullName,
+          province,
+          locality,
+          email,
+          phoneNumber: number,
+          photoURL: photo,
+        } = user
+
+        return {
+          id,
+          fullName,
+          province: province.name,
+          locality,
+          email,
+          number,
+          photo,
+          donationsQuantity,
+          totalAmount,
+        }
+      },
+    )
+  }
+
+  async selectStateOfExpandedElement(element: DonorData): Promise<void> {
+    this.expandedElement = this.expandedElement === element ? null : element
+
+    this.donorsData = await Promise.all(
+      this.donorsData.map(async (data) => {
+        if (data === this.expandedElement) {
+          const donationsByUser = await this.donations.getDonationsByUserId(data.id)
+
+          const modifiedData = {
+            ...data,
+            donations: donationsByUser,
+          }
+
+          this.expandedElement = modifiedData
+
+          console.log(donationsByUser)
+
+          return modifiedData
+        }
+
+        return data
+      }),
+    )
+  }
 }
