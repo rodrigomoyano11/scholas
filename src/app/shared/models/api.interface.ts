@@ -179,6 +179,18 @@ export type GetDonationsByUserResponse = {
   preferenceId: null | string
 }[]
 
+export interface GetDonationsByUserAndProjectResponse {
+  id: number
+  projectId: number
+  userId: number
+  status: 'SUCCESS' | 'PENDING' | 'FAILURE' | null
+  type: 'RECURRING' | 'REGULAR'
+  paymentId: null | string
+  amount: number
+  registerAt: string
+  preferenceId: null | string
+}
+
 // Utils
 export type GetProvincesAndLocalitiesResponse = [
   {
