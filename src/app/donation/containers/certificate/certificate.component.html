@@ -2,7 +2,7 @@
   <div class="main-container">
     <ng-container *ngIf="donation; else loading">
       <app-toolbar [buttons]="toolbarButtons" [fullWidth]="true" [withMargin]="false"></app-toolbar>
-      <ng-container *ngIf="donation.status === 'SUCCESS'; else donationIsNotSuccess">
+      <ng-container *ngIf="donation.status !== 'SUCCESS'; else donationIsNotSuccess">
         <div class="content">
           <app-logo class="logo" color="#009993" type="vertical"></app-logo>
           <div class="caption">

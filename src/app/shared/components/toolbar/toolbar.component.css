@@ -24,10 +24,14 @@
   align-items: center;
   justify-content: flex-start;
   gap: 1rem;
+
+  user-select: none;
 }
 
 .title {
   margin: 0;
+
+  user-select: none;
 }
 
 .title--center {

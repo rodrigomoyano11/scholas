@@ -6,6 +6,8 @@
   gap: 3rem;
 
   width: 100%;
+
+  user-select: none;
 }
 
 .chart-container {
