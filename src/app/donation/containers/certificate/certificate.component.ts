@@ -59,7 +59,7 @@ export class CertificateComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.donation = await this.donationsService.getDonationById(Number(this.selectedDonationId))
 
-    if (this.donation?.status !== 'SUCCESS') this.toolbarButtons.pop()
+    if (this.donation?.status === 'SUCCESS') this.toolbarButtons.pop()
   }
 
   shareAsLink(): void {
