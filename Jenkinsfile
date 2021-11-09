@@ -16,4 +16,12 @@ pipeline {
       }
     }
   }
+  post {
+      success {
+      mail to:"dmedel@folcode.com", subject:"SUCCESS: ${currentBuild.fullDisplayName}", body: "Well done is better than well said."
+      }
+      failure {
+      mail to:"dmedel@folcode.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Houston, we have a problem here."
+      }   
+    }
 }
