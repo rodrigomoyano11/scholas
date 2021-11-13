@@ -7,6 +7,7 @@ import { LayoutService } from 'src/app/shared/services/layout/layout.service'
 import { LocationService } from 'src/app/shared/services/location/location.service'
 import { ProjectsService } from 'src/app/shared/services/projects/projects.service'
 import { FiltersFormData } from '../../components/filters/filters.component'
+import { GetMetricsAsFileArgs, MetricsService } from '../../services/metrics/metrics.service'
 
 export interface FiltersData {
   province: number | null
@@ -59,7 +60,7 @@ export class ProjectMetricsComponent implements OnInit {
           icon: 'file_download',
           action: {
             type: 'button',
-            click: (): void => console.log('Works'),
+            click: (): void => this.getMetricsAsFile(),
           },
         },
       ],
@@ -78,6 +79,7 @@ export class ProjectMetricsComponent implements OnInit {
     private projects: ProjectsService,
     public layout: LayoutService,
     private location: LocationService,
+    private metrics: MetricsService,
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -106,5 +108,45 @@ export class ProjectMetricsComponent implements OnInit {
       type,
       value,
     }
+  }
+
+  getMetricsAsFile(): void {
+    const selectedOrder: GetMetricsAsFileArgs = this.ordersData
+      ? Object.fromEntries([[this.ordersData.type, this.ordersData.value]])
+      : {
+          orderAlphabetically: 'ascending',
+        }
+
+    if (!this.filtersData) {
+      void this.metrics.getMetricsAsFile({
+        ...selectedOrder,
+        projectId: Number(this.selectedProjectId),
+      })
+
+      return
+    }
+
+    const { province, age1, age2, amount1, amount2, paymentType: isRecurring } = this.filtersData
+
+    const filtersAndOrdersData: GetMetricsAsFileArgs = {
+      // General
+      projectId: Number(this.selectedProjectId),
+
+      // Filters
+      provinceId: province ?? undefined,
+
+      age1: Number(age1) ?? undefined,
+      age2: Number(age2) ?? undefined,
+
+      mount1: Number(amount1) ?? undefined,
+      mount2: Number(amount2) ?? undefined,
+
+      type: isRecurring ? 'recurring' : 'regular',
+
+      // Orders
+      ...selectedOrder,
+    }
+
+    void this.metrics.getMetricsAsFile(filtersAndOrdersData)
   }
 }

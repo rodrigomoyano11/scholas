@@ -1,12 +1,11 @@
 import { animate, state, style, transition, trigger } from '@angular/animations'
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core'
-import { MatPaginator } from '@angular/material/paginator'
+import { Component, Input, OnChanges, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { DonationsService } from 'src/app/donation/services/donations/donations.service'
 import { GetDonorsByFiltersResponse } from 'src/app/shared/models/api.interface'
 import { DonationWithProjectName } from '../../../donation/services/donations/donations.service'
 import { FiltersData, OrdersData } from '../../containers/project-metrics/project-metrics.component'
-import { GetDonorsByFiltersArgs, MetricsService } from '../../services/metrics/metrics.service'
+import { GetMetricsByFiltersArgs, MetricsService } from '../../services/metrics/metrics.service'
 
 interface DonorData {
   id: number
@@ -39,8 +38,6 @@ interface PaginatorEvent {
   ],
 })
 export class MetricsListComponent implements OnInit, OnChanges {
-  @ViewChild(MatPaginator) paginator!: MatPaginator
-
   // Inputs
   @Input() filtersData!: FiltersData
   @Input() ordersData!: OrdersData
@@ -72,8 +69,6 @@ export class MetricsListComponent implements OnInit, OnChanges {
   itemsPerPage = 30
   totalPages = 0
 
-  filtersAndOrdersData!: GetDonorsByFiltersArgs
-
   constructor(
     private donations: DonationsService,
     private metrics: MetricsService,
@@ -93,7 +88,7 @@ export class MetricsListComponent implements OnInit, OnChanges {
   async getDonorsData(): Promise<void> {
     const projectId = Number(this.selectedProjectId)
 
-    const selectedOrder: GetDonorsByFiltersArgs = this.ordersData
+    const selectedOrder: GetMetricsByFiltersArgs = this.ordersData
       ? Object.fromEntries([[this.ordersData.type, this.ordersData.value]])
       : {
           orderAlphabetically: 'ascending',
@@ -103,8 +98,8 @@ export class MetricsListComponent implements OnInit, OnChanges {
       this.metricsData = await this.metrics.getDonorsByFilters({
         ...selectedOrder,
         projectId,
-        page: this.currentPage, // Current Page
-        size: this.itemsPerPage, // Items per page
+        page: this.currentPage,
+        size: this.itemsPerPage,
       })
 
       return
@@ -112,7 +107,7 @@ export class MetricsListComponent implements OnInit, OnChanges {
 
     const { province, age1, age2, amount1, amount2, paymentType: isRecurring } = this.filtersData
 
-    this.filtersAndOrdersData = {
+    const filtersAndOrdersData: GetMetricsByFiltersArgs = {
       // General
       projectId,
 
@@ -134,7 +129,7 @@ export class MetricsListComponent implements OnInit, OnChanges {
       ...selectedOrder,
     }
 
-    this.metricsData = await this.metrics.getDonorsByFilters(this.filtersAndOrdersData)
+    this.metricsData = await this.metrics.getDonorsByFilters(filtersAndOrdersData)
     this.totalPages = this.metricsData.totalItems
   }
 
