@@ -21,6 +21,11 @@ interface DonorData {
   donations?: DonationWithProjectName[]
 }
 
+interface PaginatorEvent {
+  pageIndex: number
+  pageSize: number
+}
+
 @Component({
   selector: 'app-metrics-list',
   templateUrl: './metrics-list.component.html',
@@ -62,24 +67,12 @@ export class MetricsListComponent implements OnInit, OnChanges {
   // States
   expandedElement: DonorData | null = null
 
+  // Paginator
   currentPage = 0
-  itemsPerPage = 3
+  itemsPerPage = 30
   totalPages = 0
 
-  filtersAndOrdersData!: {
-    projectId: number
-    page: number
-    size: number
-    type: 'recurring' | 'regular'
-    provinceId: number | undefined
-    age1: number
-    age2: number
-    mount1: number
-    mount2: number
-    orderAlphabetically?: 'ascending' | 'descending' | undefined
-    orderRecentOrAncient?: 'ascending' | 'descending' | undefined
-    orderByDonationCount?: 'ascending' | 'descending' | undefined
-  }
+  filtersAndOrdersData!: GetDonorsByFiltersArgs
 
   constructor(
     private donations: DonationsService,
@@ -90,8 +83,6 @@ export class MetricsListComponent implements OnInit, OnChanges {
   async ngOnInit(): Promise<void> {
     await this.getDonorsData()
     this.convertDonorsData()
-
-    this.totalPages = this.metricsData.totalPage
   }
 
   async ngOnChanges(): Promise<void> {
@@ -110,9 +101,10 @@ export class MetricsListComponent implements OnInit, OnChanges {
 
     if (!this.filtersData) {
       this.metricsData = await this.metrics.getDonorsByFilters({
-        projectId,
-
         ...selectedOrder,
+        projectId,
+        page: this.currentPage, // Current Page
+        size: this.itemsPerPage, // Items per page
       })
 
       return
@@ -124,8 +116,8 @@ export class MetricsListComponent implements OnInit, OnChanges {
       // General
       projectId,
 
-      page: 0, // Current Page
-      size: 3, // Items per page
+      page: this.currentPage,
+      size: this.itemsPerPage,
 
       // Filters
       provinceId: province ?? undefined,
@@ -143,6 +135,7 @@ export class MetricsListComponent implements OnInit, OnChanges {
     }
 
     this.metricsData = await this.metrics.getDonorsByFilters(this.filtersAndOrdersData)
+    this.totalPages = this.metricsData.totalItems
   }
 
   convertDonorsData(): void {
@@ -177,15 +170,13 @@ export class MetricsListComponent implements OnInit, OnChanges {
     )
   }
 
-  changePage(event: unknown) {
-    const { previousPageIndex, pageIndex, pageSize, length } = event as {
-      previousPageIndex: number
-      pageIndex: number
-      pageSize: number
-      length: number
-    }
+  // Change page event
+  async changePage({ pageIndex, pageSize }: PaginatorEvent): Promise<void> {
+    this.currentPage = pageIndex
+    this.itemsPerPage = pageSize
 
-    console.log(event)
+    await this.getDonorsData()
+    this.convertDonorsData()
   }
 
   async selectStateOfExpandedElement(element: DonorData): Promise<void> {

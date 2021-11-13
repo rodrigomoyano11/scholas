@@ -62,7 +62,8 @@ export class MetricsService {
 
     if (projectId) params = params.set('projectId', projectId)
 
-    if (page) params = params.set('page', page)
+    if (page !== undefined) params = params.set('page', page)
+
     if (size) params = params.set('size', size)
 
     // Filters
