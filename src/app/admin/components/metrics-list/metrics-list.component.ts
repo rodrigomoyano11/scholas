@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations'
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core'
+import { MatPaginator } from '@angular/material/paginator'
 import { ActivatedRoute } from '@angular/router'
 import { DonationsService } from 'src/app/donation/services/donations/donations.service'
 import { GetDonorsByFiltersResponse } from 'src/app/shared/models/api.interface'
@@ -33,6 +34,8 @@ interface DonorData {
   ],
 })
 export class MetricsListComponent implements OnInit, OnChanges {
+  @ViewChild(MatPaginator) paginator!: MatPaginator
+
   // Inputs
   @Input() filtersData!: FiltersData
   @Input() ordersData!: OrdersData
@@ -52,12 +55,32 @@ export class MetricsListComponent implements OnInit, OnChanges {
   ]
 
   // Data
-  donorsData!: DonorData[]
-  metricsData!: GetDonorsByFiltersResponse['body']
+  dataSource!: DonorData[]
+  metricsData!: GetDonorsByFiltersResponse['body'] // Data from service
   selectedProjectId: string | null = this.route.snapshot.paramMap.get('id')
 
   // States
   expandedElement: DonorData | null = null
+
+  currentPage = 0
+  itemsPerPage = 3
+  totalPages = 0
+
+  filtersAndOrdersData!: {
+    projectId: number
+    page: number
+    size: number
+    type: 'recurring' | 'regular'
+    provinceId: number | undefined
+    age1: number
+    age2: number
+    mount1: number
+    mount2: number
+    orderAlphabetically?: 'ascending' | 'descending' | undefined
+    orderRecentOrAncient?: 'ascending' | 'descending' | undefined
+    orderByDonationCount?: 'ascending' | 'descending' | undefined
+  }
+
   constructor(
     private donations: DonationsService,
     private metrics: MetricsService,
@@ -67,6 +90,8 @@ export class MetricsListComponent implements OnInit, OnChanges {
   async ngOnInit(): Promise<void> {
     await this.getDonorsData()
     this.convertDonorsData()
+
+    this.totalPages = this.metricsData.totalPage
   }
 
   async ngOnChanges(): Promise<void> {
@@ -95,12 +120,12 @@ export class MetricsListComponent implements OnInit, OnChanges {
 
     const { province, age1, age2, amount1, amount2, paymentType: isRecurring } = this.filtersData
 
-    this.metricsData = await this.metrics.getDonorsByFilters({
+    this.filtersAndOrdersData = {
       // General
       projectId,
 
       page: 0, // Current Page
-      size: 30, // Items per page
+      size: 3, // Items per page
 
       // Filters
       provinceId: province ?? undefined,
@@ -115,7 +140,9 @@ export class MetricsListComponent implements OnInit, OnChanges {
 
       // Orders
       ...selectedOrder,
-    })
+    }
+
+    this.metricsData = await this.metrics.getDonorsByFilters(this.filtersAndOrdersData)
   }
 
   convertDonorsData(): void {
@@ -123,7 +150,7 @@ export class MetricsListComponent implements OnInit, OnChanges {
 
     const { data: donors } = this.metricsData
 
-    this.donorsData = donors.map(
+    this.dataSource = donors.map(
       ({ donationCount: donationsQuantity, amount: totalAmount, user }) => {
         const {
           id,
@@ -150,11 +177,22 @@ export class MetricsListComponent implements OnInit, OnChanges {
     )
   }
 
+  changePage(event: unknown) {
+    const { previousPageIndex, pageIndex, pageSize, length } = event as {
+      previousPageIndex: number
+      pageIndex: number
+      pageSize: number
+      length: number
+    }
+
+    console.log(event)
+  }
+
   async selectStateOfExpandedElement(element: DonorData): Promise<void> {
     this.expandedElement = this.expandedElement === element ? null : element
 
-    this.donorsData = await Promise.all(
-      this.donorsData.map(async (data) => {
+    this.dataSource = await Promise.all(
+      this.dataSource.map(async (data) => {
         if (data === this.expandedElement) {
           const donationsByUser = await this.donations.getDonationsByUserAndProject(
             data.id,
