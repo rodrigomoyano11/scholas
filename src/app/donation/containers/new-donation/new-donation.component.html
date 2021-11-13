@@ -42,6 +42,8 @@
 
     <mat-step label="Finalizá la donación" [completed]="stepperStatus[2]" [editable]="false">
       <div class="content">
+        <app-spinner *ngIf="state === undefined && state !== 'recurring'"></app-spinner>
+
         <app-recurring-payment *ngIf="state === 'recurring'"></app-recurring-payment>
 
         <app-failure-payment *ngIf="state === 'failure'"></app-failure-payment>
@@ -74,7 +76,14 @@
           Intentar nuevamente
         </button>
 
-        <button type="button" [color]="'primary'" mat-button matStepperNext [routerLink]="'/donor'">
+        <button
+          type="button"
+          [color]="'primary'"
+          mat-button
+          matStepperNext
+          *ngIf="state === undefined || state === 'recurring' || state === 'pending'"
+          [routerLink]="'/donor'"
+        >
           Volver a la página principal
         </button>
       </div>

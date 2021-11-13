@@ -84,6 +84,11 @@ export class NewDonationComponent {
 
     await this.donations.editDonation(MercadoPagoData.payment_id, MercadoPagoData.preference_id)
 
+    if (MercadoPagoData.payment_id === null) {
+      this.state = 'failure'
+      return
+    }
+
     this.state = this.donations.setDonationStatus(MercadoPagoData.status)
   }
 
