@@ -99,7 +99,7 @@ export class ProjectsComponent implements OnInit {
       finished: this.projects.getProjects('public', 'finished'),
       inProgress: this.projects.getProjects('public', 'inProgress'),
       public: this.projects.getProjects('public'),
-      private: this.projects.getProjects('public'),
+      private: this.projects.getProjects('private'),
     }
     this.cardData = []
     filters[filter].subscribe((projects) =>
