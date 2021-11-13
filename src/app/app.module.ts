@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser'
 import { ClipboardModule } from '@angular/cdk/clipboard'
 import { environment } from 'src/environments/environment'
 import { getAuth, provideAuth } from '@angular/fire/auth'
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app'
 import { LOCALE_ID, NgModule } from '@angular/core'
 import { MatDialogModule } from '@angular/material/dialog'
@@ -14,6 +14,8 @@ import { registerLocaleData } from '@angular/common'
 import AR from '@angular/common/locales/es-AR'
 import { IsLoggedGuard } from './shared/guards/isLogged/is-logged.guard'
 import { SharedModule } from './shared/shared.module'
+
+import { InterceptorService } from './shared/utils/interceptor.service'
 
 registerLocaleData(AR)
 
@@ -31,7 +33,11 @@ registerLocaleData(AR)
     provideAuth(() => getAuth()),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'es-AR' }, IsLoggedGuard],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'es-AR' },
+    IsLoggedGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
