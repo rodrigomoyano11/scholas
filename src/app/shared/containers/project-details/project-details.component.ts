@@ -101,7 +101,7 @@ export class ProjectDetailsComponent implements OnInit, OnChanges {
 
   shareAsLink(): void {
     this.share.shareAsLink(
-      `${environment.apiUrl}/projects/read/${this.selectedProjectId ?? 'error'}`,
+      `https://devscholasfront.folclass.com/projects/read/${this.selectedProjectId ?? 'error'}`,
       'Se copió el link del proyecto',
     )
   }

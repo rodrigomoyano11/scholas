@@ -70,7 +70,7 @@ export class ProjectsComponent implements OnInit {
 
   shareAsLink(projectId: Project['id']): void {
     this.share.shareAsLink(
-      `${environment.apiUrl}/projects/read/${projectId}`,
+      `https://devscholasfront.folclass.com/projects/read/${projectId}`,
       'Se copió el link del proyecto',
     )
   }
