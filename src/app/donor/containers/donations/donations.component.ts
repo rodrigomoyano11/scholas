@@ -71,6 +71,16 @@ export class DonationsComponent implements OnInit {
     )
   }
 
+  showMessage(): void {
+    this.snackBar.open(
+      `Te contactaremos muy pronto para poder continuar con tu donación`,
+      'Cerrar',
+      {
+        duration: 5000,
+      },
+    )
+  }
+
   setListItemStatus(status: 'SUCCESS' | 'PENDING' | 'FAILURE' | null): BadgeStatus | null {
     const statuses: { [key in 'SUCCESS' | 'PENDING' | 'FAILURE']: BadgeStatus | null } = {
       SUCCESS: null,

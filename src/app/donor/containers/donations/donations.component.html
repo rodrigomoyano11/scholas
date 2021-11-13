@@ -6,6 +6,11 @@
     [fullWidth]="true"
   ></app-toolbar>
 
+  <h1 class="title">Donaciones regulares</h1>
+  <p class="description mat-h3">
+    Listado donde se muestran todas las donaciones únicas que hayas realizado
+  </p>
+
   <ng-container *ngIf="!isLoading; else loading">
     <app-list-alert
       description="Hasta el momento, no se han realizado donaciones"
@@ -13,6 +18,7 @@
     >
       <ng-container *ngFor="let donation of donations; index as i">
         <app-list-item
+          *ngIf="donation.type !== 'RECURRING'"
           [title]="donation.projectName"
           [subtitle]="
             (donation.registerAt | date: 'dd/MM/yyyy') + ' - ' + (donation.amount | currency: 'ARS')
@@ -21,6 +27,30 @@
           (clickEvent)="goToDonationDetails(donation.id, donation.status)"
           [actionItem]="true"
           [status]="setListItemStatus(donation.status)"
+        ></app-list-item>
+      </ng-container>
+    </app-list-alert>
+  </ng-container>
+
+  <h1 class="title">Donaciones recurrentes</h1>
+  <p class="description mat-h3">
+    Listado donde se muestran todas las donaciones en las que te hayas comprometido de forma mensual
+  </p>
+  <ng-container *ngIf="!isLoading; else loading">
+    <app-list-alert
+      description="Hasta el momento, no se han realizado donaciones recurrentes"
+      [alertCondition]="donations.length === 0"
+    >
+      <ng-container *ngFor="let donation of donations; index as i">
+        <app-list-item
+          *ngIf="donation.type === 'RECURRING'"
+          [title]="donation.projectName"
+          [subtitle]="
+            (donation.registerAt | date: 'dd/MM/yyyy') + ' - ' + (donation.amount | currency: 'ARS')
+          "
+          icon="schedule"
+          (clickEvent)="showMessage()"
+          [actionItem]="true"
         ></app-list-item>
       </ng-container>
     </app-list-alert>
