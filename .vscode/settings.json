@@ -5,50 +5,42 @@
   "material-icon-theme.files.associations": {
     ".stylelintcache": "stylelint"
   },
-
   // Editor
   "js/ts.implicitProjectConfig.experimentalDecorators": true,
-
   // Linter
   "eslint.format.enable": true,
-
   // Excluded files and folders
   "files.exclude": {
     // Dependencies
-    "node_modules/": true,
-    "package-lock.json": true,
-    "yarn.lock": true,
-
+    "node_modules/": false,
+    "package-lock.json": false,
+    "yarn.lock": false,
     // Formatter
-    ".prettierrc": true,
-    ".prettierignore": true,
-
+    ".prettierrc": false,
+    ".prettierignore": false,
     // Linter
-    ".eslintrc": true,
-    ".eslintcache": true,
-    ".stylelintrc.js": true,
-    ".stylelintignore": true,
-    ".stylelintcache": true,
-
+    ".eslintrc": false,
+    ".eslintcache": false,
+    ".stylelintrc.js": false,
+    ".stylelintignore": false,
+    ".stylelintcache": false,
     // Tests
-    "**/*test.ts": true,
-    "**/*spec*": true,
-
+    "**/*test.ts": false,
+    "**/*spec*": false,
     // Git
-    ".gitignore": true,
-
+    ".gitignore": false,
     // TypeScript
-    "tsconfig.app.json": true,
-
+    "tsconfig.app.json": false,
     // Firebase
-    ".firebaserc": true,
-    "firebase.json": true,
-
+    ".firebaserc": false,
+    "firebase.json": false,
+    // DevOps
+    "Jenkinsfile": false,
     // Others
-    "karma.conf.js": true,
-    ".husky/": true,
-    ".editorconfig": true,
-    ".browserslistrc": true,
-    "**/polyfills.ts": true
+    "karma.conf.js": false,
+    ".husky/": false,
+    ".editorconfig": false,
+    ".browserslistrc": false,
+    "**/polyfills.ts": false
   }
 }
