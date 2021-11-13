@@ -451,8 +451,8 @@ export class AuthService {
         .open<DialogComponent, DialogData>(DialogComponent, {
           data: {
             actions: ['No', 'Sí, eliminar'],
-            title: '¿Estás seguro de eliminar tu cuenta?',
-            description: 'La eliminación es definitiva. No podrás volver a reactivar la cuenta.',
+            title: '',
+            description: '¿Estás seguro de que quieres eliminar tu cuenta?',
           },
         })
         .afterClosed(),
