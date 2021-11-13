@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms'
-import { LocationService } from 'src/app/shared/services/location/location.service'
-import { ValidationService } from 'src/app/shared/services/validation/validation.service'
+import { LocationService } from 'src/app/core/services/location/location.service'
+import { ValidationService } from 'src/app/core/services/validation/validation.service'
 
 export interface FiltersFormData {
   age1: string | null

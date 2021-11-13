@@ -12,10 +12,10 @@ import { MatDialogModule } from '@angular/material/dialog'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { registerLocaleData } from '@angular/common'
 import AR from '@angular/common/locales/es-AR'
-import { IsLoggedGuard } from './shared/guards/isLogged/is-logged.guard'
-import { SharedModule } from './shared/shared.module'
+import { IsLoggedGuard } from './core/guards/isLogged/is-logged.guard'
+import { CoreModule } from './core/core.module'
 
-import { InterceptorService } from './shared/utils/interceptor.service'
+import { InterceptorService } from './core/utils/interceptor.service'
 
 registerLocaleData(AR)
 
@@ -29,7 +29,7 @@ registerLocaleData(AR)
     HttpClientModule,
     MatDialogModule,
     MatSnackBarModule,
-    SharedModule,
+    CoreModule,
     provideAuth(() => getAuth()),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
   ],

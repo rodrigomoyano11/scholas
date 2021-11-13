@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { NotFoundComponent } from '../shared/containers/not-found/not-found.component'
+import { NotFoundComponent } from '../core/containers/not-found/not-found.component'
 import { AdminsComponent } from './containers/admins/admins.component'
 import { CreateProjectFormComponent } from './containers/create-project-form/create-project-form.component'
 import { UpdateProjectFormComponent } from './containers/update-project-form/update-project-form.component'

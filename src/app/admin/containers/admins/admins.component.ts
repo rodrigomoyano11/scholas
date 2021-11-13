@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
-import { LayoutService } from 'src/app/shared/services/layout/layout.service'
+import { ToolbarButtons } from 'src/app/core/components/toolbar/toolbar.component'
+import { LayoutService } from 'src/app/core/services/layout/layout.service'
 
 import { AdminsService } from '../../services/admins/admins.service'
 

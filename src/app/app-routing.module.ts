@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { ProjectDetailsComponent } from './shared/containers/project-details/project-details.component'
-import { IsAdminGuard } from './shared/guards/isAdmin/is-admin.guard'
-import { IsLoggedGuard } from './shared/guards/isLogged/is-logged.guard'
+import { ProjectDetailsComponent } from './core/containers/project-details/project-details.component'
+import { IsAdminGuard } from './core/guards/isAdmin/is-admin.guard'
+import { IsLoggedGuard } from './core/guards/isLogged/is-logged.guard'
 
 const routes: Routes = [
   {
@@ -31,7 +31,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    loadChildren: () => import('./shared/shared.module').then((m) => m.SharedModule),
+    loadChildren: () => import('./core/core.module').then((m) => m.CoreModule),
   },
 ]
 

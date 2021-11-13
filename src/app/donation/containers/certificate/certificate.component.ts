@@ -3,8 +3,8 @@ import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
 import { lastValueFrom } from 'rxjs'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
-import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
-import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
+import { DialogComponent, DialogData } from 'src/app/core/components/dialog/dialog.component'
+import { ToolbarButtons } from 'src/app/core/components/toolbar/toolbar.component'
 import {
   DonationsService,
   DonationWithProjectName,

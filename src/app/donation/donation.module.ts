@@ -22,7 +22,7 @@ import { NgModule } from '@angular/core'
 import { PaymentComponent } from './components/payment/payment.component'
 import { PendingPaymentComponent } from './components/pending-payment/pending-payment.component'
 import { ReactiveFormsModule } from '@angular/forms'
-import { SharedModule } from '../shared/shared.module'
+import { CoreModule } from '../core/core.module'
 import { SuccessPaymentComponent } from './components/success-payment/success-payment.component'
 import { RecurringPaymentComponent } from './components/recurring-payment/recurring-payment.component'
 
@@ -55,7 +55,7 @@ import { RecurringPaymentComponent } from './components/recurring-payment/recurr
     MatStepperModule,
     MatTooltipModule,
     ReactiveFormsModule,
-    SharedModule,
+    CoreModule,
   ],
 })
 export class DonationModule {}

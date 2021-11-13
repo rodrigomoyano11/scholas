@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core'
 import { FormControl } from '@angular/forms'
-import { Donation } from 'src/app/shared/models/donation.interface'
+import { Donation } from 'src/app/core/models/donation.interface'
 import { DonationsService } from '../../services/donations/donations.service'
 
 @Component({

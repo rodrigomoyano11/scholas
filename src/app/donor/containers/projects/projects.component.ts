@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { CardData } from 'src/app/shared/components/project-card/project-card.component'
-import { GetProjectResponse } from 'src/app/shared/models/api.interface'
-import { Project } from 'src/app/shared/models/project.interface'
-import { ShareService } from 'src/app/shared/services/share/share.service'
+import { CardData } from 'src/app/core/components/project-card/project-card.component'
+import { GetProjectResponse } from 'src/app/core/models/api.interface'
+import { Project } from 'src/app/core/models/project.interface'
+import { ShareService } from 'src/app/core/services/share/share.service'
 import { environment } from 'src/environments/environment'
-import { ProjectsService } from '../../../shared/services/projects/projects.service'
+import { ProjectsService } from '../../../core/services/projects/projects.service'
 
 @Component({
   selector: 'app-projects',

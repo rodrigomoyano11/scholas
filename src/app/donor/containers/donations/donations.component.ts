@@ -5,9 +5,9 @@ import {
   DonationsService,
   DonationWithProjectName,
 } from 'src/app/donation/services/donations/donations.service'
-import { BadgeStatus } from 'src/app/shared/components/list-item/list-item.component'
-import { ToolbarButtons } from 'src/app/shared/components/toolbar/toolbar.component'
-import { GetDonationsByUserResponse } from 'src/app/shared/models/api.interface'
+import { BadgeStatus } from 'src/app/core/components/list-item/list-item.component'
+import { ToolbarButtons } from 'src/app/core/components/toolbar/toolbar.component'
+import { GetDonationsByUserResponse } from 'src/app/core/models/api.interface'
 
 @Component({
   selector: 'app-donations',

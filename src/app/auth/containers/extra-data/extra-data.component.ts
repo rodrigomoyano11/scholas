@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { LocationService } from 'src/app/shared/services/location/location.service'
-import { ValidationService } from 'src/app/shared/services/validation/validation.service'
+import { LocationService } from 'src/app/core/services/location/location.service'
+import { ValidationService } from 'src/app/core/services/validation/validation.service'
 import { AuthService, ExtraDataSentForm } from '../../services/auth/auth.service'
 
 @Component({

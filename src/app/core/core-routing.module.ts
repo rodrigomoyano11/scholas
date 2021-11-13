@@ -8,4 +8,4 @@ const routes: Routes = [{ path: '**', component: NotFoundComponent }]
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class SharedRoutingModule {}
+export class CoreRoutingModule {}

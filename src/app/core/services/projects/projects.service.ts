@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { Router } from '@angular/router'
 import { lastValueFrom, Observable } from 'rxjs'
-import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
+import { DialogComponent, DialogData } from 'src/app/core/components/dialog/dialog.component'
 import {
   CreateProjectRequest,
   CreateProjectResponse,
@@ -11,9 +11,9 @@ import {
   GetProjectsResponse,
   ModifyProjectRequest,
   ModifyProjectResponse,
-} from 'src/app/shared/models/api.interface'
+} from 'src/app/core/models/api.interface'
 
-import { Project } from 'src/app/shared/models/project.interface'
+import { Project } from 'src/app/core/models/project.interface'
 import { environment } from 'src/environments/environment'
 import { LocationService } from '../location/location.service'
 

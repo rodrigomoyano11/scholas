@@ -5,10 +5,10 @@ import {
   GetDonationAmountsResponse,
   GetDonationsByUserAndProjectResponse,
   GetDonationsByUserResponse,
-} from 'src/app/shared/models/api.interface'
-import { Donation } from 'src/app/shared/models/donation.interface'
-import { Project } from 'src/app/shared/models/project.interface'
-import { ProjectsService } from 'src/app/shared/services/projects/projects.service'
+} from 'src/app/core/models/api.interface'
+import { Donation } from 'src/app/core/models/donation.interface'
+import { Project } from 'src/app/core/models/project.interface'
+import { ProjectsService } from 'src/app/core/services/projects/projects.service'
 import { environment } from 'src/environments/environment'
 import { DonationAmountSettingsForm } from '../../containers/donation-amounts-settings/donation-amounts-settings.component'
 

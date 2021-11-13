@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { lastValueFrom, Observable, of } from 'rxjs'
 import { AuthService } from 'src/app/auth/services/auth/auth.service'
-import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
-import { GetUsersResponse } from 'src/app/shared/models/api.interface'
-import { User } from 'src/app/shared/models/user.interface'
+import { DialogComponent, DialogData } from 'src/app/core/components/dialog/dialog.component'
+import { GetUsersResponse } from 'src/app/core/models/api.interface'
+import { User } from 'src/app/core/models/user.interface'
 import { environment } from 'src/environments/environment'
 
 @Injectable({

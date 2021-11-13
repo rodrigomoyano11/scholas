@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
 import { ErrorService } from 'src/app/auth/services/error/error.service'
-import { ValidationService } from 'src/app/shared/services/validation/validation.service'
+import { ValidationService } from 'src/app/core/services/validation/validation.service'
 import { DonationsService } from '../../services/donations/donations.service'
 
 export interface DonationAmountSettingsForm {

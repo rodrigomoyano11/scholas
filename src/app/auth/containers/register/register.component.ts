@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { ValidationService } from 'src/app/shared/services/validation/validation.service'
+import { ValidationService } from 'src/app/core/services/validation/validation.service'
 import { AuthService, Provider } from '../../services/auth/auth.service'
 
 @Component({

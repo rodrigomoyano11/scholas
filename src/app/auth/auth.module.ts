@@ -17,7 +17,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { NgModule } from '@angular/core'
 import { ReactiveFormsModule } from '@angular/forms'
 import { RegisterComponent } from './containers/register/register.component'
-import { SharedModule } from '../shared/shared.module'
+import { CoreModule } from '../core/core.module'
 import { UpdateAccountDetailsComponent } from './containers/update-account-details/update-account-details.component'
 import { VerifyEmailComponent } from './containers/verify-email/verify-email.component'
 import SocialButtonComponent from './components/social-button/social-button.component'
@@ -47,7 +47,7 @@ import SocialButtonComponent from './components/social-button/social-button.comp
     MatSelectModule,
     MatSnackBarModule,
     ReactiveFormsModule,
-    SharedModule,
+    CoreModule,
   ],
 })
 export class AuthModule {}

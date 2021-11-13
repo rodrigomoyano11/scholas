@@ -26,7 +26,7 @@ import { NgModule } from '@angular/core'
 import { ProjectMetricsComponent } from './containers/project-metrics/project-metrics.component'
 import { ProjectsComponent } from './containers/projects/projects.component'
 import { ReactiveFormsModule } from '@angular/forms'
-import { SharedModule } from '../shared/shared.module'
+import { CoreModule } from '../core/core.module'
 import { UpdateProjectFormComponent } from './containers/update-project-form/update-project-form.component'
 import { ChartComponent } from './components/chart/chart.component'
 
@@ -63,7 +63,7 @@ import { ChartComponent } from './components/chart/chart.component'
     MatTableModule,
     MatTooltipModule,
     ReactiveFormsModule,
-    SharedModule,
+    CoreModule,
   ],
 })
 export class AdminModule {}

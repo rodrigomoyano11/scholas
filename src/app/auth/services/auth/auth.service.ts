@@ -22,20 +22,20 @@ import {
   signInWithPopup,
   user,
 } from '@angular/fire/auth'
-import { convertDate } from 'src/app/shared/utils/convertDate'
+import { convertDate } from 'src/app/core/utils/convertDate'
 import { ErrorService } from '../error/error.service'
-import { User } from 'src/app/shared/models/user.interface'
-import { convertPhoneNumber } from 'src/app/shared/utils/convertPhoneNumber'
+import { User } from 'src/app/core/models/user.interface'
+import { convertPhoneNumber } from 'src/app/core/utils/convertPhoneNumber'
 import {
   CreateUserRequest,
   CreateUserResponse,
   GetUserResponse,
   GetUserIdResponse,
-} from 'src/app/shared/models/api.interface'
+} from 'src/app/core/models/api.interface'
 
 import { UpdateAccountDetailsForm } from '../../containers/update-account-details/update-account-details.component'
-import { LocationService } from 'src/app/shared/services/location/location.service'
-import { DialogComponent, DialogData } from 'src/app/shared/components/dialog/dialog.component'
+import { LocationService } from 'src/app/core/services/location/location.service'
+import { DialogComponent, DialogData } from 'src/app/core/components/dialog/dialog.component'
 import { MatDialog } from '@angular/material/dialog'
 
 export type Provider = 'google' | 'facebook' | 'email'

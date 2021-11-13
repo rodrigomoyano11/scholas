@@ -2,8 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { lastValueFrom, Observable } from 'rxjs'
-import { GetDonorsByFiltersResponse, GetMetricsResponse } from 'src/app/shared/models/api.interface'
-import { Project } from 'src/app/shared/models/project.interface'
+import { GetDonorsByFiltersResponse, GetMetricsResponse } from 'src/app/core/models/api.interface'
+import { Project } from 'src/app/core/models/project.interface'
 import { environment } from 'src/environments/environment'
 
 export interface GetMetricsByFiltersArgs extends GetMetricsAsFileArgs {

@@ -31,7 +31,7 @@ import { NotFoundComponent } from './containers/not-found/not-found.component'
 import { OverlayModule } from '@angular/cdk/overlay'
 import { ProjectCardComponent } from './components/project-card/project-card.component'
 import { ProjectDetailsComponent } from './containers/project-details/project-details.component'
-import { SharedRoutingModule } from './shared-routing.module'
+import { CoreRoutingModule } from './core-routing.module'
 import { ShortNumberPipe } from './pipes/short-number.pipe'
 import { SpinnerComponent } from './components/spinner/spinner.component'
 import { ToolbarComponent } from './components/toolbar/toolbar.component'
@@ -81,7 +81,7 @@ import { VideoPlayerComponent } from './components/video-player/video-player.com
     MatToolbarModule,
     MatTooltipModule,
     OverlayModule,
-    SharedRoutingModule,
+    CoreRoutingModule,
   ],
   exports: [
     AlertMessageComponent,
@@ -103,4 +103,4 @@ import { VideoPlayerComponent } from './components/video-player/video-player.com
     VideoPlayerComponent,
   ],
 })
-export class SharedModule {}
+export class CoreModule {}

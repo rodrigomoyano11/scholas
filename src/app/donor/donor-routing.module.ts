@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { NotFoundComponent } from '../shared/containers/not-found/not-found.component'
+import { NotFoundComponent } from '../core/containers/not-found/not-found.component'
 
-import { IsDonorGuard } from '../shared/guards/isDonor/is-donor.guard'
-import { IsNotAdminGuard } from '../shared/guards/isNotAdmin/is-not-admin.guard'
+import { IsDonorGuard } from '../core/guards/isDonor/is-donor.guard'
+import { IsNotAdminGuard } from '../core/guards/isNotAdmin/is-not-admin.guard'
 import { DonationsComponent } from './containers/donations/donations.component'
 import { HomeComponent } from './containers/home/home.component'
 import { LandingPageComponent } from './containers/landing-page/landing-page.component'

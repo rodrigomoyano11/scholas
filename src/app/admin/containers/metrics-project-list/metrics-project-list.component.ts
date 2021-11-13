@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { CreateProjectResponse } from 'src/app/shared/models/api.interface'
-import { Project } from 'src/app/shared/models/project.interface'
-import { ProjectsService } from 'src/app/shared/services/projects/projects.service'
+import { CreateProjectResponse } from 'src/app/core/models/api.interface'
+import { Project } from 'src/app/core/models/project.interface'
+import { ProjectsService } from 'src/app/core/services/projects/projects.service'
 
 @Component({
   selector: 'app-metrics-project-list',

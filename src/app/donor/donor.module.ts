@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatListModule } from '@angular/material/list'
 import { NgModule } from '@angular/core'
 import { ProjectsComponent } from './containers/projects/projects.component'
-import { SharedModule } from '../shared/shared.module'
+import { CoreModule } from '../core/core.module'
 import { LandingPageComponent } from './containers/landing-page/landing-page.component'
 
 @NgModule({
@@ -18,7 +18,7 @@ import { LandingPageComponent } from './containers/landing-page/landing-page.com
     MatButtonModule,
     MatIconModule,
     MatListModule,
-    SharedModule,
+    CoreModule,
   ],
 })
 export class DonorModule {}

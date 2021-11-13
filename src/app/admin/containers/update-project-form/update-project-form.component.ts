@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core'
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { lastValueFrom } from 'rxjs'
-import { LocationService } from 'src/app/shared/services/location/location.service'
-import { ValidationService } from 'src/app/shared/services/validation/validation.service'
-import { ProjectsService } from '../../../shared/services/projects/projects.service'
+import { LocationService } from 'src/app/core/services/location/location.service'
+import { ValidationService } from 'src/app/core/services/validation/validation.service'
+import { ProjectsService } from '../../../core/services/projects/projects.service'
 
 @Component({
   selector: 'app-update-project-form',
