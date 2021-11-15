@@ -58,7 +58,7 @@ export class DonationsComponent implements OnInit {
   }
 
   goToDonationDetails(id: number, status: GetDonationsByUserResponse[0]['status']): void {
-    if (status === 'SUCCESS') void this.router.navigate(['/donation/certificate', id])
+    if (status === 'SUCCESS') return void this.router.navigate(['/donation/certificate', id])
 
     this.snackBar.open(
       `El certificado no está disponible porque la donación ${

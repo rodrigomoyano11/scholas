@@ -32,19 +32,6 @@ export class CertificateComponent implements OnInit {
         },
       ],
     },
-    {
-      style: 'tertiary',
-      data: [
-        {
-          label: 'Compartir',
-          icon: 'share',
-          action: {
-            type: 'button',
-            click: (): void => (this.selectedDonationId ? this.shareAsLink() : undefined),
-          },
-        },
-      ],
-    },
   ]
 
   donation: DonationWithProjectName | undefined = undefined
@@ -59,7 +46,20 @@ export class CertificateComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.donation = await this.donationsService.getDonationById(Number(this.selectedDonationId))
 
-    if (this.donation?.status === 'SUCCESS') this.toolbarButtons.pop()
+    if (this.donation?.status === 'SUCCESS')
+      this.toolbarButtons.push({
+        style: 'tertiary',
+        data: [
+          {
+            label: 'Compartir',
+            icon: 'share',
+            action: {
+              type: 'button',
+              click: (): void => (this.selectedDonationId ? this.shareAsLink() : undefined),
+            },
+          },
+        ],
+      })
   }
 
   shareAsLink(): void {
