@@ -1,8 +1,12 @@
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
 import { ErrorService } from 'src/app/auth/services/error/error.service'
+import { DialogComponent, DialogData } from 'src/app/core/components/dialog/dialog.component'
 import { ValidationService } from 'src/app/core/services/validation/validation.service'
 import { DonationsService } from '../../services/donations/donations.service'
 
@@ -32,6 +36,7 @@ export class DonationAmountsSettingsComponent {
     private router: Router,
     private errorHandler: ErrorService,
     private snackBar: MatSnackBar,
+    private dialog: MatDialog,
   ) {
     this.form = this.fb.group({
       amount1: ['', [Validators.required, validation.isNumber(), validation.isValidTargetAmount()]],
@@ -80,14 +85,28 @@ export class DonationAmountsSettingsComponent {
     this.submitIsLoading = true
     const formValues = this.form.value as DonationAmountSettingsForm
     if (this.hasAmountError(formValues))
-      return this.errorHandler.openDialog(
-        'Los valores deben tener un orden ascendente. Ej: 100, 200, 300, 400',
-      )
+      return this.cambiarLoading('Los valores deben tener un orden ascendente. Ej: 100, 200, 300, 400')
 
     await this.donations.editDonationAmounts(formValues)
 
     this.snackBar.open('Los cambios han sido guardados correctamente', 'Cerrar', { duration: 5000 })
 
     await this.router.navigate(['/']).then(() => (this.submitIsLoading = false))
+  }
+
+  cambiarLoading(error: string){
+    let dialogo = this.dialog.open<DialogComponent, DialogData>(DialogComponent,{
+      data:{
+        actions: [null, 'Cerrar'],
+        title: 'Ha ocurrido un error',
+        description: error,
+        icon: 'error_outline',
+      },
+      })
+    dialogo.afterClosed().subscribe(result =>{
+      if(result == true){
+        this.submitIsLoading = false;
+      }
+    }, error=>{console.log(error)})
   }
 }

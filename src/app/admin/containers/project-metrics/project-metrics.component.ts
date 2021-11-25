@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { lastValueFrom } from 'rxjs'
@@ -72,6 +73,7 @@ export class ProjectMetricsComponent implements OnInit {
 
   selectedProjectId: string | null = this.route.snapshot.paramMap.get('id')
   projectData!: CreateProjectResponse
+  restante: any;
 
   constructor(
     private router: Router,
@@ -87,6 +89,18 @@ export class ProjectMetricsComponent implements OnInit {
       this.projectData = await lastValueFrom(
         this.projects.getProject(Number(this.selectedProjectId)),
       )
+    }
+    if(this.projectData.remainingAmount == null){
+      this.restante = 0;
+      console.log(this.restante)
+    }
+    if(this.projectData.remainingAmount <= 0){
+      this.restante = 0;
+      console.log(this.restante)
+    }
+    else{
+      this.restante = this.projectData.remainingAmount
+      console.log(this.restante)
     }
   }
 
