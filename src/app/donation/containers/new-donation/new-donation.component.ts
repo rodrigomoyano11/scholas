@@ -63,7 +63,7 @@ export class NewDonationComponent {
       this.state = 'recurring'
 
       this.setStepperStatus(1, true)
-
+      await this.donations.createDonation(donationData)
       return
     }
 
